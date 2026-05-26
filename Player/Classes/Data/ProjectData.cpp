@@ -2668,10 +2668,12 @@ bool ProjectData::init(const rapidjson::Value& json, const std::string &projectP
 	// オブジェクトグループ
 	{
 		char const * const member = "objectGroup";
-		CC_ASSERT(json.HasMember(member));
+		//CC_ASSERT(json.HasMember(member));
 		cocos2d::__Array* ary = cocos2d::Array::create();
-		for (rapidjson::SizeType i = 0; i < json[member].Size(); ++i) {
-			ary->addObject(cocos2d::__String::create(json[member][i].GetString()));
+		if (json.HasMember(member) && json[member].IsArray()) {
+			for (rapidjson::SizeType i = 0; i < json[member].Size(); ++i) {
+				ary->addObject(cocos2d::__String::create(json[member][i].GetString()));
+			}
 		}
 		setObjectGroup(ary);
 	}
