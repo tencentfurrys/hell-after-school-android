@@ -91,13 +91,15 @@ bool FontData::init(const rapidjson::Value& json)
 	auto localeSettings = cocos2d::__Dictionary::create();
 	auto p = FontData::FontSetting::create(json);
 	localeSettings->setObject(p, "mainLanguage");
-	auto &jo = json["localeSettings"];
-	for(auto it = jo.MemberBegin(); it != jo.MemberEnd(); it++){
-		auto p = FontData::FontSetting::create(it->value);
+	if (json.HasMember("localeSettings") && json["localeSettings"].IsObject()) {
+		auto &jo = json["localeSettings"];
+		for(auto it = jo.MemberBegin(); it != jo.MemberEnd(); it++){
+			auto p = FontData::FontSetting::create(it->value);
 #if defined(AGTK_DEBUG)
-		CC_ASSERT(strcmp(it->name.GetString(), "mainLanguage") == 0 || localeSettings->objectForKey(it->name.GetString()) == nullptr);
+			CC_ASSERT(strcmp(it->name.GetString(), "mainLanguage") == 0 || localeSettings->objectForKey(it->name.GetString()) == nullptr);
 #endif
-		localeSettings->setObject(p, it->name.GetString());
+			localeSettings->setObject(p, it->name.GetString());
+		}
 	}
 	this->setLocaleSettings(localeSettings);
 

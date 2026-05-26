@@ -2577,14 +2577,16 @@ bool ProjectData::init(const rapidjson::Value& json, const std::string &projectP
 // #AGTK-NX
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_NX)
 #endif
-	CC_ASSERT(json.HasMember("databaseList"));
+	//CC_ASSERT(json.HasMember("databaseList"));
 	auto databaseList = cocos2d::__Dictionary::create();
-	for (rapidjson::SizeType i = 0; i < json["databaseList"].Size(); i++) {
-		auto databaseData = DatabaseData::create(json["databaseList"][i]);
+	if (json.HasMember("databaseList") && json["databaseList"].IsArray()) {
+		for (rapidjson::SizeType i = 0; i < json["databaseList"].Size(); i++) {
+			auto databaseData = DatabaseData::create(json["databaseList"][i]);
 #if defined(AGTK_DEBUG)
-		CC_ASSERT(databaseList->objectForKey(databaseData->getId()) == nullptr);
+			CC_ASSERT(databaseList->objectForKey(databaseData->getId()) == nullptr);
 #endif
-		databaseList->setObject(databaseData, databaseData->getId());
+			databaseList->setObject(databaseData, databaseData->getId());
+		}
 	}
 	this->setDatabaseList(databaseList);
 	// #AGTK-NX
