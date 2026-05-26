@@ -410,7 +410,9 @@ bool JavascriptManager::addObject(JSContext* cx, JS::HandleObject global)
 	JS::RootedObject robj(cx, obj);
 	{
 		auto gameManager = GameManager::getInstance();
-		JS::RootedValue rversion(cx, std_string_to_jsval(cx, cocos2d::String::createWithFormat("%s %s", gameManager->getAppName()->getCString(), gameManager->getAppVersion()->getCString())->getCString()));
+		const char* appNameStr = gameManager->getAppName() ? gameManager->getAppName()->getCString() : "HellAfterSchool";
+		const char* appVerStr = gameManager->getAppVersion() ? gameManager->getAppVersion()->getCString() : "1.0";
+		JS::RootedValue rversion(cx, std_string_to_jsval(cx, cocos2d::String::createWithFormat("%s %s", appNameStr, appVerStr)->getCString()));
 		JS_SetProperty(cx, robj, "version", rversion);
 	}
 	JSFunctionSpec agtk_methods[] = {
