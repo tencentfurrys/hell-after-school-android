@@ -16,6 +16,8 @@ Contents:
 | [`05-build-pipeline.md`](05-build-pipeline.md) | NDK r17c + build-tools 30.0.3 + JDK 17 toolchain. `ndk-build` knobs. rapidjson / cocos2d-x v3-deps-153 / PGMMV extension gotchas. The "swap `.so` into an existing APK and resign" shortcut that's saved hours. |
 | [`06-open-bugs-and-next-steps.md`](06-open-bugs-and-next-steps.md) | Current known issues (V-menu still freezes, bed save freezes, load freezes, cutscene blackscreen, gameover key, MuMu's `loadLibrary` hang). What we *think* each one is. What log to grab next. Candidate fixes ranked by risk. |
 | [`07-version-history.md`](07-version-history.md) | What changed in every release: v71 → v72 → v72b → v72c → v72d → v72e → v72f → v72g → v72h → v72i → v72j → v72k → v72L. SHA-256, download links, install gotchas, what to test. |
+| [`08-v72L-log-1-analysis.md`](08-v72L-log-1-analysis.md) | First v72L capture from Coolkids analysed. Updates the V-menu hypothesis: render thread doesn't stop after V — *update* thread does. Render-alive + update-paused. |
+| [`09-v72M-spec.md`](09-v72M-spec.md) | The v72M build spec: Director pause/resume trace, scene push/pop trace, V button overlay trace, `onTrimMemory` line reword, and a bypass-prep shim. All behaviour-neutral — shippable to Coolkids immediately. |
 | [`references/`](references/) | Raw artifacts: the v72 RenderTexture source diff, the patched dumper output excerpt that broke the bug open, key MEMU/Galaxy log signatures, the in-game key map. |
 
 ## TL;DR for someone picking this up cold
@@ -39,4 +41,4 @@ Contents:
 - "v72*" = our patched builds.
 - Source paths use the layout of this repo: `Player/Classes/...`, `Player/proj.android-studio/...`, `apk-build/...`.
 
-Last updated: 2026-05-30 (after v72L diag build).
+Last updated: 2026-05-30 (after v72L diag build + first log analysis + v72M spec).

@@ -22,32 +22,37 @@ on-screen V button or physical V key on PC/emulator).
 input registers thereafter, no SIGSEGV.
 
 **What we know from v72k–v72L logs**:
-- GL render thread is alive — `visitScene:` frame counter keeps ticking
-  *until* V is pressed.
-- After V, render thread *stops emitting `visitScene:` lines* within ~1
-  frame. Render loop appears stuck.
-- v72L log so far is incomplete because the user wiped the log mid-test
-  — see open question in "What we need" below.
+- GL render thread is alive throughout — `visitScene:` frame counter
+  keeps ticking *across* the freeze window all the way until the user
+  backgrounds the app. (Updated after first clean v72L log — see
+  [`08-v72L-log-1-analysis.md`](08-v72L-log-1-analysis.md). The
+  earlier "render thread stops within 1 frame after V" reading was
+  based on v72k data and didn't survive v72L's wider coverage.)
+- What is paused is the *update* path — scheduler / action manager /
+  physics step — i.e. `Director::pause()` semantics. The visible
+  result is character locked mid-animation while the renderer keeps
+  drawing the same paused state.
+- v72L's input/touch coverage is solid: 1470 INPUT TOUCH events, 0
+  INPUT KEY events (touchscreen-only session), every `JAVA GP inject
+  queued` matched by `JAVA GP inject fired` within ~20 ms.
 
-**Hypothesis (ranked)**:
-1. The native V-menu code path tries to use the per-scene-layer
-   `RenderTextureCtrl` we disabled. Patch #1 makes `isUseShader()` false
-   but doesn't fully purge every code path that *unconditionally*
-   touches a controller (just the ones that route via `isUseShader`).
-   Some menu-fade transition probably calls `RenderTextureCtrl::end()`
-   or `::getSprite()` on a null controller and waits forever on a
-   callback that never fires.
-2. The menu scene tries to apply a postprocess shader (the screen-fade
-   effect when V opens) and the shader pipeline we partially disabled
-   has a missing null-check somewhere.
-3. Scene::pauseAll or similar gets called by V-menu open, and one of
-   the paused subsystems is the GL render loop itself.
+**Updated hypothesis (post v72L log #1)**: V-menu open calls
+`Director::pause()` (or AGTK equivalent — `GameScene::pauseGame` /
+`Scene::pauseAll`) which suspends scheduler + action manager + physics
+*without* suspending the GL surface visitor. Then the menu push either
+(a) silently nulls before `Scene::onEnter`, (b) enters but renders
+invisible because of a postprocess-RT issue, or (c) pushes a
+zero-sized node tree. All three look identical to the player: paused
+world, overlay still drawn, no menu, no input progress, no exception.
+The prior "RT-shader leftover" theory was about the rendering side —
+the actual freeze is on the *update* side.
 
-**Next move**: get a clean v72L log (delete `hell_runtime.log` first,
-play, press V, wait 10 sec, send). Look for the *last `visitScene:`
-line* — its scene/layer numbers will tell us which scene was active at
-the freeze. Then look at the `Scene::init` log right after — if it shows
-a transition started but never completed, that's hypothesis #1.
+**Next move**: build v72M with the instrumentation in
+[`09-v72M-spec.md`](09-v72M-spec.md) (Director pause/resume trace,
+scene push/pop trace, V-button overlay trace, `onTrimMemory` reword,
++ a bypass-prep shim). Behaviour-neutral, so shippable immediately.
+One repro of the freeze with v72M will disambiguate (a) / (b) / (c)
+and dictate the v72N fix.
 
 ### 2. Bed save freezes the game
 
@@ -102,34 +107,30 @@ v71 thread). Possibly fixable by:
 **Priority**: low — the user has MEMU and physical hardware as
 alternatives.
 
-## 🔬 Diagnostic build currently in user's hands: v72L
+## 🔬 Diagnostic builds
 
-v72L is functionally the same as v72j (no new fixes) but adds full
-input-path logging — see [03-gamepad-overlay.md](03-gamepad-overlay.md).
-
-The next log from v72L is the gating artifact for v72M (the real fix).
-Without it, the right move is to ask for it, not to ship more
-guess-fixes.
-
-## 🛠 v72M candidate plan (when we get the v72L log)
-
-If the log shows V-press → render-thread stops within 1 frame → no
-`Scene::init` for menu scene → no native exception:
-
-- **v72M**: extend the source-level fix or add binary patches that
-  null-check every spot in the menu transition code that derefs a
-  `RenderTextureCtrl` it expects to be non-null after patch #2 made
-  it always null. Specifically:
-  - `Scene::transitToScene*` family
-  - `SceneLayer::beginShaderCapture` / `endShaderCapture`
-  - Any `RenderTextureCtrl::update` callsites — if `addShader` had a
-    null deref at v72c, others probably do too.
-
-- **v72M-bypass** (alt): re-implement V menu in Java overlay, invoke
-  inventory + save + load via direct Lua/JS bindings, bypass the native
-  menu scene entirely. Bigger lift (~half day) but isolates from the
-  shader pipeline. Coolkids has explicitly approved this path as a
-  parallel shot to the v72M fix.
+- **v72L** (in user's hands): functionally same as v72j; adds full
+  input-path logging (`INPUT TOUCH`, `INPUT KEY`, `FOCUS`,
+  `LIFE onPause/onResume`, `JAVA GP touch/inject queued/fired`).
+- **v72M** (next, fully spec'd in
+  [`09-v72M-spec.md`](09-v72M-spec.md)): on top of v72L, adds
+  `DIRECTOR pause/resume`, `DIRECTOR pushScene/popScene`,
+  `SCENE onEnter/onExit`, `V_BTN tap`, rewords the misleading
+  `CRITICAL OOM` line, and adds the bypass-prep shim. All behaviour-
+  neutral. Ship the moment it builds.
+- **v72N** (depends on what v72M's first repro shows):
+  - if `V_BTN tap` never fires → `bringToFront()` on overlay,
+  - if pause + push fire but `SCENE onEnter` doesn't → null-check
+    the menu scene's init path,
+  - if all three fire and the menu just renders invisible → extend
+    the `isUseShader` guard or skip RT capture on the top-most layer.
+- **v72M-bypass** (parallel alternative): re-implement V menu in
+  Java overlay, invoke inventory + save + load via direct Lua/JS
+  bindings, bypass the native menu scene entirely. Bigger lift
+  (~half day) but isolates from the shader pipeline. Coolkids has
+  explicitly approved this path as a parallel shot to the v72M fix.
+  v72M's track-B prep makes this a one-function swap in
+  `GamepadOverlay.java::onVButtonTap()`.
 
 ## 💸 Memory/asset downscale (deferred, not currently planned)
 
