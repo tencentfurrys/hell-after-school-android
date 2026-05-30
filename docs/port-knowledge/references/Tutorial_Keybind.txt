@@ -1,0 +1,31 @@
+# Hell After School — Tutorial keybinds
+# Source: Coolkids' Tutorial_Keybind.txt shared 2026-05-28
+# Mirrored here as a source-of-truth for the Java gamepad overlay.
+
+# Movement
+←  ↑  ↓  →           Walk / select (double-tap = sprint)
+
+# Combat / action keys (cocos2d numeric key IDs in parens)
+Z (key 2)            Attack / Shoot / Confirm
+X (key 1)            Cancel / Exit Menu / Search
+C (key 4)            Change Weapon
+V (key 3)            Open Menu
+
+# Modifier keys (combine with the above)
+Shift                Aim mode
+  Shift + ↑/↓          Aim up / down
+  Shift + Z            Shoot while aiming
+  Shift + X            Reload gun
+
+Ctrl                 Crouch (toggle)
+  Ctrl + X (on body)   Take DNA sample
+
+# Misc
+Space                Dash
+Enter                Confirm (alternate)
+
+# Notes
+# - There is NO dedicated inventory key. Inventory is accessed inside
+#   the V-menu (project.json variable id 2026).
+# - These are the only keys cocos2d-x receives via PGMMV input mapping.
+#   Any other key from the Java overlay must inject one of the above.
