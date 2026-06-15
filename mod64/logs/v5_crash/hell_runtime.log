@@ -1,0 +1,5 @@
+1781565052564 JAVA GP STATE[bringToFront(onResume)] vis=0 attached=false parent=ResizeLayout w=0 h=0 elev=0.0 clickable=true
+1781565052595 JAVA GP onAttachedToWindow vis=0 w=0 h=0
+1781565052595 JAVA GP onWindowVisibilityChanged vis=0
+1781565052595 JAVA GP onVisibilityChanged vis=0
+1781565052606 JAVA GP onSizeChanged w=1440 h=720
