@@ -1,0 +1,10 @@
+1781491616452 onCreate ENTER
+1781491616468 onLoadNativeLibraries: ENTER
+1781491616472 lib_name=MyGame
+1781491616472 before System.loadLibrary(MyGame)
+1781491616527 after loadLibrary: SUCCESS
+1781491616538 onCreate super.onCreate done
+1781491616539 gamepad overlay added
+1781491616540 virtual game controller registered
+1781491616540 periodic cache purger scheduled (20s)
+1781491616548 MenuShim init OK
