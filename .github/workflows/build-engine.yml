@@ -1,0 +1,61 @@
+name: Build arm64 libMyGame.so
+
+on:
+  workflow_dispatch:
+    inputs:
+      ndk_version:
+        description: 'NDK version (e.g. r17c, r21e, r25c)'
+        required: false
+        default: 'r17c'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install NDK r17c
+        run: |
+          set -e
+          # NDK r17c is the known-working version for this project
+          NDK_URL="https://dl.google.com/android/repository/android-ndk-r17c-linux-x86_64.zip"
+          echo "Downloading NDK r17c..."
+          curl -sSL "$NDK_URL" -o /tmp/ndk.zip
+          unzip -q /tmp/ndk.zip -d /opt
+          export ANDROID_NDK_ROOT=/opt/android-ndk-r17c
+          export NDK_ROOT=$ANDROID_NDK_ROOT
+          echo "ANDROID_NDK_ROOT=$ANDROID_NDK_ROOT" >> $GITHUB_ENV
+          echo "NDK_ROOT=$NDK_ROOT" >> $GITHUB_ENV
+          echo "$ANDROID_NDK_ROOT" >> $GITHUB_PATH
+          # libtinfo shim for r17c clang on modern Ubuntu
+          sudo apt-get install -y libtinfo5 2>/dev/null || sudo ln -sf /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
+
+      - name: Build libMyGame.so (arm64-v8a)
+        run: |
+          set -e
+          cd Player/proj.android-studio/app
+          $ANDROID_NDK_ROOT/ndk-build -j$(nproc) \
+            NDK_PROJECT_PATH=. \
+            NDK_APPLICATION_MK=jni/Application.mk \
+            APP_BUILD_SCRIPT=jni/Android.mk \
+            APP_ABI=arm64-v8a \
+            NDK_DEBUG=0
+          echo "=== Build output ==="
+          find libs/ -name "*.so" -exec ls -lh {} \;
+
+      - name: Upload libMyGame.so
+        uses: actions/upload-artifact@v4
+        with:
+          name: libMyGame-arm64-v6
+          path: Player/proj.android-studio/app/libs/arm64-v8a/libMyGame.so
+
+      - name: Summary
+        run: |
+          SO=Player/proj.android-studio/app/libs/arm64-v8a/libMyGame.so
+          echo "### Build Complete ✅" >> $GITHUB_STEP_SUMMARY
+          echo "- **File:** libMyGame.so (arm64-v8a)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Size:** $(ls -lh $SO | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
+          echo "- **SHA256:** $(sha256sum $SO | cut -d' ' -f1)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Download from Artifacts above, then repackage into the APK." >> $GITHUB_STEP_SUMMARY
