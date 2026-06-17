@@ -456,6 +456,20 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #else
 	gm->loadJsonFile(projectFilePath);
 #endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	// On Android the path resolved before the FileUtilsRuntime swap may fail
+	// to load.  If projectData is still null, re-resolve and retry once.
+	if (!gm->getProjectData()) {
+		CCLOG("AppDelegate: projectData null after loadJsonFile, retrying with re-resolved path");
+		auto retryPath = FileUtils::getInstance()->fullPathForFilename("data/project.json");
+		if (!retryPath.empty()) {
+			CCLOG("AppDelegate: retry path = %s", retryPath.c_str());
+			gm->loadJsonFile(retryPath);
+		}
+	}
+#endif
+
 	gm->deserialize();
 	gm->serialize();
 
@@ -463,14 +477,21 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_NX)
 #endif
 
-	AGTK_ACTION_LOG(1, "# InputManager Init");
-	InputManager::getInstance()->init(gm->getProjectData()->getInputMapping());
-	AGTK_ACTION_LOG(1, "# AudioManager Init");
-	AudioManager::getInstance()->init(gm->getProjectData()->getSoundSetting());
-
 	auto projectData = gm->getProjectData();
-	auto screenSize = projectData->getScreenSize();
-	float frameZoomFactor = projectData->getMagnifyWindow() ? projectData->getWindowMagnification() : 1.0f;
+
+	AGTK_ACTION_LOG(1, "# InputManager Init");
+	{
+		agtk::data::InputMappingData *inputMapping = projectData ? projectData->getInputMapping() : nullptr;
+		InputManager::getInstance()->init(inputMapping);
+	}
+	AGTK_ACTION_LOG(1, "# AudioManager Init");
+	{
+		agtk::data::SoundSettingData *soundSetting = projectData ? projectData->getSoundSetting() : nullptr;
+		AudioManager::getInstance()->init(soundSetting);
+	}
+
+	cocos2d::Size screenSize = projectData ? projectData->getScreenSize() : designResolutionSize;
+	float frameZoomFactor = (projectData && projectData->getMagnifyWindow()) ? projectData->getWindowMagnification() : 1.0f;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_NX) // #AGTK-NX
 #endif
 #endif // USE_BG_PROJECT_LOAD
@@ -573,11 +594,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// プロジェクトデータに依存する処理を後で行う
 #else
 	//cursor
-	glview->setCursorVisible(projectData->getDisplayMousePointer());
+	if (projectData) {
+		glview->setCursorVisible(projectData->getDisplayMousePointer());
 
-	if ((bool)projectData->getScreenSettings() != agtk::IsFullScreen()) {
-		AGTK_ACTION_LOG(1, "# ChangeScreen:%d", projectData->getScreenSettings());
-		agtk::ChangeScreen(projectData->getScreenSettings());
+		if ((bool)projectData->getScreenSettings() != agtk::IsFullScreen()) {
+			AGTK_ACTION_LOG(1, "# ChangeScreen:%d", projectData->getScreenSettings());
+			agtk::ChangeScreen(projectData->getScreenSettings());
+		}
 	}
 
 	/*
@@ -726,12 +749,18 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// プロジェクトデータに依存する処理を後で行う
 #else
 	auto inputManager = InputManager::getInstance();
-	inputManager->setInputMappingData(projectData->getInputMapping());
-	agtk::setTileCollisionThreshold(projectData->getWallDetectionOverlapMargin());
-	if (projectData->getMultithreading()) {
-		ThreadManager::setUsedThreadCount(MAX(1, MIN(2, AGTK_THREAD_COUNT)));
+	if (projectData) {
+		inputManager->setInputMappingData(projectData->getInputMapping());
+		agtk::setTileCollisionThreshold(projectData->getWallDetectionOverlapMargin());
+		if (projectData->getMultithreading()) {
+			ThreadManager::setUsedThreadCount(MAX(1, MIN(2, AGTK_THREAD_COUNT)));
+		}
+		else {
+			ThreadManager::setUsedThreadCount(1);
+		}
 	}
 	else {
+		CCLOG("AppDelegate: projectData is null, using defaults");
 		ThreadManager::setUsedThreadCount(1);
 	}
 #endif
