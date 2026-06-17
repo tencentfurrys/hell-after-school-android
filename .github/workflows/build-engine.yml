@@ -7,6 +7,10 @@ on:
         description: 'NDK version (e.g. r17c, r21e, r25c)'
         required: false
         default: 'r17c'
+      branch:
+        description: 'Branch to build from'
+        required: false
+        default: 'v72-rt-shader-fix'
 
 jobs:
   build:
@@ -14,11 +18,12 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
 
       - name: Install NDK r17c
         run: |
           set -e
-          # NDK r17c is the known-working version for this project
           NDK_URL="https://dl.google.com/android/repository/android-ndk-r17c-linux-x86_64.zip"
           echo "Downloading NDK r17c..."
           curl -sSL "$NDK_URL" -o /tmp/ndk.zip
@@ -28,8 +33,52 @@ jobs:
           echo "ANDROID_NDK_ROOT=$ANDROID_NDK_ROOT" >> $GITHUB_ENV
           echo "NDK_ROOT=$NDK_ROOT" >> $GITHUB_ENV
           echo "$ANDROID_NDK_ROOT" >> $GITHUB_PATH
-          # libtinfo shim for r17c clang on modern Ubuntu
           sudo apt-get install -y libtinfo5 2>/dev/null || sudo ln -sf /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
+
+      - name: Fetch upstream PGMMV dependencies
+        run: |
+          set -e
+          echo "Cloning upstream PGMMV for missing dirs (external, extensions, build, cmake, tools)..."
+          git clone --depth=1 --filter=blob:none --sparse \
+            https://github.com/GGGweb-adm/PGMMV.git /tmp/pgmmv-up
+          cd /tmp/pgmmv-up
+          git sparse-checkout set Player/cocos2d/external Player/cocos2d/extensions Player/cocos2d/build Player/cocos2d/cmake Player/cocos2d/tools
+          cp -r Player/cocos2d/external $GITHUB_WORKSPACE/Player/cocos2d/external
+          cp -r Player/cocos2d/extensions $GITHUB_WORKSPACE/Player/cocos2d/extensions
+          [ -d Player/cocos2d/build ] && cp -r Player/cocos2d/build $GITHUB_WORKSPACE/Player/cocos2d/build || true
+          [ -d Player/cocos2d/cmake ] && cp -r Player/cocos2d/cmake $GITHUB_WORKSPACE/Player/cocos2d/cmake || true
+          [ -d Player/cocos2d/tools ] && cp -r Player/cocos2d/tools $GITHUB_WORKSPACE/Player/cocos2d/tools || true
+          echo "Done fetching upstream deps"
+
+      - name: Apply arm64 source patches
+        run: |
+          set -e
+          cd $GITHUB_WORKSPACE
+
+          # Patch 1: unzip.cpp — add missing include so CC_TARGET_PLATFORM is defined
+          UNZIP=Player/cocos2d/external/unzip/unzip.cpp
+          if [ -f "$UNZIP" ]; then
+            sed -i '1s/^/#include "platform\/CCPlatformConfig.h"\n/' "$UNZIP"
+            echo "Patched unzip.cpp"
+          fi
+
+          # Patch 2: document.h — add primitive-value rvalue-name AddMember overload
+          DOCH=Player/cocos2d/external/json/document.h
+          if [ -f "$DOCH" ] && ! grep -q "AddMember(GenericValue&& name, T value" "$DOCH"; then
+            # Find line number of last GenericValue&& AddMember and insert after its closing brace
+            LINE=$(grep -n "GenericValue& AddMember(GenericValue&& name, GenericValue&& value" "$DOCH" | tail -1 | cut -d: -f1)
+            if [ -n "$LINE" ]; then
+              # Find the closing brace of that function (next line with just "}")
+              END=$(tail -n +$LINE "$DOCH" | grep -n "^    }$" | head -1 | cut -d: -f1)
+              INSERT=$((LINE + END))
+              sed -i "${INSERT}a\\\    // arm64 fix: primitive-value with rvalue-name\n    template <typename T>\n    RAPIDJSON_DISABLEIF_RETURN((internal::OrExpr<internal::IsPointer<T>, internal::IsGenericValue<T> >), (GenericValue\&))\n    AddMember(GenericValue\&\& name, T value, Allocator\& allocator) {\n        return AddMember(name, value, allocator);\n    }" "$DOCH"
+              echo "Patched document.h"
+            else
+              echo "WARN: Could not find AddMember insertion point in document.h"
+            fi
+          else
+            echo "document.h already patched or not found"
+          fi
 
       - name: Build libMyGame.so (arm64-v8a)
         run: |
@@ -47,7 +96,7 @@ jobs:
       - name: Upload libMyGame.so
         uses: actions/upload-artifact@v4
         with:
-          name: libMyGame-arm64-v6
+          name: libMyGame-arm64-v8
           path: Player/proj.android-studio/app/libs/arm64-v8a/libMyGame.so
 
       - name: Summary
@@ -57,5 +106,3 @@ jobs:
           echo "- **File:** libMyGame.so (arm64-v8a)" >> $GITHUB_STEP_SUMMARY
           echo "- **Size:** $(ls -lh $SO | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
           echo "- **SHA256:** $(sha256sum $SO | cut -d' ' -f1)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Download from Artifacts above, then repackage into the APK." >> $GITHUB_STEP_SUMMARY
