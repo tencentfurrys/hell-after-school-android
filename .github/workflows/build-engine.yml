@@ -44,7 +44,53 @@ jobs:
           [ -d Player/cocos2d/cmake ] && cp -r Player/cocos2d/cmake $GITHUB_WORKSPACE/Player/cocos2d/cmake || true
           [ -d Player/cocos2d/tools ] && cp -r Player/cocos2d/tools $GITHUB_WORKSPACE/Player/cocos2d/tools || true
           echo "Done fetching upstream deps"
-          ls -la $GITHUB_WORKSPACE/Player/cocos2d/
+
+      - name: Apply arm64 source patches
+        run: |
+          set -e
+          cd $GITHUB_WORKSPACE
+
+          # Patch 1: unzip.cpp — add missing include so CC_TARGET_PLATFORM is defined
+          UNZIP=Player/cocos2d/external/unzip/unzip.cpp
+          if [ -f "$UNZIP" ]; then
+            sed -i '1s/^/#include "platform\/CCPlatformConfig.h"\n/' "$UNZIP"
+            echo "✅ Patched unzip.cpp (added CCPlatformConfig.h include)"
+          fi
+
+          # Patch 2: document.h — add primitive-value rvalue-name AddMember overload
+          DOCH=Player/cocos2d/external/json/document.h
+          if [ -f "$DOCH" ]; then
+            # Add the overload after the existing rvalue AddMember overloads
+            # Find the line with RAPIDJSON_HAS_CXX11_RVALUE_REFS end section and add before it
+            # Use a targeted sed to add the overload
+            cat >> /tmp/addmember_patch.txt << 'PATCH'
+    // arm64 build fix: primitive-value with rvalue-name overload
+    template <typename T>
+    RAPIDJSON_DISABLEIF_RETURN((internal::OrExpr<internal::IsPointer<T>, internal::IsGenericValue<T> >), (GenericValue&))
+    AddMember(GenericValue&& name, T value, Allocator& allocator) {
+        return AddMember(name, value, allocator);
+    }
+PATCH
+            # Insert before the closing #endif of RAPIDJSON_HAS_CXX11_RVALUE_REFS in the AddMember section
+            # Find a suitable insertion point — after the last GenericValue&& AddMember overload
+            if grep -q "AddMember(GenericValue&& name, T value" "$DOCH"; then
+              echo "✅ document.h already has the primitive-value overload"
+            else
+              # Insert after the line containing "AddMember(GenericValue&& name, GenericValue&& value"
+              sed -i '/AddMember(GenericValue\&\& name, GenericValue\&\& value, Allocator\& allocator)/,/^[[:space:]]*}/ {
+                /^[[:space:]]*}/ a\
+    // arm64 build fix: primitive-value with rvalue-name overload\
+    template <typename T>\
+    RAPIDJSON_DISABLEIF_RETURN((internal::OrExpr<internal::IsPointer<T>, internal::IsGenericValue<T> >), (GenericValue\&))\
+    AddMember(GenericValue\&\& name, T value, Allocator\& allocator) {\
+        return AddMember(name, value, allocator);\
+    }
+              }' "$DOCH"
+              echo "✅ Patched document.h (added primitive-value rvalue-name AddMember overload)"
+            fi
+          fi
+
+          echo "All source patches applied"
 
       - name: Build libMyGame.so (arm64-v8a)
         run: |
