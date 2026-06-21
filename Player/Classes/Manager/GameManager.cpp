@@ -277,7 +277,7 @@ GameManager* GameManager::getInstance()
 #else
 		_gameManager->_saveDataPath = FileUtils::getInstance()->getApplicationPath() + SAVE_FOLDER;
 #endif
-		THREAD_PRINTF("_gameManager: 0x%x", _gameManager);
+		THREAD_PRINTF("_gameManager: %p", _gameManager);
 	}
 	return _gameManager;
 }

@@ -5365,7 +5365,7 @@ void SceneLayer::updateObjectDispPriority()
 // #AGTK-NX
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_NX)
 #else
-			return (int)p1 < (int)p2;
+			return (intptr_t)p1 < (intptr_t)p2;
 #endif
 		};
 
@@ -5444,7 +5444,7 @@ void SceneLayer::updateObjectDispPriority()
 // #AGTK-NX
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_NX)
 #else
-			return (int)p1 < (int)p2;
+			return (intptr_t)p1 < (intptr_t)p2;
 #endif
 
 		};
@@ -5531,7 +5531,7 @@ void SceneLayer::updateObjectDispPriority()
 // #AGTK-NX
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_NX)
 #else
-			return (int)p1 < (int)p2;
+			return (intptr_t)p1 < (intptr_t)p2;
 #endif
 
 		};

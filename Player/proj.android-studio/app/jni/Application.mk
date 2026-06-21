@@ -1,6 +1,6 @@
 APP_STL := c++_static
 
-APP_CPPFLAGS := -frtti -fexceptions -DCC_ENABLE_CHIPMUNK_INTEGRATION=1 -DUSE_AGTK -DAGTK_RUNTIME -DAGTK_RELEASE -DUSE_RUNTIME -std=c++11 -fsigned-char
+APP_CPPFLAGS := -frtti -fexceptions -DCC_ENABLE_CHIPMUNK_INTEGRATION=1 -DUSE_AGTK -DAGTK_RUNTIME -DAGTK_RELEASE -DUSE_RUNTIME -DCC_TEXTURE_ATLAS_USE_VAO=0 -std=c++11 -fsigned-char
 APP_LDFLAGS  := -latomic
 
 # Galaxy J3 Orbit is 32-bit ARMv7; arm64-v8a for everything else modern.
