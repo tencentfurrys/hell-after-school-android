@@ -1,4 +1,4 @@
-name: Build arm64 Engine
+name: Build arm64 Engine (NDK r25c)
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     
     steps:
       - name: Checkout
@@ -27,23 +27,60 @@ jobs:
           ndk-version: r25c
           add-to-path: true
 
-      - name: Build arm64-v8a
+      - name: Patch for NDK r25c compatibility
+        run: |
+          set -e
+          echo "=== Patching pvmp3dec Android.mk: remove -Werror ==="
+          PVMP3_MK="Player/cocos2d/external/android-specific/pvmp3dec/Android.mk"
+          sed -i 's/LOCAL_CFLAGS += -Werror/LOCAL_CFLAGS += -Wno-error/' "$PVMP3_MK"
+          echo "Patched $PVMP3_MK"
+
+          echo "=== Patching audio primitives.h: suppress implicit const int float conversion ==="
+          PRIM_H="Player/cocos2d/cocos/audio/android/audio_utils/include/audio_utils/primitives.h"
+          if [ -f "$PRIM_H" ]; then
+            sed -i 's/static const float limpos = 0xffffffffUL \/ (float)(1 << 28);/static const float limpos = (float)0xffffffffUL \/ (float)(1 << 28);/' "$PRIM_H"
+            echo "Patched $PRIM_H"
+          fi
+
+          echo "=== Adding global -Wno-implicit-const-int-float-conversion to Application.mk ==="
+          APP_MK="Player/proj.android-studio/app/jni/Application.mk"
+          sed -i 's/APP_CPPFLAGS := /APP_CPPFLAGS := -Wno-implicit-const-int-float-conversion /' "$APP_MK"
+          echo "Patched $APP_MK"
+
+          echo "=== Verifying patches ==="
+          grep "LOCAL_CFLAGS" "$PVMP3_MK"
+          grep "APP_CPPFLAGS" "$APP_MK"
+
+      - name: Build arm64-v8a with NDK r25c
         working-directory: Player/proj.android-studio/app
         env:
           NDK_MODULE_PATH: ${{ steps.setup-ndk.outputs.ndk-path }}/sources
         run: |
+          set -e
           echo "NDK path: ${{ steps.setup-ndk.outputs.ndk-path }}"
+          echo "NDK version: $(${{ steps.setup-ndk.outputs.ndk-path }}/ndk-build --version 2>/dev/null || echo unknown)"
           ${{ steps.setup-ndk.outputs.ndk-path }}/ndk-build \
             NDK_DEBUG=0 \
             APP_ABI=arm64-v8a \
             -j$(nproc) \
-            V=0
+            V=0 \
+            2>&1 | tee /tmp/build.log
+          echo "Build exit code: $?"
 
       - name: Verify output
         run: |
-          ls -la Player/proj.android-studio/app/libs/arm64-v8a/libMyGame.so
-          file Player/proj.android-studio/app/libs/arm64-v8a/libMyGame.so
-          readelf -h Player/proj.android-studio/app/libs/arm64-v8a/libMyGame.so | grep -E "Class|Machine"
+          SO="Player/proj.android-studio/app/libs/arm64-v8a/libMyGame.so"
+          if [ -f "$SO" ]; then
+            echo "=== Build SUCCESS ==="
+            ls -lh "$SO"
+            file "$SO"
+            readelf -h "$SO" | grep -E "Class|Machine"
+            echo "=== NDK r25c arm64-v8a build verified ==="
+          else
+            echo "=== ERROR: libMyGame.so not found ==="
+            find Player/proj.android-studio/app/ -name "*.so" -type f
+            exit 1
+          fi
 
       - name: Upload libMyGame.so
         uses: actions/upload-artifact@v4
@@ -51,3 +88,19 @@ jobs:
           name: libMyGame-arm64-r25c
           path: Player/proj.android-studio/app/libs/arm64-v8a/libMyGame.so
           retention-days: 30
+
+      - name: Build summary
+        if: always()
+        run: |
+          SO="Player/proj.android-studio/app/libs/arm64-v8a/libMyGame.so"
+          echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
+          if [ -f "$SO" ]; then
+            echo "✅ **SUCCESS** - libMyGame.so built with NDK r25c for arm64-v8a" >> $GITHUB_STEP_SUMMARY
+            echo "- **Size:** $(ls -lh $SO | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
+            echo "- **SHA256:** $(sha256sum $SO | cut -d' ' -f1)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **FAILED** - check build logs above" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            tail -50 /tmp/build.log >> $GITHUB_STEP_SUMMARY 2>/dev/null || echo "No build log" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          fi
