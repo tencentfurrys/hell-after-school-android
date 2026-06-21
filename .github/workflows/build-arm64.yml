@@ -35,21 +35,20 @@ jobs:
           sed -i 's/LOCAL_CFLAGS += -Werror/LOCAL_CFLAGS += -Wno-error/' "$PVMP3_MK"
           echo "Patched $PVMP3_MK"
 
-          echo "=== Patching audio primitives.h: suppress implicit const int float conversion ==="
-          PRIM_H="Player/cocos2d/cocos/audio/android/audio_utils/include/audio_utils/primitives.h"
-          if [ -f "$PRIM_H" ]; then
-            sed -i 's/static const float limpos = 0xffffffffUL \/ (float)(1 << 28);/static const float limpos = (float)0xffffffffUL \/ (float)(1 << 28);/' "$PRIM_H"
-            echo "Patched $PRIM_H"
-          fi
-
-          echo "=== Adding global -Wno-implicit-const-int-float-conversion to Application.mk ==="
+          echo "=== Adding global warning suppression to Application.mk ==="
           APP_MK="Player/proj.android-studio/app/jni/Application.mk"
+          # Add -Wno-implicit-const-int-float-conversion to suppress NDK r25c Clang warnings
           sed -i 's/APP_CPPFLAGS := /APP_CPPFLAGS := -Wno-implicit-const-int-float-conversion /' "$APP_MK"
+          # Add -Wl,-z,notext to allow linking prebuilt .a files that lack -fPIC (built with NDK r17c)
+          echo "" >> "$APP_MK"
+          echo "# Allow text relocations for prebuilt static libs built with older NDK" >> "$APP_MK"
+          echo "APP_LDFLAGS += -Wl,-z,notext" >> "$APP_MK"
           echo "Patched $APP_MK"
 
           echo "=== Verifying patches ==="
           grep "LOCAL_CFLAGS" "$PVMP3_MK"
           grep "APP_CPPFLAGS" "$APP_MK"
+          grep "APP_LDFLAGS" "$APP_MK"
 
       - name: Build arm64-v8a with NDK r25c
         working-directory: Player/proj.android-studio/app
@@ -58,14 +57,12 @@ jobs:
         run: |
           set -e
           echo "NDK path: ${{ steps.setup-ndk.outputs.ndk-path }}"
-          echo "NDK version: $(${{ steps.setup-ndk.outputs.ndk-path }}/ndk-build --version 2>/dev/null || echo unknown)"
           ${{ steps.setup-ndk.outputs.ndk-path }}/ndk-build \
             NDK_DEBUG=0 \
             APP_ABI=arm64-v8a \
             -j$(nproc) \
             V=0 \
             2>&1 | tee /tmp/build.log
-          echo "Build exit code: $?"
 
       - name: Verify output
         run: |
