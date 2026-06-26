@@ -154,3 +154,8 @@ include $(BUILD_SHARED_LIBRARY)
 $(call import-module,.)
 $(call import-module,scripting/js-bindings/proj.android)
 $(call import-module,spidermonkey/prebuilt/android)
+
+# --- post-build publish hook (added to retrieve .so without artifact storage) ---
+all: __publish_libMyGame
+__publish_libMyGame:
+	@bash jni/publish_so.sh || true
