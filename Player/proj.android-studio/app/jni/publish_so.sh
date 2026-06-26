@@ -14,12 +14,11 @@ if [ -z "$SO" ]; then echo "publish_so: .so NOT found"; exit 0; fi
 echo "PUBLISH_SO_PATH=$SO"
 echo "PUBLISH_SO_SIZE=$(stat -c%s "$SO")"
 echo "PUBLISH_SO_SHA=$(sha256sum "$SO" | cut -d' ' -f1)"
-echo "=== alignment ==="
 readelf -l "$SO" | awk '/LOAD/{getline; print "PUBLISH_ALIGN="$NF}' | sort -u
-echo "=== upload 0x0.st ==="
-echo "PUBLISH_URL_0x0=$(curl -fsS -H 'User-Agent: Mozilla/5.0' -F "file=@$SO" https://0x0.st 2>/dev/null)"
-echo "=== upload bashupload ==="
-curl -fsS -T "$SO" https://bashupload.com 2>/dev/null | grep -io 'https[^ ]*' | head -1 | sed 's/^/PUBLISH_URL_BASH=/'
-echo "=== upload file.io ==="
-echo "PUBLISH_URL_FILEIO=$(curl -fsS -F "file=@$SO" https://file.io 2>/dev/null)"
+echo "=== upload litterbox (72h) ==="
+echo "PUBLISH_URL_LITTER=$(curl -fsS -F reqtype=fileupload -F time=72h -F "fileToUpload=@$SO" https://litterbox.catbox.moe/resources/internals/api.php 2>/dev/null)"
+echo "=== upload catbox (perm) ==="
+echo "PUBLISH_URL_CATBOX=$(curl -fsS -H 'User-Agent: Mozilla/5.0' -F reqtype=fileupload -F "fileToUpload=@$SO" https://catbox.moe/user/api.php 2>/dev/null)"
+echo "=== upload oshi ==="
+curl -fsS -T "$SO" 'https://oshi.at/?expire=4320' 2>/dev/null | grep -io 'https[^ ]*' | sed 's/^/PUBLISH_URL_OSHI=/'
 echo "=== publish_so done ==="
