@@ -77,7 +77,7 @@ public:
     virtual long getFileSize(const std::string& filepath) const override;
     virtual std::vector<std::string> listFiles(const std::string& dirPath) const override;
 #ifdef USE_AGTK
-    virtual std::string getApplicationPath() override { return ""; }
+    virtual std::string getApplicationPath() override { return getWritablePath(); }
     virtual std::vector<std::string> getDirContents(std::string dirname) override { return {}; }
     virtual FILE* memFopen(const char* ptr, size_t sz, int p[2]) override { return nullptr; }
     virtual void memFclose(FILE* fp, int p[2]) override {}

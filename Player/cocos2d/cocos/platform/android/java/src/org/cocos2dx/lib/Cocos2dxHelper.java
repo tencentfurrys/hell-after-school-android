@@ -273,6 +273,8 @@ public class Cocos2dxHelper {
         return Cocos2dxHelper.sPackageName;
     }
     public static String getCocos2dxWritablePath() {
+        java.io.File ext = sActivity.getExternalFilesDir(null);
+        if (ext != null) return ext.getAbsolutePath();
         return sActivity.getFilesDir().getAbsolutePath();
     }
 
