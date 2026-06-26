@@ -2868,6 +2868,17 @@ void SetCursorVisible(bool bVisible)
 void ChangeScreenResolutionSize(cocos2d::Size designResolutionSize, float magnifyWindow)
 {
 	auto director = Director::getInstance();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	// Mobile: the surface size is fixed by the OS. The desktop frame-resize path
+	// (IMGUIGLViewImpl::setFrameSizeAndZoomFactor) operates on a window that does
+	// not exist here and segfaults. AppDelegate already calls setDesignResolutionSize
+	// with the project screen size at init, so just (re)apply that safely and return.
+	if (auto gv = director->getOpenGLView()) {
+		gv->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
+		director->setContentScaleFactor(1.0f);
+	}
+	return;
+#endif
 // #AGTK-NX
 #ifdef STATIC_DOWN_CAST
 	auto glview = static_cast<IMGUIGLViewImpl *>(director->getOpenGLView());
