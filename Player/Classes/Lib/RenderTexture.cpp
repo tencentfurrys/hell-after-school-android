@@ -524,6 +524,41 @@ agtk::Shader *RenderTextureCtrl::getShader(Shader::ShaderKind kind)
 */
 bool RenderTextureCtrl::isUseShader()
 {
+#ifdef __ANDROID__
+	// ----------------------------------------------------------------------
+	// Hell After School Android port — v72 RT-shader compositing fix.
+	//
+	// On Android the per-scene-layer RT capture path
+	// (RenderTextureCtrl::update(delta, viewMatrix, maskList, objList, tileMapList, ignoreVisibleObject))
+	// produces a fully-black RT for scenes where the camera has scrolled
+	// (camera.position != (0,0)). Symptom: black world + correct HUD on
+	// Tutorial and any other multi-screen scene. Title and Loading
+	// (camera stays at 0,0) render fine through the same path.
+	//
+	// Root cause: in cocos2d-x 3.17 RenderTexture::onBegin with
+	// setKeepMatrix=true on this build chain (NDK r17c, armeabi-v7a +
+	// Mali / x86_64 native-bridge), the modelview/projection captured
+	// when the FBO is bound does not align with the per-layer view
+	// transform passed via node->visit(parentTransform=m), so world
+	// content lands outside the RT's NDC range and gets clipped to black.
+	// Verified via in-game dumper: every layer RT is created at the screen
+	// size (1366x768) and the layer's children sit at world coords around
+	// camera.position=(8196,0) yet the captured RT is empty.
+	//
+	// Patch: for kTypeSceneLayer specifically, return false so that
+	//   1) SceneLayer::updateRenderer skips the broken RT capture path,
+	//   2) GameManager::visitScene draws the layer via the working
+	//      "direct visit" path (sceneLayer->visit(renderer, vm, true)),
+	// which the Loading/Title scenes already prove works.
+	//
+	// Trade-off: disables per-layer shader filters (color tint / blur)
+	// and overlap-mask effects on scene layers. Background, TopMost,
+	// menus, HUD overlays and object-level shaders are untouched.
+	// ----------------------------------------------------------------------
+	if (getType() == kTypeSceneLayer) {
+		return false;
+	}
+#endif
 	if (getShaderList()->count()) {
 		return true;
 	}

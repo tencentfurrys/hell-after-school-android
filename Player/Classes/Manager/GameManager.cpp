@@ -3970,14 +3970,21 @@ std::string GameManager::getProjectPathFromProjectFile(const std::string &filePa
 {
 	auto it = filePath.end();
 	int count = 2;
+	std::string::const_iterator lastSlash = filePath.end();
 	while (--it >= filePath.begin()) {
 		if (*it == '/') {
+			if (lastSlash == filePath.end()) lastSlash = it;
 			count--;
 			if (count == 0) {
 				//found
 				return filePath.substr(0, it - filePath.begin() + 1);
 			}
 		}
+	}
+	// Android: path may only have one slash (e.g. "data/project.json").
+	// Return the directory up to and including that slash.
+	if (lastSlash != filePath.end()) {
+		return filePath.substr(0, lastSlash - filePath.begin() + 1);
 	}
 	return std::string();
 }

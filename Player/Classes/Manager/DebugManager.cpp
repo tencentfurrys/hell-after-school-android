@@ -1941,7 +1941,11 @@ void DebugManager::showMainMenuBar()
 #ifdef USE_PREVIEW
 			if (getAppNameVersion() == nullptr) {
 				auto gameManager = GameManager::getInstance();
-				setAppNameVersion(cocos2d::String::createWithFormat("%s %s\n%s", gameManager->getAppName()->getCString(), gameManager->getAppVersion()->getCString(), "PREVIEW_PLAYER_VERSION"));
+				{
+					const char* an = gameManager->getAppName() ? gameManager->getAppName()->getCString() : "HellAfterSchool";
+					const char* av = gameManager->getAppVersion() ? gameManager->getAppVersion()->getCString() : "1.0";
+					setAppNameVersion(cocos2d::String::createWithFormat("%s %s\n%s", an, av, "PREVIEW_PLAYER_VERSION"));
+				};
 			}
 			ImGui::MenuItem(getAppNameVersion()->getCString(), nullptr, nullptr, true);
 #endif
