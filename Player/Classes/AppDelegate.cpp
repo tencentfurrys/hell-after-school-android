@@ -468,6 +468,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
 			gm->loadJsonFile(retryPath);
 		}
 	}
+	// v25 fix: re-resolve projectFilePath after FileUtilsRuntime swap.
+	// On arm64, the path resolved at startup (before createAndSet) is stale.
+	// GameScene::create() and all scene/resource loads use this path.
+	// Without this fix, GameScene hangs silently on a dead asset path.
+	{
+		auto resolvedPath = FileUtils::getInstance()->fullPathForFilename("data/project.json");
+		if (!resolvedPath.empty() && resolvedPath != projectFilePath) {
+			CCLOG("AppDelegate: v25 re-resolved projectFilePath: %s", resolvedPath.c_str());
+			projectFilePath = resolvedPath;
+		}
+	}
 #endif
 
 	gm->deserialize();
