@@ -631,8 +631,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #ifdef USE_PREVIEW
 	sc->enableDebugger();
 #endif
+	AGTK_ACTION_LOG(1, "# v27 jsb_boot.js BEGIN");
 	sc->runScript("script/jsb_boot.js");
+	AGTK_ACTION_LOG(1, "# v27 jsb_boot.js END");
+	AGTK_ACTION_LOG(1, "# v27 jsb.js BEGIN");
 	sc->runScript("script/jsb.js");
+	AGTK_ACTION_LOG(1, "# v27 jsb.js END");
 #if defined(USE_PREVIEW)
 	registerConsoleLogCallback(consoleLogCallback);
 #endif
@@ -653,17 +657,21 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_NX) // #AGTK-NX
 #endif
 	{
+		AGTK_ACTION_LOG(1, "# v27 LogoScene::createScene BEGIN");
 #ifdef USE_BG_PROJECT_LOAD
 		auto scene = LogoScene::createScene(locale, projectFilePath);
 #else
 		auto scene = LogoScene::createScene( locale );
 #endif
+		AGTK_ACTION_LOG(1, "# v27 LogoScene::createScene END scene=%p", (void*)scene);
 		if (!scene) {
 			AGTK_ACTION_LOG(1, "# GameManager StartCanvas");
 			GameManager::getInstance()->startCanvas();
 		}
 		else {
+			AGTK_ACTION_LOG(1, "# v27 runWithScene BEGIN");
 			director->runWithScene(scene);
+			AGTK_ACTION_LOG(1, "# v27 runWithScene END");
 		}
 	}
 #else

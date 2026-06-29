@@ -660,21 +660,14 @@ void ScriptingCore::createGlobalContext() {
 
     _cx = JS_NewContext(_rt, 32 * 1024);
 
-#if defined(__aarch64__) || defined(__arm64__)
-    // arm64 fix (v26): this vintage of SpiderMonkey (mozjs-31/33) has a
-    // broken/incomplete arm64 JIT backend. Ion/Baseline codegen silently
-    // hangs once the game's JS starts executing during
-    // GameManager::startCanvas() -> black screen, no audio, no input on
-    // arm64-v8a. Force the interpreter on 64-bit ARM. armv7 keeps the JIT
-    // (it works there, hence the 32-bit build runs fine).
-    JS::RuntimeOptionsRef(_rt).setIon(false);
-    JS::RuntimeOptionsRef(_rt).setBaseline(false);
-    JS::RuntimeOptionsRef(_rt).setAsmJS(false);
-    JS::RuntimeOptionsRef(_rt).setNativeRegExp(false);
-#else
+    // v27: revert the blanket arm64 JIT-disable from v26. With JIT off the
+    // interpreter allocated so aggressively that the OS fired
+    // onTrimMemory(RUNNING_CRITICAL) within ~400 ms of onResume, the GL
+    // thread starved, and no shaders ever bound. Re-enable JIT on every
+    // arch; the real hang point is being narrowed with new action_log
+    // markers around jsb_boot.js / LogoScene wiring.
     JS::RuntimeOptionsRef(_rt).setIon(true);
     JS::RuntimeOptionsRef(_rt).setBaseline(true);
-#endif
 
     JS_SetErrorReporter(_cx, ScriptingCore::reportError);
 #if defined(JS_GC_ZEAL) && defined(DEBUG)

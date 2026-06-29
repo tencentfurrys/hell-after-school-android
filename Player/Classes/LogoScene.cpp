@@ -217,7 +217,9 @@ bool LogoScene::init(const std::string &locale)
 
 void LogoScene::onEnter()
 {
+	AGTK_ACTION_LOG(1, "# v27 LogoScene::onEnter BEGIN");
 	Layer::onEnter();
+	AGTK_ACTION_LOG(1, "# v27 LogoScene::onEnter Layer::onEnter done");
 // #AGTK-NX
 #ifdef USE_LOGO_ACT2_6098
 	scheduleUpdateWithPriority(kSchedulePriorityScene);
@@ -231,6 +233,11 @@ void LogoScene::onEnter()
 
 void LogoScene::update(float delta)
 {
+	static bool s_v27FirstTick = true;
+	if (s_v27FirstTick) {
+		s_v27FirstTick = false;
+		AGTK_ACTION_LOG(1, "# v27 LogoScene::update FIRST TICK delta=%f", delta);
+	}
 // #AGTK-NX
 #ifdef USE_LOGO_ACT2_6098
 	(void)delta;
