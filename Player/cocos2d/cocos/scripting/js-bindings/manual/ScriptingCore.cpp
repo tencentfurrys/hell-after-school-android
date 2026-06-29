@@ -474,7 +474,7 @@ static const JSClass global_class = {
 
 #ifdef USE_AGTK
 static ScriptingCore* instance = nullptr;
-// インスタンスが生成されているかチェック
+// 繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ縺檎函謌舌＆繧後※縺�繧九°繝√ぉ繝�繧ｯ
 bool ScriptingCore::isCreateInstance()
 {
 	if (instance != nullptr)
@@ -660,8 +660,21 @@ void ScriptingCore::createGlobalContext() {
 
     _cx = JS_NewContext(_rt, 32 * 1024);
 
+#if defined(__aarch64__) || defined(__arm64__)
+    // arm64 fix (v26): this vintage of SpiderMonkey (mozjs-31/33) has a
+    // broken/incomplete arm64 JIT backend. Ion/Baseline codegen silently
+    // hangs once the game's JS starts executing during
+    // GameManager::startCanvas() -> black screen, no audio, no input on
+    // arm64-v8a. Force the interpreter on 64-bit ARM. armv7 keeps the JIT
+    // (it works there, hence the 32-bit build runs fine).
+    JS::RuntimeOptionsRef(_rt).setIon(false);
+    JS::RuntimeOptionsRef(_rt).setBaseline(false);
+    JS::RuntimeOptionsRef(_rt).setAsmJS(false);
+    JS::RuntimeOptionsRef(_rt).setNativeRegExp(false);
+#else
     JS::RuntimeOptionsRef(_rt).setIon(true);
     JS::RuntimeOptionsRef(_rt).setBaseline(true);
+#endif
 
     JS_SetErrorReporter(_cx, ScriptingCore::reportError);
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
