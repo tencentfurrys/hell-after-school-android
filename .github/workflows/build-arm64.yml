@@ -39,16 +39,11 @@ jobs:
           APP_MK="Player/proj.android-studio/app/jni/Application.mk"
           # Add -Wno-implicit-const-int-float-conversion to suppress NDK r25c Clang warnings
           sed -i 's/APP_CPPFLAGS := /APP_CPPFLAGS := -Wno-implicit-const-int-float-conversion /' "$APP_MK"
-          # Add -Wl,-z,notext to allow linking prebuilt .a files that lack -fPIC (built with NDK r17c)
-          echo "" >> "$APP_MK"
-          echo "# Allow text relocations for prebuilt static libs built with older NDK" >> "$APP_MK"
-          echo "APP_LDFLAGS += -Wl,-z,notext" >> "$APP_MK"
           echo "Patched $APP_MK"
 
           echo "=== Verifying patches ==="
           grep "LOCAL_CFLAGS" "$PVMP3_MK"
           grep "APP_CPPFLAGS" "$APP_MK"
-          grep "APP_LDFLAGS" "$APP_MK"
 
       - name: Build arm64-v8a with NDK r25c
         working-directory: Player/proj.android-studio/app

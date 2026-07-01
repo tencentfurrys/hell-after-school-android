@@ -660,22 +660,13 @@ void ScriptingCore::createGlobalContext() {
 
     _cx = JS_NewContext(_rt, 32 * 1024);
 
-#if defined(__aarch64__) || defined(__arm64__)
-    // v28: keep arm64 JIT OFF. v27 (JIT on) emitted TEXTREL in the
-    // SpiderMonkey arm64 codegen object files, so the Android loader
-    // refused dlopen with "has text relocations" on api>=23 -- the .so
-    // never even loaded. The v26 builds (JIT off) did load cleanly
-    // (loadLibrary SUCCESS on the S26), and the cachePurge spam we saw
-    // there was the VM growing its young heap, not OOM. Stay on the
-    // interpreter for arm64-v8a; armv7 keeps the JIT.
-    JS::RuntimeOptionsRef(_rt).setIon(false);
-    JS::RuntimeOptionsRef(_rt).setBaseline(false);
-    JS::RuntimeOptionsRef(_rt).setAsmJS(false);
-    JS::RuntimeOptionsRef(_rt).setNativeRegExp(false);
-#else
+    // v30: re-enable JIT on all archs. v29 proved the false DT_TEXTREL
+    // flag (from -Wl,-z,notext) blocked dlopen, NOT real text relocations
+    // (all dyn relocs target writable .data.rel.ro/.data/.got). With
+    // -z,notext removed the linker validates this; JIT-on historically
+    // booted to GameManager StartCanvas, JIT-off (v29) stalled earlier.
     JS::RuntimeOptionsRef(_rt).setIon(true);
     JS::RuntimeOptionsRef(_rt).setBaseline(true);
-#endif
 
     JS_SetErrorReporter(_cx, ScriptingCore::reportError);
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
