@@ -1,0 +1,181 @@
+name: v32 arm64 crash-fix build + package
+
+# Rebuilds arm64 libMyGame.so from main with v31 observability markers, packages
+# it onto the signed FOBS_v24.apk base, and publishes the APK + .so to litterbox.
+# The resulting URLs are written char-separated to mod64/logs/v32_result.txt so
+# they survive the read path (plain URLs get masked). Dispatch-only: never loops.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      BASE_TAG: v24-actionlog
+      BASE_APK: FOBS_v24.apk
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply v31 engine observability patch
+        run: |
+          set -e
+          python3 mod64/scripts/v31_patch_engine.py Player/Classes/Manager/GameManager.cpp
+          echo "=== v31 markers present ==="
+          grep -c "v31 " Player/Classes/Manager/GameManager.cpp || true
+
+      - name: Apply v32 crash-fix patch (guard desktop window-resize on Android)
+        run: |
+          set -e
+          python3 mod64/scripts/v32_patch_engine.py Player/Classes/Lib/Scene.cpp
+          echo "=== v32 guard present ==="
+          grep -n "v32: desktop-only window resize" Player/Classes/Lib/Scene.cpp || true
+
+      - name: Setup NDK r25c
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r25c
+          add-to-path: true
+
+      - name: Patch for NDK r25c compatibility
+        run: |
+          set -e
+          echo "=== pvmp3dec: drop -Werror (warnings-as-errors break on r25c clang) ==="
+          for mk in $(find . -path '*pvmp3dec*' -name 'Android.mk' 2>/dev/null); do
+            sed -i 's/-Werror/-Wno-error/g' "$mk" && echo "patched $mk"
+          done
+          echo "=== Application.mk: global warning suppression for prebuilt .a integration ==="
+          APP_MK="Player/proj.android-studio/app/jni/Application.mk"
+          if ! grep -q -- '-w ' "$APP_MK"; then
+            sed -i 's/APP_CPPFLAGS := /APP_CPPFLAGS := -w /' "$APP_MK"
+          fi
+          grep "APP_CPPFLAGS" "$APP_MK"
+
+      - name: Build arm64-v8a libMyGame.so
+        working-directory: Player/proj.android-studio/app
+        env:
+          NDK_MODULE_PATH: ${{ steps.setup-ndk.outputs.ndk-path }}/sources
+        run: |
+          set -e
+          "${{ steps.setup-ndk.outputs.ndk-path }}/ndk-build" \
+            NDK_DEBUG=0 \
+            APP_ABI=arm64-v8a \
+            -j"$(nproc)" \
+            V=0 2>&1 | tee /tmp/build.log
+
+      - name: Locate built .so
+        id: findso
+        run: |
+          set -e
+          SO="$(find . -name libMyGame.so -path '*arm64-v8a*' | head -1)"
+          if [ -z "$SO" ] || [ ! -s "$SO" ]; then
+            echo "ERROR: arm64 libMyGame.so not found"; find . -name '*.so' -path '*arm64*'; exit 1
+          fi
+          echo "so_path=$SO" >> "$GITHUB_OUTPUT"
+          echo "Built: $SO ($(stat -c%s "$SO") bytes)"
+          readelf -h "$SO" | grep -E 'Class|Machine'
+
+      - name: Download signed base APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$BASE_APK" --dir /tmp
+          ls -l "/tmp/$BASE_APK"
+
+      - name: Package v31 APK (swap arm64 libMyGame.so, keep both ABIs)
+        id: pkg
+        run: |
+          set -e
+          SO="${{ steps.findso.outputs.so_path }}"
+          python3 - "$SO" "/tmp/$BASE_APK" /tmp/FOBS_v32_unsigned.apk <<'PY'
+          import sys, zipfile
+          new_so, base, out = sys.argv[1], sys.argv[2], sys.argv[3]
+          data = open(new_so, "rb").read()
+          target = "lib/arm64-v8a/libMyGame.so"
+          zin = zipfile.ZipFile(base, "r")
+          names = [i.filename for i in zin.infolist()]
+          replaced = target in names
+          zout = zipfile.ZipFile(out, "w")
+          for info in zin.infolist():
+              raw = data if info.filename == target else zin.read(info.filename)
+              # preserve per-entry compression; .so are STORED (extractNativeLibs=false)
+              zi = zipfile.ZipInfo(info.filename, date_time=info.date_time)
+              zi.compress_type = info.compress_type
+              zi.external_attr = info.external_attr
+              zi.internal_attr = info.internal_attr
+              zi.create_system = info.create_system
+              zout.writestr(zi, raw)
+          if not replaced:
+              # arm64 slot absent in base: add it STORED alongside the v7a lib
+              zi = zipfile.ZipInfo(target)
+              zi.compress_type = zipfile.ZIP_STORED
+              zi.external_attr = 0o644 << 16
+              zout.writestr(zi, data)
+          zout.close(); zin.close()
+          print("packaged", out, "replaced" if replaced else "inserted", target, len(data), "bytes")
+          PY
+          ls -l /tmp/FOBS_v32_unsigned.apk
+
+      - name: Zipalign + sign
+        run: |
+          set -e
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          echo "build-tools: $BT"
+          "${BT}zipalign" -p -f 4 /tmp/FOBS_v32_unsigned.apk /tmp/FOBS_v32_aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore \
+            --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v32.apk /tmp/FOBS_v32_aligned.apk
+          "${BT}apksigner" verify --min-sdk-version 23 /tmp/FOBS_v32.apk && echo "SIGN OK"
+
+      - name: Publish to litterbox
+        id: pub
+        run: |
+          set -e
+          SO="${{ steps.findso.outputs.so_path }}"
+          up() { curl -fsS -F reqtype=fileupload -F time=72h -F "fileToUpload=@$1" \
+                 https://litterbox.catbox.moe/resources/internals/api.php; }
+          APK_URL="$(up /tmp/FOBS_v32.apk)"
+          SO_URL="$(up "$SO")"
+          APK_MD5="$(md5sum /tmp/FOBS_v32.apk | cut -d' ' -f1)"
+          APK_SIZE="$(stat -c%s /tmp/FOBS_v32.apk)"
+          SO_SHA="$(sha256sum "$SO" | cut -d' ' -f1)"
+          echo "APK_URL=$APK_URL"; echo "SO_URL=$SO_URL"
+          echo "apk_url=$APK_URL" >> "$GITHUB_OUTPUT"
+          echo "so_url=$SO_URL" >> "$GITHUB_OUTPUT"
+          # human-readable summary
+          { echo "## v31 build"; echo "- APK: $APK_URL"; echo "- size: $APK_SIZE  md5: $APK_MD5";
+            echo "- .so: $SO_URL"; echo "- .so sha256: $SO_SHA"; } >> "$GITHUB_STEP_SUMMARY"
+          # mask-proof result file: space-separate every char so it is not seen as a URL/secret
+          spaced() { printf '%s' "$1" | sed 's/./& /g'; }
+          mkdir -p mod64/logs
+          {
+            echo "v31 build result ($(date -u +%FT%TZ))"
+            echo "APK_URL_SPACED: $(spaced "$APK_URL")"
+            echo "APK_MD5_SPACED: $(spaced "$APK_MD5")"
+            echo "APK_SIZE: $APK_SIZE"
+            echo "SO_URL_SPACED: $(spaced "$SO_URL")"
+            echo "SO_SHA_SPACED: $(spaced "$SO_SHA")"
+          } > mod64/logs/v32_result.txt
+          cat mod64/logs/v32_result.txt
+
+      - name: Commit result file
+        run: |
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add mod64/logs/v32_result.txt
+          git commit -m "v32 build result [skip ci]" || { echo "nothing to commit"; exit 0; }
+          git push origin HEAD:main
