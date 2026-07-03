@@ -1,0 +1,6 @@
+v31 build result (2026-07-03T18:30:07Z)
+APK_URL_SPACED: h t t p s : / / l i t t e r . c a t b o x . m o e / g o 1 2 r 0 . a p k 
+APK_MD5_SPACED: 5 1 8 5 9 7 5 a c 6 c 9 c 9 7 1 f 2 4 c 7 2 6 b 5 7 c b 2 d 0 c 
+APK_SIZE: 228493308
+SO_URL_SPACED: h t t p s : / / l i t t e r . c a t b o x . m o e / t 1 f n b y . s o 
+SO_SHA_SPACED: e 3 f 1 e 7 c 0 8 6 b 5 b 7 7 4 5 a f 3 0 c b b 1 4 5 c 5 2 8 b 6 c 7 0 c 0 0 f 9 a e 2 a 1 8 0 c f c 7 f c 5 e f 3 f 0 7 4 d 2 
