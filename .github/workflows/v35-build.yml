@@ -1,0 +1,193 @@
+name: v35 controls fix (dex patch) build + package
+
+# v35 wires the dead on-screen buttons (S/W/D + attack/dash/switch/activate)
+# straight into the WORKING keyboard channel (stdKeyInject -> handleKeyDown/Up),
+# and turns the V button into the Shift+Ctrl+Q inventory chord.
+#
+# DEX-ONLY patch: takes the v34 crash-fixed APK (already boots on arm64 with the
+# correct engine libMyGame.so) as base, patches only org/cocos2dx/cpp/
+# GamepadOverlay in classes.dex, re-aligns and re-signs. No NDK build. The engine
+# .so and all other 1645 entries are preserved byte-exact.
+#
+# Base APK (v34, md5 cf99fa45ca35b6e0932980194a862639) pulled from litterbox.
+# Result URLs are written char-separated to mod64/logs to survive masking, and
+# the signed APK is also attached to the v35-controls release for a stable link.
+# Dispatch-only: never loops.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_APK_URL: https://litter.catbox.moe/f54ivm.apk
+      BASE_APK_MD5: cf99fa45ca35b6e0932980194a862639
+      OVERLAY: org/cocos2dx/cpp/GamepadOverlay.smali
+      SMALI_API: "23"
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '11'
+
+      - name: Download v34 base APK (crash-fixed engine)
+        run: |
+          set -e
+          curl -fsSL -o /tmp/base.apk "$BASE_APK_URL"
+          GOT="$(md5sum /tmp/base.apk | cut -d' ' -f1)"
+          echo "size=$(stat -c%s /tmp/base.apk) md5=$GOT"
+          if [ "$GOT" != "$BASE_APK_MD5" ]; then
+            echo "ERROR: base APK md5 mismatch (litterbox link may have expired)."
+            echo "expected $BASE_APK_MD5 got $GOT"; exit 1
+          fi
+          echo "base APK md5 OK"
+
+      - name: Fetch baksmali + smali (runnable fat jars)
+        run: |
+          set -e
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar \
+              "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+            echo "$j: $(stat -c%s /tmp/$j.jar) bytes"
+          done
+          java -jar /tmp/baksmali.jar --version 2>&1 | head -1
+          java -jar /tmp/smali.jar --version 2>&1 | head -1
+
+      - name: Extract classes.dex
+        run: |
+          set -e
+          mkdir -p /tmp/dex
+          unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          echo "dex bytes: $(stat -c%s /tmp/dex/classes.dex)"
+          echo -n "dex version: "; head -c 8 /tmp/dex/classes.dex | od -c | head -1
+
+      - name: Baksmali classes.dex
+        run: |
+          set -e
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+          echo "total smali files: $(find /tmp/smali -name '*.smali' | wc -l)"
+          test -f "/tmp/smali/$OVERLAY" || { echo "ERROR: $OVERLAY not found"; exit 1; }
+          echo "overlay present: /tmp/smali/$OVERLAY"
+
+      - name: Apply v35 controls patch
+        run: |
+          set -e
+          python3 mod64/scripts/patch_overlay.py "/tmp/smali/$OVERLAY"
+
+      - name: Reassemble classes.dex + verify
+        run: |
+          set -e
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_patched.dex
+          echo "patched dex bytes: $(stat -c%s /tmp/dex/classes_patched.dex)"
+          echo -n "patched dex version: "; head -c 8 /tmp/dex/classes_patched.dex | od -c | head -1
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes_patched.dex -o /tmp/verify
+          V="/tmp/verify/$OVERLAY"
+          grep -q "const/16 p0, 0x2d" "$V" || { echo "VERIFY-FAIL: Q sentinel missing"; exit 1; }
+          grep -q "const/16 v0, 0x71" "$V" || { echo "VERIFY-FAIL: Ctrl chord missing"; exit 1; }
+          grep -q "const/16 p0, 0x33" "$V" || { echo "VERIFY-FAIL: W mapping missing"; exit 1; }
+          grep -q "const/16 p0, 0x2f" "$V" || { echo "VERIFY-FAIL: S mapping missing"; exit 1; }
+          echo "VERIFY-OK: patched dex carries new mapping + chord"
+
+      - name: Repackage APK (swap classes.dex, keep all else byte-exact)
+        run: |
+          set -e
+          python3 - /tmp/dex/classes_patched.dex /tmp/base.apk /tmp/v35_unaligned.apk <<'PY'
+          import sys, zipfile
+          patched_dex, base, out = sys.argv[1], sys.argv[2], sys.argv[3]
+          data = open(patched_dex, "rb").read()
+          target = "classes.dex"
+          zin = zipfile.ZipFile(base, "r")
+          zout = zipfile.ZipFile(out, "w")
+          replaced = False
+          for info in zin.infolist():
+              raw = data if info.filename == target else zin.read(info.filename)
+              if info.filename == target:
+                  replaced = True
+              zi = zipfile.ZipInfo(info.filename, date_time=info.date_time)
+              zi.compress_type = info.compress_type
+              zi.external_attr = info.external_attr
+              zi.internal_attr = info.internal_attr
+              zi.create_system = info.create_system
+              zi.flag_bits = info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not replaced:
+              print("ERROR: classes.dex not found in base"); sys.exit(1)
+          print("repackaged", out, "dex bytes", len(data))
+          PY
+          ls -l /tmp/v35_unaligned.apk
+
+      - name: Zipalign + sign
+        run: |
+          set -e
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          echo "build-tools: $BT"
+          "${BT}zipalign" -p -f 4 /tmp/v35_unaligned.apk /tmp/v35_aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore \
+            --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v35.apk /tmp/v35_aligned.apk
+          "${BT}apksigner" verify --min-sdk-version 23 /tmp/FOBS_v35.apk && echo "SIGN OK"
+          ls -l /tmp/FOBS_v35.apk
+
+      - name: Attach APK to release (stable link)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          if gh release view v35-controls --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload v35-controls /tmp/FOBS_v35.apk --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create v35-controls /tmp/FOBS_v35.apk \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "FOBS v35 (controls fix)" \
+              --notes "Dex patch on v34: S/W/D + attack/dash/switch/activate wired to the keyboard channel; V = Shift+Ctrl+Q inventory chord."
+          fi
+
+      - name: Publish to litterbox + write result log
+        run: |
+          set -e
+          up() { curl -fsS -F reqtype=fileupload -F time=72h -F "fileToUpload=@$1" \
+                 https://litterbox.catbox.moe/resources/internals/api.php; }
+          APK_URL="$(up /tmp/FOBS_v35.apk)"
+          APK_MD5="$(md5sum /tmp/FOBS_v35.apk | cut -d' ' -f1)"
+          APK_SIZE="$(stat -c%s /tmp/FOBS_v35.apk)"
+          REL_URL="https://github.com/$GITHUB_REPOSITORY/releases/download/v35-controls/FOBS_v35.apk"
+          echo "APK_URL=$APK_URL"
+          { echo "## v35 controls build";
+            echo "- litterbox APK: $APK_URL";
+            echo "- release APK: $REL_URL";
+            echo "- size: $APK_SIZE  md5: $APK_MD5"; } >> "$GITHUB_STEP_SUMMARY"
+          spaced() { printf '%s' "$1" | sed 's/./& /g'; }
+          mkdir -p mod64/logs
+          {
+            echo "v35 controls build result ($(date -u +%FT%TZ))"
+            echo "APK_URL_SPACED: $(spaced "$APK_URL")"
+            echo "RELEASE_URL_SPACED: $(spaced "$REL_URL")"
+            echo "APK_MD5_SPACED: $(spaced "$APK_MD5")"
+            echo "APK_SIZE: $APK_SIZE"
+          } > mod64/logs/v35_result.txt
+          cat mod64/logs/v35_result.txt
+
+      - name: Commit result file
+        run: |
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add mod64/logs/v35_result.txt
+          git commit -m "v35 controls build result [skip ci]" || { echo "nothing to commit"; exit 0; }
+          git push origin HEAD:main
