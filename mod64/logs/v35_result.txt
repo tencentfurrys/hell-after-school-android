@@ -1,0 +1,5 @@
+v35 controls build result (2026-07-05T06:56:39Z)
+APK_URL_SPACED: h t t p s : / / l i t t e r . c a t b o x . m o e / 1 2 4 0 d r . a p k 
+RELEASE_URL_SPACED: h t t p s : / / g i t h u b . c o m / s o n i c s o n i c a 7 0 1 - c l o u d / h e l l - a f t e r - s c h o o l - a n d r o i d / r e l e a s e s / d o w n l o a d / v 3 5 - c o n t r o l s / F O B S _ v 3 5 . a p k 
+APK_MD5_SPACED: d 6 9 5 0 6 1 1 a 0 1 9 c f 6 d a f e 8 f 0 3 2 6 7 1 1 e 6 d 2 
+APK_SIZE: 228493308
