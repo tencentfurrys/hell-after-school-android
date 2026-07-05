@@ -1,0 +1,124 @@
+name: v35 overlay recon (dump GamepadOverlay smali)
+
+# Read-only recon: download the signed base APK, baksmali its dex, dump the
+# GamepadOverlay class family + a grep summary of every candidate input-delivery
+# path, and commit the report so the v35 controls patch can be written precisely.
+# No engine build, no signing. Dispatch-only.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      BASE_TAG: v24-actionlog
+      BASE_APK: FOBS_v24.apk
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '11'
+
+      - name: Download signed base APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$BASE_APK" --dir /tmp
+          ls -l "/tmp/$BASE_APK"
+
+      - name: Fetch baksmali
+        run: |
+          set -e
+          curl -fsSL -o /tmp/baksmali.jar \
+            https://repo1.maven.org/maven2/org/smali/baksmali/2.5.2/baksmali-2.5.2.jar
+          java -jar /tmp/baksmali.jar --version || true
+
+      - name: Extract dex files
+        run: |
+          set -e
+          mkdir -p /tmp/dex
+          cd /tmp/dex
+          unzip -o "/tmp/$BASE_APK" 'classes*.dex' -d /tmp/dex
+          ls -l /tmp/dex
+
+      - name: Baksmali all dex (capture errors, never abort)
+        run: |
+          set +e
+          java -version 2>&1 | tee /tmp/java.txt
+          mkdir -p /tmp/smali
+          : > /tmp/baksmali.log
+          for d in /tmp/dex/classes*.dex; do
+            [ -f "$d" ] || continue
+            name="$(basename "$d" .dex)"
+            echo "=== disassembling $d -> /tmp/smali/$name ===" | tee -a /tmp/baksmali.log
+            java -Xmx3g -jar /tmp/baksmali.jar disassemble "$d" -o "/tmp/smali/$name" 2>&1 | tee -a /tmp/baksmali.log
+          done
+          echo "=== total smali files ===" | tee -a /tmp/baksmali.log
+          find /tmp/smali -name '*.smali' | wc -l | tee -a /tmp/baksmali.log
+          exit 0
+
+      - name: Locate GamepadOverlay + input paths
+        run: |
+          set +e
+          echo "=== GamepadOverlay smali files ==="
+          find /tmp/smali -iname '*GamepadOverlay*.smali' | tee /tmp/overlay_files.txt
+          echo "=== grep: candidate delivery symbols across ALL smali (file + count) ==="
+          for sym in nativeKeyEvent handleKeyDown handleKeyUp dispatchKeyEvent stdKeyInject nativeInjectCocos2dKey precedeTriggered precedeReleased queueEvent Cocos2dxGLSurfaceView Cocos2dxRenderer rawInject pressButton; do
+            n="$(grep -rl --include='*.smali' -e "$sym" /tmp/smali | wc -l)"
+            echo "  $sym : $n files"
+          done
+          exit 0
+
+      - name: Build recon report
+        if: always()
+        run: |
+          set +e
+          mkdir -p mod64/logs
+          REP=mod64/logs/v35_recon.txt
+          {
+            echo "===== JAVA ====="; cat /tmp/java.txt 2>/dev/null
+            echo "===== BAKSMALI LOG ====="; cat /tmp/baksmali.log 2>/dev/null
+            echo "===== DEX FILES ====="; ls -l /tmp/dex 2>/dev/null
+            echo
+            echo "===== v35 OVERLAY RECON ($(date -u +%FT%TZ)) ====="
+            echo "base apk: $BASE_APK  tag: $BASE_TAG"
+            echo
+            echo "===== GamepadOverlay family files ====="
+            find /tmp/smali -iname '*GamepadOverlay*.smali' | sort
+            echo
+            echo "===== delivery-symbol grep (symbol : files : sample locations) ====="
+            for sym in nativeKeyEvent handleKeyDown handleKeyUp dispatchKeyEvent stdKeyInject nativeInjectCocos2dKey precedeTriggered precedeReleased queueEvent rawInject pressButton onTouch; do
+              echo "----- $sym -----"
+              grep -rn --include='*.smali' -e "$sym" /tmp/smali | sed 's#/tmp/smali/##' | head -20 || true
+            done
+            echo
+            echo "===== FULL DUMP: GamepadOverlay family ====="
+            for f in $(find /tmp/smali -iname '*GamepadOverlay*.smali' | sort); do
+              echo
+              echo "########## FILE: ${f#/tmp/smali/} ##########"
+              cat "$f"
+            done
+          } > "$REP"
+          echo "report bytes: $(stat -c%s "$REP")  lines: $(wc -l < "$REP")"
+
+      - name: Commit recon report
+        if: always()
+        run: |
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add mod64/logs/v35_recon.txt
+          git commit -m "v35 overlay recon report [skip ci]" || { echo "nothing to commit"; exit 0; }
+          git push origin HEAD:main
