@@ -1,0 +1,5 @@
+v36 real-input build result (2026-07-06T21:14:41Z)
+APK_URL_SPACED: 
+RELEASE_URL_SPACED: h t t p s : / / g i t h u b . c o m / s o n i c s o n i c a 7 0 1 - c l o u d / h e l l - a f t e r - s c h o o l - a n d r o i d / r e l e a s e s / d o w n l o a d / v 3 6 - c o n t r o l s / F O B S _ v 3 6 . a p k 
+APK_MD5_SPACED: 1 c c f d 7 8 4 9 a 9 3 c 8 c 6 b c c 8 5 b 9 f 1 8 f 7 6 c 8 3 
+APK_SIZE: 228423676
