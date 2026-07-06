@@ -1,0 +1,88 @@
+mod64/src/menushim_v36.cpp:48:8: error: unknown type name 'fn_idr_registerKeyPressed'
+static fn_idr_registerKeyPressed  s_idr_registerKeyPressed  = nullptr;
+       ^
+mod64/src/menushim_v36.cpp:49:8: error: unknown type name 'fn_idr_registerKeyReleased'
+static fn_idr_registerKeyReleased s_idr_registerKeyReleased = nullptr;
+       ^
+mod64/src/menushim_v36.cpp:50:8: error: unknown type name 'fn_ic_isPressedPc'
+static fn_ic_isPressedPc          s_ic_isPressedPc          = nullptr;
+       ^
+mod64/src/menushim_v36.cpp:51:8: error: unknown type name 'fn_im_isPressedKeyboard'
+static fn_im_isPressedKeyboard    s_im_isPressedKeyboard    = nullptr;
+       ^
+mod64/src/menushim_v36.cpp:186:34: error: use of undeclared identifier 'fn_idr_registerKeyPressed'; did you mean 's_idr_registerKeyPressed'?
+    s_idr_registerKeyPressed  = (fn_idr_registerKeyPressed ) sym(s_libHandle, "_ZN12InputDataRaw18registerKeyPressedEii");
+                                 ^~~~~~~~~~~~~~~~~~~~~~~~~
+                                 s_idr_registerKeyPressed
+mod64/src/menushim_v36.cpp:48:35: note: 's_idr_registerKeyPressed' declared here
+static fn_idr_registerKeyPressed  s_idr_registerKeyPressed  = nullptr;
+                                  ^
+mod64/src/menushim_v36.cpp:187:34: error: use of undeclared identifier 'fn_idr_registerKeyReleased'; did you mean 's_idr_registerKeyReleased'?
+    s_idr_registerKeyReleased = (fn_idr_registerKeyReleased) sym(s_libHandle, "_ZN12InputDataRaw19registerKeyReleasedEii");
+                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~
+                                 s_idr_registerKeyReleased
+mod64/src/menushim_v36.cpp:49:35: note: 's_idr_registerKeyReleased' declared here
+static fn_idr_registerKeyReleased s_idr_registerKeyReleased = nullptr;
+                                  ^
+mod64/src/menushim_v36.cpp:188:34: error: use of undeclared identifier 'fn_ic_isPressedPc'; did you mean 's_ic_isPressedPc'?
+    s_ic_isPressedPc          = (fn_ic_isPressedPc         ) sym(s_libHandle, "_ZN15InputController11isPressedPcEi");
+                                 ^~~~~~~~~~~~~~~~~
+                                 s_ic_isPressedPc
+mod64/src/menushim_v36.cpp:50:35: note: 's_ic_isPressedPc' declared here
+static fn_ic_isPressedPc          s_ic_isPressedPc          = nullptr;
+                                  ^
+mod64/src/menushim_v36.cpp:189:34: error: use of undeclared identifier 'fn_im_isPressedKeyboard'; did you mean 's_im_isPressedKeyboard'?
+    s_im_isPressedKeyboard    = (fn_im_isPressedKeyboard   ) sym(s_libHandle, "_ZN12InputManager17isPressedKeyboardEi");
+                                 ^~~~~~~~~~~~~~~~~~~~~~~
+                                 s_im_isPressedKeyboard
+mod64/src/menushim_v36.cpp:51:35: note: 's_im_isPressedKeyboard' declared here
+static fn_im_isPressedKeyboard    s_im_isPressedKeyboard    = nullptr;
+                                  ^
+mod64/src/menushim_v36.cpp:217:2: error: use of undeclared identifier 'redacted'
+[redacted-secret](JNIEnv* env, jclass, jstring path) {
+ ^
+mod64/src/menushim_v36.cpp:217:11: error: use of undeclared identifier 'secret'
+[redacted-secret](JNIEnv* env, jclass, jstring path) {
+          ^
+mod64/src/menushim_v36.cpp:217:25: error: expected ')'
+[redacted-secret](JNIEnv* env, jclass, jstring path) {
+                        ^
+mod64/src/menushim_v36.cpp:217:18: note: to match this '('
+[redacted-secret](JNIEnv* env, jclass, jstring path) {
+                 ^
+mod64/src/menushim_v36.cpp:217:19: error: variable has incomplete type 'void'
+[redacted-secret](JNIEnv* env, jclass, jstring path) {
+                  ^
+mod64/src/menushim_v36.cpp:218:5: error: expected expression
+    if (!path) { s_diagPath[0] = 0; return; }
+    ^
+mod64/src/menushim_v36.cpp:225:2: error: expected ';' after top level declarator
+}
+ ^
+ ;
+mod64/src/menushim_v36.cpp:228:2: error: use of undeclared identifier 'redacted'
+[redacted-secret](JNIEnv*, jclass) {
+ ^
+mod64/src/menushim_v36.cpp:228:11: error: use of undeclared identifier 'secret'
+[redacted-secret](JNIEnv*, jclass) {
+          ^
+mod64/src/menushim_v36.cpp:228:25: error: expected ')'
+[redacted-secret](JNIEnv*, jclass) {
+                        ^
+mod64/src/menushim_v36.cpp:228:18: note: to match this '('
+[redacted-secret](JNIEnv*, jclass) {
+                 ^
+mod64/src/menushim_v36.cpp:228:19: error: redefinition of 'JNIEnv' as different kind of symbol
+[redacted-secret](JNIEnv*, jclass) {
+                  ^
+/tmp/android-ndk-r25c/toolchains/llvm/prebuilt/linux-x86_64/bin/../sysroot/usr/include/jni.h:139:17: note: previous definition is here
+typedef _JNIEnv JNIEnv;
+                ^
+mod64/src/menushim_v36.cpp:229:26: error: expected '}'
+    installCrashHandler();
+                         ^
+mod64/src/menushim_v36.cpp:228:36: note: to match this '{'
+[redacted-secret](JNIEnv*, jclass) {
+                                   ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
