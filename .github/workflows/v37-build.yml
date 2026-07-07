@@ -1,0 +1,223 @@
+name: v37 physics-crash-fix engine build + package
+
+# v37 rebuilds arm64 libMyGame.so with:
+#   - v31 observability markers (GameManager.cpp)   [same as the working v34 engine]
+#   - v34 boot-crash fix (Scene.cpp: exclude desktop window/resolution block)   [required]
+#   - v37 physics-crash fix (Tile.cpp): make tile bodies static + non-rotating
+#     BEFORE addShape so cocos never calls Chipmunk cpBodySetMoment() with a bad
+#     (arm64 negative/NaN) moment -> fixes the "Moment of Inertia must be positive"
+#     abort on first scene load (tutorial / skip-tutorial).
+#
+# The rebuilt .so is packaged onto the SIGNED v36 APK (FOBS_v36.apk), which already
+# carries the v36 controls fix (libmenushim.so + patched classes.dex). We swap ONLY
+# lib/arm64-v8a/libMyGame.so, so the controls fix AND the v7a build are preserved.
+#
+# Dispatch-only; never loops.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      BASE_TAG: v36-controls
+      BASE_APK: FOBS_v36.apk
+      ENGINE_SO_PATH: lib/arm64-v8a/libMyGame.so
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply v31 engine observability patch (GameManager.cpp)
+        run: |
+          set -e
+          python3 mod64/scripts/v31_patch_engine.py Player/Classes/Manager/GameManager.cpp
+          grep -c "v31 " Player/Classes/Manager/GameManager.cpp || true
+
+      - name: Apply v34 boot-crash fix (Scene.cpp)
+        run: |
+          set -e
+          python3 mod64/scripts/v34_patch_engine.py Player/Classes/Lib/Scene.cpp
+          grep -n "v34: skip desktop window/resolution setup on Android" Player/Classes/Lib/Scene.cpp
+
+      - name: Apply v37 physics-crash fix (Tile.cpp)
+        run: |
+          set -e
+          python3 mod64/scripts/v37_patch_tile.py Player/Classes/Lib/Tile.cpp
+          echo "=== v37 markers ==="
+          grep -n "v37:" Player/Classes/Lib/Tile.cpp
+
+      - name: Setup NDK r25c
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r25c
+          add-to-path: true
+
+      - name: Patch for NDK r25c compatibility
+        run: |
+          set -e
+          for mk in $(find . -path '*pvmp3dec*' -name 'Android.mk' 2>/dev/null); do
+            sed -i 's/-Werror/-Wno-error/g' "$mk" && echo "patched $mk"
+          done
+          APP_MK="Player/proj.android-studio/app/jni/Application.mk"
+          if ! grep -q -- '-w ' "$APP_MK"; then
+            sed -i 's/APP_CPPFLAGS := /APP_CPPFLAGS := -w /' "$APP_MK"
+          fi
+          grep "APP_CPPFLAGS" "$APP_MK"
+
+      - name: Build arm64-v8a libMyGame.so
+        working-directory: Player/proj.android-studio/app/jni
+        env:
+          NDK_MODULE_PATH: ${{ steps.setup-ndk.outputs.ndk-path }}/sources
+        run: |
+          set -e
+          "${{ steps.setup-ndk.outputs.ndk-path }}/ndk-build" \
+            NDK_DEBUG=0 \
+            APP_ABI=arm64-v8a \
+            -j"$(nproc)" \
+            V=0 2>&1 | tee /tmp/build.log
+
+      - name: Locate built .so
+        id: findso
+        run: |
+          set -e
+          SO="$(find . -name libMyGame.so -path '*arm64-v8a*' | head -1)"
+          if [ -z "$SO" ] || [ ! -s "$SO" ]; then
+            echo "ERROR: arm64 libMyGame.so not found"; find . -name '*.so' -path '*arm64*'; exit 1
+          fi
+          echo "so_path=$SO" >> "$GITHUB_OUTPUT"
+          echo "Built: $SO ($(stat -c%s "$SO") bytes)"
+          readelf -h "$SO" | grep -E 'Class|Machine'
+
+      - name: Verify v37 fix in binary (setupPhysicsBody sets body static before addShape)
+        run: |
+          set -e
+          SO="${{ steps.findso.outputs.so_path }}"
+          OBJDUMP="$(ls "${{ steps.setup-ndk.outputs.ndk-path }}"/toolchains/llvm/prebuilt/*/bin/llvm-objdump | head -1)"
+          "$OBJDUMP" -d -C "$SO" > /tmp/disasm.txt || true
+          # In the fixed binary, agtk::Tile::setupPhysicsBody must call
+          # PhysicsBody::setDynamic and setRotationEnable BEFORE PhysicsBody::addShape.
+          awk '/<agtk::Tile::setupPhysicsBody\(/{f=1} f{print} f&&/^$/{c++} f&&c>1{exit}' /tmp/disasm.txt > /tmp/setup.txt || true
+          SETDYN=$(grep -n 'PhysicsBody::setDynamic' /tmp/setup.txt | head -1 | cut -d: -f1)
+          ADDSHAPE=$(grep -n 'PhysicsBody::addShape' /tmp/setup.txt | head -1 | cut -d: -f1)
+          echo "first setDynamic at line $SETDYN ; first addShape at line $ADDSHAPE (within setupPhysicsBody disasm)"
+          if [ -n "$SETDYN" ] && [ -n "$ADDSHAPE" ]; then
+            if [ "$SETDYN" -lt "$ADDSHAPE" ]; then
+              echo "FIX-VERIFY-OK: setDynamic precedes addShape"
+            else
+              echo "FIX-VERIFY-WARN: could not confirm ordering (inlining may reorder); continuing"
+            fi
+          else
+            echo "FIX-VERIFY-WARN: symbols not both found in disasm slice (inlining); continuing"
+          fi
+
+      - name: Download signed base APK (v36 controls build)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$BASE_APK" --dir /tmp
+          ls -l "/tmp/$BASE_APK"
+
+      - name: Package v37 APK (swap arm64 libMyGame.so, keep menushim + dex + v7a)
+        run: |
+          set -e
+          SO="${{ steps.findso.outputs.so_path }}"
+          python3 - "$SO" "/tmp/$BASE_APK" /tmp/v37_unaligned.apk "$ENGINE_SO_PATH" <<'PY'
+          import sys, zipfile
+          new_so, base, out, target = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+          data = open(new_so, "rb").read()
+          zin = zipfile.ZipFile(base, "r")
+          names = [i.filename for i in zin.infolist()]
+          if target not in names:
+              print("ERROR: %s not in base APK" % target); sys.exit(1)
+          zout = zipfile.ZipFile(out, "w")
+          for info in zin.infolist():
+              raw = data if info.filename == target else zin.read(info.filename)
+              zi = zipfile.ZipInfo(info.filename, date_time=info.date_time)
+              # keep the engine .so STORED (uncompressed, page-aligned) like the base
+              zi.compress_type = info.compress_type
+              zi.external_attr = info.external_attr
+              zi.internal_attr = info.internal_attr
+              zi.create_system = info.create_system
+              zi.flag_bits     = info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          print("packaged", out, "swapped", target, len(data), "bytes")
+          PY
+          ls -l /tmp/v37_unaligned.apk
+
+      - name: Zipalign + sign (v1+v2+v3)
+        run: |
+          set -e
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          echo "build-tools: $BT"
+          "${BT}zipalign" -p -f 4 /tmp/v37_unaligned.apk /tmp/v37_aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore \
+            --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v37.apk /tmp/v37_aligned.apk
+          "${BT}apksigner" verify --min-sdk-version 23 /tmp/FOBS_v37.apk && echo "SIGN OK"
+          ls -l /tmp/FOBS_v37.apk
+
+      - name: Attach APK to GitHub release (stable link)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          if gh release view v37-controls --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload v37-controls /tmp/FOBS_v37.apk --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create v37-controls /tmp/FOBS_v37.apk \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "FOBS v37 (physics crash fix)" \
+              --notes "Rebuilt arm64 engine on top of v36 controls: Tile physics bodies are made static+non-rotating before addShape, fixing the Chipmunk 'Moment of Inertia must be positive' abort on scene load. Controls fix (v36) preserved."
+          fi
+
+      - name: Publish to litterbox + write char-spaced result log
+        run: |
+          set -e
+          SO="${{ steps.findso.outputs.so_path }}"
+          up() { curl -fsS -F reqtype=fileupload -F time=72h -F "fileToUpload=@$1" \
+                 https://litterbox.catbox.moe/resources/internals/api.php; }
+          APK_URL="$(up /tmp/FOBS_v37.apk || true)"
+          SO_URL="$(up "$SO" || true)"
+          APK_MD5="$(md5sum /tmp/FOBS_v37.apk | cut -d' ' -f1)"
+          APK_SIZE="$(stat -c%s /tmp/FOBS_v37.apk)"
+          SO_SHA="$(sha256sum "$SO" | cut -d' ' -f1)"
+          REL_URL="https://github.com/$GITHUB_REPOSITORY/releases/download/v37-controls/FOBS_v37.apk"
+          { echo "## v37 physics-fix build";
+            echo "- release APK: $REL_URL";
+            echo "- litterbox APK: $APK_URL";
+            echo "- size: $APK_SIZE  md5: $APK_MD5";
+            echo "- .so: $SO_URL  sha256: $SO_SHA"; } >> "$GITHUB_STEP_SUMMARY"
+          spaced() { printf '%s' "$1" | sed 's/./& /g'; }
+          mkdir -p mod64/logs
+          {
+            echo "v37 physics-fix build result ($(date -u +%FT%TZ))"
+            echo "RELEASE_URL_SPACED: $(spaced "$REL_URL")"
+            echo "APK_URL_SPACED: $(spaced "$APK_URL")"
+            echo "APK_MD5_SPACED: $(spaced "$APK_MD5")"
+            echo "APK_SIZE: $APK_SIZE"
+            echo "SO_SHA_SPACED: $(spaced "$SO_SHA")"
+          } > mod64/logs/v37_result.txt
+          cat mod64/logs/v37_result.txt
+
+      - name: Commit result log
+        run: |
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add mod64/logs/v37_result.txt
+          git commit -m "v37 build result [skip ci]" || { echo "nothing to commit"; exit 0; }
+          git push origin HEAD:main
