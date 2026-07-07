@@ -1,0 +1,4 @@
+v38 build result (2026-07-07T20:10:10Z)
+RELEASE_URL_SPACED: h t t p s : / / g i t h u b . c o m / s o n i c s o n i c a 7 0 1 - c l o u d / h e l l - a f t e r - s c h o o l - a n d r o i d / r e l e a s e s / d o w n l o a d / v 3 8 - c o n t r o l s / F O B S _ v 3 8 . a p k 
+APK_MD5_SPACED: 7 f 8 4 f b d 4 f a f 2 7 7 1 d a 8 0 4 5 1 8 a c 0 f 9 f 2 4 d 
+APK_SIZE: 228423676
