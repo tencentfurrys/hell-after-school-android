@@ -1,0 +1,225 @@
+name: v40 tile-addShape scene-load fix + package
+
+# v40 is the definitive fix for the Chipmunk "Moment of Inertia must be
+# positive" abort on scene load (tutorial / home spawn). The crash is in
+# Tile::setupPhysicsBody -> PhysicsBody::addShape, which by default accumulates
+# mass+moment and calls cpBodySetMoment with a non-positive/NaN value for arm64
+# edge-segment tile shapes. Chipmunk is a PREBUILT lib so its assert can't be
+# removed; v39's cocos2d-level moment clamp did not stop it.
+#
+# v40 patches Tile.cpp to call addShape(shape, false) so mass/moment are never
+# accumulated for these static collision tiles -> cpBodySetMoment is never
+# called from this path -> no abort. Collision geometry is unchanged.
+#
+# Engine rebuild stacks:
+#   - v34: exclude desktop window/resolution block in Scene::start on Android
+#          (REQUIRED boot fix)
+#   - v40: Tile.cpp addShape(x, false)  [THE fix]
+#   - v39: cocos2d ccSafeMoment clamp   [belt-and-suspenders for merged tiles]
+#
+# Rebuilt libMyGame.so is swapped into the signed v36 APK (keeps controls).
+# Dispatch-only.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      BASE_TAG: v36-controls
+      BASE_APK: FOBS_v36.apk
+      JNI_DIR: Player/proj.android-studio/app/jni
+      APP_MK: Player/proj.android-studio/app/jni/Application.mk
+      SCENE_CPP: Player/Classes/Lib/Scene.cpp
+      TILE_CPP: Player/Classes/Lib/Tile.cpp
+      PHYS_CPP: Player/cocos2d/cocos/physics/CCPhysicsBody.cpp
+      TARGET_SO: lib/arm64-v8a/libMyGame.so
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply v34 boot crash-fix patch
+        run: |
+          set -e
+          python3 mod64/scripts/v34_patch_engine.py "$SCENE_CPP"
+          grep -n "v34: skip desktop window/resolution setup on Android" "$SCENE_CPP"
+
+      - name: Apply v40 tile-addShape patch (THE fix)
+        run: |
+          set -e
+          python3 mod64/scripts/v40_patch_tile.py "$TILE_CPP"
+          echo "=== v40 verify: no unqualified pTile->addShape( remains ==="
+          if grep -nE 'pTile->addShape\([A-Za-z_]+\);' "$TILE_CPP"; then
+            echo "V40-VERIFY-FAIL: unqualified addShape still present"; exit 1
+          fi
+          grep -n "addShape(wall, false)\|addShape(box, false)" "$TILE_CPP"
+
+      - name: Apply v39 cocos2d moment clamp (belt-and-suspenders)
+        run: |
+          set -e
+          python3 mod64/scripts/v39_patch_engine.py "$PHYS_CPP"
+          echo "=== v39 verify ==="
+          grep -c "ccSafeMoment" "$PHYS_CPP"
+
+      - name: Setup NDK r25c
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r25c
+          add-to-path: true
+
+      - name: Patch for NDK r25c compatibility
+        run: |
+          set -e
+          for mk in $(find . -path '*pvmp3dec*' -name 'Android.mk' 2>/dev/null); do
+            sed -i 's/-Werror/-Wno-error/g' "$mk" && echo "patched $mk"
+          done
+          if ! grep -q -- '-w ' "$APP_MK"; then
+            sed -i 's/APP_CPPFLAGS := /APP_CPPFLAGS := -w /' "$APP_MK"
+          fi
+          grep "APP_CPPFLAGS" "$APP_MK" || true
+
+      - name: Build arm64-v8a libMyGame.so
+        working-directory: ${{ env.JNI_DIR }}
+        env:
+          NDK_MODULE_PATH: ${{ steps.setup-ndk.outputs.ndk-path }}/sources
+        run: |
+          set -e
+          "${{ steps.setup-ndk.outputs.ndk-path }}/ndk-build" \
+            NDK_DEBUG=0 APP_ABI=arm64-v8a -j"$(nproc)" V=0 2>&1 | tee /tmp/build.log
+
+      - name: Locate built .so
+        id: findso
+        run: |
+          set -e
+          SO="$(find . -name libMyGame.so -path '*arm64-v8a*' | head -1)"
+          if [ -z "$SO" ] || [ ! -s "$SO" ]; then
+            echo "ERROR: arm64 libMyGame.so not found"; find . -name '*.so' -path '*arm64*'; exit 1
+          fi
+          echo "so_path=$SO" >> "$GITHUB_OUTPUT"
+          echo "Built: $SO ($(stat -c%s "$SO") bytes)"
+          readelf -h "$SO" | grep -E 'Class|Machine'
+
+      - name: Verify v34 fix still in binary
+        run: |
+          set -e
+          SO="${{ steps.findso.outputs.so_path }}"
+          OBJDUMP="$(ls "${{ steps.setup-ndk.outputs.ndk-path }}"/toolchains/llvm/prebuilt/*/bin/llvm-objdump | head -1)"
+          "$OBJDUMP" -d -C "$SO" > /tmp/disasm.txt
+          awk '/<agtk::Scene::start\(/{f=1} f{print} f&&/^$/{exit}' /tmp/disasm.txt > /tmp/ss.txt
+          grep -E '\bbl\b' /tmp/ss.txt | grep -oE '<[^>]+>' | sort -u > /tmp/calls.txt || true
+          if grep -Eq 'GetScreenResolutionSize|GetFrameSize|IsFullScreen|ChangeScreen\b' /tmp/calls.txt; then
+            echo "V34-VERIFY-FAIL"; exit 1
+          fi
+          echo "V34-VERIFY-OK"
+
+      - name: Download signed v36 base APK (keeps controls)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$BASE_APK" --dir /tmp
+          ls -l "/tmp/$BASE_APK"
+          if ! unzip -l "/tmp/$BASE_APK" | grep -q "lib/arm64-v8a/libmenushim.so"; then
+            echo "ERROR: base v36 APK missing libmenushim.so"; exit 1
+          fi
+          echo "base v36 carries libmenushim.so (controls preserved)"
+
+      - name: Package v40 APK (swap arm64 libMyGame.so only)
+        run: |
+          set -e
+          SO="${{ steps.findso.outputs.so_path }}"
+          python3 - "$SO" "/tmp/$BASE_APK" /tmp/v40_unaligned.apk "$TARGET_SO" <<'PY'
+          import sys, zipfile
+          new_so, base, out, target = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+          data = open(new_so, "rb").read()
+          zin = zipfile.ZipFile(base, "r")
+          replaced = False
+          zout = zipfile.ZipFile(out, "w")
+          for info in zin.infolist():
+              raw = data if info.filename == target else zin.read(info.filename)
+              if info.filename == target: replaced = True
+              zi = zipfile.ZipInfo(info.filename, date_time=info.date_time)
+              zi.compress_type = info.compress_type
+              zi.external_attr = info.external_attr
+              zi.internal_attr = info.internal_attr
+              zi.create_system = info.create_system
+              zi.flag_bits     = info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not replaced:
+              print("ERROR:", target, "not in base APK"); sys.exit(1)
+          print("packaged", out, "swapped", target, len(data), "bytes")
+          PY
+          ls -l /tmp/v40_unaligned.apk
+
+      - name: Zipalign + sign (v1+v2+v3)
+        run: |
+          set -e
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v40_unaligned.apk /tmp/v40_aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore \
+            --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v40.apk /tmp/v40_aligned.apk
+          "${BT}apksigner" verify --min-sdk-version 23 /tmp/FOBS_v40.apk && echo "SIGN OK"
+          ls -l /tmp/FOBS_v40.apk
+
+      - name: Attach APK to GitHub release (stable link)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          if gh release view v40-controls --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload v40-controls /tmp/FOBS_v40.apk --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create v40-controls /tmp/FOBS_v40.apk \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "FOBS v40 (controls + scene-load fix)" \
+              --notes "v36 controls + the real arm64 scene-load fix: tile collision shapes are added with addMassAndMoment=false, so cocos2d never calls Chipmunk cpBodySetMoment for them and the 'Moment of Inertia must be positive' abort can no longer occur. Keeps the v34 boot fix; also re-applies the v39 moment clamp for merged tiles."
+          fi
+
+      - name: Publish to litterbox + write char-spaced result log
+        run: |
+          set -e
+          SO="${{ steps.findso.outputs.so_path }}"
+          up() { curl -fsS -F reqtype=fileupload -F time=72h -F "fileToUpload=@$1" \
+                 https://litterbox.catbox.moe/resources/internals/api.php; }
+          APK_URL="$(up /tmp/FOBS_v40.apk || true)"
+          APK_MD5="$(md5sum /tmp/FOBS_v40.apk | cut -d' ' -f1)"
+          APK_SIZE="$(stat -c%s /tmp/FOBS_v40.apk)"
+          SO_SHA="$(sha256sum "$SO" | cut -d' ' -f1)"
+          REL_URL="https://github.com/$GITHUB_REPOSITORY/releases/download/v40-controls/FOBS_v40.apk"
+          { echo "## v40 build"; echo "- release APK: $REL_URL"; echo "- litterbox APK: $APK_URL";
+            echo "- size: $APK_SIZE  md5: $APK_MD5"; echo "- .so sha256: $SO_SHA"; } >> "$GITHUB_STEP_SUMMARY"
+          spaced() { printf '%s' "$1" | sed 's/./& /g'; }
+          mkdir -p mod64/logs
+          {
+            echo "v40 build result ($(date -u +%FT%TZ))"
+            echo "RELEASE_URL_SPACED: $(spaced "$REL_URL")"
+            echo "APK_URL_SPACED: $(spaced "$APK_URL")"
+            echo "APK_MD5_SPACED: $(spaced "$APK_MD5")"
+            echo "APK_SIZE: $APK_SIZE"
+            echo "SO_SHA_SPACED: $(spaced "$SO_SHA")"
+          } > mod64/logs/v40_result.txt
+          cat mod64/logs/v40_result.txt
+
+      - name: Commit result file
+        run: |
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add mod64/logs/v40_result.txt
+          git commit -m "v40 build result [skip ci]" || { echo "nothing to commit"; exit 0; }
+          git push origin HEAD:main
