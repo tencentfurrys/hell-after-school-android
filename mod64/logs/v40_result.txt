@@ -1,0 +1,6 @@
+v40 build result (2026-07-07T23:08:46Z)
+RELEASE_URL_SPACED: h t t p s : / / g i t h u b . c o m / s o n i c s o n i c a 7 0 1 - c l o u d / h e l l - a f t e r - s c h o o l - a n d r o i d / r e l e a s e s / d o w n l o a d / v 4 0 - c o n t r o l s / F O B S _ v 4 0 . a p k 
+APK_URL_SPACED: h t t p s : / / l i t t e r . c a t b o x . m o e / b 1 j v s l . a p k 
+APK_MD5_SPACED: 1 5 c 9 3 5 5 5 f 3 6 3 6 b 3 0 e 2 b 4 2 f f a 5 a 3 0 0 7 1 6 
+APK_SIZE: 228423676
+SO_SHA_SPACED: 5 0 3 5 2 9 4 f d 3 6 8 d 7 2 4 4 b e f d 8 4 4 3 4 6 b 3 1 e b e 8 e a 8 1 8 a e e 1 7 4 2 4 f 9 9 4 0 f 3 5 4 c 2 5 9 9 c 4 b 
