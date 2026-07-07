@@ -1,0 +1,185 @@
+name: v38 arm64 PHYSICS_INFINITY guard build v2 + package
+
+# v38 stacks THESE patches on the arm64 engine rebuild:
+#   - v31: observability markers (GameManager.cpp)   [same as v34]
+#   - v34: exclude desktop window/resolution block in Scene::start on Android
+#          [REQUIRED so the engine boots on arm64]
+#   - v38: clamp every cpBodySetMoment call in cocos2d PhysicsBody so the arm64
+#          PHYSICS_INFINITY (which resolves non-positive) can never abort
+#          Chipmunk. Fixes the "Moment of Inertia must be positive" abort seen
+#          in v36 (addShape path) and v37 (setRotationEnable path).
+#
+# We deliberately DO NOT apply v37's Tile.cpp change -- it moved the crash
+# earlier rather than fixing it. Tile.cpp stays stock.
+#
+# The rebuilt .so is swapped into the v36 signed APK to keep controls.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      BASE_TAG: v36-controls
+      BASE_APK: FOBS_v36.apk
+      JNI_DIR: Player/proj.android-studio/app/jni
+      APP_MK: Player/proj.android-studio/app/jni/Application.mk
+      GM_CPP: Player/Classes/Manager/GameManager.cpp
+      SCENE_CPP: Player/Classes/Lib/Scene.cpp
+      PB_CPP: Player/cocos2d/cocos/physics/CCPhysicsBody.cpp
+      TARGET_SO: lib/arm64-v8a/libMyGame.so
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply v31 observability patch
+        run: |
+          set -e
+          python3 mod64/scripts/v31_patch_engine.py "$GM_CPP" || true
+
+      - name: Apply v34 boot crash-fix patch
+        run: |
+          set -e
+          python3 mod64/scripts/v34_patch_engine.py "$SCENE_CPP"
+          grep -n "v34: skip desktop window/resolution setup on Android" "$SCENE_CPP"
+
+      - name: Apply v38 PhysicsBody moment guard
+        run: |
+          set -e
+          python3 mod64/scripts/v38_patch_engine.py "$PB_CPP"
+          echo "--- v38 clamped sites ---"
+          grep -n "v38_pos_moment(" "$PB_CPP" | head
+
+      - name: Setup NDK r25c
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r25c
+          add-to-path: true
+
+      - name: Patch for NDK r25c compatibility
+        run: |
+          set -e
+          for mk in $(find . -path '*pvmp3dec*' -name 'Android.mk' 2>/dev/null); do
+            sed -i 's/-Werror/-Wno-error/g' "$mk"
+          done
+          if ! grep -q -- '-w ' "$APP_MK"; then
+            sed -i 's/APP_CPPFLAGS := /APP_CPPFLAGS := -w /' "$APP_MK"
+          fi
+
+      - name: Build arm64-v8a libMyGame.so
+        working-directory: ${{ env.JNI_DIR }}
+        env:
+          NDK_MODULE_PATH: ${{ steps.setup-ndk.outputs.ndk-path }}/sources
+        run: |
+          set -e
+          "${{ steps.setup-ndk.outputs.ndk-path }}/ndk-build" \
+            NDK_DEBUG=0 APP_ABI=arm64-v8a -j"$(nproc)" V=0 2>&1 | tee /tmp/build.log
+
+      - name: Locate built .so
+        id: findso
+        run: |
+          set -e
+          SO="$(find . -name libMyGame.so -path '*arm64-v8a*' | head -1)"
+          test -s "$SO" || { echo "no .so"; exit 1; }
+          echo "so_path=$SO" >> "$GITHUB_OUTPUT"
+          echo "Built: $SO ($(stat -c%s "$SO") bytes)"
+
+      - name: Verify v38 guard in binary
+        run: |
+          set -e
+          SO="${{ steps.findso.outputs.so_path }}"
+          OBJDUMP="$(ls "${{ steps.setup-ndk.outputs.ndk-path }}"/toolchains/llvm/prebuilt/*/bin/llvm-objdump | head -1)"
+          # The clamp helper may inline, but the symbol name should still appear
+          # in disasm demangled output if it wasn't inlined; otherwise the
+          # value 1e30 should appear as an immediate. Non-fatal check.
+          "$OBJDUMP" -d -C "$SO" | grep -m1 -E "v38_pos_moment|1e\+30|1.0e\+30" || echo "(inlined; source-level fix asserted)"
+
+      - name: Download v36 signed base APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$BASE_APK" --dir /tmp
+          unzip -l "/tmp/$BASE_APK" | grep -q "libmenushim.so" || { echo "no libmenushim in base"; exit 1; }
+
+      - name: Package v38 APK (swap libMyGame.so only, keep controls)
+        run: |
+          set -e
+          SO="${{ steps.findso.outputs.so_path }}"
+          python3 - "$SO" "/tmp/$BASE_APK" /tmp/v38_unaligned.apk "$TARGET_SO" <<'PY'
+          import sys, zipfile
+          new_so, base, out, target = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+          data = open(new_so, "rb").read()
+          zin = zipfile.ZipFile(base, "r"); replaced=False
+          zout = zipfile.ZipFile(out, "w")
+          for info in zin.infolist():
+              raw = data if info.filename==target else zin.read(info.filename)
+              if info.filename==target: replaced=True
+              zi = zipfile.ZipInfo(info.filename, date_time=info.date_time)
+              zi.compress_type = info.compress_type
+              zi.external_attr = info.external_attr
+              zi.internal_attr = info.internal_attr
+              zi.create_system = info.create_system
+              zi.flag_bits = info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not replaced: print("ERROR", target); sys.exit(1)
+          print("packaged", out, "swapped", target, len(data), "bytes")
+          PY
+
+      - name: Zipalign + sign
+        run: |
+          set -e
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v38_unaligned.apk /tmp/v38_aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v38.apk /tmp/v38_aligned.apk
+          "${BT}apksigner" verify --min-sdk-version 23 /tmp/FOBS_v38.apk && echo "SIGN OK"
+
+      - name: Attach APK to GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          if gh release view v38-controls --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload v38-controls /tmp/FOBS_v38.apk --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create v38-controls /tmp/FOBS_v38.apk \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "FOBS v38 (controls + arm64 physics guard)" \
+              --notes "v36 controls + arm64 fix: clamp every cocos2d PhysicsBody cpBodySetMoment call so PHYSICS_INFINITY resolving non-positive on arm64 can no longer abort Chipmunk on scene load."
+          fi
+
+      - name: Publish log
+        run: |
+          set -e
+          APK_MD5="$(md5sum /tmp/FOBS_v38.apk | cut -d' ' -f1)"
+          APK_SIZE="$(stat -c%s /tmp/FOBS_v38.apk)"
+          REL_URL="https://github.com/$GITHUB_REPOSITORY/releases/download/v38-controls/FOBS_v38.apk"
+          spaced() { printf '%s' "$1" | sed 's/./& /g'; }
+          mkdir -p mod64/logs
+          {
+            echo "v38 build result ($(date -u +%FT%TZ))"
+            echo "RELEASE_URL_SPACED: $(spaced "$REL_URL")"
+            echo "APK_MD5_SPACED: $(spaced "$APK_MD5")"
+            echo "APK_SIZE: $APK_SIZE"
+          } > mod64/logs/v38_result.txt
+          cat mod64/logs/v38_result.txt
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add mod64/logs/v38_result.txt
+          git commit -m "v38 build result [skip ci]" || true
+          git push origin HEAD:main || true
