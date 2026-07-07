@@ -1,0 +1,6 @@
+v37 physics-fix build result (2026-07-07T03:27:22Z)
+RELEASE_URL_SPACED: h t t p s : / / g i t h u b . c o m / s o n i c s o n i c a 7 0 1 - c l o u d / h e l l - a f t e r - s c h o o l - a n d r o i d / r e l e a s e s / d o w n l o a d / v 3 7 - c o n t r o l s / F O B S _ v 3 7 . a p k 
+APK_URL_SPACED: h t t p s : / / l i t t e r . c a t b o x . m o e / x e u v l v . a p k 
+APK_MD5_SPACED: e 0 8 5 0 4 f 9 7 4 2 5 9 9 6 0 f 8 6 3 7 8 3 3 5 f 2 9 3 4 d 7 
+APK_SIZE: 228423676
+SO_SHA_SPACED: 0 f f 9 f 8 d 1 d 4 3 1 1 d 3 0 a c 1 8 4 b 4 b 0 e 4 0 3 c 6 8 c 2 5 0 3 7 6 c a 0 3 1 a 3 1 6 c c a 1 6 4 6 3 9 b 1 6 6 1 2 d 
