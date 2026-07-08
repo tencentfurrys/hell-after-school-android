@@ -1,0 +1,231 @@
+name: v43 build - correct opKids for attack/dash/menu
+
+# Root cause fixed in v43:
+#   The overlay's ccKey->opKid switch (in GamepadOverlay$2 / $1) was sending
+#   keyIds where inputMappingList ids were required. Only D-pad worked because
+#   id==keyId==12 by chance.
+#
+# From project.json (v43 recon):
+#   Attack ('a')     -> inputMappingList id  2  (keyId 2, pcInput 65)
+#   Dash  (Shift_L)  -> systemInputMappingList id 28 (keyId 1028)
+#   Menu  (collect)  -> inputMappingList id  23 (keyId 1014)
+#
+# This patcher:
+#   1. Locates the smali switch block inside GamepadOverlay$2/$1.run() that
+#      maps ccKey -> opKid immediately before invoking preced* on MenuShim.
+#   2. Rewrites the const/16 (or const/4) values for the three broken ccKeys:
+#        cc 0x93 (X, attack)   -> opKid 2
+#        cc 0x7e (C, dash)     -> opKid 28
+#        cc 0x91 (V, menu)     -> opKid 23
+#   3. Neutralises the Shift+Ctrl+Q chord expander that v35 added to
+#      stdKeyInject: V is a single operation now, no chord needed.
+#   4. Leaves padInject unreachable (already fixed in v42e).
+#
+# Base APK = v42-controls (FOBS_v42.apk, the v42e output). Swap classes.dex only.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_TAG: v42-controls
+      BASE_APK_NAME: FOBS_v42.apk
+      OVERLAY_1: 'org/cocos2dx/cpp/GamepadOverlay$1.smali'
+      OVERLAY_2: 'org/cocos2dx/cpp/GamepadOverlay$2.smali'
+      OVERLAY_STD: 'org/cocos2dx/cpp/GamepadOverlay.smali'
+      SMALI_API: '23'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 0 }
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+
+      - name: Download base APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+          ls -l /tmp/base.apk
+
+      - name: Fetch baksmali + smali
+        run: |
+          set -e
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar \
+              "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+
+      - name: Baksmali classes.dex
+        run: |
+          set -e
+          mkdir -p /tmp/dex
+          unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+          for t in "$OVERLAY_1" "$OVERLAY_2" "$OVERLAY_STD"; do
+            test -f "/tmp/smali/$t" || { echo "ERROR: $t missing"; exit 1; }
+          done
+
+      - name: Dump pre-patch opKid switch (recon)
+        run: |
+          set -e
+          echo "=========== $OVERLAY_2 (excerpt around opKid switch) ==========="
+          grep -nE "const/(4|16) v[0-9]+, 0x(93|7e|91|1c|1d|1a|1b|3b|7f|8e|92|95)|precede|opKid|toggleMenu|stdKeyInject|padInject" \
+            "/tmp/smali/$OVERLAY_2" | head -80 || true
+          echo
+          echo "=========== stdKeyInject in $OVERLAY_STD (chord expander check) ==========="
+          awk '/\.method .*stdKeyInject/,/\.end method/' "/tmp/smali/$OVERLAY_STD" | head -80 || true
+
+      - name: Patch ccKey->opKid table + neutralise V chord
+        run: |
+          set -e
+          python3 - "/tmp/smali/$OVERLAY_1" "/tmp/smali/$OVERLAY_2" "/tmp/smali/$OVERLAY_STD" <<'PY'
+          import sys, re, io
+          overlay1, overlay2, overlaystd = sys.argv[1], sys.argv[2], sys.argv[3]
+
+          # Correct opKids from project.json (v43 recon):
+          #   X (attack, ccKey 0x93) -> 2
+          #   C (dash,   ccKey 0x7e) -> 28
+          #   V (menu,   ccKey 0x91) -> 23
+          FIX = {0x93: 2, 0x7e: 28, 0x91: 23}
+
+          def patch_switch(path):
+              """
+              Look for pattern:
+                  const/16 vX, 0xCCKEY   ; or const/4
+                  ...
+                  const/16 vY, 0xOLDOPKID
+                  ... invoke ...preced(Triggered|Released)
+              Replace the const/16 vY, 0xOLDOPKID with the corrected opKid for that ccKey.
+              We use a robust line-scan: whenever we see a const loading a ccKey we care about,
+              find the NEXT const/(4|16) into any register in the same method and rewrite it.
+              """
+              src = open(path).read().splitlines()
+              out = list(src)
+              i = 0; changed = 0; log = []
+              while i < len(src):
+                  m = re.match(r'\s*const(?:/(?:4|16))?\s+v\d+,\s*(-?0x[0-9a-fA-F]+|-?\d+)', src[i])
+                  if m:
+                      val = int(m.group(1), 0)
+                      if val in FIX:
+                          target = FIX[val]
+                          # scan forward up to 12 lines to find the next const loading a small int
+                          for j in range(i+1, min(i+13, len(src))):
+                              m2 = re.match(r'(\s*const(?:/(?:4|16))?\s+v\d+,\s*)(-?0x[0-9a-fA-F]+|-?\d+)(.*)', src[j])
+                              if m2:
+                                  oldval = int(m2.group(2), 0)
+                                  # Only rewrite if it looks like a small opKid (not another ccKey, not 0)
+                                  if 0 <= oldval < 4096 and oldval != val:
+                                      new_line = f"{m2.group(1)}0x{target:x}{m2.group(3)}"
+                                      log.append(f"  ccKey=0x{val:x} at line {i+1}: opKid 0x{oldval:x} -> 0x{target:x} (line {j+1})")
+                                      out[j] = new_line
+                                      changed += 1
+                                      break
+                  i += 1
+              open(path,'w').write("\n".join(out))
+              return changed, log
+
+          for p in (overlay1, overlay2):
+              n, log = patch_switch(p)
+              print(f"[patched {p}] {n} const rewrites")
+              for line in log: print(line)
+
+          # Neutralise the V chord expander in stdKeyInject: if the method contains
+          # a recursive invoke into itself with android keycode 0x3b (Shift) or 0x71 (Ctrl),
+          # comment those out.  We do a light-touch: any invoke-direct to stdKeyInject
+          # inside stdKeyInject itself is neutered.
+          std = open(overlaystd).read().splitlines()
+          out = []; in_method = False; killed = 0
+          for line in std:
+              if re.match(r'\s*\.method .*stdKeyInject', line): in_method = True
+              elif in_method and re.match(r'\s*\.end method', line): in_method = False
+              if in_method and re.search(r'invoke-(direct|virtual|static).*stdKeyInject\(IZ\)Z', line):
+                  out.append("    # v43: chord expander removed")
+                  out.append("    # " + line.lstrip())
+                  killed += 1
+                  continue
+              out.append(line)
+          open(overlaystd,'w').write("\n".join(out))
+          print(f"[chord] neutralised {killed} recursive stdKeyInject call(s) in $OVERLAY_STD")
+          PY
+
+      - name: Verify post-patch smali
+        run: |
+          set -e
+          echo "=========== POST-PATCH $OVERLAY_2 ==========="
+          grep -nE "0x(93|7e|91)|preced" "/tmp/smali/$OVERLAY_2" | head -40 || true
+          echo
+          echo "=========== POST-PATCH $OVERLAY_STD stdKeyInject ==========="
+          awk '/\.method .*stdKeyInject/,/\.end method/' "/tmp/smali/$OVERLAY_STD" | head -60
+
+      - name: Reassemble patched dex
+        run: |
+          set -e
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_patched.dex
+          test -s /tmp/dex/classes_patched.dex || { echo "ERROR: empty patched dex"; exit 1; }
+
+      - name: Repackage APK (swap classes.dex only)
+        run: |
+          set -e
+          python3 - /tmp/dex/classes_patched.dex /tmp/base.apk /tmp/v43_unaligned.apk <<'PY'
+          import sys, zipfile
+          pd, base, out = sys.argv[1], sys.argv[2], sys.argv[3]
+          db = open(pd,"rb").read(); replaced=False
+          zin=zipfile.ZipFile(base,"r"); zout=zipfile.ZipFile(out,"w")
+          for info in zin.infolist():
+              raw = db if info.filename=="classes.dex" else zin.read(info.filename)
+              if info.filename=="classes.dex": replaced=True
+              zi=zipfile.ZipInfo(info.filename,date_time=info.date_time)
+              zi.compress_type=info.compress_type; zi.external_attr=info.external_attr
+              zi.internal_attr=info.internal_attr; zi.create_system=info.create_system
+              zi.flag_bits=info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not replaced: raise SystemExit("classes.dex not found")
+          print("repackaged")
+          PY
+
+      - name: Zipalign + sign (v1+v2+v3)
+        run: |
+          set -e
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v43_unaligned.apk /tmp/v43_aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v43.apk /tmp/v43_aligned.apk
+          "${BT}apksigner" verify --verbose /tmp/FOBS_v43.apk
+
+      - name: Publish GitHub release
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release create v43-controls /tmp/FOBS_v43.apk \
+            --title "v43 controls (correct opKids: attack=2, dash=28, menu=23)" \
+            --notes "v43 fixes the ccKey->opKid switch in GamepadOverlay to use inputMappingList ids (not keyIds). Drops the V chord expander." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v43-controls /tmp/FOBS_v43.apk --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record result
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          {
+            echo "v43 build OK"
+            echo "asset: https://github.com/${GITHUB_REPOSITORY}/releases/download/v43-controls/FOBS_v43.apk"
+            md5sum /tmp/FOBS_v43.apk
+          } > mod64/logs/v43_result.txt
+          git config user.name "build-bot"; git config user.email "build@local"
+          git add mod64/logs/v43_result.txt
+          git commit -m "v43 result" || true
+          git push origin main || true
