@@ -1,0 +1,186 @@
+name: v42 controls padBtn fix (attack/dash/menu)
+
+# v42 fixes the ONLY three dead buttons (Attack X, Dash C, Collectible-menu V).
+#
+# Root cause proven by the v41 input.log: those three are the only overlay
+# buttons with padBtn >= 0, so alongside their keyboard inject they ALSO fire
+# padInject() -> a virtual gamepad button. PGMMV then treats the gamepad as the
+# active input source for that frame; the game has no operation bound to those
+# pad-button indices, so the action never triggers and the simultaneous
+# keyboard inject (which WOULD trigger it) is discarded. Every button that
+# works uses padBtn = -1 (keyboard path only).
+#
+# Fix: neutralise the padInject branch in GamepadOverlay$1.run() so padInject
+# is never reached. All buttons then take the keyboard + MenuShim.precede path
+# that already works. Movement buttons (padBtn=-1) are unchanged.
+#
+# Base APK = the v41 release (physics cpFloat fix + full controls). We swap ONLY
+# classes.dex; both native libs (libMyGame.so, libmenushim.so) are copied
+# byte-for-byte, so v42 keeps the v41 scene-load fix AND all controls.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_TAG: v41-controls
+      BASE_APK_NAME: FOBS_v41.apk
+      OVERLAY_INNER: 'org/cocos2dx/cpp/GamepadOverlay$1.smali'
+      SMALI_API: '23'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 0 }
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+
+      - name: Download base APK (v41 release asset)
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+          echo "base APK: $(stat -c%s /tmp/base.apk) bytes, md5 $(md5sum /tmp/base.apk | cut -d' ' -f1)"
+          # sanity: base must carry both native libs (controls + physics)
+          unzip -l /tmp/base.apk | grep -q "lib/arm64-v8a/libMyGame.so"   || { echo "ERROR: base missing libMyGame.so"; exit 1; }
+          unzip -l /tmp/base.apk | grep -q "lib/arm64-v8a/libmenushim.so" || { echo "ERROR: base missing libmenushim.so"; exit 1; }
+          echo "base carries libMyGame.so + libmenushim.so"
+
+      - name: Fetch baksmali + smali (runnable fat jars)
+        run: |
+          set -e
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar \
+              "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+          java -jar /tmp/baksmali.jar --version 2>&1 | head -1
+          java -jar /tmp/smali.jar     --version 2>&1 | head -1
+
+      - name: Extract + baksmali classes.dex
+        run: |
+          set -e
+          mkdir -p /tmp/dex
+          unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          echo "dex: $(stat -c%s /tmp/dex/classes.dex) bytes"
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+          test -f "/tmp/smali/$OVERLAY_INNER" || { echo "ERROR: $OVERLAY_INNER not found"; exit 1; }
+          echo "overlay inner present: /tmp/smali/$OVERLAY_INNER"
+          echo "--- guard BEFORE patch ---"
+          grep -nE "val\\\$padBtn:I|if-ltz|goto :cond|access\\\$100" "/tmp/smali/$OVERLAY_INNER" | head
+
+      - name: Apply v42 padBtn patch
+        run: |
+          set -e
+          python3 mod64/scripts/v42_patch_overlay_padbtn.py "/tmp/smali/$OVERLAY_INNER"
+
+      - name: Reassemble + verify patched dex
+        run: |
+          set -e
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_patched.dex
+          echo "patched dex: $(stat -c%s /tmp/dex/classes_patched.dex) bytes"
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes_patched.dex -o /tmp/verify
+          V="/tmp/verify/$OVERLAY_INNER"
+          echo "--- guard AFTER patch ---"
+          grep -nE "val\\\$padBtn:I|if-ltz|goto :cond|access\\\$100" "$V" | head
+          # The padBtn iget must now be followed by an unconditional goto, and the
+          # if-ltz guard on padBtn must be gone. This makes padInject unreachable.
+          python3 - "$V" <<'PY'
+          import re, sys
+          s = open(sys.argv[1]).read()
+          m = re.search(r"iget\s+(v\d+),\s*p0,[^\n]*->val\$padBtn:I\s*\n(?:\s*\.line\s+\d+\s*\n)?\s*(\S+)\s+(\1)?", s)
+          if not m: print("VERIFY-FAIL: padBtn iget site not found"); sys.exit(1)
+          nextop = m.group(2)
+          if nextop.startswith("if-ltz"): print("VERIFY-FAIL: if-ltz guard still present"); sys.exit(1)
+          if not nextop.startswith("goto"): print("VERIFY-FAIL: expected goto after padBtn iget, got", nextop); sys.exit(1)
+          print("VERIFY-OK: padBtn guard replaced by", nextop, "(padInject unreachable)")
+          PY
+
+      - name: Repackage APK (swap classes.dex only)
+        run: |
+          set -e
+          python3 - /tmp/dex/classes_patched.dex /tmp/base.apk /tmp/v42_unaligned.apk <<'PY'
+          import sys, zipfile
+          patched_dex, base, out = sys.argv[1], sys.argv[2], sys.argv[3]
+          dex_bytes = open(patched_dex, "rb").read()
+          target_dex = "classes.dex"
+          zin = zipfile.ZipFile(base, "r")
+          zout = zipfile.ZipFile(out, "w")
+          replaced = False
+          for info in zin.infolist():
+              raw = dex_bytes if info.filename == target_dex else zin.read(info.filename)
+              if info.filename == target_dex: replaced = True
+              zi = zipfile.ZipInfo(info.filename, date_time=info.date_time)
+              zi.compress_type = info.compress_type   # keep .so STORED, others as-was
+              zi.external_attr = info.external_attr
+              zi.internal_attr = info.internal_attr
+              zi.create_system = info.create_system
+              zi.flag_bits     = info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not replaced: print("ERROR: classes.dex not found in base"); sys.exit(1)
+          print("repackaged", out, "dex", len(dex_bytes))
+          PY
+          ls -l /tmp/v42_unaligned.apk
+
+      - name: Zipalign + sign (v1+v2+v3)
+        run: |
+          set -e
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          echo "build-tools: $BT"
+          "${BT}zipalign" -p -f 4 /tmp/v42_unaligned.apk /tmp/v42_aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore \
+            --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v42.apk /tmp/v42_aligned.apk
+          "${BT}apksigner" verify --min-sdk-version 23 /tmp/FOBS_v42.apk && echo "SIGN OK"
+          ls -l /tmp/FOBS_v42.apk
+
+      - name: Attach APK to GitHub release (stable link)
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          if gh release view v42-controls --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload v42-controls /tmp/FOBS_v42.apk --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create v42-controls /tmp/FOBS_v42.apk \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "FOBS v42 (attack/dash/menu fix)" \
+              --notes "Fixes the 3 dead buttons (Attack X, Dash C, Menu V). Root cause: those were the only buttons with padBtn>=0, firing a phantom virtual-gamepad button that stole the input frame. v42 neutralises the padInject branch in GamepadOverlay\$1 so every button takes the keyboard+precede path that already works. Keeps v41 physics scene-load fix."
+          fi
+
+      - name: Write result log
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          APK_MD5="$(md5sum /tmp/FOBS_v42.apk | cut -d' ' -f1)"
+          APK_SIZE="$(stat -c%s /tmp/FOBS_v42.apk)"
+          REL_URL="https://github.com/$GITHUB_REPOSITORY/releases/download/v42-controls/FOBS_v42.apk"
+          { echo "## v42 controls padBtn fix";
+            echo "- release APK: $REL_URL";
+            echo "- size: $APK_SIZE  md5: $APK_MD5"; } >> "$GITHUB_STEP_SUMMARY"
+          mkdir -p mod64/logs
+          { echo "v42 build result ($(date -u +%FT%TZ))";
+            echo "RELEASE_URL: $REL_URL";
+            echo "APK_MD5: $APK_MD5";
+            echo "APK_SIZE: $APK_SIZE"; } > mod64/logs/v42_result.txt
+          cat mod64/logs/v42_result.txt
+
+      - name: Commit result log
+        run: |
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add mod64/logs/v42_result.txt
+          git commit -m "v42 build result [skip ci]" || { echo "nothing to commit"; exit 0; }
+          git push origin HEAD:main
