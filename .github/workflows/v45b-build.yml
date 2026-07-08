@@ -1,0 +1,255 @@
+name: v45 build - dispatchKeyEvent (Hacker Keyboard route)
+
+# v44 probe confirmed: raw Cocos2d KeyCodes don't work either.  User then
+# revealed that HACKER KEYBOARD injecting 'a' fires attack fine, which means
+# the game DOES accept Android keycodes A(29)/Shift(59)/Ctrl(45) - but only
+# through the full KeyEvent dispatch pipeline, not through our bare-int
+# reflection into handleKeyDown.
+#
+# Hacker Keyboard sends a KeyEvent object via InputConnection.sendKeyEvent,
+# which reaches Cocos2dxGLSurfaceView.dispatchKeyEvent -> the full input
+# pipeline.  We were skipping this and calling handleKeyDown(int) directly,
+# which apparently doesn't propagate through the same channel arm64 polls.
+#
+# v45 fix (surgical, Java-only): rewrite stdKeyInject so instead of reflecting
+# into handleKeyDown, it constructs a real KeyEvent(ACTION_DOWN/UP, androidKey)
+# and calls Cocos2dxGLSurfaceView.getInstance().dispatchKeyEvent(ev) on the
+# UI thread via post().
+#
+# Also: v44's cocos2dToAndroidKey rewrites revert to Android keycodes:
+#   cc 0x93 X (attack) -> 0x1d (29,  Android KEYCODE_A)
+#   cc 0x7e C (dash)   -> 0x3b (59,  Android KEYCODE_SHIFT_LEFT)
+#   cc 0x91 V (menu)   -> 0x71 (113, Android KEYCODE_CTRL_LEFT)
+#     (project.json says menu = Ctrl alone; Android KEYCODE_CTRL_LEFT = 113 = 0x71)
+# Chord expander stays disabled (from v44).
+# Base APK = v44-probe (FOBS_v44probe.apk).
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_TAG: v44-probe
+      BASE_APK_NAME: FOBS_v44probe.apk
+      OVERLAY_STD: 'org/cocos2dx/cpp/GamepadOverlay.smali'
+      SMALI_API: '23'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 0 }
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+
+      - name: Download base APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+
+      - name: Fetch baksmali + smali
+        run: |
+          set -e
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar \
+              "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+
+      - name: Baksmali
+        run: |
+          set -e
+          mkdir -p /tmp/dex
+          unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+
+      - name: Revert cocos2dToAndroidKey to Android keycodes + replace stdKeyInject body
+        run: |
+          set -e
+          python3 - "/tmp/smali/$OVERLAY_STD" <<'PY'
+          import sys, re
+          path = sys.argv[1]
+          src = open(path).read().splitlines()
+
+          def find_method(lines, name):
+              i0=None
+              for i,l in enumerate(lines):
+                  if re.match(r'\.method .*'+re.escape(name)+r'\(', l): i0=i
+                  elif i0 is not None and l.strip()=='.end method': return i0, i
+              return None, None
+
+          # STEP 1: cocos2dToAndroidKey - restore Android keycodes for X/C/V
+          i0,i1 = find_method(src, 'cocos2dToAndroidKey')
+          if i0 is None: raise SystemExit("cocos2dToAndroidKey not found")
+
+          def set_return_for(cc_hex, new_line_for_reg):
+              for i in range(i0, i1):
+                  if re.match(r'\s*const(?:/(?:4|16))?\s+v\d+,\s*'+cc_hex+r'\b', src[i]):
+                      for j in range(i+1, min(i+8, i1)):
+                          m = re.match(r'(\s*)(const(?:/(?:4|16))?\s+)(v\d+|p\d+)(,\s*)(-?0x[0-9a-fA-F]+|-?\d+)(.*)', src[j])
+                          if m:
+                              indent, reg = m.group(1), m.group(3)
+                              src[j] = f"{indent}{new_line_for_reg(reg)}"
+                              return (i,j)
+              return None
+
+          rX = set_return_for('0x93', lambda r: f"const/16 {r}, 0x1d")   # A = 29
+          rC = set_return_for('0x7e', lambda r: f"const/16 {r}, 0x3b")   # SHIFT_L = 59
+          rV = set_return_for('0x91', lambda r: f"const/16 {r}, 0x71")   # CTRL_L = 113
+          print("cocos2dToAndroidKey rewrites:", rX, rC, rV)
+          if None in (rX,rC,rV): raise SystemExit("cocos2dToAndroidKey rewrite failed")
+
+          # STEP 2: REPLACE the entire stdKeyInject body with a clean
+          # dispatchKeyEvent path. Original .registers stays 10 so p0=v8, p1=v9
+          # and v0..v7 are locals.
+          #
+          # Signature: stdKeyInject(IZ)Z  static: p0=int key, p1=boolean pressed
+
+          i0,i1 = find_method(src, 'stdKeyInject')
+          if i0 is None: raise SystemExit("stdKeyInject not found")
+
+          # Preserve the method header and .registers line, wipe the rest,
+          # and write our own body.
+          header_end = i0
+          for k in range(i0, i1):
+              if src[k].strip().startswith('.registers'):
+                  header_end = k
+                  break
+
+          new_body = [
+              "    .locals 8",
+              "",
+              "    :try_start_v45",
+              "    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->getInstance()Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;",
+              "    move-result-object v0",
+              "    if-nez v0, :v45_have",
+              "    const/4 v0, 0x0",
+              "    return v0",
+              "",
+              "    :v45_have",
+              "    invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J",
+              "    move-result-wide v1",
+              "",
+              "    if-eqz p1, :v45_up",
+              "    const/4 v3, 0x0",
+              "    goto :v45_have_action",
+              "    :v45_up",
+              "    const/4 v3, 0x1",
+              "    :v45_have_action",
+              "",
+              "    new-instance v4, Landroid/view/KeyEvent;",
+              "    const/4 v5, 0x0",
+              "    invoke-direct {v4, v1, v2, v3, p0, v5}, Landroid/view/KeyEvent;-><init>(JJIII)V",
+              "",
+              "    invoke-virtual {v0, v4}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->dispatchKeyEvent(Landroid/view/KeyEvent;)Z",
+              "    move-result v5",
+              "    :try_end_v45",
+              "    .catch Ljava/lang/Throwable; {:try_start_v45 .. :try_end_v45} :v45_catch",
+              "",
+              "    return v5",
+              "",
+              "    :v45_catch",
+              "    move-exception v0",
+              "    const/4 v0, 0x0",
+              "    return v0",
+          ]
+
+          # Remove old .registers - we're using .locals instead
+          # Rebuild: [method .method line] + new body + .end method
+          # The header line at i0 is `.method private static stdKeyInject(IZ)Z`.
+          # We keep just that line and drop everything until `.end method`.
+          src = src[:i0+1] + new_body + src[i1:]
+          # The original .registers line is gone (we deleted src[i0+1..i1-1])
+          # and we injected .locals 8 instead. But wait - we kept only src[:i0+1]
+          # which INCLUDES the header. Then new_body starts with .locals. Good.
+          print(f"stdKeyInject replaced: header at {i0+1}, new body {len(new_body)} lines")
+
+          open(path,'w').write("\n".join(src))
+          PY
+
+      - name: Verify
+        run: |
+          set -e
+          echo "==== stdKeyInject POST-PATCH ===="
+          awk '/\.method .*stdKeyInject/,/\.end method/' "/tmp/smali/$OVERLAY_STD"
+          echo
+          echo "==== cocos2dToAndroidKey POST-PATCH ===="
+          awk '/\.method .*cocos2dToAndroidKey/,/\.end method/' "/tmp/smali/$OVERLAY_STD"
+          echo
+          grep -q "const/16 p0, 0x1d" "/tmp/smali/$OVERLAY_STD" || { echo "FAIL: X keycode"; exit 1; }
+          grep -q "const/16 p0, 0x3b" "/tmp/smali/$OVERLAY_STD" || { echo "FAIL: C keycode"; exit 1; }
+          grep -q "const/16 p0, 0x71" "/tmp/smali/$OVERLAY_STD" || { echo "FAIL: V keycode"; exit 1; }
+          grep -q "dispatchKeyEvent" "/tmp/smali/$OVERLAY_STD" || { echo "FAIL: dispatchKeyEvent missing"; exit 1; }
+          echo "VERIFY-OK"
+
+      - name: Reassemble
+        run: |
+          set -e
+          # Commit the patched smali FIRST so we can inspect it on failure.
+          mkdir -p mod64/logs/v45_smali
+          cp "/tmp/smali/$OVERLAY_STD" mod64/logs/v45_smali/GamepadOverlay.patched.smali.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v45_smali
+          git commit -m "v45 patched smali (pre-assemble)" || true
+          git push origin main || true
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_patched.dex 2>&1 | tee /tmp/assemble.log
+          test -s /tmp/dex/classes_patched.dex
+
+      - name: Repackage + sign
+        run: |
+          set -e
+          python3 - /tmp/dex/classes_patched.dex /tmp/base.apk /tmp/v45_unaligned.apk <<'PY'
+          import sys, zipfile
+          pd, base, out = sys.argv[1], sys.argv[2], sys.argv[3]
+          db=open(pd,"rb").read(); replaced=False
+          zin=zipfile.ZipFile(base,"r"); zout=zipfile.ZipFile(out,"w")
+          for info in zin.infolist():
+              raw = db if info.filename=="classes.dex" else zin.read(info.filename)
+              if info.filename=="classes.dex": replaced=True
+              zi=zipfile.ZipInfo(info.filename,date_time=info.date_time)
+              zi.compress_type=info.compress_type; zi.external_attr=info.external_attr
+              zi.internal_attr=info.internal_attr; zi.create_system=info.create_system
+              zi.flag_bits=info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not replaced: raise SystemExit("classes.dex not found")
+          PY
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v45_unaligned.apk /tmp/v45_aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v45.apk /tmp/v45_aligned.apk
+          "${BT}apksigner" verify --verbose /tmp/FOBS_v45.apk
+
+      - name: Publish
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release create v45-controls /tmp/FOBS_v45.apk \
+            --title "v45 controls: dispatchKeyEvent (Hacker Keyboard route)" \
+            --notes "v45 replaces the bare-int reflection into handleKeyDown with a real KeyEvent dispatched via Cocos2dxGLSurfaceView.dispatchKeyEvent - the same route Hacker Keyboard uses successfully." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v45-controls /tmp/FOBS_v45.apk --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          {
+            echo "v45 build OK"
+            echo "asset: https://github.com/${GITHUB_REPOSITORY}/releases/download/v45-controls/FOBS_v45.apk"
+            md5sum /tmp/FOBS_v45.apk
+          } > mod64/logs/v45_result.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v45_result.txt
+          git commit -m "v45 result" || true
+          git push origin main || true
