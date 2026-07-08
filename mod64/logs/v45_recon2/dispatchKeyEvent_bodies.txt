@@ -1,0 +1,166 @@
+===== /tmp/s/org/cocos2dx/lib/GameControllerDelegate.smali =====
+.method public abstract dispatchKeyEvent(Landroid/view/KeyEvent;)Z
+.end method
+===== /tmp/s/org/cocos2dx/cpp/AppActivity.smali =====
+.method public dispatchKeyEvent(Landroid/view/KeyEvent;)Z
+    .registers 8
+
+    .line 62
+    const-string v0, "input.log"
+
+    :try_start_2
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getKeyCode()I
+
+    move-result v1
+
+    .line 63
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getAction()I
+
+    move-result v2
+
+    .line 64
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "INPUT KEY act="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    const-string v4, " code="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {p0, v0, v3}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 68
+    invoke-static {v1}, Lorg/cocos2dx/cpp/GamepadOverlay;->androidKeyToCocos2d(I)I
+
+    move-result v1
+
+    .line 69
+    if-eqz v1, :cond_6a
+
+    const/4 v3, 0x1
+
+    if-eqz v2, :cond_35
+
+    if-ne v2, v3, :cond_6a
+
+    .line 70
+    :cond_35
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->isCanceled()Z
+
+    move-result v4
+
+    if-nez v4, :cond_6a
+
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getRepeatCount()I
+
+    move-result v4
+
+    if-nez v4, :cond_6a
+
+    .line 71
+    if-nez v2, :cond_45
+
+    move v2, v3
+
+    goto :goto_46
+
+    :cond_45
+    const/4 v2, 0x0
+
+    .line 72
+    :goto_46
+    invoke-static {v1, v2}, Lorg/cocos2dx/cpp/GamepadOverlay;->queueInject(IZ)V
+
+    .line 73
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v5, "INPUT KEY FORCED-INJECT cc="
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v4, " pressed="
+
+    invoke-virtual {v1, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_69
+    .catchall {:try_start_2 .. :try_end_69} :catchall_6b
+
+    .line 74
+    return v3
+
+    .line 78
+    :cond_6a
+    goto :goto_82
+
+    .line 76
+    :catchall_6b
+    move-exception v1
+
+    .line 77
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "INPUT KEY EXC "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 79
+    :goto_82
+    invoke-super {p0, p1}, Lorg/cocos2dx/lib/Cocos2dxActivity;->dispatchKeyEvent(Landroid/view/KeyEvent;)Z
+
+    move-result p1
+
+    return p1
+.end method

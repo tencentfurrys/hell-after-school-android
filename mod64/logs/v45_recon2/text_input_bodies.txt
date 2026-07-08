@@ -1,0 +1,6 @@
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$15.smali =====
+52:    invoke-virtual {v0, v1}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleInsertText(Ljava/lang/String;)V
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxRenderer.smali =====
+54:.method private static native nativeInsertText(Ljava/lang/String;)V
+150:.method public handleInsertText(Ljava/lang/String;)V
+153:    invoke-static {p1}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->nativeInsertText(Ljava/lang/String;)V
