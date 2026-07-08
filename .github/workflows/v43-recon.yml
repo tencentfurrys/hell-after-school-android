@@ -1,0 +1,113 @@
+name: v43 recon - dump project.json input/operationKey bindings
+
+# Read-only recon. Downloads the v41 base APK, locates the PGMMV project.json
+# (any bundled file containing inputMappingList), and dumps every operationKey
+# with its name + keyboard/pad bindings so we can find the REAL opKid + pcInput
+# for Attack / Dash / Collectibles. Writes a plain-text report to
+# mod64/logs/v43_recon.txt and commits it (read back via raw media type).
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      BASE_TAG: v41-controls
+      BASE_APK_NAME: FOBS_v41.apk
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 0 }
+
+      - name: Download base APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+          ls -l /tmp/base.apk
+
+      - name: Unzip APK
+        run: |
+          set -e
+          mkdir -p /tmp/apk
+          unzip -o -q /tmp/base.apk -d /tmp/apk
+          echo "=== assets tree (top) ==="
+          find /tmp/apk/assets -maxdepth 3 -type f 2>/dev/null | head -80 || true
+
+      - name: Locate project.json
+        run: |
+          set -e
+          echo "=== files containing inputMappingList ==="
+          grep -rl "inputMappingList" /tmp/apk 2>/dev/null | tee /tmp/hits.txt || true
+          echo "=== files literally named project.json ==="
+          find /tmp/apk -iname 'project.json' 2>/dev/null | tee -a /tmp/hits.txt || true
+          echo "=== any *.json under assets (sizes) ==="
+          find /tmp/apk/assets -iname '*.json' -printf '%s\t%p\n' 2>/dev/null | sort -n | tail -40 || true
+          sort -u /tmp/hits.txt -o /tmp/hits.txt
+          test -s /tmp/hits.txt || { echo "NOTE: no plaintext hit - data may be packed/encrypted"; }
+
+      - name: Dump operationKey + input bindings
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          python3 - <<'PY' | tee mod64/logs/v43_recon.txt
+          import json, glob, os, re, sys
+          hits = [l.strip() for l in open('/tmp/hits.txt')] if os.path.exists('/tmp/hits.txt') else []
+          hits = [h for h in hits if h]
+          # also consider all json files as fallback
+          cand = list(dict.fromkeys(hits + glob.glob('/tmp/apk/assets/**/*.json', recursive=True)))
+          print("=== candidate files ===")
+          for c in cand: 
+              try: print(f"{os.path.getsize(c):>9}  {c}")
+              except: pass
+          data=None; used=None
+          for c in cand:
+              try:
+                  raw=open(c,'r',encoding='utf-8',errors='replace').read()
+              except Exception as e:
+                  continue
+              if 'inputMappingList' not in raw and 'operationKey' not in raw:
+                  continue
+              try:
+                  data=json.loads(raw); used=c; break
+              except Exception as e:
+                  print(f"!! {c} contains keys but is not plain JSON: {e}")
+          if data is None:
+              print("\n=== FALLBACK: regex scrape of inputMappingList blocks ===")
+              for c in cand:
+                  try: raw=open(c,encoding='utf-8',errors='replace').read()
+                  except: continue
+                  for m in re.finditer(r'"(operationKey|inputMappingList|systemInputMappingList)"\s*:', raw):
+                      s=max(0,m.start()-40); print(c, "...", raw[s:m.start()+400].replace(chr(10),' '))
+              sys.exit(0)
+          print(f"\n=== parsed JSON from: {used} ===")
+          def walk_find(obj, key):
+              out=[]
+              if isinstance(obj,dict):
+                  for k,v in obj.items():
+                      if k==key: out.append(v)
+                      out+=walk_find(v,key)
+              elif isinstance(obj,list):
+                  for v in obj: out+=walk_find(v,key)
+              return out
+          for key in ['operationKeyList','operationKey','inputMappingList','systemInputMappingList','keyList']:
+              found=walk_find(data,key)
+              if found:
+                  print(f"\n########## {key} ({len(found)} block(s)) ##########")
+                  print(json.dumps(found, ensure_ascii=False, indent=1)[:20000])
+          PY
+
+      - name: Commit report
+        run: |
+          set -e
+          git config user.name "recon-bot"
+          git config user.email "recon@local"
+          git add mod64/logs/v43_recon.txt
+          git commit -m "v43 recon: project.json input/operationKey dump" || echo "nothing to commit"
+          git push origin main || echo "push failed"
