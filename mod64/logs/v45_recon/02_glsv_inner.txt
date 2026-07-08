@@ -1,0 +1,1167 @@
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$10.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$10;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->onTouchEvent(Landroid/view/MotionEvent;)Z
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+.field final val$idUp:I
+
+.field final val$xUp:F
+
+.field final val$yUp:F
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;IFF)V
+    .registers 5
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$10;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    iput p2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$10;->val$idUp:I
+
+    iput p3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$10;->val$xUp:F
+
+    iput p4, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$10;->val$yUp:F
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 5
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$10;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    iget v1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$10;->val$idUp:I
+
+    iget v2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$10;->val$xUp:F
+
+    iget v3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$10;->val$yUp:F
+
+    invoke-virtual {v0, v1, v2, v3}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleActionUp(IFF)V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$11.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$11;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->onTouchEvent(Landroid/view/MotionEvent;)Z
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+.field final val$idsCancel:[I
+
+.field final val$xsCancel:[F
+
+.field final val$ysCancel:[F
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;[I[F[F)V
+    .registers 5
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$11;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    iput-object p2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$11;->val$idsCancel:[I
+
+    iput-object p3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$11;->val$xsCancel:[F
+
+    iput-object p4, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$11;->val$ysCancel:[F
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 5
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$11;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    iget-object v1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$11;->val$idsCancel:[I
+
+    iget-object v2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$11;->val$xsCancel:[F
+
+    iget-object v3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$11;->val$ysCancel:[F
+
+    invoke-virtual {v0, v1, v2, v3}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleActionCancel([I[F[F)V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$15.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$15;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->insertText(Ljava/lang/String;)V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+.field final val$pText:Ljava/lang/String;
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;Ljava/lang/String;)V
+    .registers 3
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$15;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    iput-object p2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$15;->val$pText:Ljava/lang/String;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 3
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$15;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    iget-object v1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$15;->val$pText:Ljava/lang/String;
+
+    invoke-virtual {v0, v1}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleInsertText(Ljava/lang/String;)V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$6.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$6;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->onTouchEvent(Landroid/view/MotionEvent;)Z
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+.field final val$idDown:I
+
+.field final val$xDown:F
+
+.field final val$yDown:F
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;IFF)V
+    .registers 5
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$6;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    iput p2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$6;->val$idDown:I
+
+    iput p3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$6;->val$xDown:F
+
+    iput p4, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$6;->val$yDown:F
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 5
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$6;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    iget v1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$6;->val$idDown:I
+
+    iget v2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$6;->val$xDown:F
+
+    iget v3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$6;->val$yDown:F
+
+    invoke-virtual {v0, v1, v2, v3}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleActionDown(IFF)V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$13.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$13;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->onKeyDown(ILandroid/view/KeyEvent;)Z
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+.field final val$pKeyCode:I
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;I)V
+    .registers 3
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$13;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    iput p2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$13;->val$pKeyCode:I
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 3
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$13;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    iget v1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$13;->val$pKeyCode:I
+
+    invoke-virtual {v0, v1}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleKeyDown(I)V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$9.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$9;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->onTouchEvent(Landroid/view/MotionEvent;)Z
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+.field final val$idPointerUp:I
+
+.field final val$xPointerUp:F
+
+.field final val$yPointerUp:F
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;IFF)V
+    .registers 5
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$9;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    iput p2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$9;->val$idPointerUp:I
+
+    iput p3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$9;->val$xPointerUp:F
+
+    iput p4, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$9;->val$yPointerUp:F
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 5
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$9;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    iget v1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$9;->val$idPointerUp:I
+
+    iget v2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$9;->val$xPointerUp:F
+
+    iget v3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$9;->val$yPointerUp:F
+
+    invoke-virtual {v0, v1, v2, v3}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleActionUp(IFF)V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$12.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$12;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->onTouchEvent(Landroid/view/MotionEvent;)Z
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+.field final val$ids:[I
+
+.field final val$xs:[F
+
+.field final val$ys:[F
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;[I[F[F)V
+    .registers 5
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$12;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    iput-object p2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$12;->val$ids:[I
+
+    iput-object p3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$12;->val$xs:[F
+
+    iput-object p4, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$12;->val$ys:[F
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 5
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$12;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    iget-object v1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$12;->val$ids:[I
+
+    iget-object v2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$12;->val$xs:[F
+
+    iget-object v3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$12;->val$ys:[F
+
+    invoke-virtual {v0, v1, v2, v3}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleActionCancel([I[F[F)V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$3.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$3;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->onResume()V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)V
+    .registers 2
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$3;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 2
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$3;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleOnResume()V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$14.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$14;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->onKeyUp(ILandroid/view/KeyEvent;)Z
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+.field final val$keyCode:I
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;I)V
+    .registers 3
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$14;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    iput p2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$14;->val$keyCode:I
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 3
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$14;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    iget v1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$14;->val$keyCode:I
+
+    invoke-virtual {v0, v1}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleKeyUp(I)V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$4.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$4;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->onPause()V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)V
+    .registers 2
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$4;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 2
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$4;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleOnPause()V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$2.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$2;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->queueAccelerometer(FFFJ)V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final val$timestamp:J
+
+.field final val$x:F
+
+.field final val$y:F
+
+.field final val$z:F
+
+
+# direct methods
+.method constructor <init>(FFFJ)V
+    .registers 6
+
+    iput p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$2;->val$x:F
+
+    iput p2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$2;->val$y:F
+
+    iput p3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$2;->val$z:F
+
+    iput-wide p4, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$2;->val$timestamp:J
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 6
+
+    iget v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$2;->val$x:F
+
+    iget v1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$2;->val$y:F
+
+    iget v2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$2;->val$z:F
+
+    iget-wide v3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$2;->val$timestamp:J
+
+    invoke-static {v0, v1, v2, v3, v4}, Lorg/cocos2dx/lib/Cocos2dxAccelerometer;->onSensorChanged(FFFJ)V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$16.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$16;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->deleteBackward()V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)V
+    .registers 2
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$16;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 2
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$16;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleDeleteBackward()V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$1.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$1;
+.super Landroid/os/Handler;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->initView()V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)V
+    .registers 2
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$1;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    invoke-direct {p0}, Landroid/os/Handler;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public handleMessage(Landroid/os/Message;)V
+    .registers 7
+
+    iget v0, p1, Landroid/os/Message;->what:I
+
+    const-string v1, "GLSurfaceView"
+
+    const/4 v2, 0x0
+
+    const-string v3, "input_method"
+
+    const/4 v4, 0x2
+
+    if-eq v0, v4, :cond_54
+
+    const/4 p1, 0x3
+
+    if-eq v0, p1, :cond_f
+
+    goto/16 :goto_bd
+
+    :cond_f
+    iget-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$1;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxEditText:Lorg/cocos2dx/lib/Cocos2dxEditBox;
+    invoke-static {p1}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$000(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxEditBox;
+
+    move-result-object p1
+
+    if-eqz p1, :cond_bd
+
+    iget-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$1;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxEditText:Lorg/cocos2dx/lib/Cocos2dxEditBox;
+    invoke-static {p1}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$000(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxEditBox;
+
+    move-result-object p1
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->sCocos2dxTextInputWraper:Lorg/cocos2dx/lib/Cocos2dxTextInputWrapper;
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$100()Lorg/cocos2dx/lib/Cocos2dxTextInputWrapper;
+
+    move-result-object v0
+
+    invoke-virtual {p1, v0}, Lorg/cocos2dx/lib/Cocos2dxEditBox;->removeTextChangedListener(Landroid/text/TextWatcher;)V
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxGLSurfaceView:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$200()Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->getContext()Landroid/content/Context;
+
+    move-result-object p1
+
+    invoke-virtual {p1, v3}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object p1
+
+    check-cast p1, Landroid/view/inputmethod/InputMethodManager;
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$1;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxEditText:Lorg/cocos2dx/lib/Cocos2dxEditBox;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$000(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxEditBox;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxEditBox;->getWindowToken()Landroid/os/IBinder;
+
+    move-result-object v0
+
+    invoke-virtual {p1, v0, v2}, Landroid/view/inputmethod/InputMethodManager;->hideSoftInputFromWindow(Landroid/os/IBinder;I)Z
+
+    iget-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$1;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    invoke-virtual {p1}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->requestFocus()Z
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxGLSurfaceView:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$200()Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->getContext()Landroid/content/Context;
+
+    move-result-object p1
+
+    check-cast p1, Lorg/cocos2dx/lib/Cocos2dxActivity;
+
+    invoke-virtual {p1}, Lorg/cocos2dx/lib/Cocos2dxActivity;->hideVirtualButton()V
+
+    const-string p1, "HideSoftInput"
+
+    goto :goto_ba
+
+    :cond_54
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$1;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxEditText:Lorg/cocos2dx/lib/Cocos2dxEditBox;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$000(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxEditBox;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_bd
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$1;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxEditText:Lorg/cocos2dx/lib/Cocos2dxEditBox;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$000(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxEditBox;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxEditBox;->requestFocus()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_bd
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$1;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxEditText:Lorg/cocos2dx/lib/Cocos2dxEditBox;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$000(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxEditBox;
+
+    move-result-object v0
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->sCocos2dxTextInputWraper:Lorg/cocos2dx/lib/Cocos2dxTextInputWrapper;
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$100()Lorg/cocos2dx/lib/Cocos2dxTextInputWrapper;
+
+    move-result-object v4
+
+    invoke-virtual {v0, v4}, Lorg/cocos2dx/lib/Cocos2dxEditBox;->removeTextChangedListener(Landroid/text/TextWatcher;)V
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$1;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxEditText:Lorg/cocos2dx/lib/Cocos2dxEditBox;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$000(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxEditBox;
+
+    move-result-object v0
+
+    const-string v4, ""
+
+    invoke-virtual {v0, v4}, Lorg/cocos2dx/lib/Cocos2dxEditBox;->setText(Ljava/lang/CharSequence;)V
+
+    iget-object p1, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
+
+    check-cast p1, Ljava/lang/String;
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$1;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxEditText:Lorg/cocos2dx/lib/Cocos2dxEditBox;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$000(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxEditBox;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p1}, Lorg/cocos2dx/lib/Cocos2dxEditBox;->append(Ljava/lang/CharSequence;)V
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->sCocos2dxTextInputWraper:Lorg/cocos2dx/lib/Cocos2dxTextInputWrapper;
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$100()Lorg/cocos2dx/lib/Cocos2dxTextInputWrapper;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p1}, Lorg/cocos2dx/lib/Cocos2dxTextInputWrapper;->setOriginText(Ljava/lang/String;)V
+
+    iget-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$1;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxEditText:Lorg/cocos2dx/lib/Cocos2dxEditBox;
+    invoke-static {p1}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$000(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxEditBox;
+
+    move-result-object p1
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->sCocos2dxTextInputWraper:Lorg/cocos2dx/lib/Cocos2dxTextInputWrapper;
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$100()Lorg/cocos2dx/lib/Cocos2dxTextInputWrapper;
+
+    move-result-object v0
+
+    invoke-virtual {p1, v0}, Lorg/cocos2dx/lib/Cocos2dxEditBox;->addTextChangedListener(Landroid/text/TextWatcher;)V
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxGLSurfaceView:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$200()Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->getContext()Landroid/content/Context;
+
+    move-result-object p1
+
+    invoke-virtual {p1, v3}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object p1
+
+    check-cast p1, Landroid/view/inputmethod/InputMethodManager;
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$1;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxEditText:Lorg/cocos2dx/lib/Cocos2dxEditBox;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$000(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxEditBox;
+
+    move-result-object v0
+
+    invoke-virtual {p1, v0, v2}, Landroid/view/inputmethod/InputMethodManager;->showSoftInput(Landroid/view/View;I)Z
+
+    const-string p1, "showSoftInput"
+
+    :goto_ba
+    invoke-static {v1, p1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_bd
+    :goto_bd
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$7.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$7;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->onTouchEvent(Landroid/view/MotionEvent;)Z
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+.field final val$idsMove:[I
+
+.field final val$xsMove:[F
+
+.field final val$ysMove:[F
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;[I[F[F)V
+    .registers 5
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$7;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    iput-object p2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$7;->val$idsMove:[I
+
+    iput-object p3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$7;->val$xsMove:[F
+
+    iput-object p4, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$7;->val$ysMove:[F
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 5
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$7;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    iget-object v1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$7;->val$idsMove:[I
+
+    iget-object v2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$7;->val$xsMove:[F
+
+    iget-object v3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$7;->val$ysMove:[F
+
+    invoke-virtual {v0, v1, v2, v3}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleActionMove([I[F[F)V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$8.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$8;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->onTouchEvent(Landroid/view/MotionEvent;)Z
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+.field final val$ids:[I
+
+.field final val$xs:[F
+
+.field final val$ys:[F
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;[I[F[F)V
+    .registers 5
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$8;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    iput-object p2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$8;->val$ids:[I
+
+    iput-object p3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$8;->val$xs:[F
+
+    iput-object p4, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$8;->val$ys:[F
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 5
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$8;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    iget-object v1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$8;->val$ids:[I
+
+    iget-object v2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$8;->val$xs:[F
+
+    iget-object v3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$8;->val$ys:[F
+
+    invoke-virtual {v0, v1, v2, v3}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleActionMove([I[F[F)V
+
+    return-void
+.end method
+===== /tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView$5.smali =====
+.class Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$5;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->onTouchEvent(Landroid/view/MotionEvent;)Z
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+.field final val$idPointerDown:I
+
+.field final val$xPointerDown:F
+
+.field final val$yPointerDown:F
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;IFF)V
+    .registers 5
+
+    iput-object p1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$5;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    iput p2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$5;->val$idPointerDown:I
+
+    iput p3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$5;->val$xPointerDown:F
+
+    iput p4, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$5;->val$yPointerDown:F
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 5
+
+    iget-object v0, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$5;->this$0:Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    # getter for: Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->mCocos2dxRenderer:Lorg/cocos2dx/lib/Cocos2dxRenderer;
+    invoke-static {v0}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+
+    move-result-object v0
+
+    iget v1, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$5;->val$idPointerDown:I
+
+    iget v2, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$5;->val$xPointerDown:F
+
+    iget v3, p0, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$5;->val$yPointerDown:F
+
+    invoke-virtual {v0, v1, v2, v3}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleActionDown(IFF)V
+
+    return-void
+.end method

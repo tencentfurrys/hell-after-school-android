@@ -1,0 +1,5 @@
+/tmp/s/org/cocos2dx/lib/GameControllerDelegate.smali:67:.method public abstract dispatchKeyEvent(Landroid/view/KeyEvent;)Z
+/tmp/s/org/cocos2dx/lib/Cocos2dxEditBox.smali:164:.method public onKeyDown(ILandroid/view/KeyEvent;)Z
+/tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView.smali:431:.method public onKeyDown(ILandroid/view/KeyEvent;)Z
+/tmp/s/org/cocos2dx/lib/Cocos2dxGLSurfaceView.smali:487:.method public onKeyUp(ILandroid/view/KeyEvent;)Z
+/tmp/s/org/cocos2dx/cpp/AppActivity.smali:674:.method public dispatchKeyEvent(Landroid/view/KeyEvent;)Z
