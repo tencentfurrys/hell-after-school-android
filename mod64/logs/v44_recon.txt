@@ -1,0 +1,331 @@
+==========================================================
+v44 recon: JS press/release operationKey API
+==========================================================
+
+### keywords: pressOperationKey / releaseOperationKey / operationKey / Agtk / _pgm ###
+/tmp/apk/assets/Resources/plugins/002.js:182:                    var textData = Agtk.texts.get(textId);
+/tmp/apk/assets/Resources/plugins/002.js:195:                    var fontData = Agtk.fonts.get(fontId);
+/tmp/apk/assets/Resources/plugins/002.js:207:                        var fontImageData = Agtk.images.get(fontImageId);
+/tmp/apk/assets/Resources/plugins/002.js:258:                    var bgImageData = Agtk.images.get(bgImageId);
+/tmp/apk/assets/Resources/plugins/002.js:275:                        var imageData = Agtk.images.get(imageId);
+/tmp/apk/assets/Resources/plugins/002.js:584:                                    return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorNext;
+/tmp/apk/assets/Resources/plugins/002.js:620:                            return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorBlock;
+/tmp/apk/assets/Resources/plugins/002.js:686:                                    return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorBlock;
+/tmp/apk/assets/Resources/plugins/002.js:712:                                        return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorBlock;
+/tmp/apk/assets/Resources/plugins/002.js:719:                                        return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorNext;
+/tmp/apk/assets/Resources/plugins/002.js:724:                            return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorBlock;
+/tmp/apk/assets/Resources/plugins/002.js:734:                                return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorBlock;
+/tmp/apk/assets/Resources/plugins/002.js:765:                                return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorBlock;
+/tmp/apk/assets/Resources/plugins/002.js:774:                                        return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorNext;
+/tmp/apk/assets/Resources/plugins/002.js:777:                                return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorBlock;
+/tmp/apk/assets/Resources/plugins/002.js:782:                            return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorNext;
+/tmp/apk/assets/Resources/plugins/002.js:785:                    return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorNext;
+/tmp/apk/assets/Resources/plugins/002.js:805:                    for(var i = 0; i <= Agtk.controllers.MaxControllerId; i++){
+/tmp/apk/assets/Resources/plugins/002.js:806:                        if(Agtk.controllers.getOperationKeyPressed(i, Agtk.constants.controllers.OperationKeyOk)){
+/tmp/apk/assets/Resources/plugins/002.js:810:                    if(Agtk.controllers.getKeyValue(0, Agtk.constants.controllers.ReservedKeyCodePc_LeftClick) != 0){
+/tmp/apk/assets/Resources/plugins/002.js:811:                        var x = Agtk.variables.get(Agtk.variables.MouseXId).getValue();
+/tmp/apk/assets/Resources/plugins/002.js:812:                        var y = obj.screenHeight - 1 - Agtk.variables.get(Agtk.variables.MouseYId).getValue();
+/tmp/apk/assets/Resources/plugins/002.js:832:            var agtkLayer = Agtk.sceneInstances.getCurrent().getMenuLayerById(Agtk.constants.systemLayers.HudLayerId);
+/tmp/apk/assets/Resources/plugins/002.js:834:                return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorNext;
+/tmp/apk/assets/Resources/plugins/002.js:894:                return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorBlock;
+/tmp/apk/assets/Resources/plugins/002.js:898:        return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorNext;
+/tmp/apk/assets/Resources/plugins/init.js:3:    var obj = Agtk;
+/tmp/apk/assets/Resources/plugins/init.js:127:        //console.log("Agtk.updatePlugins called: " + [dt, this]);
+/tmp/apk/assets/Resources/plugins/init.js:128:        for(var i = 0; i < Agtk.plugins.length; i++){
+/tmp/apk/assets/Resources/plugins/init.js:129:            var plugin = Agtk.plugins[i];
+/tmp/apk/assets/Resources/plugins/init.js:136:        //console.log("Agtk.updatePlugins called: " + [dt, this]);
+/tmp/apk/assets/Resources/plugins/init.js:137:        for(var i = 0; i < Agtk.plugins.length; i++){
+/tmp/apk/assets/Resources/plugins/init.js:138:            var plugin = Agtk.plugins[i];
+/tmp/apk/assets/Resources/plugins/init.js:145:        console.log("Agtk.unloadPlugins called");
+/tmp/apk/assets/Resources/plugins/init.js:147:            var plugin = Agtk.plugins[i];
+/tmp/apk/assets/Resources/plugins/init.js:148:            Agtk.plugins.unload(plugin.id);
+/tmp/apk/assets/Resources/plugins/init.js:152:        console.log("Agtk.getPluginInternals called");
+/tmp/apk/assets/Resources/plugins/init.js:155:            var plugin = Agtk.plugins[i];
+/tmp/apk/assets/Resources/plugins/init.js:161:        console.log("Agtk.setPluginInternals called");
+/tmp/apk/assets/Resources/plugins/init.js:169:            var plugin = Agtk.plugins[i];
+/tmp/apk/assets/Resources/plugins/init.js:180:        //console.log("Agtk.execActionCommand called: " + [pluginId, index, valueJsonStr, objectId, instanceId, actionId, commandId]);
+/tmp/apk/assets/Resources/plugins/init.js:181:        var plugin = Agtk.plugins.getById(pluginId);
+/tmp/apk/assets/Resources/plugins/init.js:190:        //console.log("Agtk.execLinkCondition called: " + [pluginId, index, valueJsonStr, objectId, instanceId, linkId, conditionId]);
+/tmp/apk/assets/Resources/plugins/init.js:191:        var plugin = Agtk.plugins.getById(pluginId);
+/tmp/apk/assets/Resources/plugins/init.js:216:            console.log("Agtk.scriptFunctions.objectDamaged[" + key + "] not found");
+/tmp/apk/assets/Resources/plugins/init.js:224:            console.log("Agtk.scriptFunctions.objectActionCommandSwitchVariableChange[" + key + "] not found");
+/tmp/apk/assets/Resources/plugins/init.js:232:            console.log("Agtk.scriptFunctions.objectActionCommandScriptEvaluate[" + key + "] not found");
+/tmp/apk/assets/Resources/plugins/init.js:240:            console.log("Agtk.scriptFunctions.objectLinkConditionScript[" + key + "] not found");
+/tmp/apk/assets/Resources/plugins/init.js:248:            console.log("Agtk.scriptFunctions.tilesetTileGimmickSwitchVariableChange[" + key + "] not found");
+/tmp/apk/assets/Resources/plugins/init.js:256:            console.log("Agtk.scriptFunctions.sceneCourseSwitchVariableChange[" + key + "] not found");
+/tmp/apk/assets/Resources/plugins/init.js:264:            console.log("Agtk.scriptFunctions.portalPreMoveSwitchVariableChange[" + key + "] not found");
+/tmp/apk/assets/Resources/plugins/init.js:272:            console.log("Agtk.scriptFunctions.portalPostMoveSwitchVariableChange[" + key + "] not found");
+/tmp/apk/assets/Resources/plugins/init.js:280:            console.log("Agtk.scriptFunctions.sceneCourseSwitchVariableChange[" + key + "] not found");
+/tmp/apk/assets/Resources/plugins/001.js:153:        var tileset = Agtk.tilesets.getById(tilesetId);
+/tmp/apk/assets/Resources/plugins/001.js:159:        var plugin = Agtk.plugins.getById(pluginId);
+/tmp/apk/assets/Resources/plugins/001.js:231:            var horzTileCount = Math.ceil(Agtk.settings.screenWidth / Agtk.settings.tileWidth);
+/tmp/apk/assets/Resources/plugins/001.js:232:            var vertTileCount = Math.ceil(Agtk.settings.screenHeight / Agtk.settings.tileHeight);
+/tmp/apk/assets/Resources/plugins/001.js:234:            var editLayerIndex = Agtk.ui.editLayerIndex;
+/tmp/apk/assets/Resources/plugins/001.js:235:            var layers = Agtk.scenes.getById(Agtk.ui.editSceneId).layers;
+/tmp/apk/assets/Resources/plugins/001.js:412:            var tileset = Agtk.tilesets.getById(tilesetId);
+/tmp/apk/assets/Resources/plugins/005.js:84:        var cameraPos = Agtk.sceneInstances.getCurrent().getCurrentCameraTargetPos();
+/tmp/apk/assets/Resources/plugins/005.js:85:        var displayScale = Agtk.sceneInstances.getCurrent().getCurrentCameraDisplayScale();
+/tmp/apk/assets/Resources/plugins/005.js:89:        var instance = Agtk.objectInstances.get(instanceId);
+/tmp/apk/assets/Resources/plugins/005.js:92:        var sceneInstance = Agtk.sceneInstances.getCurrent();
+/tmp/apk/assets/Resources/plugins/005.js:99:        if(xObjId == Agtk.constants.switchVariableObjects.ProjectCommon){
+/tmp/apk/assets/Resources/plugins/005.js:100:            variable = Agtk.variables.get(xVarId);
+/tmp/apk/assets/Resources/plugins/005.js:101:        } else if(xObjId == Agtk.constants.switchVariableObjects.SelfObject){
+/tmp/apk/assets/Resources/plugins/005.js:103:        } else if(xObjId == Agtk.constants.switchVariableObjects.ParentObject){
+/tmp/apk/assets/Resources/plugins/005.js:104:            var parentInstanceId = instance.variables.get(Agtk.constants.objects.variables.ParentObjectInstanceIDId);
+/tmp/apk/assets/Resources/plugins/005.js:105:            var parentInstance = Agtk.objectInstances.get(parentInstanceId);
+/tmp/apk/assets/Resources/plugins/005.js:109:            var posX = instance.variables.get(Agtk.constants.objects.variables.XId).getValue() + layerNode.x;
+/tmp/apk/assets/Resources/plugins/005.js:111:                posX = (posX - cameraPos.x) / displayScale.x + Agtk.settings.screenWidth / 2;
+/tmp/apk/assets/Resources/plugins/005.js:118:        if(yObjId == Agtk.constants.switchVariableObjects.ProjectCommon){
+/tmp/apk/assets/Resources/plugins/005.js:119:            variable = Agtk.variables.get(yVarId);
+/tmp/apk/assets/Resources/plugins/005.js:120:        } else if(yObjId == Agtk.constants.switchVariableObjects.SelfObject){
+/tmp/apk/assets/Resources/plugins/005.js:122:        } else if(yObjId == Agtk.constants.switchVariableObjects.ParentObject){
+/tmp/apk/assets/Resources/plugins/005.js:123:            var parentInstanceId = instance.variables.get(Agtk.constants.objects.variables.ParentObjectInstanceIDId);
+/tmp/apk/assets/Resources/plugins/005.js:124:            var parentInstance = Agtk.objectInstances.get(parentInstanceId);
+/tmp/apk/assets/Resources/plugins/005.js:128:            var posY = instance.variables.get(Agtk.constants.objects.variables.YId).getValue() + layerNode.y;
+/tmp/apk/assets/Resources/plugins/005.js:130:                posY = (posY - cameraPos.y) / displayScale.y + Agtk.settings.screenHeight / 2;
+/tmp/apk/assets/Resources/plugins/prepare.js:1:var Agtk = {};
+/tmp/apk/assets/Resources/plugins/prepare.js:2:Agtk.constants = {};
+/tmp/apk/assets/Resources/plugins/prepare.js:3:Agtk.constants.actionCommands = {};
+/tmp/apk/assets/Resources/plugins/prepare.js:4:Agtk.constants.actionCommands.ObjectByType = 0;
+/tmp/apk/assets/Resources/plugins/prepare.js:5:Agtk.constants.actionCommands.ObjectByGroup = 0;
+/tmp/apk/assets/Resources/plugins/prepare.js:6:Agtk.constants.actionCommands.ObjectById = 1;
+/tmp/apk/assets/Resources/plugins/prepare.js:8:Agtk.constants.actionCommands.ProjectCommon = 0;
+/tmp/apk/assets/Resources/plugins/prepare.js:9:Agtk.constants.actionCommands.UnsetObject = -1;
+/tmp/apk/assets/Resources/plugins/prepare.js:10:Agtk.constants.actionCommands.SelfObject = -2;
+/tmp/apk/assets/Resources/plugins/prepare.js:11:Agtk.constants.actionCommands.OtherThanSelfObject = -3;
+/tmp/apk/assets/Resources/plugins/prepare.js:12:Agtk.constants.actionCommands.ChildObject = -4;
+/tmp/apk/assets/Resources/plugins/prepare.js:13:Agtk.constants.actionCommands.LockedObject = -5;
+/tmp/apk/assets/Resources/plugins/prepare.js:14:Agtk.constants.actionCommands.TouchedObject = -6;
+/tmp/apk/assets/Resources/plugins/prepare.js:15:Agtk.constants.actionCommands.ParentObject = -7;
+/tmp/apk/assets/Resources/plugins/prepare.js:17:Agtk.constants.actionCommands.AccordingToMoveDirection = -2;
+/tmp/apk/assets/Resources/plugins/prepare.js:19:Agtk.constants.actionCommands.commandBehavior = {
+/tmp/apk/assets/Resources/plugins/prepare.js:25:Agtk.constants.actionCommands.priorityType = {
+/tmp/apk/assets/Resources/plugins/prepare.js:31:Agtk.constants.actionCommands.templateMove = {
+/tmp/apk/assets/Resources/plugins/prepare.js:42:Agtk.constants.actionCommands.objectLock = {
+/tmp/apk/assets/Resources/plugins/prepare.js:54:Agtk.constants.actionCommands.objectCreate = {
+/tmp/apk/assets/Resources/plugins/prepare.js:58:Agtk.constants.actionCommands.objectChange = {
+/tmp/apk/assets/Resources/plugins/prepare.js:62:Agtk.constants.actionCommands.objectMove = {
+/tmp/apk/assets/Resources/plugins/prepare.js:75:Agtk.constants.actionCommands.objectPushPull = {
+/tmp/apk/assets/Resources/plugins/prepare.js:89:Agtk.constants.actionCommands.attackSetting = {
+/tmp/apk/assets/Resources/plugins/prepare.js:94:Agtk.constants.actionCommands.sceneRotateFlip = {
+/tmp/apk/assets/Resources/plugins/prepare.js:98:Agtk.constants.actionCommands.soundPlay = {
+/tmp/apk/assets/Resources/plugins/prepare.js:103:Agtk.constants.actionCommands.soundStop = {
+/tmp/apk/assets/Resources/plugins/prepare.js:108:Agtk.constants.actionCommands.soundPositionRemember = {
+/tmp/apk/assets/Resources/plugins/prepare.js:113:Agtk.constants.actionCommands.messageShow = {
+/tmp/apk/assets/Resources/plugins/prepare.js:134:Agtk.constants.actionCommands.scrollMessageShow = {
+/tmp/apk/assets/Resources/plugins/prepare.js:150:Agtk.constants.actionCommands.effectShow = {
+/tmp/apk/assets/Resources/plugins/prepare.js:154:Agtk.constants.actionCommands.effectRemove = {
+/tmp/apk/assets/Resources/plugins/prepare.js:162:Agtk.constants.actionCommands.particleShow = {
+/tmp/apk/assets/Resources/plugins/prepare.js:166:Agtk.constants.actionCommands.particleRemove = {
+/tmp/apk/assets/Resources/plugins/prepare.js:174:Agtk.constants.actionCommands.movieShow = {
+/tmp/apk/assets/Resources/plugins/prepare.js:187:Agtk.constants.actionCommands.imageShow = {
+/tmp/apk/assets/Resources/plugins/prepare.js:209:Agtk.constants.actionCommands.gameSpeedChange = {
+/tmp/apk/assets/Resources/plugins/prepare.js:216:Agtk.constants.actionCommands.timer = {
+/tmp/apk/assets/Resources/plugins/prepare.js:220:Agtk.constants.actionCommands.directionMove = {
+/tmp/apk/assets/Resources/plugins/prepare.js:223:Agtk.constants.actionCommands.forthBackMoveTurn = {
+/tmp/apk/assets/Resources/plugins/prepare.js:240:Agtk.constants.actionCommands.menuShow = {
+/tmp/apk/assets/Resources/plugins/prepare.js:247:Agtk.constants.actionCommands.menuHide = {
+/tmp/apk/assets/Resources/plugins/prepare.js:254:Agtk.constants.actionCommands.fileLoad = {
+/tmp/apk/assets/Resources/plugins/prepare.js:263:Agtk.constants.actionCommands.objectUnlock = {
+/tmp/apk/assets/Resources/plugins/prepare.js:268:Agtk.constants.linkCondition = {};
+/tmp/apk/assets/Resources/plugins/prepare.js:269:Agtk.constants.linkCondition.objectWallTouched = {
+/tmp/apk/assets/Resources/plugins/prepare.js:273:Agtk.constants.linkCondition.objectHit = {
+/tmp/apk/assets/Resources/plugins/prepare.js:277:Agtk.constants.linkCondition.attackAreaTouched = {
+/tmp/apk/assets/Resources/plugins/prepare.js:285:Agtk.constants.linkCondition.attackAreaNear = {
+/tmp/apk/assets/Resources/plugins/prepare.js:297:Agtk.constants.linkCondition.objectNear = {
+/tmp/apk/assets/Resources/plugins/prepare.js:305:Agtk.constants.linkCondition.objectFacingEachOther = {
+/tmp/apk/assets/Resources/plugins/prepare.js:309:Agtk.constants.linkCondition.objectFacing = {
+/tmp/apk/assets/Resources/plugins/prepare.js:313:Agtk.constants.linkCondition.objectFound = {
+/tmp/apk/assets/Resources/plugins/prepare.js:317:Agtk.constants.linkCondition.objectFacingDirection = {
+/tmp/apk/assets/Resources/plugins/prepare.js:321:Agtk.constants.linkCondition.locked = {
+/tmp/apk/assets/Resources/plugins/prepare.js:325:Agtk.constants.linkCondition.slopeTouched = {
+/tmp/apk/assets/Resources/plugins/prepare.js:335:Agtk.constants.conditions = {
+/tmp/apk/assets/Resources/plugins/prepare.js:352:Agtk.constants.assignments = {
+/tmp/apk/assets/Resources/plugins/prepare.js:369:Agtk.constants.attackAttributes = {
+/tmp/apk/assets/Resources/plugins/prepare.js:379:Agtk.constants.filterEffects = {
+/tmp/apk/assets/Resources/plugins/prepare.js:399:Agtk.constants.systemLayers = {
+/tmp/apk/assets/Resources/plugins/prepare.js:404:Agtk.constants.qualifier = {
+/tmp/apk/assets/Resources/plugins/prepare.js:409:Agtk.constants.objectType = {
+/tmp/apk/assets/Resources/plugins/prepare.js:415:Agtk.constants.objectGroup = {
+/tmp/apk/assets/Resources/plugins/prepare.js:421:Agtk.constants.tileGroup = {
+/tmp/apk/assets/Resources/plugins/prepare.js:425:Agtk.constants.tile = {
+/tmp/apk/assets/Resources/plugins/prepare.js:437:Agtk.constants.direction = {
+/tmp/apk/assets/Resources/plugins/prepare.js:451:Agtk.constants.controllers = {
+/tmp/apk/assets/Resources/plugins/prepare.js:496:Agtk.constants.animations = {
+/tmp/apk/assets/Resources/plugins/prepare.js:502:Agtk.constants.tracks = {
+/tmp/apk/assets/Resources/plugins/prepare.js:509:Agtk.constants.objects = {
+/tmp/apk/assets/Resources/plugins/prepare.js:565:Agtk.constants.switchVariableObjects = {
+/tmp/apk/assets/Resources/plugins/prepare.js:571:Agtk.constants.databaseTemplateTypes = {
+/tmp/apk/assets/Resources/plugins/003.js:201:                this.sceneId = Agtk.sceneInstances.getCurrent().sceneId;
+/tmp/apk/assets/Resources/plugins/003.js:202:                var scene = Agtk.scenes.get(this.sceneId);
+/tmp/apk/assets/Resources/plugins/003.js:219:                        var fontData = Agtk.fonts.get(fontId);
+/tmp/apk/assets/Resources/plugins/003.js:259:                var imageData = Agtk.images.get(imageId);
+/tmp/apk/assets/Resources/plugins/003.js:279:                    var scene = Agtk.scenes.get(sceneId);
+/tmp/apk/assets/Resources/plugins/003.js:350:                    var portalIds = Agtk.portals.getIdList();
+/tmp/apk/assets/Resources/plugins/003.js:353:                        var portal = Agtk.portals.get(portalIds[i]);
+/tmp/apk/assets/Resources/plugins/003.js:384:                var baseScene = Agtk.scenes.get(basePortal.sceneId);
+/tmp/apk/assets/Resources/plugins/003.js:385:                var nextScene = Agtk.scenes.get(nextPortal.sceneId);
+/tmp/apk/assets/Resources/plugins/003.js:386:                var baseSceneWidth = Agtk.settings.screenWidth * baseScene.horzScreenCount;
+/tmp/apk/assets/Resources/plugins/003.js:387:                var baseSceneHeight = Agtk.settings.screenHeight * baseScene.vertScreenCount;
+/tmp/apk/assets/Resources/plugins/003.js:453:                var instance = Agtk.objectInstances.get(this.instanceId);
+/tmp/apk/assets/Resources/plugins/003.js:468:                var instance = Agtk.objectInstances.get(this.instanceId);
+/tmp/apk/assets/Resources/plugins/003.js:492:                var sceneId = Agtk.sceneInstances.getCurrent().sceneId;
+/tmp/apk/assets/Resources/plugins/003.js:494:                var scene = Agtk.scenes.get(sceneId);
+/tmp/apk/assets/Resources/plugins/003.js:544:        var agtkLayer = Agtk.sceneInstances.getCurrent().getMenuLayerById(Agtk.constants.systemLayers.HudLayerId);
+/tmp/apk/assets/Resources/plugins/003.js:546:            return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorNext;
+/tmp/apk/assets/Resources/plugins/003.js:552:        return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorBlock;
+/tmp/apk/assets/Resources/plugins/003.js:584:        var currentSceneInstance = Agtk.sceneInstances.getCurrent();
+/tmp/apk/assets/Resources/plugins/003.js:590:                obj.playerInstanceId = Agtk.variables.get(Agtk.variables._1PInstanceId).getValue();
+/tmp/apk/assets/Resources/plugins/003.js:644:            var fontImageData = Agtk.images.get(fontImageId);
+/tmp/apk/assets/Resources/plugins/009.js:101:        var instance = Agtk.objectInstances.get(instanceId);
+/tmp/apk/assets/Resources/plugins/009.js:109:        var maxDistance = Math.sqrt( Math.pow( Agtk.settings.screenWidth, 2 ) + Math.pow( Agtk.settings.screenHeight, 2 ) );
+/tmp/apk/assets/Resources/plugins/009.js:115:        var currentScene = Agtk.sceneInstances.getCurrent();
+/tmp/apk/assets/Resources/plugins/009.js:131:        var maxDistanceX = Math.sqrt( Math.pow( Agtk.settings.screenWidth, 2 ) );
+/tmp/apk/assets/Resources/plugins/009.js:151:        return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorNext;
+/tmp/apk/assets/Resources/plugins/004.js:192:                var bgImageData = Agtk.images.get(bgImageId);
+/tmp/apk/assets/Resources/plugins/004.js:203:                var fontData = Agtk.fonts.get(fontId);
+/tmp/apk/assets/Resources/plugins/004.js:222:                    var textData = Agtk.texts.get(textId);
+/tmp/apk/assets/Resources/plugins/004.js:229:                            fdata = Agtk.fonts.get(textData.fontId);
+/tmp/apk/assets/Resources/plugins/004.js:330:                        return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorBlock;
+/tmp/apk/assets/Resources/plugins/004.js:397:                            return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorBlock;
+/tmp/apk/assets/Resources/plugins/004.js:405:                        return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorNext;
+/tmp/apk/assets/Resources/plugins/004.js:407:                    return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorBlock;
+/tmp/apk/assets/Resources/plugins/004.js:409:                return Agtk.constants.actionCommands.commandBehavior.CommandBehaviorNext;
+/tmp/apk/assets/Resources/plugins/004.js:412:                var x = Agtk.variables.get(Agtk.variables.MouseXId).getValue();
+/tmp/apk/assets/Resources/plugins/004.js:413:                var y = obj.screenHeight - 1 - Agtk.variables.get(Agtk.variables.MouseYId).getValue();
+/tmp/apk/assets/Resources/plugins/004.js:510:                return this.isKeyJustPressed(Agtk.constants.controllers.OperationKeyOk);
+/tmp/apk/assets/Resources/plugins/004.js:513:                return this.isKeyJustPressed(Agtk.constants.controllers.OperationKeyCancel);
+/tmp/apk/assets/Resources/plugins/004.js:516:                return this.isKeyJustPressed(Agtk.constants.controllers.OperationKeyUp);
+/tmp/apk/assets/Resources/plugins/004.js:519:                return this.isKeyJustPressed(Agtk.constants.controllers.OperationKeyDown);
+/tmp/apk/assets/Resources/plugins/004.js:522:                return this.isMouseJustPressed(Agtk.constants.controllers.ReservedKeyCodePc_LeftClick);
+/tmp/apk/assets/Resources/plugins/004.js:525:                return this.isMouseJustPressed(Agtk.constants.controllers.ReservedKeyCodePc_RightClick);
+/tmp/apk/assets/Resources/plugins/004.js:528:                for(var i = 0; i <= Agtk.controllers.MaxControllerId; i++){
+/tmp/apk/assets/Resources/plugins/004.js:529:                    if(Agtk.controllers.getOperationKeyPressed(i, keyId)){
+/tmp/apk/assets/Resources/plugins/004.js:545:                if(Agtk.controllers.getKeyValue(0, keyCode) != 0){
+/tmp/apk/assets/Resources/plugins/004.js:567:        var agtkLayer = Agtk.sceneInstances.getCurrent().getMenuLayerById(Agtk.constants.systemLayers.HudLayerId);
+
+### keywords in the engine .so (may show symbol names for the C++ side) ###
+-- /tmp/apk/lib/arm64-v8a/libMyGame.so --
+ %*/49>CHMQUY^bgkN4agtk11ShaderValueE
+# InputManager Init
+#N4agtk4data8FontData11FontSettingE
+(function(){ var obj = %s; if(obj != null) Agtk.plugins.reload(obj, %d, "%s", %s, %s); })()
+/home/runner/work/hell-after-school-android/hell-after-school-android/Player/proj.android-studio/app/jni/../../../Classes/Manager/InputManager.cpp
+12InputManager
+753N4agtk11VideoSpriteE
+7N4agtk10FireBulletE
+;00010203040506070809101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899N4agtk4data12DatabaseDataE
+?N4agtk12OthersCourse11CoursePointE
+?N4agtk16ObjectInvincibleE
+?N4agtk21SceneBackgroundSpriteE
+@AN4agtk3GuiE
+Agtk
+Agtk.scriptFunctions.%s['%d,%d,%d'] = function(portalId, abId, index){ return (%s
+Agtk.scriptFunctions.objectActionCommandScriptEvaluate['%d,%d,0,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ %s
+Agtk.scriptFunctions.objectActionCommandScriptEvaluate['%d,%d,0,-1,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ %s
+Agtk.scriptFunctions.objectActionCommandScriptEvaluate['%d,%d,1,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ %s
+Agtk.scriptFunctions.objectActionCommandScriptEvaluate['-1,%d,0,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ %s
+Agtk.scriptFunctions.objectActionCommandScriptEvaluate['-1,%d,0,-1,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ %s
+Agtk.scriptFunctions.objectActionCommandScriptEvaluate['-1,%d,1,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ %s
+Agtk.scriptFunctions.objectActionCommandSwitchVariableChange['%d,%d,0,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ return (%s
+Agtk.scriptFunctions.objectActionCommandSwitchVariableChange['%d,%d,0,-1,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ return (%s
+Agtk.scriptFunctions.objectActionCommandSwitchVariableChange['%d,%d,1,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ return (%s
+Agtk.scriptFunctions.objectActionCommandSwitchVariableChange['-1,%d,0,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ return (%s
+Agtk.scriptFunctions.objectActionCommandSwitchVariableChange['-1,%d,0,-1,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ return (%s
+Agtk.scriptFunctions.objectActionCommandSwitchVariableChange['-1,%d,1,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ return (%s
+Agtk.scriptFunctions.objectDamaged['%d,%d'] = function(objectId){ return (%s
+Agtk.scriptFunctions.objectLinkConditionScript['%d,%d,%d,%d'] = function(objectId, instanceId, linkId, conditionId, commonActionLinkIndex){ return (%s
+Agtk.scriptFunctions.objectLinkConditionScript['%d,-1,%d,%d'] = function(objectId, instanceId, linkId, conditionId, commonActionLinkIndex){ return (%s
+Agtk.scriptFunctions.sceneCourseSwitchVariableChange['%d,%d,%d,%d'] = function(sceneId, scenePartId, pointIndex, index){ return (%s
+Agtk.scriptFunctions.tilesetTileGimmickSwitchVariableChange['%d,%d,%d,%d'] = function(tilesetId, tileX, tileY, index){ return (%s
+Agtk.scriptFunctions.transitionLinkPostMoveSwitchVariableChange['%d,%d'] = function(transitionLinkId, index){ return (%s
+CN4agtk5SlopeE
+Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalString
+KTZN4agtk17PortalTouchedDataE
+N12InputManager16PrecedeInputDataE
+N4agtk10BasePlayerE
+N4agtk10CameraVec2E
+N4agtk10EventTimerE
+N4agtk10IfCallFuncE
+N4agtk10PhysicsPinE
+N4agtk10SceneLayer11ConnectRopeE
+N4agtk10SceneLayer13ConnectTargetE
+N4agtk10SceneLayer17changeRunningNodeE
+N4agtk10SceneLayerE
+N4agtk10SceneShake10ShakeTimerE
+N4agtk10SceneShakeE
+N4agtk10SceneWaterE
+N4agtk10TimerColorE
+N4agtk10TimerFloatE
+N4agtk10ValueTimerIfEE
+N4agtk11BulletLocusE
+N4agtk11ImagePlayerE
+N4agtk11PhysicsAxisE
+N4agtk11PhysicsBase9ForceDataE
+N4agtk11PhysicsBaseE
+N4agtk11PhysicsDiskE
+N4agtk11SceneSprite12OpacityTimerE
+N4agtk11SceneSpriteE
+-- /tmp/apk/lib/armeabi-v7a/libMyGame.so --
+# InputManager Init
+(function(){ var obj = %s; if(obj != null) Agtk.plugins.reload(obj, %d, "%s", %s, %s); })()
+/__modal/volumes/vo-mn9uAUCQK6rFYHD9arsSpD/repos/hell-after-school-android/Player/proj.android-studio/app/jni/../../../Classes/Manager/InputManager.cpp
+12InputManager
+;00010203040506070809101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899N4agtk4data12DatabaseDataE
+?N4agtk12OthersCourse11CoursePointE
+?N4agtk16ObjectInvincibleE
+?N4agtk21SceneBackgroundSpriteE
+@AN4agtk3GuiE
+Agtk
+Agtk.scriptFunctions.%s['%d,%d,%d'] = function(portalId, abId, index){ return (%s
+Agtk.scriptFunctions.objectActionCommandScriptEvaluate['%d,%d,0,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ %s
+Agtk.scriptFunctions.objectActionCommandScriptEvaluate['%d,%d,0,-1,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ %s
+Agtk.scriptFunctions.objectActionCommandScriptEvaluate['%d,%d,1,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ %s
+Agtk.scriptFunctions.objectActionCommandScriptEvaluate['-1,%d,0,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ %s
+Agtk.scriptFunctions.objectActionCommandScriptEvaluate['-1,%d,0,-1,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ %s
+Agtk.scriptFunctions.objectActionCommandScriptEvaluate['-1,%d,1,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ %s
+Agtk.scriptFunctions.objectActionCommandSwitchVariableChange['%d,%d,0,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ return (%s
+Agtk.scriptFunctions.objectActionCommandSwitchVariableChange['%d,%d,0,-1,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ return (%s
+Agtk.scriptFunctions.objectActionCommandSwitchVariableChange['%d,%d,1,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ return (%s
+Agtk.scriptFunctions.objectActionCommandSwitchVariableChange['-1,%d,0,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ return (%s
+Agtk.scriptFunctions.objectActionCommandSwitchVariableChange['-1,%d,0,-1,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ return (%s
+Agtk.scriptFunctions.objectActionCommandSwitchVariableChange['-1,%d,1,%d,%d'] = function(objectId, instanceId, actionId, commandId, isCommonAction, sceneId){ return (%s
+Agtk.scriptFunctions.objectDamaged['%d,%d'] = function(objectId){ return (%s
+Agtk.scriptFunctions.objectLinkConditionScript['%d,%d,%d,%d'] = function(objectId, instanceId, linkId, conditionId, commonActionLinkIndex){ return (%s
+Agtk.scriptFunctions.objectLinkConditionScript['%d,-1,%d,%d'] = function(objectId, instanceId, linkId, conditionId, commonActionLinkIndex){ return (%s
+Agtk.scriptFunctions.sceneCourseSwitchVariableChange['%d,%d,%d,%d'] = function(sceneId, scenePartId, pointIndex, index){ return (%s
+Agtk.scriptFunctions.tilesetTileGimmickSwitchVariableChange['%d,%d,%d,%d'] = function(tilesetId, tileX, tileY, index){ return (%s
+Agtk.scriptFunctions.transitionLinkPostMoveSwitchVariableChange['%d,%d'] = function(transitionLinkId, index){ return (%s
+CN4agtk5SlopeE
+Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalString
+N12InputManager16PrecedeInputDataE
+N4agtk10BasePlayerE
+N4agtk10CameraVec2E
+N4agtk10EventTimerE
+N4agtk10FireBulletE
+N4agtk10IfCallFuncE
+N4agtk10PhysicsPinE
+N4agtk10SceneLayer11ConnectRopeE
+N4agtk10SceneLayer13ConnectTargetE
+N4agtk10SceneLayer17changeRunningNodeE
+N4agtk10SceneLayerE
+N4agtk10SceneShake10ShakeTimerE
+N4agtk10SceneShakeE
+N4agtk10SceneWaterE
+N4agtk10TimerColorE
+N4agtk10TimerFloatE
+N4agtk10ValueTimerIfEE
+N4agtk11BulletLocusE
+N4agtk11ImagePlayerE
+N4agtk11PhysicsAxisE
+N4agtk11PhysicsBase9ForceDataE
+N4agtk11PhysicsBaseE
+N4agtk11PhysicsDiskE
+N4agtk11SceneSprite12OpacityTimerE
+N4agtk11SceneSpriteE
+N4agtk11ShaderValueE
+N4agtk11VideoSpriteE
+N4agtk12CameraObjectE
+N4agtk12DebugManagerE
+
+### how cachePurge is invoked (successful reference we already know works) ###
