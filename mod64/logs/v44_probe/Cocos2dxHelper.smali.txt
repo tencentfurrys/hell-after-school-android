@@ -1,0 +1,2274 @@
+.class public Lorg/cocos2dx/lib/Cocos2dxHelper;
+.super Ljava/lang/Object;
+
+
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Lorg/cocos2dx/lib/Cocos2dxHelper$Cocos2dxHelperListener;
+    }
+.end annotation
+
+
+# static fields
+.field private static final BOOST_TIME:I = 0x7
+
+.field private static final PREFS_NAME:Ljava/lang/String; = "Cocos2dxPrefsFile"
+
+.field private static final RUNNABLES_PER_FRAME:I = 0x5
+
+.field private static final TAG:Ljava/lang/String; = "Cocos2dxHelper"
+
+.field private static connection:Landroid/content/ServiceConnection;
+
+.field private static mGameServiceBinder:Lcom/enhance/gameservice/IGameTuningService;
+
+.field private static onActivityResultListeners:Ljava/util/Set;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/Set<",
+            "Landroid/preference/PreferenceManager$OnActivityResultListener;",
+            ">;"
+        }
+    .end annotation
+.end field
+
+.field private static sAccelerometerEnabled:Z
+
+.field private static sActivity:Landroid/app/Activity;
+
+.field private static sActivityVisible:Z
+
+.field private static sAssetManager:Landroid/content/res/AssetManager;
+
+.field private static sAssetsPath:Ljava/lang/String;
+
+.field private static sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+.field private static sCocos2dSound:Lorg/cocos2dx/lib/Cocos2dxSound;
+
+.field private static sCocos2dxAccelerometer:Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+.field private static sCocos2dxHelperListener:Lorg/cocos2dx/lib/Cocos2dxHelper$Cocos2dxHelperListener;
+
+.field private static sCompassEnabled:Z
+
+.field private static sInited:Z
+
+.field private static sOBBFile:Lcom/android/vending/expansion/zipfile/ZipResourceFile;
+
+.field private static sPackageName:Ljava/lang/String;
+
+.field private static sVibrateService:Landroid/os/Vibrator;
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .registers 2
+
+    new-instance v0, Ljava/util/LinkedHashSet;
+
+    invoke-direct {v0}, Ljava/util/LinkedHashSet;-><init>()V
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->onActivityResultListeners:Ljava/util/Set;
+
+    const/4 v0, 0x0
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sVibrateService:Landroid/os/Vibrator;
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->mGameServiceBinder:Lcom/enhance/gameservice/IGameTuningService;
+
+    const-string v1, ""
+
+    sput-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->sAssetsPath:Ljava/lang/String;
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sOBBFile:Lcom/android/vending/expansion/zipfile/ZipResourceFile;
+
+    const/4 v0, 0x0
+
+    sput-boolean v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sInited:Z
+
+    new-instance v0, Lorg/cocos2dx/lib/Cocos2dxHelper$2;
+
+    invoke-direct {v0}, Lorg/cocos2dx/lib/Cocos2dxHelper$2;-><init>()V
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->connection:Landroid/content/ServiceConnection;
+
+    return-void
+.end method
+
+.method public constructor <init>()V
+    .registers 1
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+.method static synthetic access$002(Lcom/enhance/gameservice/IGameTuningService;)Lcom/enhance/gameservice/IGameTuningService;
+    .registers 1
+
+    sput-object p0, Lorg/cocos2dx/lib/Cocos2dxHelper;->mGameServiceBinder:Lcom/enhance/gameservice/IGameTuningService;
+
+    return-object p0
+.end method
+
+.method static synthetic access$100()Landroid/content/ServiceConnection;
+    .registers 1
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->connection:Landroid/content/ServiceConnection;
+
+    return-object v0
+.end method
+
+.method static synthetic access$200()Landroid/app/Activity;
+    .registers 1
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    return-object v0
+.end method
+
+.method static synthetic access$300([B)V
+    .registers 1
+
+    invoke-static {p0}, Lorg/cocos2dx/lib/Cocos2dxHelper;->nativeSetEditTextDialogResult([B)V
+
+    return-void
+.end method
+
+.method public static addOnActivityResultListener(Landroid/preference/PreferenceManager$OnActivityResultListener;)V
+    .registers 2
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->onActivityResultListeners:Ljava/util/Set;
+
+    invoke-interface {v0, p0}, Ljava/util/Set;->add(Ljava/lang/Object;)Z
+
+    return-void
+.end method
+
+.method public static conversionEncoding([BLjava/lang/String;Ljava/lang/String;)[B
+    .registers 4
+
+    :try_start_0
+    new-instance v0, Ljava/lang/String;
+
+    invoke-direct {v0, p0, p1}, Ljava/lang/String;-><init>([BLjava/lang/String;)V
+
+    invoke-virtual {v0, p2}, Ljava/lang/String;->getBytes(Ljava/lang/String;)[B
+
+    move-result-object p0
+    :try_end_9
+    .catch Ljava/io/UnsupportedEncodingException; {:try_start_0 .. :try_end_9} :catch_a
+
+    return-object p0
+
+    :catch_a
+    move-exception p0
+
+    invoke-virtual {p0}, Ljava/io/UnsupportedEncodingException;->printStackTrace()V
+
+    const/4 p0, 0x0
+
+    return-object p0
+.end method
+
+.method public static deleteValueForKey(Ljava/lang/String;)V
+    .registers 4
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    const-string v1, "Cocos2dxPrefsFile"
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroid/app/Activity;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v0
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v0
+
+    invoke-interface {v0, p0}, Landroid/content/SharedPreferences$Editor;->remove(Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences$Editor;->apply()V
+
+    return-void
+.end method
+
+.method public static disableAccelerometer()V
+    .registers 1
+
+    const/4 v0, 0x0
+
+    sput-boolean v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sAccelerometerEnabled:Z
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getAccelerometer()Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxAccelerometer;->disable()V
+
+    return-void
+.end method
+
+.method public static enableAccelerometer()V
+    .registers 1
+
+    const/4 v0, 0x1
+
+    sput-boolean v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sAccelerometerEnabled:Z
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getAccelerometer()Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxAccelerometer;->enableAccel()V
+
+    return-void
+.end method
+
+.method public static enableCompass()V
+    .registers 1
+
+    const/4 v0, 0x1
+
+    sput-boolean v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCompassEnabled:Z
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getAccelerometer()Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxAccelerometer;->enableCompass()V
+
+    return-void
+.end method
+
+.method public static end()V
+    .registers 1
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxMusic;->end()V
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxSound;->end()V
+
+    return-void
+.end method
+
+.method public static fastLoading(I)I
+    .registers 3
+
+    const/4 v0, -0x1
+
+    :try_start_1
+    sget-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->mGameServiceBinder:Lcom/enhance/gameservice/IGameTuningService;
+
+    if-eqz v1, :cond_a
+
+    invoke-interface {v1, p0}, Lcom/enhance/gameservice/IGameTuningService;->boostUp(I)I
+
+    move-result p0
+    :try_end_9
+    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_9} :catch_b
+
+    return p0
+
+    :cond_a
+    return v0
+
+    :catch_b
+    move-exception p0
+
+    invoke-virtual {p0}, Ljava/lang/Exception;->printStackTrace()V
+
+    return v0
+.end method
+
+.method public static getAccelValue()[F
+    .registers 1
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getAccelerometer()Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+    move-result-object v0
+
+    iget-object v0, v0, Lorg/cocos2dx/lib/Cocos2dxAccelerometer;->accelerometerValues:[F
+
+    return-object v0
+.end method
+
+.method private static getAccelerometer()Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+    .registers 2
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dxAccelerometer:Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+    if-nez v0, :cond_d
+
+    new-instance v0, Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+    sget-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    invoke-direct {v0, v1}, Lorg/cocos2dx/lib/Cocos2dxAccelerometer;-><init>(Landroid/content/Context;)V
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dxAccelerometer:Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+    :cond_d
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dxAccelerometer:Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+    return-object v0
+.end method
+
+.method public static getActivity()Landroid/app/Activity;
+    .registers 1
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    return-object v0
+.end method
+
+.method public static getAssetManager()Landroid/content/res/AssetManager;
+    .registers 1
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sAssetManager:Landroid/content/res/AssetManager;
+
+    return-object v0
+.end method
+
+.method public static getAssetsPath()Ljava/lang/String;
+    .registers 4
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sAssetsPath:Ljava/lang/String;
+
+    const-string v1, ""
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_70
+
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    invoke-static {}, Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    const-string v2, "/Android/obb/"
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    sget-object v2, Lorg/cocos2dx/lib/Cocos2dxHelper;->sPackageName:Ljava/lang/String;
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    new-instance v2, Ljava/io/File;
+
+    invoke-direct {v2, v0}, Ljava/io/File;-><init>(Ljava/lang/String;)V
+
+    new-instance v3, Lorg/cocos2dx/lib/Cocos2dxHelper$1;
+
+    invoke-direct {v3}, Lorg/cocos2dx/lib/Cocos2dxHelper$1;-><init>()V
+
+    invoke-virtual {v2, v3}, Ljava/io/File;->list(Ljava/io/FilenameFilter;)[Ljava/lang/String;
+
+    move-result-object v2
+
+    if-eqz v2, :cond_58
+
+    array-length v3, v2
+
+    if-lez v3, :cond_58
+
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    const-string v1, "/"
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    const/4 v1, 0x0
+
+    aget-object v1, v2, v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    :cond_58
+    new-instance v0, Ljava/io/File;
+
+    invoke-direct {v0, v1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
+
+    invoke-virtual {v0}, Ljava/io/File;->exists()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_66
+
+    sput-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->sAssetsPath:Ljava/lang/String;
+
+    goto :goto_70
+
+    :cond_66
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    invoke-virtual {v0}, Landroid/app/Activity;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
+
+    move-result-object v0
+
+    iget-object v0, v0, Landroid/content/pm/ApplicationInfo;->sourceDir:Ljava/lang/String;
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sAssetsPath:Ljava/lang/String;
+
+    :cond_70
+    :goto_70
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sAssetsPath:Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method public static getBackgroundMusicVolume()F
+    .registers 1
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxMusic;->getBackgroundVolume()F
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static getBoolForKey(Ljava/lang/String;Z)Z
+    .registers 5
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    const-string v1, "Cocos2dxPrefsFile"
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroid/app/Activity;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v0
+
+    :try_start_9
+    invoke-interface {v0, p0, p1}, Landroid/content/SharedPreferences;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result p0
+    :try_end_d
+    .catch Ljava/lang/Exception; {:try_start_9 .. :try_end_d} :catch_e
+
+    return p0
+
+    :catch_e
+    move-exception v1
+
+    invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences;->getAll()Ljava/util/Map;
+
+    move-result-object v0
+
+    invoke-interface {v0, p0}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object p0
+
+    instance-of v0, p0, Ljava/lang/String;
+
+    if-eqz v0, :cond_27
+
+    invoke-virtual {p0}, Ljava/lang/Object;->toString()Ljava/lang/String;
+
+    move-result-object p0
+
+    invoke-static {p0}, Ljava/lang/Boolean;->parseBoolean(Ljava/lang/String;)Z
+
+    move-result p0
+
+    return p0
+
+    :cond_27
+    instance-of v0, p0, Ljava/lang/Integer;
+
+    const/4 v1, 0x1
+
+    if-eqz v0, :cond_36
+
+    check-cast p0, Ljava/lang/Integer;
+
+    invoke-virtual {p0}, Ljava/lang/Integer;->intValue()I
+
+    move-result p0
+
+    if-eqz p0, :cond_35
+
+    move v2, v1
+
+    :cond_35
+    return v2
+
+    :cond_36
+    instance-of v0, p0, Ljava/lang/Float;
+
+    if-eqz v0, :cond_47
+
+    check-cast p0, Ljava/lang/Float;
+
+    invoke-virtual {p0}, Ljava/lang/Float;->floatValue()F
+
+    move-result p0
+
+    const/4 p1, 0x0
+
+    cmpl-float p0, p0, p1
+
+    if-eqz p0, :cond_46
+
+    move v2, v1
+
+    :cond_46
+    return v2
+
+    :cond_47
+    return p1
+.end method
+
+.method public static getCocos2dxPackageName()Ljava/lang/String;
+    .registers 1
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sPackageName:Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method public static getCocos2dxWritablePath()Ljava/lang/String;
+    .registers 3
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, v1}, Landroid/app/Activity;->getExternalFilesDir(Ljava/lang/String;)Ljava/io/File;
+
+    move-result-object v2
+
+    if-eqz v2, :cond_e
+
+    invoke-virtual {v2}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+
+    :cond_e
+    invoke-virtual {v0}, Landroid/app/Activity;->getFilesDir()Ljava/io/File;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public static getCompassValue()[F
+    .registers 1
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getAccelerometer()Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+    move-result-object v0
+
+    iget-object v0, v0, Lorg/cocos2dx/lib/Cocos2dxAccelerometer;->compassFieldValues:[F
+
+    return-object v0
+.end method
+
+.method public static getCurrentLanguage()Ljava/lang/String;
+    .registers 1
+
+    invoke-static {}, Ljava/util/Locale;->getDefault()Ljava/util/Locale;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/util/Locale;->getLanguage()Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public static getDPI()I
+    .registers 2
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    if-eqz v0, :cond_21
+
+    new-instance v0, Landroid/util/DisplayMetrics;
+
+    invoke-direct {v0}, Landroid/util/DisplayMetrics;-><init>()V
+
+    sget-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    invoke-virtual {v1}, Landroid/app/Activity;->getWindowManager()Landroid/view/WindowManager;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_21
+
+    invoke-interface {v1}, Landroid/view/WindowManager;->getDefaultDisplay()Landroid/view/Display;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_21
+
+    invoke-virtual {v1, v0}, Landroid/view/Display;->getMetrics(Landroid/util/DisplayMetrics;)V
+
+    iget v0, v0, Landroid/util/DisplayMetrics;->density:F
+
+    const/high16 v1, 0x43200000    # 160.0f
+
+    mul-float/2addr v0, v1
+
+    float-to-int v0, v0
+
+    return v0
+
+    :cond_21
+    const/4 v0, -0x1
+
+    return v0
+.end method
+
+.method public static getDeviceModel()Ljava/lang/String;
+    .registers 1
+
+    sget-object v0, Landroid/os/Build;->MODEL:Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method public static getDoubleForKey(Ljava/lang/String;D)D
+    .registers 3
+
+    double-to-float p1, p1
+
+    invoke-static {p0, p1}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getFloatForKey(Ljava/lang/String;F)F
+
+    move-result p0
+
+    float-to-double p0, p0
+
+    return-wide p0
+.end method
+
+.method public static getEffectsVolume()F
+    .registers 1
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxSound;->getEffectsVolume()F
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static getFloatForKey(Ljava/lang/String;F)F
+    .registers 5
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    const-string v1, "Cocos2dxPrefsFile"
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroid/app/Activity;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v0
+
+    :try_start_9
+    invoke-interface {v0, p0, p1}, Landroid/content/SharedPreferences;->getFloat(Ljava/lang/String;F)F
+
+    move-result p0
+    :try_end_d
+    .catch Ljava/lang/Exception; {:try_start_9 .. :try_end_d} :catch_e
+
+    return p0
+
+    :catch_e
+    move-exception v1
+
+    invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences;->getAll()Ljava/util/Map;
+
+    move-result-object v0
+
+    invoke-interface {v0, p0}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object p0
+
+    instance-of v0, p0, Ljava/lang/String;
+
+    if-eqz v0, :cond_27
+
+    invoke-virtual {p0}, Ljava/lang/Object;->toString()Ljava/lang/String;
+
+    move-result-object p0
+
+    invoke-static {p0}, Ljava/lang/Float;->parseFloat(Ljava/lang/String;)F
+
+    move-result p0
+
+    return p0
+
+    :cond_27
+    instance-of v0, p0, Ljava/lang/Integer;
+
+    if-eqz v0, :cond_32
+
+    check-cast p0, Ljava/lang/Integer;
+
+    invoke-virtual {p0}, Ljava/lang/Integer;->floatValue()F
+
+    move-result p0
+
+    return p0
+
+    :cond_32
+    instance-of v0, p0, Ljava/lang/Boolean;
+
+    if-eqz v0, :cond_41
+
+    check-cast p0, Ljava/lang/Boolean;
+
+    invoke-virtual {p0}, Ljava/lang/Boolean;->booleanValue()Z
+
+    move-result p0
+
+    if-eqz p0, :cond_41
+
+    const/high16 p0, 0x3f800000    # 1.0f
+
+    return p0
+
+    :cond_41
+    return p1
+.end method
+
+.method public static getIntegerForKey(Ljava/lang/String;I)I
+    .registers 5
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    const-string v1, "Cocos2dxPrefsFile"
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroid/app/Activity;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v0
+
+    :try_start_9
+    invoke-interface {v0, p0, p1}, Landroid/content/SharedPreferences;->getInt(Ljava/lang/String;I)I
+
+    move-result p0
+    :try_end_d
+    .catch Ljava/lang/Exception; {:try_start_9 .. :try_end_d} :catch_e
+
+    return p0
+
+    :catch_e
+    move-exception v1
+
+    invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences;->getAll()Ljava/util/Map;
+
+    move-result-object v0
+
+    invoke-interface {v0, p0}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object p0
+
+    instance-of v0, p0, Ljava/lang/String;
+
+    if-eqz v0, :cond_27
+
+    invoke-virtual {p0}, Ljava/lang/Object;->toString()Ljava/lang/String;
+
+    move-result-object p0
+
+    invoke-static {p0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
+
+    move-result p0
+
+    return p0
+
+    :cond_27
+    instance-of v0, p0, Ljava/lang/Float;
+
+    if-eqz v0, :cond_32
+
+    check-cast p0, Ljava/lang/Float;
+
+    invoke-virtual {p0}, Ljava/lang/Float;->intValue()I
+
+    move-result p0
+
+    return p0
+
+    :cond_32
+    instance-of v0, p0, Ljava/lang/Boolean;
+
+    if-eqz v0, :cond_40
+
+    check-cast p0, Ljava/lang/Boolean;
+
+    invoke-virtual {p0}, Ljava/lang/Boolean;->booleanValue()Z
+
+    move-result p0
+
+    if-eqz p0, :cond_40
+
+    const/4 p0, 0x1
+
+    return p0
+
+    :cond_40
+    return p1
+.end method
+
+.method public static getObbAssetFileDescriptor(Ljava/lang/String;)[J
+    .registers 7
+
+    const/4 v0, 0x3
+
+    new-array v0, v0, [J
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getObbFile()Lcom/android/vending/expansion/zipfile/ZipResourceFile;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_5d
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getObbFile()Lcom/android/vending/expansion/zipfile/ZipResourceFile;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p0}, Lcom/android/vending/expansion/zipfile/ZipResourceFile;->getAssetFileDescriptor(Ljava/lang/String;)Landroid/content/res/AssetFileDescriptor;
+
+    move-result-object p0
+
+    if-eqz p0, :cond_5d
+
+    :try_start_13
+    invoke-virtual {p0}, Landroid/content/res/AssetFileDescriptor;->getParcelFileDescriptor()Landroid/os/ParcelFileDescriptor;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    move-result-object v2
+
+    const-string v3, "getFd"
+
+    const/4 v4, 0x0
+
+    new-array v5, v4, [Ljava/lang/Class;
+
+    invoke-virtual {v2, v3, v5}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+
+    move-result-object v2
+
+    new-array v3, v4, [Ljava/lang/Object;
+
+    invoke-virtual {v2, v1, v3}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Ljava/lang/Integer;
+
+    invoke-virtual {v1}, Ljava/lang/Integer;->intValue()I
+
+    move-result v1
+
+    int-to-long v1, v1
+
+    aput-wide v1, v0, v4
+
+    const/4 v1, 0x1
+
+    invoke-virtual {p0}, Landroid/content/res/AssetFileDescriptor;->getStartOffset()J
+
+    move-result-wide v2
+
+    aput-wide v2, v0, v1
+
+    const/4 v1, 0x2
+
+    invoke-virtual {p0}, Landroid/content/res/AssetFileDescriptor;->getLength()J
+
+    move-result-wide v2
+
+    aput-wide v2, v0, v1
+    :try_end_41
+    .catch Ljava/lang/NoSuchMethodException; {:try_start_13 .. :try_end_41} :catch_55
+    .catch Ljava/lang/IllegalAccessException; {:try_start_13 .. :try_end_41} :catch_4a
+    .catch Ljava/lang/reflect/InvocationTargetException; {:try_start_13 .. :try_end_41} :catch_42
+
+    goto :goto_5d
+
+    :catch_42
+    move-exception p0
+
+    sget-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->TAG:Ljava/lang/String;
+
+    invoke-virtual {p0}, Ljava/lang/reflect/InvocationTargetException;->toString()Ljava/lang/String;
+
+    move-result-object p0
+
+    goto :goto_51
+
+    :catch_4a
+    move-exception p0
+
+    sget-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->TAG:Ljava/lang/String;
+
+    invoke-virtual {p0}, Ljava/lang/IllegalAccessException;->toString()Ljava/lang/String;
+
+    move-result-object p0
+
+    :goto_51
+    invoke-static {v1, p0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_5d
+
+    :catch_55
+    move-exception p0
+
+    sget-object p0, Lorg/cocos2dx/lib/Cocos2dxHelper;->TAG:Ljava/lang/String;
+
+    const-string v1, "Accessing file descriptor directly from the OBB is only supported from Android 3.1 (API level 12) and above."
+
+    invoke-static {p0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_5d
+    :goto_5d
+    return-object v0
+.end method
+
+.method public static getObbFile()Lcom/android/vending/expansion/zipfile/ZipResourceFile;
+    .registers 4
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sOBBFile:Lcom/android/vending/expansion/zipfile/ZipResourceFile;
+
+    if-nez v0, :cond_2c
+
+    const/4 v0, 0x1
+
+    const/4 v1, 0x0
+
+    :try_start_6
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxActivity;->getContext()Landroid/content/Context;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
+
+    move-result-object v2
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getCocos2dxPackageName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3, v1}, Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
+
+    move-result-object v2
+
+    iget v0, v2, Landroid/content/pm/PackageInfo;->versionCode:I
+    :try_end_18
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_6 .. :try_end_18} :catch_19
+
+    goto :goto_1d
+
+    :catch_19
+    move-exception v2
+
+    invoke-virtual {v2}, Landroid/content/pm/PackageManager$NameNotFoundException;->printStackTrace()V
+
+    :goto_1d
+    :try_start_1d
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxActivity;->getContext()Landroid/content/Context;
+
+    move-result-object v2
+
+    invoke-static {v2, v0, v1}, Lcom/android/vending/expansion/zipfile/APKExpansionSupport;->getAPKExpansionZipFile(Landroid/content/Context;II)Lcom/android/vending/expansion/zipfile/ZipResourceFile;
+
+    move-result-object v0
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sOBBFile:Lcom/android/vending/expansion/zipfile/ZipResourceFile;
+    :try_end_27
+    .catch Ljava/io/IOException; {:try_start_1d .. :try_end_27} :catch_28
+
+    goto :goto_2c
+
+    :catch_28
+    move-exception v0
+
+    invoke-virtual {v0}, Ljava/io/IOException;->printStackTrace()V
+
+    :cond_2c
+    :goto_2c
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sOBBFile:Lcom/android/vending/expansion/zipfile/ZipResourceFile;
+
+    return-object v0
+.end method
+
+.method public static getOnActivityResultListeners()Ljava/util/Set;
+    .registers 1
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Ljava/util/Set<",
+            "Landroid/preference/PreferenceManager$OnActivityResultListener;",
+            ">;"
+        }
+    .end annotation
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->onActivityResultListeners:Ljava/util/Set;
+
+    return-object v0
+.end method
+
+.method public static getSDKVersion()I
+    .registers 1
+
+    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I
+
+    return v0
+.end method
+
+.method private static getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+    .registers 2
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dSound:Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    if-nez v0, :cond_d
+
+    new-instance v0, Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    sget-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    invoke-direct {v0, v1}, Lorg/cocos2dx/lib/Cocos2dxSound;-><init>(Landroid/content/Context;)V
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dSound:Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    :cond_d
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dSound:Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    return-object v0
+.end method
+
+.method public static getStringForKey(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    .registers 5
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    const-string v1, "Cocos2dxPrefsFile"
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroid/app/Activity;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v0
+
+    :try_start_9
+    invoke-interface {v0, p0, p1}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object p0
+    :try_end_d
+    .catch Ljava/lang/Exception; {:try_start_9 .. :try_end_d} :catch_e
+
+    return-object p0
+
+    :catch_e
+    move-exception p1
+
+    invoke-virtual {p1}, Ljava/lang/Exception;->printStackTrace()V
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences;->getAll()Ljava/util/Map;
+
+    move-result-object p1
+
+    invoke-interface {p1, p0}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object p0
+
+    invoke-virtual {p0}, Ljava/lang/Object;->toString()Ljava/lang/String;
+
+    move-result-object p0
+
+    return-object p0
+.end method
+
+.method public static getTemperature()I
+    .registers 2
+
+    const/4 v0, -0x1
+
+    :try_start_1
+    sget-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->mGameServiceBinder:Lcom/enhance/gameservice/IGameTuningService;
+
+    if-eqz v1, :cond_9
+
+    invoke-interface {v1}, Lcom/enhance/gameservice/IGameTuningService;->getAbstractTemperature()I
+
+    move-result v0
+    :try_end_9
+    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_9} :catch_a
+
+    :cond_9
+    return v0
+
+    :catch_a
+    move-exception v1
+
+    invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V
+
+    return v0
+.end method
+
+.method public static getVersion()Ljava/lang/String;
+    .registers 3
+
+    :try_start_0
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxActivity;->getContext()Landroid/content/Context;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
+
+    move-result-object v0
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxActivity;->getContext()Landroid/content/Context;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+
+    move-result-object v1
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
+
+    move-result-object v0
+
+    iget-object v0, v0, Landroid/content/pm/PackageInfo;->versionName:Ljava/lang/String;
+    :try_end_17
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_17} :catch_18
+
+    return-object v0
+
+    :catch_18
+    move-exception v0
+
+    const-string v0, ""
+
+    return-object v0
+.end method
+
+.method public static hasSoftKeys()Z
+    .registers 4
+
+    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I
+
+    const/16 v1, 0x11
+
+    if-lt v0, v1, :cond_2f
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    invoke-virtual {v0}, Landroid/app/Activity;->getWindowManager()Landroid/view/WindowManager;
+
+    move-result-object v0
+
+    invoke-interface {v0}, Landroid/view/WindowManager;->getDefaultDisplay()Landroid/view/Display;
+
+    move-result-object v0
+
+    new-instance v1, Landroid/util/DisplayMetrics;
+
+    invoke-direct {v1}, Landroid/util/DisplayMetrics;-><init>()V
+
+    invoke-virtual {v0, v1}, Landroid/view/Display;->getRealMetrics(Landroid/util/DisplayMetrics;)V
+
+    iget v2, v1, Landroid/util/DisplayMetrics;->heightPixels:I
+
+    iget v1, v1, Landroid/util/DisplayMetrics;->widthPixels:I
+
+    new-instance v3, Landroid/util/DisplayMetrics;
+
+    invoke-direct {v3}, Landroid/util/DisplayMetrics;-><init>()V
+
+    invoke-virtual {v0, v3}, Landroid/view/Display;->getMetrics(Landroid/util/DisplayMetrics;)V
+
+    iget v0, v3, Landroid/util/DisplayMetrics;->heightPixels:I
+
+    iget v3, v3, Landroid/util/DisplayMetrics;->widthPixels:I
+
+    sub-int/2addr v1, v3
+
+    if-gtz v1, :cond_42
+
+    sub-int/2addr v2, v0
+
+    if-lez v2, :cond_44
+
+    goto :goto_42
+
+    :cond_2f
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    invoke-static {v0}, Landroid/view/ViewConfiguration;->get(Landroid/content/Context;)Landroid/view/ViewConfiguration;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Landroid/view/ViewConfiguration;->hasPermanentMenuKey()Z
+
+    move-result v0
+
+    const/4 v1, 0x4
+
+    invoke-static {v1}, Landroid/view/KeyCharacterMap;->deviceHasKey(I)Z
+
+    move-result v1
+
+    if-nez v0, :cond_44
+
+    if-nez v1, :cond_44
+
+    :cond_42
+    :goto_42
+    const/4 v0, 0x1
+
+    goto :goto_45
+
+    :cond_44
+    const/4 v0, 0x0
+
+    :goto_45
+    return v0
+.end method
+
+.method public static init(Landroid/app/Activity;)V
+    .registers 12
+
+    sput-object p0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    move-object v0, p0
+
+    check-cast v0, Lorg/cocos2dx/lib/Cocos2dxHelper$Cocos2dxHelperListener;
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dxHelperListener:Lorg/cocos2dx/lib/Cocos2dxHelper$Cocos2dxHelperListener;
+
+    sget-boolean v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sInited:Z
+
+    if-nez v0, :cond_ee
+
+    invoke-virtual {p0}, Landroid/app/Activity;->getPackageManager()Landroid/content/pm/PackageManager;
+
+    move-result-object v0
+
+    const-string v1, "android.hardware.audio.low_latency"
+
+    invoke-virtual {v0, v1}, Landroid/content/pm/PackageManager;->hasSystemFeature(Ljava/lang/String;)Z
+
+    move-result v0
+
+    sget-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->TAG:Ljava/lang/String;
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "isSupportLowLatency:"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    const v2, 0xac44
+
+    const/16 v3, 0xc0
+
+    sget v4, Landroid/os/Build$VERSION;->SDK_INT:I
+
+    const/16 v5, 0x11
+
+    const/4 v6, 0x1
+
+    if-lt v4, v5, :cond_a6
+
+    const-string v1, "audio"
+
+    invoke-virtual {p0, v1}, Landroid/app/Activity;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Landroid/media/AudioManager;
+
+    const-class v4, Landroid/media/AudioManager;
+
+    const-string v5, "PROPERTY_OUTPUT_SAMPLE_RATE"
+
+    invoke-static {v4, v5}, Lorg/cocos2dx/lib/Cocos2dxReflectionHelper;->getConstantValue(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v4
+
+    new-array v5, v6, [Ljava/lang/Class;
+
+    const-class v7, Ljava/lang/String;
+
+    const/4 v8, 0x0
+
+    aput-object v7, v5, v8
+
+    new-array v7, v6, [Ljava/lang/Object;
+
+    aput-object v4, v7, v8
+
+    const-string v4, "getProperty"
+
+    invoke-static {v1, v4, v5, v7}, Lorg/cocos2dx/lib/Cocos2dxReflectionHelper;->invokeInstanceMethod(Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Class;[Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v5
+
+    check-cast v5, Ljava/lang/String;
+
+    const-class v7, Landroid/media/AudioManager;
+
+    const-string v9, "PROPERTY_OUTPUT_FRAMES_PER_BUFFER"
+
+    invoke-static {v7, v9}, Lorg/cocos2dx/lib/Cocos2dxReflectionHelper;->getConstantValue(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v7
+
+    new-array v9, v6, [Ljava/lang/Class;
+
+    const-class v10, Ljava/lang/String;
+
+    aput-object v10, v9, v8
+
+    new-array v10, v6, [Ljava/lang/Object;
+
+    aput-object v7, v10, v8
+
+    invoke-static {v1, v4, v9, v10}, Lorg/cocos2dx/lib/Cocos2dxReflectionHelper;->invokeInstanceMethod(Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Class;[Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Ljava/lang/String;
+
+    :try_start_74
+    invoke-static {v5}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
+
+    move-result v2
+
+    invoke-static {v1}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
+
+    move-result v1
+    :try_end_7c
+    .catch Ljava/lang/NumberFormatException; {:try_start_74 .. :try_end_7c} :catch_7e
+
+    move v3, v1
+
+    goto :goto_86
+
+    :catch_7e
+    move-exception v1
+
+    sget-object v4, Lorg/cocos2dx/lib/Cocos2dxHelper;->TAG:Ljava/lang/String;
+
+    const-string v5, "parseInt failed"
+
+    invoke-static {v4, v5, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    :goto_86
+    sget-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->TAG:Ljava/lang/String;
+
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v5, "sampleRate: "
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    const-string v5, ", framesPerBuffer: "
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v4
+
+    goto :goto_a8
+
+    :cond_a6
+    const-string v4, "android version is lower than 17"
+
+    :goto_a8
+    invoke-static {v1, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-static {v0, v2, v3}, Lorg/cocos2dx/lib/Cocos2dxHelper;->nativeSetAudioDeviceInfo(ZII)V
+
+    invoke-virtual {p0}, Landroid/app/Activity;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
+
+    move-result-object v0
+
+    iget-object v0, v0, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sPackageName:Ljava/lang/String;
+
+    new-instance v0, Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-direct {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxMusic;-><init>(Landroid/content/Context;)V
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {p0}, Landroid/app/Activity;->getAssets()Landroid/content/res/AssetManager;
+
+    move-result-object v0
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sAssetManager:Landroid/content/res/AssetManager;
+
+    invoke-static {p0, v0}, Lorg/cocos2dx/lib/Cocos2dxHelper;->nativeSetContext(Landroid/content/Context;Landroid/content/res/AssetManager;)V
+
+    invoke-static {p0}, Lorg/cocos2dx/lib/Cocos2dxBitmap;->setContext(Landroid/content/Context;)V
+
+    const-string v0, "vibrator"
+
+    invoke-virtual {p0, v0}, Landroid/app/Activity;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/os/Vibrator;
+
+    sput-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sVibrateService:Landroid/os/Vibrator;
+
+    sput-boolean v6, Lorg/cocos2dx/lib/Cocos2dxHelper;->sInited:Z
+
+    new-instance v0, Landroid/content/Intent;
+
+    const-class v1, Lcom/enhance/gameservice/IGameTuningService;
+
+    invoke-virtual {v1}, Ljava/lang/Class;->getName()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
+
+    const-string v1, "com.enhance.gameservice"
+
+    invoke-virtual {v0, v1}, Landroid/content/Intent;->setPackage(Ljava/lang/String;)Landroid/content/Intent;
+
+    invoke-virtual {p0}, Landroid/app/Activity;->getApplicationContext()Landroid/content/Context;
+
+    move-result-object p0
+
+    sget-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->connection:Landroid/content/ServiceConnection;
+
+    invoke-virtual {p0, v0, v1, v6}, Landroid/content/Context;->bindService(Landroid/content/Intent;Landroid/content/ServiceConnection;I)Z
+
+    :cond_ee
+    return-void
+.end method
+
+.method public static isActivityVisible()Z
+    .registers 1
+
+    sget-boolean v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivityVisible:Z
+
+    return v0
+.end method
+
+.method public static isBackgroundMusicPlaying()Z
+    .registers 1
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxMusic;->isBackgroundMusicPlaying()Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static isScreenRound()Z
+    .registers 2
+
+    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I
+
+    const/16 v1, 0x17
+
+    if-lt v0, v1, :cond_18
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    invoke-virtual {v0}, Landroid/app/Activity;->getResources()Landroid/content/res/Resources;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Landroid/content/res/Resources;->getConfiguration()Landroid/content/res/Configuration;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Landroid/content/res/Configuration;->isScreenRound()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_18
+
+    const/4 v0, 0x1
+
+    return v0
+
+    :cond_18
+    const/4 v0, 0x0
+
+    return v0
+.end method
+
+.method private static native nativeSetAudioDeviceInfo(ZII)V
+.end method
+
+.method private static native nativeSetContext(Landroid/content/Context;Landroid/content/res/AssetManager;)V
+.end method
+
+.method private static native nativeSetEditTextDialogResult([B)V
+.end method
+
+.method public static onEnterBackground()V
+    .registers 1
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxSound;->onEnterBackground()V
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxMusic;->onEnterBackground()V
+
+    return-void
+.end method
+
+.method public static onEnterForeground()V
+    .registers 1
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxSound;->onEnterForeground()V
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxMusic;->onEnterForeground()V
+
+    return-void
+.end method
+
+.method public static onPause()V
+    .registers 1
+
+    const/4 v0, 0x0
+
+    sput-boolean v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivityVisible:Z
+
+    sget-boolean v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sAccelerometerEnabled:Z
+
+    if-eqz v0, :cond_e
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getAccelerometer()Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxAccelerometer;->disable()V
+
+    :cond_e
+    return-void
+.end method
+
+.method public static onResume()V
+    .registers 1
+
+    const/4 v0, 0x1
+
+    sput-boolean v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivityVisible:Z
+
+    sget-boolean v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sAccelerometerEnabled:Z
+
+    if-eqz v0, :cond_e
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getAccelerometer()Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxAccelerometer;->enableAccel()V
+
+    :cond_e
+    sget-boolean v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCompassEnabled:Z
+
+    if-eqz v0, :cond_19
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getAccelerometer()Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxAccelerometer;->enableCompass()V
+
+    :cond_19
+    return-void
+.end method
+
+.method public static openURL(Ljava/lang/String;)Z
+    .registers 3
+
+    :try_start_0
+    new-instance v0, Landroid/content/Intent;
+
+    const-string v1, "android.intent.action.VIEW"
+
+    invoke-direct {v0, v1}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
+
+    invoke-static {p0}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
+
+    move-result-object p0
+
+    invoke-virtual {v0, p0}, Landroid/content/Intent;->setData(Landroid/net/Uri;)Landroid/content/Intent;
+
+    sget-object p0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    invoke-virtual {p0, v0}, Landroid/app/Activity;->startActivity(Landroid/content/Intent;)V
+    :try_end_13
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_13} :catch_15
+
+    const/4 p0, 0x1
+
+    goto :goto_17
+
+    :catch_15
+    move-exception p0
+
+    const/4 p0, 0x0
+
+    :goto_17
+    return p0
+.end method
+
+.method public static pauseAllEffects()V
+    .registers 1
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxSound;->pauseAllEffects()V
+
+    return-void
+.end method
+
+.method public static pauseBackgroundMusic()V
+    .registers 1
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxMusic;->pauseBackgroundMusic()V
+
+    return-void
+.end method
+
+.method public static pauseEffect(I)V
+    .registers 2
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxSound;->pauseEffect(I)V
+
+    return-void
+.end method
+
+.method public static playBackgroundMusic(Ljava/lang/String;Z)V
+    .registers 3
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0, p0, p1}, Lorg/cocos2dx/lib/Cocos2dxMusic;->playBackgroundMusic(Ljava/lang/String;Z)V
+
+    return-void
+.end method
+
+.method public static playEffect(Ljava/lang/String;ZFFF)I
+    .registers 11
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    move-object v1, p0
+
+    move v2, p1
+
+    move v3, p2
+
+    move v4, p3
+
+    move v5, p4
+
+    invoke-virtual/range {v0 .. v5}, Lorg/cocos2dx/lib/Cocos2dxSound;->playEffect(Ljava/lang/String;ZFFF)I
+
+    move-result p0
+
+    return p0
+.end method
+
+.method public static preloadBackgroundMusic(Ljava/lang/String;)V
+    .registers 2
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxMusic;->preloadBackgroundMusic(Ljava/lang/String;)V
+
+    return-void
+.end method
+
+.method public static preloadEffect(Ljava/lang/String;)V
+    .registers 2
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxSound;->preloadEffect(Ljava/lang/String;)I
+
+    return-void
+.end method
+
+.method public static resumeAllEffects()V
+    .registers 1
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxSound;->resumeAllEffects()V
+
+    return-void
+.end method
+
+.method public static resumeBackgroundMusic()V
+    .registers 1
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxMusic;->resumeBackgroundMusic()V
+
+    return-void
+.end method
+
+.method public static resumeEffect(I)V
+    .registers 2
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxSound;->resumeEffect(I)V
+
+    return-void
+.end method
+
+.method public static rewindBackgroundMusic()V
+    .registers 1
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxMusic;->rewindBackgroundMusic()V
+
+    return-void
+.end method
+
+.method public static runOnGLThread(Ljava/lang/Runnable;)V
+    .registers 2
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    check-cast v0, Lorg/cocos2dx/lib/Cocos2dxActivity;
+
+    invoke-virtual {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxActivity;->runOnGLThread(Ljava/lang/Runnable;)V
+
+    return-void
+.end method
+
+.method public static setAccelerometerInterval(F)V
+    .registers 2
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getAccelerometer()Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxAccelerometer;->setInterval(F)V
+
+    return-void
+.end method
+
+.method static setAudioFocus(Z)V
+    .registers 2
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxMusic;->setAudioFocus(Z)V
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxSound;->setAudioFocus(Z)V
+
+    return-void
+.end method
+
+.method public static setBackgroundMusicVolume(F)V
+    .registers 2
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxMusic;->setBackgroundVolume(F)V
+
+    return-void
+.end method
+
+.method public static setBoolForKey(Ljava/lang/String;Z)V
+    .registers 5
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    const-string v1, "Cocos2dxPrefsFile"
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroid/app/Activity;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v0
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v0
+
+    invoke-interface {v0, p0, p1}, Landroid/content/SharedPreferences$Editor;->putBoolean(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences$Editor;->apply()V
+
+    return-void
+.end method
+
+.method public static setDoubleForKey(Ljava/lang/String;D)V
+    .registers 6
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    const-string v1, "Cocos2dxPrefsFile"
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroid/app/Activity;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v0
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v0
+
+    double-to-float p1, p1
+
+    invoke-interface {v0, p0, p1}, Landroid/content/SharedPreferences$Editor;->putFloat(Ljava/lang/String;F)Landroid/content/SharedPreferences$Editor;
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences$Editor;->apply()V
+
+    return-void
+.end method
+
+.method public static setEditTextDialogResult(Ljava/lang/String;)V
+    .registers 3
+
+    :try_start_0
+    const-string v0, "UTF8"
+
+    invoke-virtual {p0, v0}, Ljava/lang/String;->getBytes(Ljava/lang/String;)[B
+
+    move-result-object p0
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dxHelperListener:Lorg/cocos2dx/lib/Cocos2dxHelper$Cocos2dxHelperListener;
+
+    new-instance v1, Lorg/cocos2dx/lib/Cocos2dxHelper$3;
+
+    invoke-direct {v1, p0}, Lorg/cocos2dx/lib/Cocos2dxHelper$3;-><init>([B)V
+
+    invoke-interface {v0, v1}, Lorg/cocos2dx/lib/Cocos2dxHelper$Cocos2dxHelperListener;->runOnGLThread(Ljava/lang/Runnable;)V
+    :try_end_10
+    .catch Ljava/io/UnsupportedEncodingException; {:try_start_0 .. :try_end_10} :catch_11
+
+    goto :goto_12
+
+    :catch_11
+    move-exception p0
+
+    :goto_12
+    return-void
+.end method
+
+.method public static setEffectsVolume(F)V
+    .registers 2
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxSound;->setEffectsVolume(F)V
+
+    return-void
+.end method
+
+.method public static setFPS(I)I
+    .registers 3
+
+    const/4 v0, -0x1
+
+    :try_start_1
+    sget-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->mGameServiceBinder:Lcom/enhance/gameservice/IGameTuningService;
+
+    if-eqz v1, :cond_a
+
+    invoke-interface {v1, p0}, Lcom/enhance/gameservice/IGameTuningService;->setFramePerSecond(I)I
+
+    move-result p0
+    :try_end_9
+    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_9} :catch_b
+
+    return p0
+
+    :cond_a
+    return v0
+
+    :catch_b
+    move-exception p0
+
+    invoke-virtual {p0}, Ljava/lang/Exception;->printStackTrace()V
+
+    return v0
+.end method
+
+.method public static setFloatForKey(Ljava/lang/String;F)V
+    .registers 5
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    const-string v1, "Cocos2dxPrefsFile"
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroid/app/Activity;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v0
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v0
+
+    invoke-interface {v0, p0, p1}, Landroid/content/SharedPreferences$Editor;->putFloat(Ljava/lang/String;F)Landroid/content/SharedPreferences$Editor;
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences$Editor;->apply()V
+
+    return-void
+.end method
+
+.method public static setIntegerForKey(Ljava/lang/String;I)V
+    .registers 5
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    const-string v1, "Cocos2dxPrefsFile"
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroid/app/Activity;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v0
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v0
+
+    invoke-interface {v0, p0, p1}, Landroid/content/SharedPreferences$Editor;->putInt(Ljava/lang/String;I)Landroid/content/SharedPreferences$Editor;
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences$Editor;->apply()V
+
+    return-void
+.end method
+
+.method public static setKeepScreenOn(Z)V
+    .registers 2
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    check-cast v0, Lorg/cocos2dx/lib/Cocos2dxActivity;
+
+    invoke-virtual {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxActivity;->setKeepScreenOn(Z)V
+
+    return-void
+.end method
+
+.method public static setLowPowerMode(Z)I
+    .registers 3
+
+    const/4 v0, -0x1
+
+    :try_start_1
+    sget-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->mGameServiceBinder:Lcom/enhance/gameservice/IGameTuningService;
+
+    if-eqz v1, :cond_a
+
+    invoke-interface {v1, p0}, Lcom/enhance/gameservice/IGameTuningService;->setGamePowerSaving(Z)I
+
+    move-result p0
+    :try_end_9
+    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_9} :catch_b
+
+    return p0
+
+    :cond_a
+    return v0
+
+    :catch_b
+    move-exception p0
+
+    invoke-virtual {p0}, Ljava/lang/Exception;->printStackTrace()V
+
+    return v0
+.end method
+
+.method public static setResolutionPercent(I)I
+    .registers 3
+
+    const/4 v0, -0x1
+
+    :try_start_1
+    sget-object v1, Lorg/cocos2dx/lib/Cocos2dxHelper;->mGameServiceBinder:Lcom/enhance/gameservice/IGameTuningService;
+
+    if-eqz v1, :cond_a
+
+    invoke-interface {v1, p0}, Lcom/enhance/gameservice/IGameTuningService;->setPreferredResolution(I)I
+
+    move-result p0
+    :try_end_9
+    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_9} :catch_b
+
+    return p0
+
+    :cond_a
+    return v0
+
+    :catch_b
+    move-exception p0
+
+    invoke-virtual {p0}, Ljava/lang/Exception;->printStackTrace()V
+
+    return v0
+.end method
+
+.method public static setStringForKey(Ljava/lang/String;Ljava/lang/String;)V
+    .registers 5
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sActivity:Landroid/app/Activity;
+
+    const-string v1, "Cocos2dxPrefsFile"
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroid/app/Activity;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v0
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v0
+
+    invoke-interface {v0, p0, p1}, Landroid/content/SharedPreferences$Editor;->putString(Ljava/lang/String;Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences$Editor;->apply()V
+
+    return-void
+.end method
+
+.method private static showDialog(Ljava/lang/String;Ljava/lang/String;)V
+    .registers 3
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dxHelperListener:Lorg/cocos2dx/lib/Cocos2dxHelper$Cocos2dxHelperListener;
+
+    invoke-interface {v0, p0, p1}, Lorg/cocos2dx/lib/Cocos2dxHelper$Cocos2dxHelperListener;->showDialog(Ljava/lang/String;Ljava/lang/String;)V
+
+    return-void
+.end method
+
+.method public static stopAllEffects()V
+    .registers 1
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxSound;->stopAllEffects()V
+
+    return-void
+.end method
+
+.method public static stopBackgroundMusic()V
+    .registers 1
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxMusic;->stopBackgroundMusic()V
+
+    return-void
+.end method
+
+.method public static stopEffect(I)V
+    .registers 2
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxSound;->stopEffect(I)V
+
+    return-void
+.end method
+
+.method public static terminateProcess()V
+    .registers 1
+
+    invoke-static {}, Landroid/os/Process;->myPid()I
+
+    move-result v0
+
+    invoke-static {v0}, Landroid/os/Process;->killProcess(I)V
+
+    return-void
+.end method
+
+.method public static unloadEffect(Ljava/lang/String;)V
+    .registers 2
+
+    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxHelper;->getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p0}, Lorg/cocos2dx/lib/Cocos2dxSound;->unloadEffect(Ljava/lang/String;)V
+
+    return-void
+.end method
+
+.method public static vibrate(F)V
+    .registers 4
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sVibrateService:Landroid/os/Vibrator;
+
+    const/high16 v1, 0x447a0000    # 1000.0f
+
+    mul-float/2addr p0, v1
+
+    float-to-long v1, p0
+
+    invoke-virtual {v0, v1, v2}, Landroid/os/Vibrator;->vibrate(J)V
+
+    return-void
+.end method
+
+.method public static willPlayBackgroundMusic()Z
+    .registers 1
+
+    sget-object v0, Lorg/cocos2dx/lib/Cocos2dxHelper;->sCocos2dMusic:Lorg/cocos2dx/lib/Cocos2dxMusic;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/lib/Cocos2dxMusic;->willPlayBackgroundMusic()Z
+
+    move-result v0
+
+    return v0
+.end method

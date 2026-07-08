@@ -1,0 +1,151 @@
+### Cocos2dxHelper method signatures ###
+.method static constructor <clinit>()V
+.method public constructor <init>()V
+.method static synthetic access$002(Lcom/enhance/gameservice/IGameTuningService;)Lcom/enhance/gameservice/IGameTuningService;
+.method static synthetic access$100()Landroid/content/ServiceConnection;
+.method static synthetic access$200()Landroid/app/Activity;
+.method static synthetic access$300([B)V
+.method public static addOnActivityResultListener(Landroid/preference/PreferenceManager$OnActivityResultListener;)V
+.method public static conversionEncoding([BLjava/lang/String;Ljava/lang/String;)[B
+.method public static deleteValueForKey(Ljava/lang/String;)V
+.method public static disableAccelerometer()V
+.method public static enableAccelerometer()V
+.method public static enableCompass()V
+.method public static end()V
+.method public static fastLoading(I)I
+.method public static getAccelValue()[F
+.method private static getAccelerometer()Lorg/cocos2dx/lib/Cocos2dxAccelerometer;
+.method public static getActivity()Landroid/app/Activity;
+.method public static getAssetManager()Landroid/content/res/AssetManager;
+.method public static getAssetsPath()Ljava/lang/String;
+.method public static getBackgroundMusicVolume()F
+.method public static getBoolForKey(Ljava/lang/String;Z)Z
+.method public static getCocos2dxPackageName()Ljava/lang/String;
+.method public static getCocos2dxWritablePath()Ljava/lang/String;
+.method public static getCompassValue()[F
+.method public static getCurrentLanguage()Ljava/lang/String;
+.method public static getDPI()I
+.method public static getDeviceModel()Ljava/lang/String;
+.method public static getDoubleForKey(Ljava/lang/String;D)D
+.method public static getEffectsVolume()F
+.method public static getFloatForKey(Ljava/lang/String;F)F
+.method public static getIntegerForKey(Ljava/lang/String;I)I
+.method public static getObbAssetFileDescriptor(Ljava/lang/String;)[J
+.method public static getObbFile()Lcom/android/vending/expansion/zipfile/ZipResourceFile;
+.method public static getOnActivityResultListeners()Ljava/util/Set;
+.method public static getSDKVersion()I
+.method private static getSound()Lorg/cocos2dx/lib/Cocos2dxSound;
+.method public static getStringForKey(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+.method public static getTemperature()I
+.method public static getVersion()Ljava/lang/String;
+.method public static hasSoftKeys()Z
+.method public static init(Landroid/app/Activity;)V
+.method public static isActivityVisible()Z
+.method public static isBackgroundMusicPlaying()Z
+.method public static isScreenRound()Z
+.method private static native nativeSetAudioDeviceInfo(ZII)V
+.method private static native nativeSetContext(Landroid/content/Context;Landroid/content/res/AssetManager;)V
+.method private static native nativeSetEditTextDialogResult([B)V
+.method public static onEnterBackground()V
+.method public static onEnterForeground()V
+.method public static onPause()V
+.method public static onResume()V
+.method public static openURL(Ljava/lang/String;)Z
+.method public static pauseAllEffects()V
+.method public static pauseBackgroundMusic()V
+.method public static pauseEffect(I)V
+.method public static playBackgroundMusic(Ljava/lang/String;Z)V
+.method public static playEffect(Ljava/lang/String;ZFFF)I
+.method public static preloadBackgroundMusic(Ljava/lang/String;)V
+.method public static preloadEffect(Ljava/lang/String;)V
+.method public static resumeAllEffects()V
+.method public static resumeBackgroundMusic()V
+.method public static resumeEffect(I)V
+.method public static rewindBackgroundMusic()V
+.method public static runOnGLThread(Ljava/lang/Runnable;)V
+.method public static setAccelerometerInterval(F)V
+.method static setAudioFocus(Z)V
+.method public static setBackgroundMusicVolume(F)V
+.method public static setBoolForKey(Ljava/lang/String;Z)V
+.method public static setDoubleForKey(Ljava/lang/String;D)V
+.method public static setEditTextDialogResult(Ljava/lang/String;)V
+.method public static setEffectsVolume(F)V
+.method public static setFPS(I)I
+.method public static setFloatForKey(Ljava/lang/String;F)V
+.method public static setIntegerForKey(Ljava/lang/String;I)V
+.method public static setKeepScreenOn(Z)V
+.method public static setLowPowerMode(Z)I
+.method public static setResolutionPercent(I)I
+.method public static setStringForKey(Ljava/lang/String;Ljava/lang/String;)V
+.method private static showDialog(Ljava/lang/String;Ljava/lang/String;)V
+.method public static stopAllEffects()V
+.method public static stopBackgroundMusic()V
+.method public static stopEffect(I)V
+.method public static terminateProcess()V
+.method public static unloadEffect(Ljava/lang/String;)V
+.method public static vibrate(F)V
+.method public static willPlayBackgroundMusic()Z
+
+### Cocos2dxRenderer method signatures ###
+.method static constructor <clinit>()V
+.method public constructor <init>()V
+.method private static native nativeDeleteBackward()V
+.method private static native nativeGetContentText()Ljava/lang/String;
+.method private static native nativeInit(II)V
+.method private static native nativeInsertText(Ljava/lang/String;)V
+.method private static native nativeKeyEvent(IZ)Z
+.method private static native nativeOnPause()V
+.method private static native nativeOnResume()V
+.method private static native nativeOnSurfaceChanged(II)V
+.method private static native nativeRender()V
+.method private static native nativeTouchesBegin(IFF)V
+.method private static native nativeTouchesCancel([I[F[F)V
+.method private static native nativeTouchesEnd(IFF)V
+.method private static native nativeTouchesMove([I[F[F)V
+.method public static setAnimationInterval(F)V
+.method public getContentText()Ljava/lang/String;
+.method public handleActionCancel([I[F[F)V
+.method public handleActionDown(IFF)V
+.method public handleActionMove([I[F[F)V
+.method public handleActionUp(IFF)V
+.method public handleDeleteBackward()V
+.method public handleInsertText(Ljava/lang/String;)V
+.method public handleKeyDown(I)V
+.method public handleKeyUp(I)V
+.method public handleOnPause()V
+.method public handleOnResume()V
+.method public onDrawFrame(Ljavax/microedition/khronos/opengles/GL10;)V
+.method public onSurfaceChanged(Ljavax/microedition/khronos/opengles/GL10;II)V
+.method public onSurfaceCreated(Ljavax/microedition/khronos/opengles/GL10;Ljavax/microedition/khronos/egl/EGLConfig;)V
+.method public setScreenWidthAndHeight(II)V
+
+### Cocos2dxGLSurfaceView method signatures ###
+.method static constructor <clinit>()V
+.method public constructor <init>(Landroid/content/Context;)V
+.method public constructor <init>(Landroid/content/Context;Landroid/util/AttributeSet;)V
+.method static synthetic access$000(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxEditBox;
+.method static synthetic access$100()Lorg/cocos2dx/lib/Cocos2dxTextInputWrapper;
+.method static synthetic access$200()Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+.method static synthetic access$300(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;)Lorg/cocos2dx/lib/Cocos2dxRenderer;
+.method public static closeIMEKeyboard()V
+.method private static dumpMotionEvent(Landroid/view/MotionEvent;)V
+.method private getContentText()Ljava/lang/String;
+.method public static getInstance()Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+.method public static openIMEKeyboard()V
+.method public static queueAccelerometer(FFFJ)V
+.method public deleteBackward()V
+.method public getCocos2dxEditText()Lorg/cocos2dx/lib/Cocos2dxEditBox;
+.method protected initView()V
+.method public insertText(Ljava/lang/String;)V
+.method public isMultipleTouchEnabled()Z
+.method public isSoftKeyboardShown()Z
+.method public onKeyDown(ILandroid/view/KeyEvent;)Z
+.method public onKeyUp(ILandroid/view/KeyEvent;)Z
+.method public onPause()V
+.method public onResume()V
+.method protected onSizeChanged(IIII)V
+.method public onTouchEvent(Landroid/view/MotionEvent;)Z
+.method public setCocos2dxEditText(Lorg/cocos2dx/lib/Cocos2dxEditBox;)V
+.method public setCocos2dxRenderer(Lorg/cocos2dx/lib/Cocos2dxRenderer;)V
+.method public setMultipleTouchEnabled(Z)V
+.method public setSoftKeyboardShown(Z)V

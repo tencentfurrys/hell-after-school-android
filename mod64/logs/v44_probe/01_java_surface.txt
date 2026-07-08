@@ -1,0 +1,238 @@
+########## every org/cocos2dx class present ##########
+/tmp/smali/org/cocos2dx/cpp/AppActivity$1.smali
+/tmp/smali/org/cocos2dx/cpp/AppActivity$2.smali
+/tmp/smali/org/cocos2dx/cpp/AppActivity.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$1.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$2.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$3$1$1.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$3$1.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$3.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$4$1$1$1.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$4$1$1.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$4$1.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$4.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay.smali
+/tmp/smali/org/cocos2dx/cpp/MenuShim$1.smali
+/tmp/smali/org/cocos2dx/cpp/MenuShim.smali
+/tmp/smali/org/cocos2dx/enginedata/EngineDataManager.smali
+/tmp/smali/org/cocos2dx/enginedata/IEngineDataManager$GameStatus.smali
+/tmp/smali/org/cocos2dx/enginedata/IEngineDataManager$OnSystemCommandListener.smali
+/tmp/smali/org/cocos2dx/enginedata/IEngineDataManager.smali
+/tmp/smali/org/cocos2dx/enginedata/magic/a$1.smali
+/tmp/smali/org/cocos2dx/enginedata/magic/a.smali
+/tmp/smali/org/cocos2dx/lib/BuildConfig.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxAccelerometer.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxActivity$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxActivity$Cocos2dxEGLConfigChooser.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxActivity.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxAudioFocusManager$1$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxAudioFocusManager$1$2.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxAudioFocusManager$1$3.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxAudioFocusManager$1$4.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxAudioFocusManager$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxAudioFocusManager$2.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxAudioFocusManager.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxBitmap.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxDownloader$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxDownloader$2.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxDownloader$3$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxDownloader$3.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxDownloader$4.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxDownloader.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBox.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$1$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$2$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$2$2.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$2.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$3.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$4.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$10.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$11.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$12.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$13.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$14.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$15.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$16.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$2.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$3.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$4.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$5.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$6.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$7.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$8.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$9.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager$1$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager$1$2.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager$1$3.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager$1$4.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager$1$5.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$10.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$11.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$12.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$13.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$14.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$15.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$16.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$2.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$3.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$4.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$5.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$6.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$7.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$8.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$9.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxHandler$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxHandler$DialogMessage.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxHandler.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxHelper$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxHelper$2.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxHelper$3.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxHelper$Cocos2dxHelperListener.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxHelper.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxHttpURLConnection.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxJavascriptJavaBridge.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxLocalStorage$DBOpenHelper.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxLocalStorage.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxLuaJavaBridge.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxMusic.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxReflectionHelper.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxSound$OnLoadCompletedListener.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxSound$SoundInfoForLoadedCompleted.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxSound.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxTextInputWrapper.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxTypefaces.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoHelper$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoHelper$VideoEventRunnable.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoHelper$VideoHandler.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoHelper.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoView$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoView$2.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoView$3.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoView$4$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoView$4.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoView$5.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoView$6.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoView$OnVideoEventListener.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoView.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebView$Cocos2dxWebViewClient$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebView$Cocos2dxWebViewClient$2.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebView$Cocos2dxWebViewClient$3.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebView$Cocos2dxWebViewClient.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebView.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$1.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$10.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$11.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$12.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$13.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$14.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$15.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$16.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$17.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$18.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$19.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$2.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$20.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$3.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$4.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$5.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$6.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$7.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$8.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper$9.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper.smali
+/tmp/smali/org/cocos2dx/lib/DataTaskHandler.smali
+/tmp/smali/org/cocos2dx/lib/DownloadTask.smali
+/tmp/smali/org/cocos2dx/lib/FileTaskHandler.smali
+/tmp/smali/org/cocos2dx/lib/GameControllerAdapter$1.smali
+/tmp/smali/org/cocos2dx/lib/GameControllerAdapter$2.smali
+/tmp/smali/org/cocos2dx/lib/GameControllerAdapter$3.smali
+/tmp/smali/org/cocos2dx/lib/GameControllerAdapter$4.smali
+/tmp/smali/org/cocos2dx/lib/GameControllerAdapter.smali
+/tmp/smali/org/cocos2dx/lib/GameControllerDelegate$ControllerEventListener.smali
+/tmp/smali/org/cocos2dx/lib/GameControllerDelegate.smali
+/tmp/smali/org/cocos2dx/lib/GameControllerUtils.smali
+/tmp/smali/org/cocos2dx/lib/HeadTaskHandler.smali
+/tmp/smali/org/cocos2dx/lib/R.smali
+/tmp/smali/org/cocos2dx/lib/ResizeLayout$1.smali
+/tmp/smali/org/cocos2dx/lib/ResizeLayout.smali
+/tmp/smali/org/cocos2dx/lib/ShouldStartLoadingWorker.smali
+
+########## methods that look like input entry points ##########
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$3.smali:40:.method public onKey(Landroid/view/View;ILandroid/view/KeyEvent;)Z
+/tmp/smali/org/cocos2dx/lib/GameControllerDelegate.smali:67:.method public abstract dispatchKeyEvent(Landroid/view/KeyEvent;)Z
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:57:.method private static native nativeKeyEvent(IZ)Z
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:158:.method public handleKeyDown(I)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:168:.method public handleKeyUp(I)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBox.smali:164:.method public onKeyDown(ILandroid/view/KeyEvent;)Z
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBox.smali:195:.method public onKeyPreIme(ILandroid/view/KeyEvent;)Z
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView.smali:431:.method public onKeyDown(ILandroid/view/KeyEvent;)Z
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView.smali:487:.method public onKeyUp(ILandroid/view/KeyEvent;)Z
+/tmp/smali/org/cocos2dx/cpp/MenuShim.smali:364:.method private static native nativeInjectKey(IZ)Z
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay.smali:1849:.method private static native nativeInjectCocos2dKey(IZ)V
+/tmp/smali/org/cocos2dx/cpp/AppActivity.smali:674:.method public dispatchKeyEvent(Landroid/view/KeyEvent;)Z
+
+########## native declarations in cocos2dx ##########
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager.smali:231:.method private static native nativeOnChangeContinuousFrameLostConfig(II)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager.smali:234:.method private static native nativeOnChangeExpectedFps(I)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager.smali:237:.method private static native nativeOnChangeLowFpsConfig(IF)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager.smali:240:.method private static native nativeOnChangeMuteEnabled(Z)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager.smali:243:.method private static native nativeOnChangeSpecialEffectLevel(I)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager.smali:246:.method private static native nativeOnQueryFps([I[I)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEngineDataManager.smali:249:.method private static native nativeSetSupportOptimization(Z)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper.smali:260:.method private static native didFailLoading(ILjava/lang/String;)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper.smali:263:.method private static native didFinishLoading(ILjava/lang/String;)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper.smali:423:.method private static native onJsCallback(ILjava/lang/String;)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxWebViewHelper.smali:564:.method private static native shouldStartLoading(ILjava/lang/String;)Z
+/tmp/smali/org/cocos2dx/lib/Cocos2dxAccelerometer.smali:101:.method public static native onSensorChanged(FFFJ)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:45:.method private static native nativeDeleteBackward()V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:48:.method private static native nativeGetContentText()Ljava/lang/String;
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:51:.method private static native nativeInit(II)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:54:.method private static native nativeInsertText(Ljava/lang/String;)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:57:.method private static native nativeKeyEvent(IZ)Z
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:60:.method private static native nativeOnPause()V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:63:.method private static native nativeOnResume()V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:66:.method private static native nativeOnSurfaceChanged(II)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:69:.method private static native nativeRender()V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:72:.method private static native nativeTouchesBegin(IFF)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:75:.method private static native nativeTouchesCancel([I[F[F)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:78:.method private static native nativeTouchesEnd(IFF)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali:81:.method private static native nativeTouchesMove([I[F[F)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxDownloader.smali:254:.method native nativeOnFinish(IIILjava/lang/String;[B)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxDownloader.smali:257:.method native nativeOnProgress(IIJJJ)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxVideoHelper.smali:556:.method public static native nativeExecuteVideoCallback(II)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxLuaJavaBridge.smali:14:.method public static native callLuaFunctionWithString(ILjava/lang/String;)I
+/tmp/smali/org/cocos2dx/lib/Cocos2dxLuaJavaBridge.smali:17:.method public static native callLuaGlobalFunctionWithString(Ljava/lang/String;Ljava/lang/String;)I
+/tmp/smali/org/cocos2dx/lib/Cocos2dxLuaJavaBridge.smali:20:.method public static native releaseLuaFunction(I)I
+/tmp/smali/org/cocos2dx/lib/Cocos2dxLuaJavaBridge.smali:23:.method public static native retainLuaFunction(I)I
+/tmp/smali/org/cocos2dx/lib/Cocos2dxAudioFocusManager.smali:48:.method private static native nativeOnAudioFocusChange(I)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxBitmap.smali:794:.method private static native nativeInitBitmapDC(II[B)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxHelper.smali:1605:.method private static native nativeSetAudioDeviceInfo(ZII)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxHelper.smali:1608:.method private static native nativeSetContext(Landroid/content/Context;Landroid/content/res/AssetManager;)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxHelper.smali:1611:.method private static native nativeSetEditTextDialogResult([B)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxJavascriptJavaBridge.smali:14:.method public static native evalString(Ljava/lang/String;)I
+/tmp/smali/org/cocos2dx/lib/GameControllerAdapter.smali:85:.method private static native nativeControllerAxisEvent(Ljava/lang/String;IIFZ)V
+/tmp/smali/org/cocos2dx/lib/GameControllerAdapter.smali:88:.method private static native nativeControllerButtonEvent(Ljava/lang/String;IIZFZ)V
+/tmp/smali/org/cocos2dx/lib/GameControllerAdapter.smali:91:.method private static native nativeControllerConnected(Ljava/lang/String;I)V
+/tmp/smali/org/cocos2dx/lib/GameControllerAdapter.smali:94:.method private static native nativeControllerDisconnected(Ljava/lang/String;I)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxActivity.smali:105:.method private static native getGLContextAttrs()[I
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper.smali:254:.method private static native editBoxEditingChanged(ILjava/lang/String;)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper.smali:257:.method private static native editBoxEditingDidBegin(I)V
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper.smali:260:.method private static native editBoxEditingDidEnd(ILjava/lang/String;I)V
+/tmp/smali/org/cocos2dx/cpp/MenuShim.smali:358:.method private static native nativeGetCommonVariable(I)D
+/tmp/smali/org/cocos2dx/cpp/MenuShim.smali:361:.method private static native nativeInit()I
+/tmp/smali/org/cocos2dx/cpp/MenuShim.smali:364:.method private static native nativeInjectKey(IZ)Z
+/tmp/smali/org/cocos2dx/cpp/MenuShim.smali:367:.method private static native nativePrecedeReleased(IIII)Z
+/tmp/smali/org/cocos2dx/cpp/MenuShim.smali:370:.method private static native nativePrecedeTriggered(IIII)Z
+/tmp/smali/org/cocos2dx/cpp/MenuShim.smali:373:.method private static native nativeSetCommonVariable(ID)I
+/tmp/smali/org/cocos2dx/cpp/MenuShim.smali:376:.method private static native nativeSetDiagPath(Ljava/lang/String;)V
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay.smali:1849:.method private static native nativeInjectCocos2dKey(IZ)V
+
+########## static access to Renderer/Helper/EventDispatcher ##########
