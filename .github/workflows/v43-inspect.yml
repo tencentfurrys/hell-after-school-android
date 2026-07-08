@@ -1,0 +1,50 @@
+name: v43 inspect - commit overlay smali for offline reading
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BASE_TAG: v42-controls
+      BASE_APK_NAME: FOBS_v42.apk
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with: { ref: main }
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+
+      - name: Download base APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+
+      - name: Baksmali
+        run: |
+          set -e
+          curl -fsSL -o /tmp/baksmali.jar \
+            https://github.com/baksmali/smali/releases/download/3.0.9/baksmali-3.0.9-fat.jar
+          mkdir -p /tmp/dex && unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+
+      - name: Commit overlay smali files
+        run: |
+          set -e
+          mkdir -p mod64/logs/v43_smali
+          cp /tmp/smali/org/cocos2dx/cpp/GamepadOverlay.smali        mod64/logs/v43_smali/GamepadOverlay.smali.txt
+          cp /tmp/smali/org/cocos2dx/cpp/GamepadOverlay\$1.smali     mod64/logs/v43_smali/GamepadOverlay_1.smali.txt || true
+          cp /tmp/smali/org/cocos2dx/cpp/GamepadOverlay\$2.smali     mod64/logs/v43_smali/GamepadOverlay_2.smali.txt || true
+          git config user.name inspect-bot; git config user.email inspect@local
+          git add mod64/logs/v43_smali
+          git commit -m "v43 inspect: raw overlay smali" || echo "nothing to commit"
+          git push origin main
