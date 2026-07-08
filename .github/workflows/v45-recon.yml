@@ -1,0 +1,53 @@
+name: v45 recon - trace real keyboard input path
+
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BASE_TAG: v43-controls
+      BASE_APK_NAME: FOBS_v43.apk
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+      - name: Download + baksmali
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+          curl -fsSL -o /tmp/baksmali.jar https://github.com/baksmali/smali/releases/download/3.0.9/baksmali-3.0.9-fat.jar
+          mkdir -p /tmp/dex && unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/s
+      - name: Trace key-input path
+        run: |
+          set -e
+          mkdir -p mod64/logs/v45_recon
+          # 1. Everyone who calls handleKeyDown / handleKeyUp / nativeKeyEvent
+          grep -rInE 'handleKeyDown|handleKeyUp|nativeKeyEvent' /tmp/s/org/cocos2dx > mod64/logs/v45_recon/01_callers.txt 2>/dev/null || true
+          # 2. The GLSurfaceView$13 runnable (what onKeyDown queues)
+          for f in $(find /tmp/s/org/cocos2dx -name 'Cocos2dxGLSurfaceView$*.smali'); do
+            echo "===== $f =====" >> mod64/logs/v45_recon/02_glsv_inner.txt
+            cat "$f" >> mod64/logs/v45_recon/02_glsv_inner.txt
+          done
+          # 3. EditText + TextInputWrapper key handling
+          for name in Cocos2dxEditText Cocos2dxTextInputWrapper Cocos2dxEditBox Cocos2dxEditBoxHelper; do
+            f=$(find /tmp/s/org/cocos2dx -name "${name}.smali" | head -1)
+            [ -n "$f" ] && cp "$f" "mod64/logs/v45_recon/EDIT_${name}.smali.txt"
+          done
+          # 4. Any class overriding dispatchKeyEvent / onKeyDown / sendKeyEvent / InputConnection
+          grep -rInE '\.method.*(dispatchKeyEvent|onKeyDown|onKeyUp|sendKeyEvent|onCreateInputConnection)' /tmp/s/org/cocos2dx > mod64/logs/v45_recon/03_key_overrides.txt 2>/dev/null || true
+          # 5. index of edit-related classes
+          find /tmp/s/org/cocos2dx -iname '*edit*' -o -iname '*input*' -o -iname '*ime*' > mod64/logs/v45_recon/04_edit_classes.txt 2>/dev/null || true
+      - name: Commit
+        run: |
+          set -e
+          git config user.name recon-bot; git config user.email recon@local
+          git add mod64/logs/v45_recon
+          git commit -m "v45 recon: keyboard input path" || echo "nothing"
+          git push origin main
