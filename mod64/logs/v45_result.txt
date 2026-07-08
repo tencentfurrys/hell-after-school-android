@@ -1,0 +1,3 @@
+v45 build OK
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v45-controls/FOBS_v45.apk
+34440d4709b3eac861ea20e8808d92cc  /tmp/FOBS_v45.apk
