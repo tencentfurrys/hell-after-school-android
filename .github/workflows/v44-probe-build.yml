@@ -1,0 +1,202 @@
+name: v44 probe build - inject raw Cocos2d KeyCode values
+
+# Probe theory:
+#   handleKeyDown(int) -> nativeKeyEvent(int, bool) hands the int STRAIGHT to
+#   libMyGame.so.  The .so has some Android->Cocos2d translation table that is
+#   INCOMPLETE (has Space/D/W/S/DPAD; missing A/Shift/Ctrl/Q).  If the .so also
+#   accepts raw Cocos2d KeyCode values verbatim, we can bypass its broken LUT
+#   by feeding it the pcInput values from project.json directly.
+#
+# Change (surgical, only cocos2dToAndroidKey in main GamepadOverlay.smali):
+#   cc 0x93 X (attack)  : return 0x41         (65,        Cocos2d KEY_A)
+#   cc 0x7e C (dash)    : return 0x1000020    (16777248,  Cocos2d KEY_LEFT_SHIFT)
+#   cc 0x91 V (menu)    : return 0x1000021    (16777249,  Cocos2d KEY_LEFT_CTRL)
+#                        (Menu's true binding is Ctrl alone, NOT Shift+Ctrl+Q.
+#                         The chord expander is also neutered in this build so
+#                         we get a clean single-keypress test.)
+#
+# All working buttons (W/S/D/Space/DPAD/D-pad) are untouched.
+# Base APK = v43-controls (FOBS_v43.apk).
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_TAG: v43-controls
+      BASE_APK_NAME: FOBS_v43.apk
+      OVERLAY_STD: 'org/cocos2dx/cpp/GamepadOverlay.smali'
+      SMALI_API: '23'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 0 }
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+
+      - name: Download base APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+
+      - name: Fetch baksmali + smali
+        run: |
+          set -e
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar \
+              "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+
+      - name: Baksmali
+        run: |
+          set -e
+          mkdir -p /tmp/dex
+          unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+          test -f "/tmp/smali/$OVERLAY_STD"
+
+      - name: Patch cocos2dToAndroidKey to emit Cocos2d KeyCodes for X/C/V
+        run: |
+          set -e
+          python3 - "/tmp/smali/$OVERLAY_STD" <<'PY'
+          import sys, re
+          path = sys.argv[1]
+          src = open(path).read().splitlines()
+          # Rewrites inside the cocos2dToAndroidKey method. That method's
+          # body is a chain of "const/16 v0, 0xCC ; if-ne p0, v0, :cond_X ;
+          # const/16 p0, 0xANDROID ; return p0".  We rewrite the RETURN value
+          # (the second const in each block) for cc 0x93, 0x7e, 0x91.
+          # Cocos2d KEY_A = 65 fits const/16; KEY_LEFT_SHIFT (16777248) and
+          # KEY_LEFT_CTRL (16777249) need full 32-bit const.
+
+          def find_method(lines, name):
+              i0 = None
+              for i, l in enumerate(lines):
+                  if re.match(r'\.method .*'+re.escape(name)+r'\(', l): i0 = i
+                  elif i0 is not None and l.strip() == '.end method':
+                      return i0, i
+              return None, None
+
+          def rewrite(lines, i0, i1, cc, new_indent, new_reg, new_op):
+              # Within [i0..i1], find first "const/16 vN, 0xCC" then next
+              # const-family line inside a small window; replace it.
+              for i in range(i0, i1):
+                  m = re.match(r'\s*const(?:/(?:4|16))?\s+v\d+,\s*'+cc+r'\b', lines[i])
+                  if m:
+                      for j in range(i+1, min(i+8, i1)):
+                          m2 = re.match(r'(\s*)(const(?:/(?:4|16))?\s+)(v\d+|p\d+)(,\s*)(-?0x[0-9a-fA-F]+|-?\d+)(.*)', lines[j])
+                          if m2:
+                              indent, reg = m2.group(1), m2.group(3)
+                              lines[j] = f"{indent}{new_op(reg)}"
+                              return (i, j)
+              return None
+
+          i0, i1 = find_method(src, 'cocos2dToAndroidKey')
+          if i0 is None: raise SystemExit("cocos2dToAndroidKey not found")
+
+          # Attack: return 65 (0x41), fits const/16
+          r1 = rewrite(src, i0, i1, '0x93', 4, None,
+                       lambda reg: f"const/16 {reg}, 0x41")
+          # Dash: return 16777248 (0x1000020), needs full const
+          r2 = rewrite(src, i0, i1, '0x7e', 4, None,
+                       lambda reg: f"const {reg}, 0x1000020")
+          # Menu: return 16777249 (0x1000021), needs full const
+          r3 = rewrite(src, i0, i1, '0x91', 4, None,
+                       lambda reg: f"const {reg}, 0x1000021")
+
+          print("rewrites:", r1, r2, r3)
+          if None in (r1,r2,r3): raise SystemExit("one or more rewrites missed")
+
+          # Also NEUTRALISE the chord expander in stdKeyInject: comment out the
+          # two recursive invoke-static stdKeyInject calls guarded by 0x2d.
+          # We do this by finding "const/16 v0, 0x2d" inside stdKeyInject and
+          # forcing the following if-ne to always jump (rewrite "if-ne p0, v0"
+          # to "goto :cond_e" style is fiddly; simpler: change the const to an
+          # impossible value so the chord path never triggers).
+          i0, i1 = find_method(src, 'stdKeyInject')
+          for i in range(i0, i1):
+              if 'const/16 v0, 0x2d' in src[i]:
+                  # Replace 0x2d with 0xffff (impossible incoming keycode) so
+                  # the if-ne always falls through, skipping the chord expander.
+                  src[i] = src[i].replace('0x2d', '0x7fff')
+                  print(f"chord neutralised at line {i+1}")
+                  break
+
+          open(path,'w').write("\n".join(src))
+          PY
+
+      - name: Verify
+        run: |
+          set -e
+          echo "==== cocos2dToAndroidKey POST-PATCH ===="
+          awk '/\.method .*cocos2dToAndroidKey/,/\.end method/' "/tmp/smali/$OVERLAY_STD"
+          echo
+          # Sanity: expected constants present
+          grep -q "const/16 p0, 0x41"        "/tmp/smali/$OVERLAY_STD" || { echo FAIL X; exit 1; }
+          grep -q "const p0, 0x1000020"      "/tmp/smali/$OVERLAY_STD" || { echo FAIL C; exit 1; }
+          grep -q "const p0, 0x1000021"      "/tmp/smali/$OVERLAY_STD" || { echo FAIL V; exit 1; }
+          grep -q "const/16 v0, 0x7fff"      "/tmp/smali/$OVERLAY_STD" || { echo "note: chord not neutralised (non-fatal)"; }
+          echo VERIFY-OK
+
+      - name: Reassemble + repackage + sign
+        run: |
+          set -e
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_patched.dex
+          python3 - /tmp/dex/classes_patched.dex /tmp/base.apk /tmp/v44_unaligned.apk <<'PY'
+          import sys, zipfile
+          pd, base, out = sys.argv[1], sys.argv[2], sys.argv[3]
+          db=open(pd,"rb").read(); replaced=False
+          zin=zipfile.ZipFile(base,"r"); zout=zipfile.ZipFile(out,"w")
+          for info in zin.infolist():
+              raw = db if info.filename=="classes.dex" else zin.read(info.filename)
+              if info.filename=="classes.dex": replaced=True
+              zi=zipfile.ZipInfo(info.filename,date_time=info.date_time)
+              zi.compress_type=info.compress_type; zi.external_attr=info.external_attr
+              zi.internal_attr=info.internal_attr; zi.create_system=info.create_system
+              zi.flag_bits=info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not replaced: raise SystemExit("classes.dex not found")
+          PY
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v44_unaligned.apk /tmp/v44_aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v44probe.apk /tmp/v44_aligned.apk
+          "${BT}apksigner" verify --verbose /tmp/FOBS_v44probe.apk
+
+      - name: Publish
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release create v44-probe /tmp/FOBS_v44probe.apk \
+            --title "v44 probe: raw Cocos2d KeyCode inject for X/C/V" \
+            --notes "Probe: injects Cocos2d KEY_A/LSHIFT/LCTRL instead of Android keycodes. If any of X/C/V now works, the .so accepts raw Cocos2d values." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v44-probe /tmp/FOBS_v44probe.apk --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          {
+            echo "v44 probe OK"
+            echo "asset: https://github.com/${GITHUB_REPOSITORY}/releases/download/v44-probe/FOBS_v44probe.apk"
+            md5sum /tmp/FOBS_v44probe.apk
+          } > mod64/logs/v44_probe_result.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v44_probe_result.txt
+          git commit -m "v44 probe result" || true
+          git push origin main || true
