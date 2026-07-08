@@ -1,0 +1,54 @@
+name: v45 recon2 - full EditBox + trace commitText path
+
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BASE_TAG: v43-controls
+      BASE_APK_NAME: FOBS_v43.apk
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+      - name: Extract
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+          curl -fsSL -o /tmp/baksmali.jar https://github.com/baksmali/smali/releases/download/3.0.9/baksmali-3.0.9-fat.jar
+          mkdir -p /tmp/dex && unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/s
+      - name: Dump full EditBox + native decls + IME callers
+        run: |
+          set -e
+          mkdir -p mod64/logs/v45_recon2
+          for f in $(find /tmp/s/org/cocos2dx -iname '*EditBox*.smali'); do
+            cp "$f" "mod64/logs/v45_recon2/$(basename $f).txt"
+          done
+          # find everything with dispatchKeyEvent body across ALL of org/cocos2dx
+          grep -rln 'dispatchKeyEvent' /tmp/s/org/cocos2dx | while read f; do
+            echo "===== $f =====" >> mod64/logs/v45_recon2/dispatchKeyEvent_bodies.txt
+            awk '/\.method .*dispatchKeyEvent/,/\.end method/' "$f" >> mod64/logs/v45_recon2/dispatchKeyEvent_bodies.txt
+          done
+          # commitText -> what does the Cocos2d input path do with typed chars?
+          grep -rln 'commitText\|nativeInsertText\|handleInsertText\|onCreateInputConnection' /tmp/s/org/cocos2dx | while read f; do
+            echo "===== $f =====" >> mod64/logs/v45_recon2/text_input_bodies.txt
+            grep -nE 'commitText|nativeInsertText|handleInsertText|onCreateInputConnection|onKeyDown|onKeyUp|sendKeyEvent' "$f" >> mod64/logs/v45_recon2/text_input_bodies.txt
+          done
+          # in the game .so, does agtk::InputManager listen to insertText?
+          strings /tmp/apk/lib/arm64-v8a/libMyGame.so 2>/dev/null | \
+            grep -iE 'insertText|commitText|InputManager|onKeyPressed|onKeyReleased|EventKeyboard|dispatchEvent' \
+            | sort -u | head -80 > mod64/logs/v45_recon2/so_input_strings.txt || true
+      - name: Commit
+        run: |
+          set -e
+          git config user.name recon-bot; git config user.email recon@local
+          git add mod64/logs/v45_recon2
+          git commit -m "v45 recon2" || true
+          git push origin main
