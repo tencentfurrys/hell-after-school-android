@@ -1,0 +1,3 @@
+v44 probe OK
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v44-probe/FOBS_v44probe.apk
+e3d9d18f86399d49a8b0889a8d7f900c  /tmp/FOBS_v44probe.apk
