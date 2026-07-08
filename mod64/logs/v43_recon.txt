@@ -1,0 +1,519 @@
+=== candidate files ===
+246666597  /tmp/apk/assets/Resources/data/project.json
+ 30521584  /tmp/apk/lib/arm64-v8a/libMyGame.so
+ 26210280  /tmp/apk/lib/armeabi-v7a/libMyGame.so
+      141  /tmp/apk/assets/Resources/data/info.json
+
+=== parsed JSON from: /tmp/apk/assets/Resources/data/project.json ===
+
+########## operationKeyList (1 block(s)) ##########
+[
+ [
+  {
+   "id": 1014,
+   "name": "メニュー"
+  },
+  {
+   "id": 1019,
+   "name": "断面図透過"
+  },
+  {
+   "id": 1020,
+   "name": "断面図縮尺"
+  },
+  {
+   "id": 1021,
+   "name": "3"
+  },
+  {
+   "id": 1026,
+   "name": "デバッグキー"
+  },
+  {
+   "id": 1022,
+   "name": "4"
+  },
+  {
+   "id": 1023,
+   "name": "5"
+  },
+  {
+   "id": 1024,
+   "name": "6"
+  },
+  {
+   "id": 1027,
+   "name": "スピードアップキー"
+  },
+  {
+   "id": 1028,
+   "name": "Ctrl"
+  },
+  {
+   "id": 1029,
+   "name": "マップ"
+  }
+ ]
+]
+
+########## inputMappingList (1 block(s)) ##########
+[
+ [
+  {
+   "id": 1,
+   "system": true,
+   "keyId": 1,
+   "custom1Input": 0,
+   "custom2Input": 1,
+   "diInput": 0,
+   "pcInput": 64,
+   "nxInput": 0
+  },
+  {
+   "id": 2,
+   "system": true,
+   "keyId": 2,
+   "custom1Input": 1,
+   "custom2Input": 2,
+   "diInput": 1,
+   "pcInput": 97,
+   "nxInput": 1
+  },
+  {
+   "id": 3,
+   "system": true,
+   "keyId": 3,
+   "custom1Input": 2,
+   "custom2Input": 0,
+   "diInput": 2,
+   "pcInput": 16777280,
+   "nxInput": 2
+  },
+  {
+   "id": 4,
+   "system": true,
+   "keyId": 4,
+   "custom1Input": 3,
+   "custom2Input": 3,
+   "diInput": 3,
+   "pcInput": 100,
+   "nxInput": 3
+  },
+  {
+   "id": 5,
+   "system": true,
+   "keyId": 5,
+   "custom1Input": 5,
+   "custom2Input": 5,
+   "diInput": 5,
+   "pcInput": 119,
+   "nxInput": 7
+  },
+  {
+   "id": 6,
+   "system": true,
+   "keyId": 6,
+   "custom1Input": 23,
+   "custom2Input": 7,
+   "diInput": 11,
+   "pcInput": 115,
+   "nxInput": 11
+  },
+  {
+   "id": 7,
+   "system": true,
+   "keyId": 7,
+   "custom1Input": 4,
+   "custom2Input": 4,
+   "diInput": 4,
+   "pcInput": 113,
+   "nxInput": 6
+  },
+  {
+   "id": 8,
+   "system": true,
+   "keyId": 8,
+   "custom1Input": 22,
+   "custom2Input": 6,
+   "diInput": 10,
+   "pcInput": 102,
+   "nxInput": 10
+  },
+  {
+   "id": 9,
+   "system": true,
+   "keyId": 9,
+   "custom1Input": 10,
+   "custom2Input": 14,
+   "diInput": 12,
+   "pcInput": 10,
+   "nxInput": 12
+  },
+  {
+   "id": 10,
+   "system": true,
+   "keyId": 10,
+   "custom1Input": 12,
+   "custom2Input": 16,
+   "diInput": 14,
+   "pcInput": 12,
+   "nxInput": 14
+  },
+  {
+   "id": 11,
+   "system": true,
+   "keyId": 11,
+   "custom1Input": 13,
+   "custom2Input": 17,
+   "diInput": 15,
+   "pcInput": 13,
+   "nxInput": 15
+  },
+  {
+   "id": 12,
+   "system": true,
+   "keyId": 12,
+   "custom1Input": 11,
+   "custom2Input": 15,
+   "diInput": 13,
+   "pcInput": 11,
+   "nxInput": 13
+  },
+  {
+   "id": 13,
+   "system": true,
+   "keyId": 13,
+   "custom1Input": 24,
+   "custom2Input": 24,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": 24
+  },
+  {
+   "id": 14,
+   "system": true,
+   "keyId": 14,
+   "custom1Input": 26,
+   "custom2Input": 26,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": 26
+  },
+  {
+   "id": 15,
+   "system": true,
+   "keyId": 15,
+   "custom1Input": 27,
+   "custom2Input": 27,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": 27
+  },
+  {
+   "id": 16,
+   "system": true,
+   "keyId": 16,
+   "custom1Input": 25,
+   "custom2Input": 25,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": 25
+  },
+  {
+   "id": 17,
+   "system": true,
+   "keyId": 17,
+   "custom1Input": 28,
+   "custom2Input": 28,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": 28
+  },
+  {
+   "id": 18,
+   "system": true,
+   "keyId": 18,
+   "custom1Input": 30,
+   "custom2Input": 30,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": 30
+  },
+  {
+   "id": 19,
+   "system": true,
+   "keyId": 19,
+   "custom1Input": 31,
+   "custom2Input": 31,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": 31
+  },
+  {
+   "id": 20,
+   "system": true,
+   "keyId": 20,
+   "custom1Input": 29,
+   "custom2Input": 29,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": 29
+  },
+  {
+   "id": 21,
+   "system": true,
+   "keyId": 26,
+   "custom1Input": 0,
+   "custom2Input": 1,
+   "diInput": 6,
+   "pcInput": 97,
+   "nxInput": 1
+  },
+  {
+   "id": 22,
+   "system": true,
+   "keyId": 27,
+   "custom1Input": 1,
+   "custom2Input": 2,
+   "diInput": 7,
+   "pcInput": 120,
+   "nxInput": 0
+  },
+  {
+   "id": 23,
+   "system": false,
+   "keyId": 1014,
+   "custom1Input": 7,
+   "custom2Input": 8,
+   "diInput": -1,
+   "pcInput": 16777249,
+   "nxInput": -1
+  },
+  {
+   "id": 24,
+   "system": false,
+   "keyId": 1019,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": 81,
+   "nxInput": -1
+  },
+  {
+   "id": 25,
+   "system": false,
+   "keyId": 1020,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": 82,
+   "nxInput": -1
+  },
+  {
+   "id": 26,
+   "system": false,
+   "keyId": 1021,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": 83,
+   "nxInput": -1
+  },
+  {
+   "id": 27,
+   "system": false,
+   "keyId": 1022,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": 84,
+   "nxInput": -1
+  },
+  {
+   "id": 40,
+   "system": false,
+   "keyId": 1023,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": 85,
+   "nxInput": -1
+  },
+  {
+   "id": 41,
+   "system": false,
+   "keyId": 1024,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": 86,
+   "nxInput": -1
+  },
+  {
+   "id": 43,
+   "system": false,
+   "keyId": 1026,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": 114,
+   "nxInput": -1
+  },
+  {
+   "id": 42,
+   "system": false,
+   "keyId": 1027,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": 101,
+   "nxInput": -1
+  },
+  {
+   "id": 44,
+   "system": false,
+   "keyId": 1028,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": 16777281,
+   "nxInput": -1
+  },
+  {
+   "id": 45,
+   "system": false,
+   "keyId": 1029,
+   "custom1Input": 6,
+   "custom2Input": 9,
+   "diInput": -1,
+   "pcInput": 109,
+   "nxInput": -1
+  }
+ ]
+]
+
+########## systemInputMappingList (1 block(s)) ##########
+[
+ [
+  {
+   "id": 28,
+   "system": true,
+   "keyId": -1,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": 16777248,
+   "nxInput": -1
+  },
+  {
+   "id": 29,
+   "system": true,
+   "keyId": -2,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": -1
+  },
+  {
+   "id": 30,
+   "system": true,
+   "keyId": -3,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": -1
+  },
+  {
+   "id": 31,
+   "system": true,
+   "keyId": -4,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": -1
+  },
+  {
+   "id": 32,
+   "system": true,
+   "keyId": -5,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": 16777296,
+   "nxInput": -1
+  },
+  {
+   "id": 33,
+   "system": true,
+   "keyId": -6,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": -1
+  },
+  {
+   "id": 34,
+   "system": true,
+   "keyId": -7,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": -1
+  },
+  {
+   "id": 35,
+   "system": true,
+   "keyId": -8,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": -1
+  },
+  {
+   "id": 36,
+   "system": true,
+   "keyId": -9,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": 8,
+   "pcInput": 16777300,
+   "nxInput": -1
+  },
+  {
+   "id": 37,
+   "system": true,
+   "keyId": -10,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": 9,
+   "pcInput": -1,
+   "nxInput": -1
+  },
+  {
+   "id": 38,
+   "system": true,
+   "keyId": -11,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": -1
+  },
+  {
+   "id": 39,
+   "system": true,
+   "keyId": -12,
+   "custom1Input": -1,
+   "custom2Input": -1,
+   "diInput": -1,
+   "pcInput": -1,
+   "nxInput": -1
+  }
+ ]
+]
