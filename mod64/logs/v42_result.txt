@@ -1,0 +1,4 @@
+v42 build result (2026-07-08T16:14:09Z)
+RELEASE_URL: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v42-controls/FOBS_v42.apk
+APK_MD5: 71370bb198789fdcb32e8c84282e7d7e
+APK_SIZE: 228423676
