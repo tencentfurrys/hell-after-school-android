@@ -1,0 +1,76 @@
+name: v44 recon - locate JS press/release operationKey API
+
+# We proved in v43 that precedeTriggered/Released is a no-op on arm64: the
+# engine ignores every opKid we send, even correct ones. Only evalString on
+# the GL thread is a live channel (cachePurge rv=1 every 20s).
+#
+# This recon extracts the game's bundled JS from the v41 base APK and greps
+# for the operation-key press/release entry point PGMMV exposes. Different
+# builds use different names (Agtk.settings.pressOperationKey, _pgm.*,
+# InputManager.*, etc.). We commit the findings to mod64/logs/v44_recon.txt.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      BASE_TAG: v41-controls
+      BASE_APK_NAME: FOBS_v41.apk
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 0 }
+
+      - name: Download base APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+
+      - name: Unzip APK
+        run: |
+          set -e
+          mkdir -p /tmp/apk
+          unzip -o -q /tmp/base.apk -d /tmp/apk
+          echo "=== script-ish files under assets ==="
+          find /tmp/apk/assets -type f \( -iname '*.js' -o -iname '*.jsc' -o -iname '*.json' -o -iname '*.lua' \) \
+            -printf '%s\t%p\n' | sort -n | tail -60
+
+      - name: Grep for operation-key JS entry points
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          {
+            echo "=========================================================="
+            echo "v44 recon: JS press/release operationKey API"
+            echo "=========================================================="
+            echo
+            echo "### keywords: pressOperationKey / releaseOperationKey / operationKey / Agtk / _pgm ###"
+            grep -rInE "pressOperationKey|releaseOperationKey|operationKey\s*[=:(]|\bAgtk\b|_pgm\b|InputManager\.[a-zA-Z]+|inputManager\.[a-zA-Z]+" \
+              /tmp/apk/assets 2>/dev/null | head -200 || echo "(no plain-text hits)"
+            echo
+            echo "### keywords in the engine .so (may show symbol names for the C++ side) ###"
+            for so in $(find /tmp/apk/lib -name 'libMyGame.so' -o -name 'libcocos2d*.so'); do
+              echo "-- $so --"
+              strings "$so" 2>/dev/null | grep -iE "pressOperationKey|releaseOperationKey|operationKey|Agtk|InputManager|handleKeyDown|handleKeyUp|evalString" | sort -u | head -60
+            done
+            echo
+            echo "### how cachePurge is invoked (successful reference we already know works) ###"
+            grep -rInE "cachePurge|CACHE_PURGE|purgeCache" /tmp/apk 2>/dev/null | head -40 || true
+          } | tee mod64/logs/v44_recon.txt
+
+      - name: Commit report
+        run: |
+          set -e
+          git config user.name recon-bot
+          git config user.email recon@local
+          git add mod64/logs/v44_recon.txt
+          git commit -m "v44 recon: locate JS press/release operationKey API" || echo "nothing to commit"
+          git push origin main
