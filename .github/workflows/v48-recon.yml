@@ -1,0 +1,93 @@
+name: v48 recon - trace the REAL key-event path (dispatchKeyEvent to native)
+
+# v47b regression proved handleKeyDown/stdInject NEVER drove the engine ("OK" was a lie).
+# Only Hacker Keyboard (a REAL Android KeyEvent) works. This recon dumps the exact
+# path a real key event takes so we can replicate it for touch:
+#   - every class that overrides dispatchKeyEvent / onKeyDown / onKeyUp
+#   - AppActivity + Cocos2dxActivity full smali
+#   - how a KeyEvent reaches nativeKeyEvent (the real native bridge)
+#   - the Cocos2dxEditText / IME insertText path (soft-keyboard chars)
+
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      BASE_TAG: v46-controls
+      BASE_APK_NAME: FOBS_v46.apk
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+      - name: Download base APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+      - name: Baksmali
+        run: |
+          set -e
+          curl -fsSL -o /tmp/baksmali.jar \
+            https://github.com/baksmali/smali/releases/download/3.0.9/baksmali-3.0.9-fat.jar
+          mkdir -p /tmp/dex && unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+      - name: Trace key-event path
+        run: |
+          set -e
+          mkdir -p mod64/logs/v48_recon
+          # 1. everything overriding dispatchKeyEvent / onKeyDown / onKeyUp
+          grep -rln -E '\.method .*(dispatchKeyEvent|onKeyDown|onKeyUp|dispatchKeyEventPreIme)' /tmp/smali \
+            > mod64/logs/v48_recon/00_overriders_paths.txt || true
+          {
+            echo "### classes overriding key dispatch ###"
+            cat mod64/logs/v48_recon/00_overriders_paths.txt
+            echo
+            echo "### each override body ###"
+            while read -r f; do
+              echo "======================== $f ========================"
+              for m in dispatchKeyEvent onKeyDown onKeyUp dispatchKeyEventPreIme; do
+                awk "/\.method .*${m}\(/,/\.end method/" "$f"
+              done
+            done < mod64/logs/v48_recon/00_overriders_paths.txt
+          } > mod64/logs/v48_recon/01_key_dispatch_bodies.txt
+
+          # 2. AppActivity full smali (the app's Activity subclass)
+          for f in $(find /tmp/smali -name 'AppActivity*.smali'); do
+            cp "$f" "mod64/logs/v48_recon/$(echo "$f" | sed 's#/tmp/smali/##; s#/#.#g').txt"
+          done
+
+          # 3. how nativeKeyEvent is reached (who calls handleKeyDown / nativeKeyEvent)
+          {
+            echo "### callers of handleKeyDown / handleKeyUp ###"
+            grep -rln -E 'handleKeyDown|handleKeyUp' /tmp/smali | while read -r f; do
+              echo "-- $f --"
+              grep -nE 'handleKeyDown|handleKeyUp' "$f"
+            done
+            echo
+            echo "### callers of nativeKeyEvent ###"
+            grep -rlnE 'nativeKeyEvent' /tmp/smali | while read -r f; do
+              echo "-- $f --"; grep -nE 'nativeKeyEvent' "$f"
+            done
+          } > mod64/logs/v48_recon/02_native_key_callers.txt
+
+          # 4. IME / EditText path (soft keyboard char input)
+          {
+            for f in $(find /tmp/smali -name 'Cocos2dxEditText*.smali' -o -name 'Cocos2dxEditBox*.smali'); do
+              echo "======================== $f ========================"
+              grep -nE '\.method|insertText|handleInsertText|onKey|dispatchKeyEvent' "$f"
+            done
+          } > mod64/logs/v48_recon/03_ime_path.txt
+
+      - name: Commit
+        run: |
+          set -e
+          git config user.name recon-bot; git config user.email recon@local
+          git add mod64/logs/v48_recon
+          git commit -m "v48 recon: real key-event path trace" || echo "nothing to commit"
+          git push origin main
