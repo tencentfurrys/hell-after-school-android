@@ -1,0 +1,23 @@
+########## every smali file that DEFINES dispatchKeyEvent ##########
+/tmp/smali/org/cocos2dx/lib/GameControllerDelegate.smali
+/tmp/smali/org/cocos2dx/cpp/AppActivity.smali
+
+########## every smali file that DEFINES onKeyDown or onKeyUp ##########
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBox.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView.smali
+
+########## classes calling queueInject / rawInject / FORCED-INJECT ##########
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$2.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$1.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$4$1.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$4.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$3.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$4$1$1.smali
+/tmp/smali/org/cocos2dx/cpp/AppActivity.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$3$1.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$3$1$1.smali
+/tmp/smali/org/cocos2dx/cpp/GamepadOverlay$4$1$1$1.smali
+
+########## classes referencing 'INPUT KEY' log tag ##########
+/tmp/smali/org/cocos2dx/cpp/AppActivity.smali

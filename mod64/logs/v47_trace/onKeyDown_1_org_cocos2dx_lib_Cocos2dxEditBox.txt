@@ -1,0 +1,31 @@
+############ /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBox.smali ############
+.method public onKeyDown(ILandroid/view/KeyEvent;)Z
+    .registers 4
+
+    const/4 v0, 0x4
+
+    if-eq p1, v0, :cond_8
+
+    invoke-super {p0, p1, p2}, Landroid/widget/EditText;->onKeyDown(ILandroid/view/KeyEvent;)Z
+
+    move-result p1
+
+    return p1
+
+    :cond_8
+    invoke-virtual {p0}, Lorg/cocos2dx/lib/Cocos2dxEditBox;->getContext()Landroid/content/Context;
+
+    move-result-object p1
+
+    check-cast p1, Lorg/cocos2dx/lib/Cocos2dxActivity;
+
+    invoke-virtual {p1}, Lorg/cocos2dx/lib/Cocos2dxActivity;->getGLSurfaceView()Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->requestFocus()Z
+
+    const/4 p1, 0x1
+
+    return p1
+.end method

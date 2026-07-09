@@ -1,0 +1,3 @@
+############ /tmp/smali/org/cocos2dx/lib/GameControllerDelegate.smali ############
+.method public abstract dispatchKeyEvent(Landroid/view/KeyEvent;)Z
+.end method

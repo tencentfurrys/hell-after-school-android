@@ -1,0 +1,56 @@
+############ /tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView.smali ############
+.method public onKeyDown(ILandroid/view/KeyEvent;)Z
+    .registers 4
+
+    const/4 v0, 0x4
+
+    if-eq p1, v0, :cond_17
+
+    const/16 v0, 0x42
+
+    if-eq p1, v0, :cond_1e
+
+    const/16 v0, 0x52
+
+    if-eq p1, v0, :cond_1e
+
+    const/16 v0, 0x55
+
+    if-eq p1, v0, :cond_1e
+
+    packed-switch p1, :pswitch_data_28
+
+    invoke-super {p0, p1, p2}, Landroid/opengl/GLSurfaceView;->onKeyDown(ILandroid/view/KeyEvent;)Z
+
+    move-result p1
+
+    return p1
+
+    :cond_17
+    sget-object p2, Lorg/cocos2dx/lib/Cocos2dxVideoHelper;->mVideoHandler:Lorg/cocos2dx/lib/Cocos2dxVideoHelper$VideoHandler;
+
+    const/16 v0, 0x3e8
+
+    invoke-virtual {p2, v0}, Lorg/cocos2dx/lib/Cocos2dxVideoHelper$VideoHandler;->sendEmptyMessage(I)Z
+
+    :cond_1e
+    :pswitch_1e
+    new-instance p2, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$13;
+
+    invoke-direct {p2, p0, p1}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView$13;-><init>(Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;I)V
+
+    invoke-virtual {p0, p2}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->queueEvent(Ljava/lang/Runnable;)V
+
+    const/4 p1, 0x1
+
+    return p1
+
+    :pswitch_data_28
+    .packed-switch 0x13
+        :pswitch_1e
+        :pswitch_1e
+        :pswitch_1e
+        :pswitch_1e
+        :pswitch_1e
+    .end packed-switch
+.end method
