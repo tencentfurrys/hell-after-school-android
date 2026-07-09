@@ -1,0 +1,75 @@
+name: v49 engine recon - InputManager + nativeKeyEvent + injection point
+
+# We control the engine source. The overlay already calls
+# nativeInjectCocos2dKey(cc,pressed) every press but it was NEVER implemented
+# in the arm64 .so (UnsatisfiedLinkError in every log). This recon dumps the
+# engine's real keyboard path so we can implement that native hook to drive
+# the SAME InputManager state the game polls.
+
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 1 }
+
+      - name: Recon engine keyboard/input source
+        run: |
+          set -e
+          mkdir -p mod64/logs/v49_recon
+          ROOT=Player/Classes
+
+          # 1. JNI functions exported for org.cocos2dx.lib / cpp (nativeKeyEvent etc.)
+          grep -rInE 'Java_org_cocos2dx|JNIEXPORT|nativeKeyEvent|nativeInjectCocos2dKey' \
+            Player 2>/dev/null > mod64/logs/v49_recon/01_jni_exports.txt || true
+
+          # 2. Where nativeKeyEvent / dispatchKeyboardEvent / EventKeyboard is handled
+          grep -rInE 'nativeKeyEvent|EventKeyboard|dispatchKeyboardEvent|onKeyPressed|onKeyReleased|KeyCodeConvert|glfwKey|keyCodeMap' \
+            Player 2>/dev/null > mod64/logs/v49_recon/02_keyboard_dispatch.txt || true
+
+          # 3. InputManager class files + key-state API
+          find Player -iname '*input*' -o -iname '*Input*' 2>/dev/null | grep -iE '\.(cpp|h|hpp)$' \
+            > mod64/logs/v49_recon/03_input_files.txt || true
+          {
+            for f in $(cat mod64/logs/v49_recon/03_input_files.txt); do
+              echo "======================== $f ========================"
+              grep -nE 'class |::|void |bool |int |KeyCode|keyId|operationKey|press|release|setKey|getKey|isPress|judge|precede|custom1|custom2|pcInput' "$f" | head -80
+            done
+          } > mod64/logs/v49_recon/04_inputmanager_api.txt
+
+          # 4. operation-key polling: how the game asks "is this operation key down"
+          grep -rInE 'InputController|InputManager|getOperationKey|operationKeyPress|isOperationKeyPress|getPressData|_keyStatus|keyStatusList|inputMapping' \
+            Player/Classes 2>/dev/null | head -200 > mod64/logs/v49_recon/05_operationkey_poll.txt || true
+
+          # 5. the exact JNI source file that declares GamepadOverlay natives (if any)
+          grep -rIlnE 'GamepadOverlay|nativeInjectCocos2dKey' Player 2>/dev/null \
+            > mod64/logs/v49_recon/06_overlay_native_home.txt || true
+
+          # 6. Cocos2dxRenderer nativeKeyEvent JNI body (the proven real path)
+          NK=$(grep -rIlnE 'nativeKeyEvent' Player 2>/dev/null | head -1)
+          if [ -n "$NK" ]; then
+            echo "FILE: $NK" > mod64/logs/v49_recon/07_nativeKeyEvent_body.txt
+            awk '/nativeKeyEvent/{p=1} p{print} /\}/{if(p)c++; if(c>3)exit}' "$NK" | head -120 >> mod64/logs/v49_recon/07_nativeKeyEvent_body.txt || true
+            # also capture surrounding 120 lines around first match for context
+            grep -nE 'nativeKeyEvent' "$NK" | head -3 >> mod64/logs/v49_recon/07_nativeKeyEvent_body.txt
+          fi
+
+          # 7. how many InputManager-ish files & their sizes for orientation
+          find Player -iregex '.*\(InputManager\|InputController\|CCInput\|TouchGamepad\).*\.\(cpp\|h\)' -printf '%s\t%p\n' 2>/dev/null \
+            > mod64/logs/v49_recon/08_key_files_index.txt || true
+
+          echo "=== recon summary ==="
+          wc -l mod64/logs/v49_recon/*.txt
+
+      - name: Commit
+        run: |
+          set -e
+          git config user.name recon-bot; git config user.email recon@local
+          git add mod64/logs/v49_recon
+          git commit -m "v49 engine recon: keyboard/InputManager source trace" || echo "nothing to commit"
+          git push origin main
