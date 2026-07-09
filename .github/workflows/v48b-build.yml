@@ -1,0 +1,220 @@
+name: v48b build - touch dispatches real KeyEvent (register-clobber fixed)
+
+# v47b regression proved direct queueInject from touch is not enough.
+# Hacker Keyboard works through AppActivity.dispatchKeyEvent(real KeyEvent).
+# v48 rewrites GamepadOverlay.rawInject so touch creates android.view.KeyEvent
+# and calls Activity.dispatchKeyEvent(event), instead of calling queueInject or
+# renderer.handleKeyDown directly.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_TAG: v46-controls
+      BASE_APK_NAME: FOBS_v46.apk
+      OVERLAY_STD: 'org/cocos2dx/cpp/GamepadOverlay.smali'
+      SMALI_API: '23'
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 0 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+
+      - name: Download base APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+
+      - name: Fetch baksmali + smali
+        run: |
+          set -e
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar \
+              "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+
+      - name: Baksmali
+        run: |
+          set -e
+          mkdir -p /tmp/dex
+          unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+          test -f "/tmp/smali/$OVERLAY_STD"
+
+      - name: Patch rawInject to synthesize KeyEvent and call Activity.dispatchKeyEvent
+        run: |
+          set -e
+          python3 - "/tmp/smali/$OVERLAY_STD" <<'PY'
+          import sys, re
+          path = sys.argv[1]
+          src = open(path).read().splitlines()
+
+          # Resolve this class descriptor from the .class line.
+          cls = None
+          for l in src[:20]:
+              m = re.match(r'\.class\s+.*?(L[^;]+;)', l)
+              if m:
+                  cls = m.group(1)
+                  break
+          if not cls:
+              raise SystemExit('class descriptor not found')
+          print('overlay class:', cls)
+
+          # Locate rawInject(IZ)V.
+          i0 = i1 = None
+          for i, l in enumerate(src):
+              if re.match(r'\.method .*rawInject\(IZ\)V', l):
+                  i0 = i
+              elif i0 is not None and l.strip() == '.end method':
+                  i1 = i
+                  break
+          if i0 is None:
+              raise SystemExit('rawInject not found')
+
+          # Replacement:
+          # android = cocos2dToAndroidKey(cc)
+          # if android == 0 return
+          # ctx = getContext(); if ctx not Activity return
+          # action = pressed ? ACTION_DOWN(0) : ACTION_UP(1)
+          # ev = new KeyEvent(action, android)
+          # ((Activity)ctx).dispatchKeyEvent(ev)
+          # log result through existing private logD(String) for runtime proof.
+          # .registers 13 -> params live in v10(this)/v11(cc)/v12(pressed),
+          # so locals v0..v6 never collide with p0/p1/p2 (the v48 clobber bug).
+          body = [
+              src[i0],
+              '    .registers 13',
+              '',
+              '    invoke-static {p1}, ' + cls + '->cocos2dToAndroidKey(I)I',
+              '    move-result v0',
+              '',
+              '    if-eqz v0, :return_void',
+              '',
+              '    invoke-virtual {p0}, Landroid/view/View;->getContext()Landroid/content/Context;',
+              '    move-result-object v1',
+              '',
+              '    instance-of v2, v1, Landroid/app/Activity;',
+              '    if-eqz v2, :return_void',
+              '',
+              '    check-cast v1, Landroid/app/Activity;',
+              '',
+              '    if-eqz p2, :is_up',
+              '    const/4 v2, 0x0',
+              '    goto :make_event',
+              '',
+              '    :is_up',
+              '    const/4 v2, 0x1',
+              '',
+              '    :make_event',
+              '    new-instance v3, Landroid/view/KeyEvent;',
+              '    invoke-direct {v3, v2, v0}, Landroid/view/KeyEvent;-><init>(II)V',
+              '',
+              '    invoke-virtual {v1, v3}, Landroid/app/Activity;->dispatchKeyEvent(Landroid/view/KeyEvent;)Z',
+              '    move-result v4',
+              '',
+              '    new-instance v5, Ljava/lang/StringBuilder;',
+              '    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V',
+              '    const-string v6, "touch dispatchKeyEvent android="',
+              '    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;',
+              '    move-result-object v5',
+              '    invoke-virtual {v5, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;',
+              '    move-result-object v5',
+              '    const-string v6, " pressed="',
+              '    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;',
+              '    move-result-object v5',
+              '    invoke-virtual {v5, p2}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;',
+              '    move-result-object v5',
+              '    const-string v6, " ok="',
+              '    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;',
+              '    move-result-object v5',
+              '    invoke-virtual {v5, v4}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;',
+              '    move-result-object v5',
+              '    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;',
+              '    move-result-object v5',
+              '    invoke-direct {p0, v5}, ' + cls + '->logD(Ljava/lang/String;)V',
+              '',
+              '    :return_void',
+              '    return-void',
+              '.end method',
+          ]
+          src = src[:i0] + body + src[i1+1:]
+          open(path, 'w').write('\n'.join(src))
+          print('rawInject replaced with synthetic KeyEvent dispatch')
+          PY
+
+      - name: Verify patch
+        run: |
+          set -e
+          echo '==== rawInject POST-PATCH ===='
+          awk '/\.method .*rawInject/,/\.end method/' "/tmp/smali/$OVERLAY_STD"
+          awk '/\.method .*rawInject/,/\.end method/' "/tmp/smali/$OVERLAY_STD" | grep -q 'dispatchKeyEvent(Landroid/view/KeyEvent;)Z'
+          awk '/\.method .*rawInject/,/\.end method/' "/tmp/smali/$OVERLAY_STD" | grep -q 'Landroid/view/KeyEvent;-><init>(II)V'
+          echo VERIFY-OK
+
+      - name: Reassemble + sign + publish
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          mkdir -p mod64/logs/v48b_smali
+          cp "/tmp/smali/$OVERLAY_STD" mod64/logs/v48b_smali/GamepadOverlay.patched.smali.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v48b_smali
+          git commit -m "v48 patched smali" || true
+          git push origin main || true
+
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_patched.dex
+          test -s /tmp/dex/classes_patched.dex
+          python3 - /tmp/dex/classes_patched.dex /tmp/base.apk /tmp/v48_unaligned.apk <<'PY'
+          import sys, zipfile
+          pd, base, out = sys.argv[1], sys.argv[2], sys.argv[3]
+          db = open(pd,'rb').read(); replaced = False
+          zin = zipfile.ZipFile(base,'r'); zout = zipfile.ZipFile(out,'w')
+          for info in zin.infolist():
+              raw = db if info.filename == 'classes.dex' else zin.read(info.filename)
+              if info.filename == 'classes.dex': replaced = True
+              zi = zipfile.ZipInfo(info.filename, date_time=info.date_time)
+              zi.compress_type = info.compress_type
+              zi.external_attr = info.external_attr
+              zi.internal_attr = info.internal_attr
+              zi.create_system = info.create_system
+              zi.flag_bits = info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not replaced: raise SystemExit('classes.dex not found')
+          PY
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v48_unaligned.apk /tmp/v48_aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v48b.apk /tmp/v48_aligned.apk
+          "${BT}apksigner" verify --verbose /tmp/FOBS_v48b.apk
+          gh release create v48b-controls /tmp/FOBS_v48b.apk \
+            --title "v48 controls: touch sends real KeyEvent through dispatchKeyEvent" \
+            --notes "rawInject now synthesizes android.view.KeyEvent and calls Activity.dispatchKeyEvent, matching the top-level Hacker Keyboard route instead of queueInject/handleKeyDown directly." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v48b-controls /tmp/FOBS_v48b.apk --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record result
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          {
+            echo "v48b build OK"
+            echo "asset: https://github.com/${GITHUB_REPOSITORY}/releases/download/v48b-controls/FOBS_v48b.apk"
+            md5sum /tmp/FOBS_v48b.apk
+          } > mod64/logs/v48b_result.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v48b_result.txt
+          git commit -m "v48 result" || true
+          git push origin main || true
