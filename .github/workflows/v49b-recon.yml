@@ -1,0 +1,67 @@
+name: v49b recon - full InputManager header + keyboard state API
+
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 1 }
+      - name: Dump InputManager source
+        run: |
+          set -e
+          mkdir -p mod64/logs/v49b_recon
+          # find the AGTK InputManager (has isTriggeredKeyboard), not libvlc
+          IMH=$(grep -rIln 'isTriggeredKeyboard' Player 2>/dev/null | grep -iE '\.h$' | head -1)
+          IMC=$(grep -rIln 'isTriggeredKeyboard' Player 2>/dev/null | grep -iE '\.cpp$' | head -1)
+          echo "HEADER=$IMH" | tee mod64/logs/v49b_recon/00_paths.txt
+          echo "CPP=$IMC"    | tee -a mod64/logs/v49b_recon/00_paths.txt
+
+          # full header
+          [ -n "$IMH" ] && cp "$IMH" mod64/logs/v49b_recon/InputManager.h.txt
+
+          # keyboard-relevant method bodies from cpp
+          if [ -n "$IMC" ]; then
+            {
+              for m in isTriggeredKeyboard isPressedKeyboard isReleasedKeyboard \
+                       update onKeyPressed onKeyReleased setKeyboard updateKeyboard \
+                       getKeyboardInput registerKeyboard _keyboardInput keyboardKeyCode; do
+                echo "############ method/def: $m ############"
+                grep -nE "$m" "$IMC" | head -20
+              done
+              echo
+              echo "############ full onKeyPressed / onKeyReleased bodies ############"
+              awk '/::onKeyPressed/{p=1} p{print} /^\}/{if(p){print "----"; exit}}' "$IMC" | head -80
+              awk '/::onKeyReleased/{p=1} p{print} /^\}/{if(p){print "----"; exit}}' "$IMC" | head -80
+              echo
+              echo "############ how keyboard listener is created (EventListenerKeyboard) ############"
+              grep -nE 'EventListenerKeyboard|onKeyPressed|onKeyReleased|addEventListener|_keyboard' "$IMC" | head -40
+            } > mod64/logs/v49b_recon/InputManager.methods.txt
+          fi
+
+          # how keyboard state is stored (the array/map isTriggeredKeyboard reads)
+          if [ -n "$IMH" ]; then
+            {
+              echo "### keyboard state storage in header ###"
+              grep -nE 'Keyboard|keyboard|KeyCode|_key|InputData|std::(vector|map|array|unordered_map)' "$IMH" | head -80
+            } > mod64/logs/v49b_recon/keyboard_state.txt
+          fi
+
+          # the isTriggeredKeyboard + isPressedKeyboard full bodies
+          if [ -n "$IMC" ]; then
+            awk '/::isTriggeredKeyboard/{p=1} p{print} /^\}/{if(p){print "----"; exit}}' "$IMC" | head -60  > mod64/logs/v49b_recon/isTriggered_body.txt
+            awk '/::isPressedKeyboard/{p=1} p{print} /^\}/{if(p){print "----"; exit}}' "$IMC" | head -60 >> mod64/logs/v49b_recon/isTriggered_body.txt
+          fi
+
+          wc -l mod64/logs/v49b_recon/*.txt
+      - name: Commit
+        run: |
+          set -e
+          git config user.name recon-bot; git config user.email recon@local
+          git add mod64/logs/v49b_recon
+          git commit -m "v49b recon: InputManager keyboard state API" || echo "nothing to commit"
+          git push origin main
