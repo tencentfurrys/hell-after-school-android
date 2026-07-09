@@ -1,0 +1,158 @@
+name: v46 build - correct Android letter keycodes for X/C/V
+
+# THE fix, finally. Hacker Keyboard log proved the game's keyboard binding is
+# literally the letter drawn on each button:
+#   X (attack) = letter 'x'  (Android KEYCODE_X = 52)
+#   C (dash)   = letter 'c'  (Android KEYCODE_C = 31)
+#   V (menu)   = letter 'v'  (Android KEYCODE_V = 50)
+# Not A/Shift/Ctrl (v42-v45) - that was a misread of project.json pcInput.
+#
+# The .so's Android->Cocos2d LUT already has entries for x/c/v; sending those
+# codes via handleKeyDown -> nativeKeyEvent works exactly like Hacker Keyboard.
+#
+# Change: three rewrites in cocos2dToAndroidKey. Everything else reverts to
+# the v43 state (Android keycodes, no dispatchKeyEvent detour, no chord).
+# Base APK = v43-controls (last clean build before the wrong-guess pivots).
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_TAG: v43-controls
+      BASE_APK_NAME: FOBS_v43.apk
+      OVERLAY_STD: 'org/cocos2dx/cpp/GamepadOverlay.smali'
+      SMALI_API: '23'
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 0 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+      - name: Download base APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+      - name: Fetch baksmali + smali
+        run: |
+          set -e
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar \
+              "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+      - name: Baksmali
+        run: |
+          set -e
+          mkdir -p /tmp/dex
+          unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+
+      - name: Patch cocos2dToAndroidKey to send x/c/v letters
+        run: |
+          set -e
+          python3 - "/tmp/smali/$OVERLAY_STD" <<'PY'
+          import sys, re
+          path = sys.argv[1]
+          src = open(path).read().splitlines()
+
+          def find_method(lines, name):
+              i0=None
+              for i,l in enumerate(lines):
+                  if re.match(r'\.method .*'+re.escape(name)+r'\(', l): i0=i
+                  elif i0 is not None and l.strip()=='.end method': return i0, i
+              return None, None
+
+          i0,i1 = find_method(src, 'cocos2dToAndroidKey')
+          if i0 is None: raise SystemExit("cocos2dToAndroidKey not found")
+
+          def set_return(cc_hex, new_val_hex):
+              for i in range(i0, i1):
+                  if re.match(r'\s*const(?:/(?:4|16))?\s+v\d+,\s*'+cc_hex+r'\b', src[i]):
+                      for j in range(i+1, min(i+8, i1)):
+                          m = re.match(r'(\s*)(const(?:/(?:4|16))?\s+)(v\d+|p\d+)(,\s*)(-?0x[0-9a-fA-F]+|-?\d+)(.*)', src[j])
+                          if m:
+                              indent, reg = m.group(1), m.group(3)
+                              src[j] = f"{indent}const/16 {reg}, {new_val_hex}"
+                              return (i,j,reg)
+              return None
+
+          # X attack (cc 0x93) -> letter x (0x34, 52)
+          # C dash   (cc 0x7e) -> letter c (0x1f, 31)
+          # V menu   (cc 0x91) -> letter v (0x32, 50)
+          rX = set_return('0x93', '0x34')
+          rC = set_return('0x7e', '0x1f')
+          rV = set_return('0x91', '0x32')
+          print("rewrites X/C/V:", rX, rC, rV)
+          if None in (rX, rC, rV): raise SystemExit("one or more rewrites missed")
+
+          open(path, 'w').write("\n".join(src))
+          PY
+
+      - name: Verify
+        run: |
+          set -e
+          echo "==== cocos2dToAndroidKey POST-PATCH ===="
+          awk '/\.method .*cocos2dToAndroidKey/,/\.end method/' "/tmp/smali/$OVERLAY_STD"
+          echo
+          # Assert each block has the correct return
+          grep -A6 "const/16 v0, 0x93" "/tmp/smali/$OVERLAY_STD" | grep -q "const/16 p0, 0x34" || { echo "FAIL: X not 0x34"; exit 1; }
+          grep -A6 "const/16 v0, 0x7e" "/tmp/smali/$OVERLAY_STD" | grep -q "const/16 p0, 0x1f" || { echo "FAIL: C not 0x1f"; exit 1; }
+          grep -A6 "const/16 v0, 0x91" "/tmp/smali/$OVERLAY_STD" | grep -q "const/16 p0, 0x32" || { echo "FAIL: V not 0x32"; exit 1; }
+          echo "VERIFY-OK"
+
+      - name: Reassemble + repackage + sign + publish
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_patched.dex
+          test -s /tmp/dex/classes_patched.dex
+          python3 - /tmp/dex/classes_patched.dex /tmp/base.apk /tmp/v46_unaligned.apk <<'PY'
+          import sys, zipfile
+          pd, base, out = sys.argv[1], sys.argv[2], sys.argv[3]
+          db=open(pd,"rb").read(); replaced=False
+          zin=zipfile.ZipFile(base,"r"); zout=zipfile.ZipFile(out,"w")
+          for info in zin.infolist():
+              raw = db if info.filename=="classes.dex" else zin.read(info.filename)
+              if info.filename=="classes.dex": replaced=True
+              zi=zipfile.ZipInfo(info.filename,date_time=info.date_time)
+              zi.compress_type=info.compress_type; zi.external_attr=info.external_attr
+              zi.internal_attr=info.internal_attr; zi.create_system=info.create_system
+              zi.flag_bits=info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not replaced: raise SystemExit("classes.dex not found")
+          PY
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v46_unaligned.apk /tmp/v46_aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v46.apk /tmp/v46_aligned.apk
+          "${BT}apksigner" verify --verbose /tmp/FOBS_v46.apk
+          gh release create v46-controls /tmp/FOBS_v46.apk \
+            --title "v46 controls: letter x/c/v (finally right)" \
+            --notes "X sends KEYCODE_X (52), C sends KEYCODE_C (31), V sends KEYCODE_V (50). These are the letters the engine's LUT actually maps to attack/dash/menu, as proven by the Hacker Keyboard log." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v46-controls /tmp/FOBS_v46.apk --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          {
+            echo "v46 build OK"
+            echo "asset: https://github.com/${GITHUB_REPOSITORY}/releases/download/v46-controls/FOBS_v46.apk"
+            md5sum /tmp/FOBS_v46.apk
+          } > mod64/logs/v46_result.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v46_result.txt
+          git commit -m "v46 result" || true
+          git push origin main || true
