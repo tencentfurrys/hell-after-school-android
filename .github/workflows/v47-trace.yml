@@ -1,0 +1,100 @@
+name: v47 trace - find the dispatchKeyEvent handler
+
+# One remaining diagnostic: Hacker Keyboard's letter-x press works, on-screen X
+# (same android=52 emitted) doesn't. There must be a class overriding
+# dispatchKeyEvent that catches KB letter events and does something MORE than
+# just queueInject. Find that class and dump its body.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  trace:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BASE_TAG: v46-controls
+      BASE_APK_NAME: FOBS_v46.apk
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+      - name: Download base APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+      - name: Baksmali
+        run: |
+          set -e
+          curl -fsSL -o /tmp/baksmali.jar \
+            https://github.com/baksmali/smali/releases/download/3.0.9/baksmali-3.0.9-fat.jar
+          mkdir -p /tmp/dex
+          unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+
+      - name: Find every dispatchKeyEvent / onKeyDown override
+        run: |
+          set -e
+          mkdir -p mod64/logs/v47_trace
+          {
+            echo "########## every smali file that DEFINES dispatchKeyEvent ##########"
+            grep -rIlE '^\.method .*dispatchKeyEvent\(Landroid/view/KeyEvent;\)Z' /tmp/smali
+            echo
+            echo "########## every smali file that DEFINES onKeyDown or onKeyUp ##########"
+            grep -rIlE '^\.method .*(onKeyDown|onKeyUp)\(ILandroid/view/KeyEvent' /tmp/smali
+            echo
+            echo "########## classes calling queueInject / rawInject / FORCED-INJECT ##########"
+            grep -rIlE 'queueInject|rawInject|FORCED-INJECT' /tmp/smali
+            echo
+            echo "########## classes referencing 'INPUT KEY' log tag ##########"
+            grep -rIlE '"INPUT KEY|INPUT KEY act=' /tmp/smali
+          } > mod64/logs/v47_trace/00_index.txt
+
+      - name: Dump each dispatchKeyEvent body
+        run: |
+          set -e
+          i=0
+          for f in $(grep -rIlE '^\.method .*dispatchKeyEvent\(Landroid/view/KeyEvent;\)Z' /tmp/smali); do
+            i=$((i+1))
+            slug=$(echo "$f" | sed 's|/tmp/smali/||; s|/|_|g; s|\.smali$||')
+            outfile="mod64/logs/v47_trace/dispatchKey_${i}_${slug}.txt"
+            echo "############ $f ############" > "$outfile"
+            awk '/\.method .*dispatchKeyEvent\(Landroid\/view\/KeyEvent;\)Z/,/\.end method/' "$f" >> "$outfile"
+            echo "---captured: $outfile ($(wc -l <"$outfile") lines)"
+          done
+
+      - name: Dump each onKeyDown body
+        run: |
+          set -e
+          i=0
+          for f in $(grep -rIlE '^\.method .*onKeyDown\(ILandroid/view/KeyEvent' /tmp/smali); do
+            i=$((i+1))
+            slug=$(echo "$f" | sed 's|/tmp/smali/||; s|/|_|g; s|\.smali$||')
+            outfile="mod64/logs/v47_trace/onKeyDown_${i}_${slug}.txt"
+            echo "############ $f ############" > "$outfile"
+            awk '/\.method .*onKeyDown\(ILandroid\/view\/KeyEvent/,/\.end method/' "$f" >> "$outfile"
+          done
+
+      - name: Also dump any class emitting INPUT KEY / FORCED-INJECT (that's the KB catcher)
+        run: |
+          set -e
+          for f in $(grep -rIlE '"INPUT KEY|FORCED-INJECT' /tmp/smali); do
+            slug=$(echo "$f" | sed 's|/tmp/smali/||; s|/|_|g; s|\.smali$||')
+            cp "$f" mod64/logs/v47_trace/CLASS_${slug}.smali.txt
+          done
+          ls -la mod64/logs/v47_trace
+
+      - name: Commit
+        run: |
+          set -e
+          git config user.name trace-bot
+          git config user.email trace@local
+          git add mod64/logs/v47_trace
+          git commit -m "v47 trace: dispatchKeyEvent handler recon" || echo nothing
+          git push origin main
