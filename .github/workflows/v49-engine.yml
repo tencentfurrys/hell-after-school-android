@@ -1,0 +1,127 @@
+name: v49 engine - build libMyGame.so with nativeInjectCocos2dKey
+
+# Builds arm64 libMyGame.so from main (NDK r25c), same recipe as build-arm64.yml,
+# but adds Classes/GamepadInject.cpp to the source list so the .so finally EXPORTS
+# Java_org_cocos2dx_cpp_GamepadOverlay_nativeInjectCocos2dKey (routes into
+# InputManager::getInputDataRaw()->registerKeyPressed, the real keyboard path).
+# Verifies the symbol is present, publishes the .so to release tag v49-so, and
+# commits a readable build-log tail to mod64/logs/v49_build.txt.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with: { ref: main, submodules: false, fetch-depth: 1 }
+
+      - name: Setup NDK r25c
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r25c
+          add-to-path: true
+
+      - name: Add GamepadInject.cpp to Android.mk source list
+        run: |
+          set -e
+          MK="Player/proj.android-studio/app/jni/Android.mk"
+          test -f "$MK"
+          test -f "Player/Classes/GamepadInject.cpp"
+          if grep -q "GamepadInject.cpp" "$MK"; then
+            echo "already listed"
+          else
+            # insert right after the hellocpp/main.cpp entry
+            sed -i 's#\(hellocpp/main.cpp \\\)#\1\n    ../../../Classes/GamepadInject.cpp \\#' "$MK"
+          fi
+          echo "=== source-list head ==="
+          grep -nE "hellocpp/main.cpp|GamepadInject.cpp" "$MK"
+
+      - name: NDK r25c compatibility patches (best-effort, find-based)
+        run: |
+          set -e
+          # 1. pvmp3 decoder: -Werror breaks under r25c clang
+          for MK in $(grep -rl "LOCAL_CFLAGS += -Werror" Player/cocos2d 2>/dev/null || true); do
+            sed -i 's/LOCAL_CFLAGS += -Werror/LOCAL_CFLAGS += -Wno-error/' "$MK"
+            echo "patched -Werror in $MK"
+          done
+          # 2. Application.mk: suppress hard-error warnings globally for r25c
+          APP_MK="Player/proj.android-studio/app/jni/Application.mk"
+          if [ -f "$APP_MK" ]; then
+            if grep -q "APP_CPPFLAGS" "$APP_MK"; then
+              sed -i 's/APP_CPPFLAGS := /APP_CPPFLAGS := -Wno-error -Wno-everything /' "$APP_MK"
+            else
+              echo 'APP_CPPFLAGS := -Wno-error -Wno-everything' >> "$APP_MK"
+            fi
+            if ! grep -q "APP_CFLAGS" "$APP_MK"; then
+              echo 'APP_CFLAGS := -Wno-error' >> "$APP_MK"
+            fi
+            echo "=== Application.mk ==="; cat "$APP_MK"
+          fi
+
+      - name: Build libMyGame.so (arm64-v8a)
+        working-directory: Player/proj.android-studio/app
+        run: |
+          set -e
+          "${{ steps.setup-ndk.outputs.ndk-path }}/ndk-build" \
+            NDK_DEBUG=0 \
+            APP_ABI=arm64-v8a \
+            -j"$(nproc)" \
+            V=0 2>&1 | tee /tmp/build.log | tail -n 40 || true
+          echo "=== searching for output .so ==="
+          find . -name "libMyGame.so" -exec ls -lh {} \;
+
+      - name: Verify native symbol exported
+        id: verify
+        run: |
+          set -e
+          SO="$(find Player/proj.android-studio/app -name libMyGame.so -path '*arm64-v8a*' | head -1)"
+          if [ -z "$SO" ] || [ ! -f "$SO" ]; then
+            echo "BUILD FAILED: libMyGame.so not produced"
+            echo "SO_OK=0" >> "$GITHUB_OUTPUT"
+          else
+            echo "found $SO ($(ls -lh "$SO" | awk '{print $5}'))"
+            NM="$(dirname "${{ steps.setup-ndk.outputs.ndk-path }}")/*/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-nm"
+            if "${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-nm" -D "$SO" 2>/dev/null | grep -q nativeInjectCocos2dKey; then
+              echo "SYMBOL OK: nativeInjectCocos2dKey exported"
+              echo "SO_OK=1" >> "$GITHUB_OUTPUT"
+            else
+              echo "WARN: symbol not found via llvm-nm; trying readelf"
+              readelf -sW "$SO" | grep nativeInjectCocos2dKey && echo "SYMBOL OK (readelf)" && echo "SO_OK=1" >> "$GITHUB_OUTPUT" || { echo "SYMBOL MISSING"; echo "SO_OK=0" >> "$GITHUB_OUTPUT"; }
+            fi
+            cp "$SO" /tmp/libMyGame.so
+          fi
+
+      - name: Commit build-log tail (readable diagnosis)
+        if: always()
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          {
+            echo "=== v49 engine build ==="
+            echo "SO_OK=${{ steps.verify.outputs.SO_OK }}"
+            echo "--- last 60 lines of build.log ---"
+            tail -n 60 /tmp/build.log 2>/dev/null || echo "(no build log)"
+          } > mod64/logs/v49_build.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v49_build.txt
+          git commit -m "v49 engine build log" || true
+          git push origin main || true
+
+      - name: Publish .so to release
+        if: steps.verify.outputs.SO_OK == '1'
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release create v49-so /tmp/libMyGame.so \
+            --title "v49 engine .so (nativeInjectCocos2dKey enabled)" \
+            --notes "arm64 libMyGame.so built from main with GamepadInject.cpp; exports the native key-inject symbol into InputManager." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v49-so /tmp/libMyGame.so --repo "$GITHUB_REPOSITORY" --clobber
