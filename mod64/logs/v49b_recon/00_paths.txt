@@ -1,0 +1,2 @@
+HEADER=Player/Classes/Manager/InputManager.h
+CPP=Player/Classes/GameScene.cpp

@@ -1,0 +1,37 @@
+############ method/def: isTriggeredKeyboard ############
+3335:			if (im->isTriggeredKeyboard((int)EventKeyboard::KeyCode::KEY_F11)) {
+############ method/def: isPressedKeyboard ############
+############ method/def: isReleasedKeyboard ############
+############ method/def: update ############
+300:	this->updateCurSceneLinkDataList();
+698:	this->updateCurSceneLinkDataList();
+704:void GameScene::updateCurSceneLinkDataList()
+706:	CCLOG("-- GameScene::updateCurSceneLinkDataList()");
+764:			scene->getCamera()->update(0.1f);
+949:			scene->updateSceneRenderTextureList(0.1f, false, objectLayerId);
+1429:					nextScene->getCamera()->update(0.1f);
+1469:						auto updateCameraForce = [&](agtk::Camera *camera, cocos2d::Vec2 cameraPos) {
+1473:								camera->update(0.0f);
+1488:							updateCameraForce(camera, cameraPos);//一時的にカメラ位置を強制設定。
+1489:							nextScene->update(framePerSeconds);
+1491:							updateCameraForce(camera, cameraPos);//一時的にカメラ位置を強制設定。
+1492:							nextScene->update(framePerSeconds);
+1521:						camera->update(0.1f);
+1522:						nextScene->updateSceneRenderTextureList(0.1f, false);
+1559:					GameManager::getInstance()->updateObjectVariableAndSwitch();
+1597:				this->updateCurSceneLinkDataList();
+2494:										dummyGui->update(0.0f);
+2626:		sceneCamera->update(Director::getInstance()->getAnimationInterval());
+2633:		scene->updateSceneRenderTextureListIgnoreMenu(0);
+############ method/def: onKeyPressed ############
+############ method/def: onKeyReleased ############
+############ method/def: setKeyboard ############
+############ method/def: updateKeyboard ############
+############ method/def: getKeyboardInput ############
+############ method/def: registerKeyboard ############
+############ method/def: _keyboardInput ############
+############ method/def: keyboardKeyCode ############
+
+############ full onKeyPressed / onKeyReleased bodies ############
+
+############ how keyboard listener is created (EventListenerKeyboard) ############

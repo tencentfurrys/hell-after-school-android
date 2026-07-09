@@ -1,0 +1,73 @@
+### keyboard state storage in header ###
+23:	class InputData : public cocos2d::Ref
+26:		CREATE_FUNC_PARAM(InputData, int, keyCode);
+37:		CC_SYNTHESIZE_READONLY(int, _keyCode, KeyCode);
+49:	InputData *getInputData(int keyCode);
+80:class AGTKPLAYER_API InputKeyboardData : public cocos2d::Ref
+83:	// 小文字アルファベットの KeyCode を 大文字アルファベットの KeyCode に変換
+85:	static int upperKeyCode(int keyCode);
+86:	class InputData : public cocos2d::Ref
+89:		CREATE_FUNC_PARAM(InputData, int, keyCode);
+94:		int getKeyCode();
+102:		int _keyCode;
+109:	InputKeyboardData();
+110:	virtual ~InputKeyboardData();
+112:	CREATE_FUNC(InputKeyboardData);
+115:	InputData *setPressData(int keyCode, int scancode);
+116:	InputData *setReleaseData(int keyCode, int scancode);
+117:	InputData *setRepeatData(int keyCode, int scancode);
+118:	InputData *setCharInputData(int keyCode);
+119:	InputData *getInputData(int keyCode);
+120:	static const char *getKeyCodeName(int keyCode);
+127:	CC_SYNTHESIZE_RETAIN(InputData *, _emptyData, EmptyData);
+203:	class InputData : public cocos2d::Ref
+209:		CREATE_FUNC_PARAM(InputData, EnumType, type);
+244:	InputData *getInput(int keyCode);
+259:class AGTKPLAYER_API InputDataRaw : public Ref
+262:	InputDataRaw();
+263:	virtual ~InputDataRaw();
+265:	CREATE_FUNC(InputDataRaw);
+345:	CC_SYNTHESIZE_RETAIN(InputKeyboardData *, _keyboard, Keyboard);
+376:	void registerKeyboardListener(cocos2d::EventDispatcher *eventDispatcher, cocos2d::Node *node);
+394:		kControllerPc,//Keyboard & Mouse
+430:	enum EnumReservedKeyCodePc {
+431:		kReservedKeyCodePc_None = -1,
+432:		kReservedKeyCodePc_W = 0,
+433:		kReservedKeyCodePc_A,
+434:		kReservedKeyCodePc_S,
+435:		kReservedKeyCodePc_D,
+436:		kReservedKeyCodePc_LeftClick,
+437:		kReservedKeyCodePc_RightClick,
+438:		kReservedKeyCodePc_Up = 10,
+439:		kReservedKeyCodePc_Right,
+440:		kReservedKeyCodePc_Down,
+441:		kReservedKeyCodePc_Left,
+442:		kReservedKeyCodePc_MiddleClick = 22,
+443:		kReservedKeyCodePc_WheelUp = 24,
+444:		kReservedKeyCodePc_WhellDown = 26,
+445:		kReservedKeyCodePc_MousePointer = 28,
+446:		kReservedKeyCodePc_Max = 32,
+460:	class ReservedKeyCodeData : public cocos2d::Ref {
+462:		CREATE_FUNC_PARAM2(ReservedKeyCodeData, int, id, int, keyCode);
+465:			_keyCode = keyCode;
+470:		CC_SYNTHESIZE(int, _keyCode, KeyCode);
+476:	static InputController *create(int id, agtk::data::InputMappingData *inputMappingData, InputDataRaw *inputDataRaw);
+480:	bool init(int id, agtk::data::InputMappingData *inputMappingData, InputDataRaw *inputDataRaw);
+496:	static const char *getKeyCodeNamePc(int keyCode);
+506:	bool getReservedKeyCode(int reservedKeyCode, const char* &name, int &keyCode);
+512:	CC_SYNTHESIZE_RETAIN(InputDataRaw *, _inputDataRaw, InputDataRaw);
+514:	CC_SYNTHESIZE_RETAIN(InputKeyboardData *, _inputKeyboardData, InputKeyboardData);
+516:	CC_SYNTHESIZE_RETAIN(cocos2d::__Dictionary *, _reservedKeyCodePc, ReservedKeyCodePc);
+517:	CC_SYNTHESIZE_RETAIN(cocos2d::__Dictionary *, _reservedKeyCodePcBase, ReservedKeyCodePcBase);
+532:		kControllerKeyboardAndMouse = 0,//キーボード＆マウス
+582:	bool isPressedKeyboard(int keyCode);
+583:	bool isTriggeredKeyboard(int keyCode);
+584:	bool isReleasedKeyboard(int keyCode);
+588:	cocos2d::__Array *getPressedKeyboard();
+589:	cocos2d::__Array *getTriggeredKeyboard();
+590:	cocos2d::__Array *getReleasedKeyboard();
+608:	CC_SYNTHESIZE_RETAIN(InputDataRaw *, _inputDataRaw, InputDataRaw);
+623:	class PrecedeInputData {
+625:		PrecedeInputData(agtk::data::ObjectInputConditionData::EnumTriggerType type, int button, int id, int instanceId) {
+641:	std::list<PrecedeInputData> _precedeInputAcceptDataList;
+642:	std::list<PrecedeInputData> _precedeInputDataList;
