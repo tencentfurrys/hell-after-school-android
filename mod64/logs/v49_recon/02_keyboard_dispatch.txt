@@ -1,0 +1,1028 @@
+Player/Classes/GameScene.cpp:3335:			if (im->isTriggeredKeyboard((int)EventKeyboard::KeyCode::KEY_F11)) {
+Player/Classes/Data/ProjectData.cpp:1352:	{ (int)EventKeyboard::KeyCode::KEY_PAUSE,  16777224 },	//Pause
+Player/Classes/Data/ProjectData.cpp:1353:	{ (int)EventKeyboard::KeyCode::KEY_SCROLL_LOCK,  16777254 },	//ScrollLock
+Player/Classes/Data/ProjectData.cpp:1354:	{ (int)EventKeyboard::KeyCode::KEY_PRINT,  16777225 },	//Print
+Player/Classes/Data/ProjectData.cpp:1355:	{ (int)EventKeyboard::KeyCode::KEY_SYSREQ,  16777226 },	//SysReq
+Player/Classes/Data/ProjectData.cpp:1356:	{ (int)EventKeyboard::KeyCode::KEY_BREAK,  16908289 },	//Cancel
+Player/Classes/Data/ProjectData.cpp:1357:	{ (int)EventKeyboard::KeyCode::KEY_ESCAPE,  16777216 },	//Escape
+Player/Classes/Data/ProjectData.cpp:1358:	{ (int)EventKeyboard::KeyCode::KEY_ESCAPE,  16777313 },	//Back//KEY_BACK 
+Player/Classes/Data/ProjectData.cpp:1359:	{ (int)EventKeyboard::KeyCode::KEY_BACKSPACE,  16777219 },	//Backspace
+Player/Classes/Data/ProjectData.cpp:1360:	{ (int)EventKeyboard::KeyCode::KEY_TAB,  16777217 },	//Tab
+Player/Classes/Data/ProjectData.cpp:1361:	{ (int)EventKeyboard::KeyCode::KEY_BACK_TAB,  16777218 },	//Backtab
+Player/Classes/Data/ProjectData.cpp:1362:	{ (int)EventKeyboard::KeyCode::KEY_RETURN,  16777220 },	//Return
+Player/Classes/Data/ProjectData.cpp:1363:	{ (int)EventKeyboard::KeyCode::KEY_CAPS_LOCK,  16777252 },	//CapsLock
+Player/Classes/Data/ProjectData.cpp:1364:	{ (int)EventKeyboard::KeyCode::KEY_LEFT_SHIFT,  16777248 },	//Shift
+Player/Classes/Data/ProjectData.cpp:1365:	{ (int)EventKeyboard::KeyCode::KEY_RIGHT_SHIFT,  16777248 },	//Shift
+Player/Classes/Data/ProjectData.cpp:1366:	{ (int)EventKeyboard::KeyCode::KEY_LEFT_CTRL,  16777249 },	//Control
+Player/Classes/Data/ProjectData.cpp:1367:	{ (int)EventKeyboard::KeyCode::KEY_RIGHT_CTRL,  16777249 },	//Control
+Player/Classes/Data/ProjectData.cpp:1368:	{ (int)EventKeyboard::KeyCode::KEY_LEFT_ALT,  16777251 },	//Alt
+Player/Classes/Data/ProjectData.cpp:1369:	{ (int)EventKeyboard::KeyCode::KEY_RIGHT_ALT,  16777251 },	//Alt
+Player/Classes/Data/ProjectData.cpp:1370:	{ (int)EventKeyboard::KeyCode::KEY_MENU,  16777301 },	//Menu
+Player/Classes/Data/ProjectData.cpp:1371:	{ (int)EventKeyboard::KeyCode::KEY_HYPER,  16777250 },	//Meta
+Player/Classes/Data/ProjectData.cpp:1372:	{ (int)EventKeyboard::KeyCode::KEY_INSERT,  16777222 },	//Insert
+Player/Classes/Data/ProjectData.cpp:1373:	{ (int)EventKeyboard::KeyCode::KEY_HOME,  16777232 },	//Home
+Player/Classes/Data/ProjectData.cpp:1374:	{ (int)EventKeyboard::KeyCode::KEY_PG_UP,  16777238 },	//PageUp
+Player/Classes/Data/ProjectData.cpp:1375:	{ (int)EventKeyboard::KeyCode::KEY_DELETE,  16777223 },	//Delete
+Player/Classes/Data/ProjectData.cpp:1376:	{ (int)EventKeyboard::KeyCode::KEY_END,  16777233 },	//End
+Player/Classes/Data/ProjectData.cpp:1377:	{ (int)EventKeyboard::KeyCode::KEY_PG_DOWN,  16777239 },	//PageDown
+Player/Classes/Data/ProjectData.cpp:1378:	{ (int)EventKeyboard::KeyCode::KEY_LEFT_ARROW,  16777234 },	//Left
+Player/Classes/Data/ProjectData.cpp:1379:	{ (int)EventKeyboard::KeyCode::KEY_RIGHT_ARROW,  16777236 },	//Right
+Player/Classes/Data/ProjectData.cpp:1380:	{ (int)EventKeyboard::KeyCode::KEY_UP_ARROW,  16777235 },	//Up
+Player/Classes/Data/ProjectData.cpp:1381:	{ (int)EventKeyboard::KeyCode::KEY_DOWN_ARROW,  16777237 },	//Down
+Player/Classes/Data/ProjectData.cpp:1382:	{ (int)EventKeyboard::KeyCode::KEY_NUM_LOCK,  16777253 },	//NumLock
+Player/Classes/Data/ProjectData.cpp:1383:	//{ (int)EventKeyboard::KeyCode::KEY_KP_PLUS,  43 },	//Plus
+Player/Classes/Data/ProjectData.cpp:1384:	//{ (int)EventKeyboard::KeyCode::KEY_KP_MINUS,  45 },	//Minus
+Player/Classes/Data/ProjectData.cpp:1385:	//{ (int)EventKeyboard::KeyCode::KEY_KP_MULTIPLY,  42 },	//Asterisk
+Player/Classes/Data/ProjectData.cpp:1386:	//{ (int)EventKeyboard::KeyCode::KEY_KP_DIVIDE,  47 },	//Slash
+Player/Classes/Data/ProjectData.cpp:1387:	{ (int)EventKeyboard::KeyCode::KEY_KP_ENTER,  16777221 },	//Enter
+Player/Classes/Data/ProjectData.cpp:1388:	{ (int)EventKeyboard::KeyCode::KEY_KP_HOME,  16777232 },	//Home
+Player/Classes/Data/ProjectData.cpp:1389:	{ (int)EventKeyboard::KeyCode::KEY_KP_UP,  16777235 },	//Up
+Player/Classes/Data/ProjectData.cpp:1390:	{ (int)EventKeyboard::KeyCode::KEY_KP_PG_UP,  16777238 },	//PageUp
+Player/Classes/Data/ProjectData.cpp:1391:	{ (int)EventKeyboard::KeyCode::KEY_KP_LEFT,  16777234 },	//Left
+Player/Classes/Data/ProjectData.cpp:1392:	{ (int)EventKeyboard::KeyCode::KEY_KP_FIVE,  16777227 },	//Break
+Player/Classes/Data/ProjectData.cpp:1393:	{ (int)EventKeyboard::KeyCode::KEY_KP_RIGHT,  16777236 },	//Right
+Player/Classes/Data/ProjectData.cpp:1394:	{ (int)EventKeyboard::KeyCode::KEY_KP_END,  16777233 },	//End
+Player/Classes/Data/ProjectData.cpp:1395:	{ (int)EventKeyboard::KeyCode::KEY_KP_DOWN,  16777237 },	//Down
+Player/Classes/Data/ProjectData.cpp:1396:	{ (int)EventKeyboard::KeyCode::KEY_KP_PG_DOWN,  16777239 },	//PageDown
+Player/Classes/Data/ProjectData.cpp:1397:	{ (int)EventKeyboard::KeyCode::KEY_KP_INSERT,  16777222 },	//Insert
+Player/Classes/Data/ProjectData.cpp:1398:	{ (int)EventKeyboard::KeyCode::KEY_KP_DELETE,  16777223 },	//Delete
+Player/Classes/Data/ProjectData.cpp:1399:	{ (int)EventKeyboard::KeyCode::KEY_F1,  16777264 },	//F1
+Player/Classes/Data/ProjectData.cpp:1400:	{ (int)EventKeyboard::KeyCode::KEY_F2,  16777265 },	//F2
+Player/Classes/Data/ProjectData.cpp:1401:	{ (int)EventKeyboard::KeyCode::KEY_F3,  16777266 },	//F3
+Player/Classes/Data/ProjectData.cpp:1402:	{ (int)EventKeyboard::KeyCode::KEY_F4,  16777267 },	//F4
+Player/Classes/Data/ProjectData.cpp:1403:	{ (int)EventKeyboard::KeyCode::KEY_F5,  16777268 },	//F5
+Player/Classes/Data/ProjectData.cpp:1404:	{ (int)EventKeyboard::KeyCode::KEY_F6,  16777269 },	//F6
+Player/Classes/Data/ProjectData.cpp:1405:	{ (int)EventKeyboard::KeyCode::KEY_F7,  16777270 },	//F7
+Player/Classes/Data/ProjectData.cpp:1406:	{ (int)EventKeyboard::KeyCode::KEY_F8,  16777271 },	//F8
+Player/Classes/Data/ProjectData.cpp:1407:	{ (int)EventKeyboard::KeyCode::KEY_F9,  16777272 },	//F9
+Player/Classes/Data/ProjectData.cpp:1408:	{ (int)EventKeyboard::KeyCode::KEY_F10,  16777273 },	//F10
+Player/Classes/Data/ProjectData.cpp:1409:	{ (int)EventKeyboard::KeyCode::KEY_F11,  16777274 },	//F11
+Player/Classes/Data/ProjectData.cpp:1410:	{ (int)EventKeyboard::KeyCode::KEY_F12,  16777275 },	//F12
+Player/Classes/Data/ProjectData.cpp:1411:	{ (int)EventKeyboard::KeyCode::KEY_SPACE,  32 },	//Space
+Player/Classes/Data/ProjectData.cpp:1412:	{ (int)EventKeyboard::KeyCode::KEY_EXCLAM,  33 },	//Exclam
+Player/Classes/Data/ProjectData.cpp:1413:	{ (int)EventKeyboard::KeyCode::KEY_QUOTE, 34 },	//QuoteDbl
+Player/Classes/Data/ProjectData.cpp:1414:	{ (int)EventKeyboard::KeyCode::KEY_NUMBER,  35 },	//NumberSign
+Player/Classes/Data/ProjectData.cpp:1415:	{ (int)EventKeyboard::KeyCode::KEY_DOLLAR,  36 },	//Dollar
+Player/Classes/Data/ProjectData.cpp:1416:	{ (int)EventKeyboard::KeyCode::KEY_PERCENT,  37 },	//Percent
+Player/Classes/Data/ProjectData.cpp:1417:	{ (int)EventKeyboard::KeyCode::KEY_CIRCUMFLEX,  94 },	//AsciiCircum
+Player/Classes/Data/ProjectData.cpp:1418:	{ (int)EventKeyboard::KeyCode::KEY_AMPERSAND,  38 },	//Ampersand
+Player/Classes/Data/ProjectData.cpp:1419:	{ (int)EventKeyboard::KeyCode::KEY_APOSTROPHE,  39 },	//Apostrophe
+Player/Classes/Data/ProjectData.cpp:1420:	{ (int)EventKeyboard::KeyCode::KEY_LEFT_PARENTHESIS,  40 },	//ParenLeft
+Player/Classes/Data/ProjectData.cpp:1421:	{ (int)EventKeyboard::KeyCode::KEY_RIGHT_PARENTHESIS,  41 },	//ParenRight
+Player/Classes/Data/ProjectData.cpp:1422:	{ (int)EventKeyboard::KeyCode::KEY_ASTERISK,  42 },	//Asterisk
+Player/Classes/Data/ProjectData.cpp:1423:	{ (int)EventKeyboard::KeyCode::KEY_PLUS,  43 },	//Plus
+Player/Classes/Data/ProjectData.cpp:1424:	{ (int)EventKeyboard::KeyCode::KEY_COMMA,  44 },	//Comma
+Player/Classes/Data/ProjectData.cpp:1425:	{ (int)EventKeyboard::KeyCode::KEY_MINUS,  45 },	//Minus
+Player/Classes/Data/ProjectData.cpp:1426:	{ (int)EventKeyboard::KeyCode::KEY_PERIOD,  46 },	//Period
+Player/Classes/Data/ProjectData.cpp:1427:	{ (int)EventKeyboard::KeyCode::KEY_SLASH,  47 },	//Slash
+Player/Classes/Data/ProjectData.cpp:1428:	{ (int)EventKeyboard::KeyCode::KEY_0,  48 },	//0
+Player/Classes/Data/ProjectData.cpp:1429:	{ (int)EventKeyboard::KeyCode::KEY_1,  49 },	//1
+Player/Classes/Data/ProjectData.cpp:1430:	{ (int)EventKeyboard::KeyCode::KEY_2,  50 },	//2
+Player/Classes/Data/ProjectData.cpp:1431:	{ (int)EventKeyboard::KeyCode::KEY_3,  51 },	//3
+Player/Classes/Data/ProjectData.cpp:1432:	{ (int)EventKeyboard::KeyCode::KEY_4,  52 },	//4
+Player/Classes/Data/ProjectData.cpp:1433:	{ (int)EventKeyboard::KeyCode::KEY_5,  53 },	//5
+Player/Classes/Data/ProjectData.cpp:1434:	{ (int)EventKeyboard::KeyCode::KEY_6,  54 },	//6
+Player/Classes/Data/ProjectData.cpp:1435:	{ (int)EventKeyboard::KeyCode::KEY_7,  55 },	//7
+Player/Classes/Data/ProjectData.cpp:1436:	{ (int)EventKeyboard::KeyCode::KEY_8,  56 },	//8
+Player/Classes/Data/ProjectData.cpp:1437:	{ (int)EventKeyboard::KeyCode::KEY_9,  57 },	//9
+Player/Classes/Data/ProjectData.cpp:1438:	{ (int)EventKeyboard::KeyCode::KEY_COLON,  58 },	//Colon
+Player/Classes/Data/ProjectData.cpp:1439:	{ (int)EventKeyboard::KeyCode::KEY_SEMICOLON,  59 },	//Semicolon
+Player/Classes/Data/ProjectData.cpp:1440:	{ (int)EventKeyboard::KeyCode::KEY_LESS_THAN,  60 },	//Less
+Player/Classes/Data/ProjectData.cpp:1441:	{ (int)EventKeyboard::KeyCode::KEY_EQUAL,  61 },	//Equal
+Player/Classes/Data/ProjectData.cpp:1442:	{ (int)EventKeyboard::KeyCode::KEY_GREATER_THAN,  62 },	//Greater
+Player/Classes/Data/ProjectData.cpp:1443:	{ (int)EventKeyboard::KeyCode::KEY_QUESTION,  63 },	//Question
+Player/Classes/Data/ProjectData.cpp:1444:	{ (int)EventKeyboard::KeyCode::KEY_AT,  64 },	//At
+Player/Classes/Data/ProjectData.cpp:1445:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_A,  65 },	//A
+Player/Classes/Data/ProjectData.cpp:1446:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_B,  66 },	//B
+Player/Classes/Data/ProjectData.cpp:1447:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_C,  67 },	//C
+Player/Classes/Data/ProjectData.cpp:1448:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_D,  68 },	//D
+Player/Classes/Data/ProjectData.cpp:1449:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_E,  69 },	//E
+Player/Classes/Data/ProjectData.cpp:1450:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_F,  70 },	//F
+Player/Classes/Data/ProjectData.cpp:1451:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_G,  71 },	//G
+Player/Classes/Data/ProjectData.cpp:1452:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_H,  72 },	//H
+Player/Classes/Data/ProjectData.cpp:1453:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_I,  73 },	//I
+Player/Classes/Data/ProjectData.cpp:1454:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_J,  74 },	//J
+Player/Classes/Data/ProjectData.cpp:1455:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_K,  75 },	//K
+Player/Classes/Data/ProjectData.cpp:1456:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_L,  76 },	//L
+Player/Classes/Data/ProjectData.cpp:1457:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_M,  77 },	//M
+Player/Classes/Data/ProjectData.cpp:1458:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_N,  78 },	//N
+Player/Classes/Data/ProjectData.cpp:1459:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_O,  79 },	//O
+Player/Classes/Data/ProjectData.cpp:1460:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_P,  80 },	//P
+Player/Classes/Data/ProjectData.cpp:1461:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_Q,  81 },	//Q
+Player/Classes/Data/ProjectData.cpp:1462:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_R,  82 },	//R
+Player/Classes/Data/ProjectData.cpp:1463:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_S,  83 },	//S
+Player/Classes/Data/ProjectData.cpp:1464:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_T,  84 },	//T
+Player/Classes/Data/ProjectData.cpp:1465:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_U,  85 },	//U
+Player/Classes/Data/ProjectData.cpp:1466:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_V,  86 },	//V
+Player/Classes/Data/ProjectData.cpp:1467:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_W,  87 },	//W
+Player/Classes/Data/ProjectData.cpp:1468:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_X,  88 },	//X
+Player/Classes/Data/ProjectData.cpp:1469:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_Y,  89 },	//Y
+Player/Classes/Data/ProjectData.cpp:1470:	{ (int)EventKeyboard::KeyCode::KEY_CAPITAL_Z,  90 },	//Z
+Player/Classes/Data/ProjectData.cpp:1471:	{ (int)EventKeyboard::KeyCode::KEY_LEFT_BRACKET,  91 },	//BracketLeft
+Player/Classes/Data/ProjectData.cpp:1472:	{ (int)EventKeyboard::KeyCode::KEY_BACK_SLASH,  92 },	//Backslash
+Player/Classes/Data/ProjectData.cpp:1473:	{ (int)EventKeyboard::KeyCode::KEY_RIGHT_BRACKET,  93 },	//BracketRight
+Player/Classes/Data/ProjectData.cpp:1474:	{ (int)EventKeyboard::KeyCode::KEY_UNDERSCORE,  95 },	//Underscore
+Player/Classes/Data/ProjectData.cpp:1475:	{ (int)EventKeyboard::KeyCode::KEY_GRAVE,  96 },	//QuoteLeft
+Player/Classes/Data/ProjectData.cpp:1476:	{ (int)EventKeyboard::KeyCode::KEY_A,  65 },	//A
+Player/Classes/Data/ProjectData.cpp:1477:	{ (int)EventKeyboard::KeyCode::KEY_B,  66 },	//B
+Player/Classes/Data/ProjectData.cpp:1478:	{ (int)EventKeyboard::KeyCode::KEY_C,  67 },	//C
+Player/Classes/Data/ProjectData.cpp:1479:	{ (int)EventKeyboard::KeyCode::KEY_D,  68 },	//D
+Player/Classes/Data/ProjectData.cpp:1480:	{ (int)EventKeyboard::KeyCode::KEY_E,  69 },	//E
+Player/Classes/Data/ProjectData.cpp:1481:	{ (int)EventKeyboard::KeyCode::KEY_F,  70 },	//F
+Player/Classes/Data/ProjectData.cpp:1482:	{ (int)EventKeyboard::KeyCode::KEY_G,  71 },	//G
+Player/Classes/Data/ProjectData.cpp:1483:	{ (int)EventKeyboard::KeyCode::KEY_H,  72 },	//H
+Player/Classes/Data/ProjectData.cpp:1484:	{ (int)EventKeyboard::KeyCode::KEY_I,  73 },	//I
+Player/Classes/Data/ProjectData.cpp:1485:	{ (int)EventKeyboard::KeyCode::KEY_J,  74 },	//J
+Player/Classes/Data/ProjectData.cpp:1486:	{ (int)EventKeyboard::KeyCode::KEY_K,  75 },	//K
+Player/Classes/Data/ProjectData.cpp:1487:	{ (int)EventKeyboard::KeyCode::KEY_L,  76 },	//L
+Player/Classes/Data/ProjectData.cpp:1488:	{ (int)EventKeyboard::KeyCode::KEY_M,  77 },	//M
+Player/Classes/Data/ProjectData.cpp:1489:	{ (int)EventKeyboard::KeyCode::KEY_N,  78 },	//N
+Player/Classes/Data/ProjectData.cpp:1490:	{ (int)EventKeyboard::KeyCode::KEY_O,  79 },	//O
+Player/Classes/Data/ProjectData.cpp:1491:	{ (int)EventKeyboard::KeyCode::KEY_P,  80 },	//P
+Player/Classes/Data/ProjectData.cpp:1492:	{ (int)EventKeyboard::KeyCode::KEY_Q,  81 },	//Q
+Player/Classes/Data/ProjectData.cpp:1493:	{ (int)EventKeyboard::KeyCode::KEY_R,  82 },	//R
+Player/Classes/Data/ProjectData.cpp:1494:	{ (int)EventKeyboard::KeyCode::KEY_S,  83 },	//S
+Player/Classes/Data/ProjectData.cpp:1495:	{ (int)EventKeyboard::KeyCode::KEY_T,  84 },	//T
+Player/Classes/Data/ProjectData.cpp:1496:	{ (int)EventKeyboard::KeyCode::KEY_U,  85 },	//U
+Player/Classes/Data/ProjectData.cpp:1497:	{ (int)EventKeyboard::KeyCode::KEY_V,  86 },	//V
+Player/Classes/Data/ProjectData.cpp:1498:	{ (int)EventKeyboard::KeyCode::KEY_W,  87 },	//W
+Player/Classes/Data/ProjectData.cpp:1499:	{ (int)EventKeyboard::KeyCode::KEY_X,  88 },	//X
+Player/Classes/Data/ProjectData.cpp:1500:	{ (int)EventKeyboard::KeyCode::KEY_Y,  89 },	//Y
+Player/Classes/Data/ProjectData.cpp:1501:	{ (int)EventKeyboard::KeyCode::KEY_Z,  90 },	//Z
+Player/Classes/Data/ProjectData.cpp:1502:	{ (int)EventKeyboard::KeyCode::KEY_LEFT_BRACE,  123 },	//BraceLeft
+Player/Classes/Data/ProjectData.cpp:1503:	{ (int)EventKeyboard::KeyCode::KEY_BAR,  124 },	//Bar
+Player/Classes/Data/ProjectData.cpp:1504:	{ (int)EventKeyboard::KeyCode::KEY_RIGHT_BRACE,  125 },	//BraceRight
+Player/Classes/Data/ProjectData.cpp:1505:	{ (int)EventKeyboard::KeyCode::KEY_TILDE,  126 },	//AsciiTilde
+Player/Classes/Data/ProjectData.cpp:1506:	{ (int)EventKeyboard::KeyCode::KEY_EURO,  -1 },	//euro
+Player/Classes/Data/ProjectData.cpp:1507:	{ (int)EventKeyboard::KeyCode::KEY_POUND,  -1 },	//pound
+Player/Classes/Data/ProjectData.cpp:1508:	{ (int)EventKeyboard::KeyCode::KEY_YEN,  165 },	//yen
+Player/Classes/Data/ProjectData.cpp:1509:	{ (int)EventKeyboard::KeyCode::KEY_MIDDLE_DOT,  -1 },	//middle dot
+Player/Classes/Data/ProjectData.cpp:1510:	{ (int)EventKeyboard::KeyCode::KEY_SEARCH,  16777362 },	//Search
+Player/Classes/Data/ProjectData.cpp:1511:	{ (int)EventKeyboard::KeyCode::KEY_DPAD_LEFT,  -1 },	//DPAD_LEFT
+Player/Classes/Data/ProjectData.cpp:1512:	{ (int)EventKeyboard::KeyCode::KEY_DPAD_RIGHT,  -1 },	//DPAD_RIGHT
+Player/Classes/Data/ProjectData.cpp:1513:	{ (int)EventKeyboard::KeyCode::KEY_DPAD_UP,  -1 },	//DPAD_UP
+Player/Classes/Data/ProjectData.cpp:1514:	{ (int)EventKeyboard::KeyCode::KEY_DPAD_DOWN,  -1 },	//DPAD_DOWN
+Player/Classes/Data/ProjectData.cpp:1515:	{ (int)EventKeyboard::KeyCode::KEY_DPAD_CENTER,  -1 },	//DPAD_CENTER
+Player/Classes/Data/ProjectData.cpp:1516:	{ (int)EventKeyboard::KeyCode::KEY_ENTER,  16777221 },	//Enter
+Player/Classes/Data/ProjectData.cpp:1517:	{ (int)EventKeyboard::KeyCode::KEY_PLAY,  16908293 },	//Play
+Player/Classes/Manager/DebugManager.cpp:3837:	if (InputManager::getInstance()->isTriggeredKeyboard((int)EventKeyboard::KeyCode::KEY_F4)) {
+Player/Classes/Manager/JavascriptManager.cpp:49:static bool js_controllers_getOperationKeyPressed(JSContext *cx, unsigned argc, JS::Value *vp);
+Player/Classes/Manager/JavascriptManager.cpp:838:		{ "getOperationKeyPressed", js_controllers_getOperationKeyPressed, 0, 0, 0 },
+Player/Classes/Manager/JavascriptManager.cpp:1644:bool js_controllers_getOperationKeyPressed(JSContext *cx, unsigned argc, JS::Value *vp)
+Player/Classes/Manager/InputManager.cpp:1044:	(short)EventKeyboard::KeyCode::KEY_NONE, //NONE
+Player/Classes/Manager/InputManager.cpp:1045:	(short)EventKeyboard::KeyCode::KEY_PAUSE,    //PAUSE
+Player/Classes/Manager/InputManager.cpp:1046:	(short)EventKeyboard::KeyCode::KEY_SCROLL_LOCK,  //SCROLL_LOCK
+Player/Classes/Manager/InputManager.cpp:1047:	(short)EventKeyboard::KeyCode::KEY_PRINT,    //PRINT
+Player/Classes/Manager/InputManager.cpp:1048:	(short)EventKeyboard::KeyCode::KEY_SYSREQ,   //SYSREQ
+Player/Classes/Manager/InputManager.cpp:1049:	(short)EventKeyboard::KeyCode::KEY_BREAK,    //BREAK
+Player/Classes/Manager/InputManager.cpp:1050:	(short)EventKeyboard::KeyCode::KEY_ESCAPE,   //ESCAPE
+Player/Classes/Manager/InputManager.cpp:1051:	(short)EventKeyboard::KeyCode::KEY_BACKSPACE,    //BACKSPACE
+Player/Classes/Manager/InputManager.cpp:1052:	(short)EventKeyboard::KeyCode::KEY_TAB,  //TAB
+Player/Classes/Manager/InputManager.cpp:1053:	(short)EventKeyboard::KeyCode::KEY_BACK_TAB, //BACK_TAB
+Player/Classes/Manager/InputManager.cpp:1054:	(short)EventKeyboard::KeyCode::KEY_RETURN,   //RETURN
+Player/Classes/Manager/InputManager.cpp:1056:	(short)EventKeyboard::KeyCode::KEY_LEFT_SHIFT,   //LEFT_SHIFT
+Player/Classes/Manager/InputManager.cpp:1057:	(short)EventKeyboard::KeyCode::KEY_LEFT_SHIFT,  //RIGHT_SHIFT
+Player/Classes/Manager/InputManager.cpp:1058:	(short)EventKeyboard::KeyCode::KEY_LEFT_CTRL,    //LEFT_CTRL
+Player/Classes/Manager/InputManager.cpp:1059:	(short)EventKeyboard::KeyCode::KEY_LEFT_CTRL,   //RIGHT_CTRL
+Player/Classes/Manager/InputManager.cpp:1060:	(short)EventKeyboard::KeyCode::KEY_LEFT_ALT, //LEFT_ALT
+Player/Classes/Manager/InputManager.cpp:1061:	(short)EventKeyboard::KeyCode::KEY_LEFT_ALT,    //RIGHT_ALT
+Player/Classes/Manager/InputManager.cpp:1062:	(short)EventKeyboard::KeyCode::KEY_MENU, //MENU
+Player/Classes/Manager/InputManager.cpp:1064:	(short)EventKeyboard::KeyCode::KEY_INSERT,   //INSERT
+Player/Classes/Manager/InputManager.cpp:1065:	(short)EventKeyboard::KeyCode::KEY_HOME, //HOME
+Player/Classes/Manager/InputManager.cpp:1066:	(short)EventKeyboard::KeyCode::KEY_PG_UP,    //PG_UP
+Player/Classes/Manager/InputManager.cpp:1067:	(short)EventKeyboard::KeyCode::KEY_DELETE,   //DELETE
+Player/Classes/Manager/InputManager.cpp:1068:	(short)EventKeyboard::KeyCode::KEY_END,  //END
+Player/Classes/Manager/InputManager.cpp:1069:	(short)EventKeyboard::KeyCode::KEY_PG_DOWN,  //PG_DOWN
+Player/Classes/Manager/InputManager.cpp:1070:	(short)EventKeyboard::KeyCode::KEY_LEFT_ARROW,   //LEFT_ARROW"
+Player/Classes/Manager/InputManager.cpp:1071:	(short)EventKeyboard::KeyCode::KEY_RIGHT_ARROW,  //RIGHT_ARROW
+Player/Classes/Manager/InputManager.cpp:1072:	(short)EventKeyboard::KeyCode::KEY_UP_ARROW, //UP_ARROW
+Player/Classes/Manager/InputManager.cpp:1073:	(short)EventKeyboard::KeyCode::KEY_DOWN_ARROW,   //DOWN_ARROW
+Player/Classes/Manager/InputManager.cpp:1074:	(short)EventKeyboard::KeyCode::KEY_NUM_LOCK, //NUM_LOCK
+Player/Classes/Manager/InputManager.cpp:1075:	(short)EventKeyboard::KeyCode::KEY_PLUS,  //KP_PLUS
+Player/Classes/Manager/InputManager.cpp:1076:	(short)EventKeyboard::KeyCode::KEY_MINUS, //KP_MINUS
+Player/Classes/Manager/InputManager.cpp:1077:	(short)EventKeyboard::KeyCode::KEY_ASTERISK,  //KP_MULTIPLY
+Player/Classes/Manager/InputManager.cpp:1078:	(short)EventKeyboard::KeyCode::KEY_SLASH,    //KP_DIVIDE
+Player/Classes/Manager/InputManager.cpp:1079:	(short)EventKeyboard::KeyCode::KEY_KP_ENTER, //KP_ENTER
+Player/Classes/Manager/InputManager.cpp:1080:	(short)EventKeyboard::KeyCode::KEY_HOME,  //KP_HOME
+Player/Classes/Manager/InputManager.cpp:1081:	(short)EventKeyboard::KeyCode::KEY_KP_UP,    //KP_UP
+Player/Classes/Manager/InputManager.cpp:1082:	(short)EventKeyboard::KeyCode::KEY_PG_UP, //KP_PG_UP
+Player/Classes/Manager/InputManager.cpp:1083:	(short)EventKeyboard::KeyCode::KEY_LEFT_ARROW,  //KP_LEFT
+Player/Classes/Manager/InputManager.cpp:1084:	(short)EventKeyboard::KeyCode::KEY_5,  //KP_FIVE
+Player/Classes/Manager/InputManager.cpp:1085:	(short)EventKeyboard::KeyCode::KEY_RIGHT_ARROW, //KP_RIGHT
+Player/Classes/Manager/InputManager.cpp:1086:	(short)EventKeyboard::KeyCode::KEY_END,   //KP_END
+Player/Classes/Manager/InputManager.cpp:1087:	(short)EventKeyboard::KeyCode::KEY_DOWN_ARROW,  //KP_DOWN
+Player/Classes/Manager/InputManager.cpp:1088:	(short)EventKeyboard::KeyCode::KEY_PG_DOWN,   //KP_PG_DOWN
+Player/Classes/Manager/InputManager.cpp:1089:	(short)EventKeyboard::KeyCode::KEY_INSERT,    //KP_INSERT
+Player/Classes/Manager/InputManager.cpp:1090:	(short)EventKeyboard::KeyCode::KEY_DELETE,    //KP_DELETE
+Player/Classes/Manager/InputManager.cpp:1091:	(short)EventKeyboard::KeyCode::KEY_F1,   //F1
+Player/Classes/Manager/InputManager.cpp:1092:	(short)EventKeyboard::KeyCode::KEY_F2,   //F2
+Player/Classes/Manager/InputManager.cpp:1093:	(short)EventKeyboard::KeyCode::KEY_F3,   //F3
+Player/Classes/Manager/InputManager.cpp:1094:	(short)EventKeyboard::KeyCode::KEY_F4,   //F4
+Player/Classes/Manager/InputManager.cpp:1095:	(short)EventKeyboard::KeyCode::KEY_F5,   //F5
+Player/Classes/Manager/InputManager.cpp:1096:	(short)EventKeyboard::KeyCode::KEY_F6,   //F6
+Player/Classes/Manager/InputManager.cpp:1097:	(short)EventKeyboard::KeyCode::KEY_F7,   //F7
+Player/Classes/Manager/InputManager.cpp:1098:	(short)EventKeyboard::KeyCode::KEY_F8,   //F8
+Player/Classes/Manager/InputManager.cpp:1099:	(short)EventKeyboard::KeyCode::KEY_F9,   //F9
+Player/Classes/Manager/InputManager.cpp:1100:	(short)EventKeyboard::KeyCode::KEY_F10,  //F10
+Player/Classes/Manager/InputManager.cpp:1101:	(short)EventKeyboard::KeyCode::KEY_F11,  //F11
+Player/Classes/Manager/InputManager.cpp:1102:	(short)EventKeyboard::KeyCode::KEY_F12,  //F12
+Player/Classes/Manager/InputManager.cpp:1103:	(short)EventKeyboard::KeyCode::KEY_SPACE,    //SPACE
+Player/Classes/Manager/InputManager.cpp:1104:	(short)EventKeyboard::KeyCode::KEY_EXCLAM,   //EXCLAM
+Player/Classes/Manager/InputManager.cpp:1105:	(short)EventKeyboard::KeyCode::KEY_QUOTE,    //QUOTE
+Player/Classes/Manager/InputManager.cpp:1106:	(short)EventKeyboard::KeyCode::KEY_NUMBER,   //NUMBER
+Player/Classes/Manager/InputManager.cpp:1107:	(short)EventKeyboard::KeyCode::KEY_DOLLAR,   //DOLLAR
+Player/Classes/Manager/InputManager.cpp:1108:	(short)EventKeyboard::KeyCode::KEY_PERCENT,  //PERCENT
+Player/Classes/Manager/InputManager.cpp:1109:	(short)EventKeyboard::KeyCode::KEY_CIRCUMFLEX,   //CIRCUMFLEX
+Player/Classes/Manager/InputManager.cpp:1110:	(short)EventKeyboard::KeyCode::KEY_AMPERSAND,    //AMPERSAND
+Player/Classes/Manager/InputManager.cpp:1111:	(short)EventKeyboard::KeyCode::KEY_APOSTROPHE,   //APOSTROPHE
+Player/Classes/Manager/InputManager.cpp:1112:	(short)EventKeyboard::KeyCode::KEY_LEFT_PARENTHESIS, //LEFT_PARENTHESIS
+Player/Classes/Manager/InputManager.cpp:1113:	(short)EventKeyboard::KeyCode::KEY_RIGHT_PARENTHESIS,    //RIGHT_PARENTHESIS
+Player/Classes/Manager/InputManager.cpp:1114:	(short)EventKeyboard::KeyCode::KEY_ASTERISK, //ASTERISK
+Player/Classes/Manager/InputManager.cpp:1115:	(short)EventKeyboard::KeyCode::KEY_PLUS, //PLUS
+Player/Classes/Manager/InputManager.cpp:1116:	(short)EventKeyboard::KeyCode::KEY_COMMA,    //COMMA
+Player/Classes/Manager/InputManager.cpp:1117:	(short)EventKeyboard::KeyCode::KEY_MINUS,    //MINUS
+Player/Classes/Manager/InputManager.cpp:1118:	(short)EventKeyboard::KeyCode::KEY_PERIOD,   //PERIOD
+Player/Classes/Manager/InputManager.cpp:1119:	(short)EventKeyboard::KeyCode::KEY_SLASH,    //SLASH
+Player/Classes/Manager/InputManager.cpp:1120:	(short)EventKeyboard::KeyCode::KEY_0,    //0
+Player/Classes/Manager/InputManager.cpp:1121:	(short)EventKeyboard::KeyCode::KEY_1,    //1
+Player/Classes/Manager/InputManager.cpp:1122:	(short)EventKeyboard::KeyCode::KEY_2,    //2
+Player/Classes/Manager/InputManager.cpp:1123:	(short)EventKeyboard::KeyCode::KEY_3,    //3
+Player/Classes/Manager/InputManager.cpp:1124:	(short)EventKeyboard::KeyCode::KEY_4,    //4
+Player/Classes/Manager/InputManager.cpp:1125:	(short)EventKeyboard::KeyCode::KEY_5,    //5
+Player/Classes/Manager/InputManager.cpp:1126:	(short)EventKeyboard::KeyCode::KEY_6,    //6
+Player/Classes/Manager/InputManager.cpp:1127:	(short)EventKeyboard::KeyCode::KEY_7,    //7
+Player/Classes/Manager/InputManager.cpp:1128:	(short)EventKeyboard::KeyCode::KEY_8,    //8
+Player/Classes/Manager/InputManager.cpp:1129:	(short)EventKeyboard::KeyCode::KEY_9,    //9
+Player/Classes/Manager/InputManager.cpp:1130:	(short)EventKeyboard::KeyCode::KEY_COLON,    //COLON
+Player/Classes/Manager/InputManager.cpp:1131:	(short)EventKeyboard::KeyCode::KEY_SEMICOLON,    //SEMICOLON
+Player/Classes/Manager/InputManager.cpp:1132:	(short)EventKeyboard::KeyCode::KEY_LESS_THAN,    //LESS_THAN
+Player/Classes/Manager/InputManager.cpp:1133:	(short)EventKeyboard::KeyCode::KEY_EQUAL,    //EQUAL
+Player/Classes/Manager/InputManager.cpp:1134:	(short)EventKeyboard::KeyCode::KEY_GREATER_THAN, //GREATER_THAN
+Player/Classes/Manager/InputManager.cpp:1135:	(short)EventKeyboard::KeyCode::KEY_QUESTION, //QUESTION
+Player/Classes/Manager/InputManager.cpp:1136:	(short)EventKeyboard::KeyCode::KEY_AT,   //AT
+Player/Classes/Manager/InputManager.cpp:1137:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_A,    //CAPITAL_A
+Player/Classes/Manager/InputManager.cpp:1138:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_B,    //CAPITAL_B
+Player/Classes/Manager/InputManager.cpp:1139:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_C,    //CAPITAL_C
+Player/Classes/Manager/InputManager.cpp:1140:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_D,    //CAPITAL_D
+Player/Classes/Manager/InputManager.cpp:1141:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_E,    //CAPITAL_E
+Player/Classes/Manager/InputManager.cpp:1142:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_F,    //CAPITAL_F
+Player/Classes/Manager/InputManager.cpp:1143:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_G,    //CAPITAL_G
+Player/Classes/Manager/InputManager.cpp:1144:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_H,    //CAPITAL_H
+Player/Classes/Manager/InputManager.cpp:1145:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_I,    //CAPITAL_I
+Player/Classes/Manager/InputManager.cpp:1146:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_J,    //CAPITAL_J
+Player/Classes/Manager/InputManager.cpp:1147:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_K,    //CAPITAL_K
+Player/Classes/Manager/InputManager.cpp:1148:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_L,    //CAPITAL_L
+Player/Classes/Manager/InputManager.cpp:1149:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_M,    //CAPITAL_M
+Player/Classes/Manager/InputManager.cpp:1150:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_N,    //CAPITAL_N
+Player/Classes/Manager/InputManager.cpp:1151:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_O,    //CAPITAL_O
+Player/Classes/Manager/InputManager.cpp:1152:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_P,    //CAPITAL_P
+Player/Classes/Manager/InputManager.cpp:1153:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_Q,    //CAPITAL_Q
+Player/Classes/Manager/InputManager.cpp:1154:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_R,    //CAPITAL_R
+Player/Classes/Manager/InputManager.cpp:1155:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_S,    //CAPITAL_S
+Player/Classes/Manager/InputManager.cpp:1156:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_T,    //CAPITAL_T
+Player/Classes/Manager/InputManager.cpp:1157:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_U,    //CAPITAL_U
+Player/Classes/Manager/InputManager.cpp:1158:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_V,    //CAPITAL_V
+Player/Classes/Manager/InputManager.cpp:1159:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_W,    //CAPITAL_W
+Player/Classes/Manager/InputManager.cpp:1160:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_X,    //CAPITAL_X
+Player/Classes/Manager/InputManager.cpp:1161:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_Y,    //CAPITAL_Y
+Player/Classes/Manager/InputManager.cpp:1162:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_Z,    //CAPITAL_Z
+Player/Classes/Manager/InputManager.cpp:1163:	(short)EventKeyboard::KeyCode::KEY_LEFT_BRACKET, //LEFT_BRACKET
+Player/Classes/Manager/InputManager.cpp:1164:	(short)EventKeyboard::KeyCode::KEY_BACK_SLASH,   //BACK_SLASH
+Player/Classes/Manager/InputManager.cpp:1165:	(short)EventKeyboard::KeyCode::KEY_RIGHT_BRACKET,    //RIGHT_BRACKET
+Player/Classes/Manager/InputManager.cpp:1166:	(short)EventKeyboard::KeyCode::KEY_UNDERSCORE,   //UNDERSCORE
+Player/Classes/Manager/InputManager.cpp:1168:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_A,    //A
+Player/Classes/Manager/InputManager.cpp:1169:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_B,    //B
+Player/Classes/Manager/InputManager.cpp:1170:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_C,    //C
+Player/Classes/Manager/InputManager.cpp:1171:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_D,    //D
+Player/Classes/Manager/InputManager.cpp:1172:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_E,    //E
+Player/Classes/Manager/InputManager.cpp:1173:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_F,    //F
+Player/Classes/Manager/InputManager.cpp:1174:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_G,    //G
+Player/Classes/Manager/InputManager.cpp:1175:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_H,    //H
+Player/Classes/Manager/InputManager.cpp:1176:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_I,    //I
+Player/Classes/Manager/InputManager.cpp:1177:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_J,    //J
+Player/Classes/Manager/InputManager.cpp:1178:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_K,    //K
+Player/Classes/Manager/InputManager.cpp:1179:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_L,    //L
+Player/Classes/Manager/InputManager.cpp:1180:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_M,    //M
+Player/Classes/Manager/InputManager.cpp:1181:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_N,    //N
+Player/Classes/Manager/InputManager.cpp:1182:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_O,    //O
+Player/Classes/Manager/InputManager.cpp:1183:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_P,    //P
+Player/Classes/Manager/InputManager.cpp:1184:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_Q,    //Q
+Player/Classes/Manager/InputManager.cpp:1185:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_R,    //R
+Player/Classes/Manager/InputManager.cpp:1186:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_S,    //S
+Player/Classes/Manager/InputManager.cpp:1187:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_T,    //T
+Player/Classes/Manager/InputManager.cpp:1188:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_U,    //U
+Player/Classes/Manager/InputManager.cpp:1189:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_V,    //V
+Player/Classes/Manager/InputManager.cpp:1190:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_W,    //W
+Player/Classes/Manager/InputManager.cpp:1191:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_X,    //X
+Player/Classes/Manager/InputManager.cpp:1192:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_Y,    //Y
+Player/Classes/Manager/InputManager.cpp:1193:	(short)EventKeyboard::KeyCode::KEY_CAPITAL_Z,    //Z
+Player/Classes/Manager/InputManager.cpp:1194:	(short)EventKeyboard::KeyCode::KEY_LEFT_BRACE,   //LEFT_BRACE
+Player/Classes/Manager/InputManager.cpp:1195:	(short)EventKeyboard::KeyCode::KEY_BAR,  //BAR
+Player/Classes/Manager/InputManager.cpp:1196:	(short)EventKeyboard::KeyCode::KEY_RIGHT_BRACE,  //RIGHT_BRACE
+Player/Classes/Manager/InputManager.cpp:1197:	(short)EventKeyboard::KeyCode::KEY_TILDE,    //TILDE
+Player/Classes/Manager/InputManager.cpp:1200:	(short)EventKeyboard::KeyCode::KEY_YEN,  //YEN
+Player/Classes/Manager/InputManager.cpp:1201:	(short)EventKeyboard::KeyCode::KEY_MIDDLE_DOT,   //MIDDLE_DOT
+Player/Classes/Manager/InputManager.cpp:1202:	(short)EventKeyboard::KeyCode::KEY_SEARCH,   //SEARCH
+Player/Classes/Manager/InputManager.cpp:1208:	(short)EventKeyboard::KeyCode::KEY_RETURN,    //ENTER
+Player/Classes/Manager/InputManager.cpp:1209:	(short)EventKeyboard::KeyCode::KEY_PLAY, //PLAY
+Player/Classes/Manager/InputManager.cpp:1554:        if(keyCode == (int)EventKeyboard::KeyCode::KEY_ESCAPE){
+Player/Classes/Manager/InputManager.cpp:2112:	keyboardListener->onKeyPressed2 = [](cocos2d::EventKeyboard::KeyCode code, int scancode, cocos2d::Event* event){
+Player/Classes/Manager/InputManager.cpp:2116:	keyboardListener->onKeyReleased2 = [](cocos2d::EventKeyboard::KeyCode code, int scancode, cocos2d::Event* event){
+Player/Classes/Manager/InputManager.cpp:2120:	keyboardListener->onKeyRepeat = [](cocos2d::EventKeyboard::KeyCode code, int scancode, cocos2d::Event* event) {
+Player/Classes/Manager/InputManager.cpp:2124:	keyboardListener->onCharInputed = [](cocos2d::EventKeyboard::KeyCode code, cocos2d::Event* event) {
+Player/Classes/Manager/InputManager.cpp:2153:	(int)EventKeyboard::KeyCode::KEY_CAPITAL_W,
+Player/Classes/Manager/InputManager.cpp:2154:	(int)EventKeyboard::KeyCode::KEY_CAPITAL_A,
+Player/Classes/Manager/InputManager.cpp:2155:	(int)EventKeyboard::KeyCode::KEY_CAPITAL_S,
+Player/Classes/Manager/InputManager.cpp:2156:	(int)EventKeyboard::KeyCode::KEY_CAPITAL_D,
+Player/Classes/Manager/InputManager.cpp:2163:	(int)EventKeyboard::KeyCode::KEY_UP_ARROW,
+Player/Classes/Manager/InputManager.cpp:2164:	(int)EventKeyboard::KeyCode::KEY_RIGHT_ARROW,
+Player/Classes/Manager/InputManager.cpp:2165:	(int)EventKeyboard::KeyCode::KEY_DOWN_ARROW,
+Player/Classes/Manager/InputManager.cpp:2166:	(int)EventKeyboard::KeyCode::KEY_LEFT_ARROW,
+Player/Classes/Manager/InputManager.cpp:2198:			infoList.push_back(ReservedKeycodeList(GameManager::tr("W"), InputController::kReservedKeyCodePc_W, (int)EventKeyboard::KeyCode::KEY_CAPITAL_W));
+Player/Classes/Manager/InputManager.cpp:2199:			infoList.push_back(ReservedKeycodeList(GameManager::tr("A"), InputController::kReservedKeyCodePc_A, (int)EventKeyboard::KeyCode::KEY_CAPITAL_A));
+Player/Classes/Manager/InputManager.cpp:2200:			infoList.push_back(ReservedKeycodeList(GameManager::tr("S"), InputController::kReservedKeyCodePc_S, (int)EventKeyboard::KeyCode::KEY_CAPITAL_S));
+Player/Classes/Manager/InputManager.cpp:2201:			infoList.push_back(ReservedKeycodeList(GameManager::tr("D"), InputController::kReservedKeyCodePc_D, (int)EventKeyboard::KeyCode::KEY_CAPITAL_D));
+Player/Classes/Manager/InputManager.cpp:2204:			infoList.push_back(ReservedKeycodeList(GameManager::tr("Up"), InputController::kReservedKeyCodePc_Up, (int)EventKeyboard::KeyCode::KEY_UP_ARROW));
+Player/Classes/Manager/InputManager.cpp:2205:			infoList.push_back(ReservedKeycodeList(GameManager::tr("Right"), InputController::kReservedKeyCodePc_Right, (int)EventKeyboard::KeyCode::KEY_RIGHT_ARROW));
+Player/Classes/Manager/InputManager.cpp:2206:			infoList.push_back(ReservedKeycodeList(GameManager::tr("Down"), InputController::kReservedKeyCodePc_Down, (int)EventKeyboard::KeyCode::KEY_DOWN_ARROW));
+Player/Classes/Manager/InputManager.cpp:2207:			infoList.push_back(ReservedKeycodeList(GameManager::tr("Left"), InputController::kReservedKeyCodePc_Left, (int)EventKeyboard::KeyCode::KEY_LEFT_ARROW));
+Player/Classes/Manager/GameManager.cpp:4596:		if (inputManager->isPressedKeyboard((int)EventKeyboard::KeyCode::KEY_SHIFT) &&
+Player/Classes/Manager/GameManager.cpp:4639:		if (inputManager->isTriggeredKeyboard((int)EventKeyboard::KeyCode::KEY_F10) && !this->isSceneChanging()) {
+Player/Classes/Manager/GameManager.cpp:4650:		if (inputManager->isTriggeredKeyboard((int)EventKeyboard::KeyCode::KEY_F12)) {
+Player/Classes/Manager/GameManager.cpp:4666:			if (inputManager->isTriggeredKeyboard((int)EventKeyboard::KeyCode::KEY_PLUS)) {
+Player/Classes/Manager/GameManager.cpp:4669:			if (inputManager->isTriggeredKeyboard((int)EventKeyboard::KeyCode::KEY_MINUS)) {
+Player/Resources/script/jsb_cocos2d.js:1501:    ret.onKeyPressed = this.onKeyPressed;
+Player/Resources/script/jsb_cocos2d.js:1502:    ret.onKeyReleased = this.onKeyReleased;
+Player/Resources/script/jsb_cocos2d.js:1537:cc.EventListenerKeyboard.prototype._onKeyPressed = function(keyCode, event) {
+Player/Resources/script/jsb_cocos2d.js:1538:    if (!this.onKeyPressed)
+Player/Resources/script/jsb_cocos2d.js:1540:    this.onKeyPressed(jsbKeyArr[keyCode], event);
+Player/Resources/script/jsb_cocos2d.js:1543:cc.EventListenerKeyboard.prototype._onKeyReleased = function(keyCode, event) {
+Player/Resources/script/jsb_cocos2d.js:1544:    if (!this.onKeyReleased)
+Player/Resources/script/jsb_cocos2d.js:1546:    this.onKeyReleased(jsbKeyArr[keyCode], event);
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:35:#include "base/CCEventKeyboard.h"
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:171:    int glfwKeyCode;
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:172:    EventKeyboard::KeyCode keyCode;
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:175:static std::unordered_map<int, EventKeyboard::KeyCode> g_keyCodeMap;
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:177:static std::unordered_map<int, EventKeyboard::KeyCode> g_charCodeMap;
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:182:    { GLFW_KEY_UNKNOWN         , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:185:    { GLFW_KEY_SPACE           , EventKeyboard::KeyCode::KEY_SPACE         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:186:    { GLFW_KEY_APOSTROPHE      , EventKeyboard::KeyCode::KEY_APOSTROPHE    },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:187:    { GLFW_KEY_COMMA           , EventKeyboard::KeyCode::KEY_COMMA         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:188:    { GLFW_KEY_MINUS           , EventKeyboard::KeyCode::KEY_MINUS         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:189:    { GLFW_KEY_PERIOD          , EventKeyboard::KeyCode::KEY_PERIOD        },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:190:    { GLFW_KEY_SLASH           , EventKeyboard::KeyCode::KEY_SLASH         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:191:    { GLFW_KEY_0               , EventKeyboard::KeyCode::KEY_0             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:192:    { GLFW_KEY_1               , EventKeyboard::KeyCode::KEY_1             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:193:    { GLFW_KEY_2               , EventKeyboard::KeyCode::KEY_2             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:194:    { GLFW_KEY_3               , EventKeyboard::KeyCode::KEY_3             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:195:    { GLFW_KEY_4               , EventKeyboard::KeyCode::KEY_4             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:196:    { GLFW_KEY_5               , EventKeyboard::KeyCode::KEY_5             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:197:    { GLFW_KEY_6               , EventKeyboard::KeyCode::KEY_6             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:198:    { GLFW_KEY_7               , EventKeyboard::KeyCode::KEY_7             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:199:    { GLFW_KEY_8               , EventKeyboard::KeyCode::KEY_8             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:200:    { GLFW_KEY_9               , EventKeyboard::KeyCode::KEY_9             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:201:    { GLFW_KEY_SEMICOLON       , EventKeyboard::KeyCode::KEY_SEMICOLON     },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:202:    { GLFW_KEY_EQUAL           , EventKeyboard::KeyCode::KEY_EQUAL         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:203:    { GLFW_KEY_A               , EventKeyboard::KeyCode::KEY_A             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:204:    { GLFW_KEY_B               , EventKeyboard::KeyCode::KEY_B             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:205:    { GLFW_KEY_C               , EventKeyboard::KeyCode::KEY_C             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:206:    { GLFW_KEY_D               , EventKeyboard::KeyCode::KEY_D             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:207:    { GLFW_KEY_E               , EventKeyboard::KeyCode::KEY_E             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:208:    { GLFW_KEY_F               , EventKeyboard::KeyCode::KEY_F             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:209:    { GLFW_KEY_G               , EventKeyboard::KeyCode::KEY_G             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:210:    { GLFW_KEY_H               , EventKeyboard::KeyCode::KEY_H             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:211:    { GLFW_KEY_I               , EventKeyboard::KeyCode::KEY_I             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:212:    { GLFW_KEY_J               , EventKeyboard::KeyCode::KEY_J             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:213:    { GLFW_KEY_K               , EventKeyboard::KeyCode::KEY_K             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:214:    { GLFW_KEY_L               , EventKeyboard::KeyCode::KEY_L             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:215:    { GLFW_KEY_M               , EventKeyboard::KeyCode::KEY_M             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:216:    { GLFW_KEY_N               , EventKeyboard::KeyCode::KEY_N             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:217:    { GLFW_KEY_O               , EventKeyboard::KeyCode::KEY_O             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:218:    { GLFW_KEY_P               , EventKeyboard::KeyCode::KEY_P             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:219:    { GLFW_KEY_Q               , EventKeyboard::KeyCode::KEY_Q             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:220:    { GLFW_KEY_R               , EventKeyboard::KeyCode::KEY_R             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:221:    { GLFW_KEY_S               , EventKeyboard::KeyCode::KEY_S             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:222:    { GLFW_KEY_T               , EventKeyboard::KeyCode::KEY_T             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:223:    { GLFW_KEY_U               , EventKeyboard::KeyCode::KEY_U             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:224:    { GLFW_KEY_V               , EventKeyboard::KeyCode::KEY_V             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:225:    { GLFW_KEY_W               , EventKeyboard::KeyCode::KEY_W             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:226:    { GLFW_KEY_X               , EventKeyboard::KeyCode::KEY_X             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:227:    { GLFW_KEY_Y               , EventKeyboard::KeyCode::KEY_Y             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:228:    { GLFW_KEY_Z               , EventKeyboard::KeyCode::KEY_Z             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:229:    { GLFW_KEY_LEFT_BRACKET    , EventKeyboard::KeyCode::KEY_LEFT_BRACKET  },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:230:    { GLFW_KEY_BACKSLASH       , EventKeyboard::KeyCode::KEY_BACK_SLASH    },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:231:    { GLFW_KEY_RIGHT_BRACKET   , EventKeyboard::KeyCode::KEY_RIGHT_BRACKET },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:232:    { GLFW_KEY_GRAVE_ACCENT    , EventKeyboard::KeyCode::KEY_GRAVE         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:233:    { GLFW_KEY_WORLD_1         , EventKeyboard::KeyCode::KEY_GRAVE         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:234:    { GLFW_KEY_WORLD_2         , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:237:    { GLFW_KEY_ESCAPE          , EventKeyboard::KeyCode::KEY_ESCAPE        },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:238:    { GLFW_KEY_ENTER           , EventKeyboard::KeyCode::KEY_ENTER      },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:239:    { GLFW_KEY_TAB             , EventKeyboard::KeyCode::KEY_TAB           },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:240:    { GLFW_KEY_BACKSPACE       , EventKeyboard::KeyCode::KEY_BACKSPACE     },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:241:    { GLFW_KEY_INSERT          , EventKeyboard::KeyCode::KEY_INSERT        },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:242:    { GLFW_KEY_DELETE          , EventKeyboard::KeyCode::KEY_DELETE        },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:243:    { GLFW_KEY_RIGHT           , EventKeyboard::KeyCode::KEY_RIGHT_ARROW   },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:244:    { GLFW_KEY_LEFT            , EventKeyboard::KeyCode::KEY_LEFT_ARROW    },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:245:    { GLFW_KEY_DOWN            , EventKeyboard::KeyCode::KEY_DOWN_ARROW    },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:246:    { GLFW_KEY_UP              , EventKeyboard::KeyCode::KEY_UP_ARROW      },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:247:    { GLFW_KEY_PAGE_UP         , EventKeyboard::KeyCode::KEY_PG_UP      },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:248:    { GLFW_KEY_PAGE_DOWN       , EventKeyboard::KeyCode::KEY_PG_DOWN    },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:249:    { GLFW_KEY_HOME            , EventKeyboard::KeyCode::KEY_HOME       },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:250:    { GLFW_KEY_END             , EventKeyboard::KeyCode::KEY_END           },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:251:    { GLFW_KEY_CAPS_LOCK       , EventKeyboard::KeyCode::KEY_CAPS_LOCK     },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:252:    { GLFW_KEY_SCROLL_LOCK     , EventKeyboard::KeyCode::KEY_SCROLL_LOCK   },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:253:    { GLFW_KEY_NUM_LOCK        , EventKeyboard::KeyCode::KEY_NUM_LOCK      },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:254:    { GLFW_KEY_PRINT_SCREEN    , EventKeyboard::KeyCode::KEY_PRINT         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:255:    { GLFW_KEY_PAUSE           , EventKeyboard::KeyCode::KEY_PAUSE         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:256:    { GLFW_KEY_F1              , EventKeyboard::KeyCode::KEY_F1            },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:257:    { GLFW_KEY_F2              , EventKeyboard::KeyCode::KEY_F2            },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:258:    { GLFW_KEY_F3              , EventKeyboard::KeyCode::KEY_F3            },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:259:    { GLFW_KEY_F4              , EventKeyboard::KeyCode::KEY_F4            },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:260:    { GLFW_KEY_F5              , EventKeyboard::KeyCode::KEY_F5            },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:261:    { GLFW_KEY_F6              , EventKeyboard::KeyCode::KEY_F6            },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:262:    { GLFW_KEY_F7              , EventKeyboard::KeyCode::KEY_F7            },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:263:    { GLFW_KEY_F8              , EventKeyboard::KeyCode::KEY_F8            },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:264:    { GLFW_KEY_F9              , EventKeyboard::KeyCode::KEY_F9            },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:265:    { GLFW_KEY_F10             , EventKeyboard::KeyCode::KEY_F10           },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:266:    { GLFW_KEY_F11             , EventKeyboard::KeyCode::KEY_F11           },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:267:    { GLFW_KEY_F12             , EventKeyboard::KeyCode::KEY_F12           },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:268:    { GLFW_KEY_F13             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:269:    { GLFW_KEY_F14             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:270:    { GLFW_KEY_F15             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:271:    { GLFW_KEY_F16             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:272:    { GLFW_KEY_F17             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:273:    { GLFW_KEY_F18             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:274:    { GLFW_KEY_F19             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:275:    { GLFW_KEY_F20             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:276:    { GLFW_KEY_F21             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:277:    { GLFW_KEY_F22             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:278:    { GLFW_KEY_F23             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:279:    { GLFW_KEY_F24             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:280:    { GLFW_KEY_F25             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:281:    { GLFW_KEY_KP_0            , EventKeyboard::KeyCode::KEY_0             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:282:    { GLFW_KEY_KP_1            , EventKeyboard::KeyCode::KEY_1             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:283:    { GLFW_KEY_KP_2            , EventKeyboard::KeyCode::KEY_2             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:284:    { GLFW_KEY_KP_3            , EventKeyboard::KeyCode::KEY_3             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:285:    { GLFW_KEY_KP_4            , EventKeyboard::KeyCode::KEY_4             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:286:    { GLFW_KEY_KP_5            , EventKeyboard::KeyCode::KEY_5             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:287:    { GLFW_KEY_KP_6            , EventKeyboard::KeyCode::KEY_6             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:288:    { GLFW_KEY_KP_7            , EventKeyboard::KeyCode::KEY_7             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:289:    { GLFW_KEY_KP_8            , EventKeyboard::KeyCode::KEY_8             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:290:    { GLFW_KEY_KP_9            , EventKeyboard::KeyCode::KEY_9             },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:291:    { GLFW_KEY_KP_DECIMAL      , EventKeyboard::KeyCode::KEY_PERIOD        },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:292:    { GLFW_KEY_KP_DIVIDE       , EventKeyboard::KeyCode::KEY_KP_DIVIDE     },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:293:    { GLFW_KEY_KP_MULTIPLY     , EventKeyboard::KeyCode::KEY_KP_MULTIPLY   },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:294:    { GLFW_KEY_KP_SUBTRACT     , EventKeyboard::KeyCode::KEY_KP_MINUS      },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:295:    { GLFW_KEY_KP_ADD          , EventKeyboard::KeyCode::KEY_KP_PLUS       },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:296:    { GLFW_KEY_KP_ENTER        , EventKeyboard::KeyCode::KEY_KP_ENTER      },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:297:    { GLFW_KEY_KP_EQUAL        , EventKeyboard::KeyCode::KEY_EQUAL         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:298:    { GLFW_KEY_LEFT_SHIFT      , EventKeyboard::KeyCode::KEY_LEFT_SHIFT         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:299:    { GLFW_KEY_LEFT_CONTROL    , EventKeyboard::KeyCode::KEY_LEFT_CTRL          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:300:    { GLFW_KEY_LEFT_ALT        , EventKeyboard::KeyCode::KEY_LEFT_ALT           },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:301:    { GLFW_KEY_LEFT_SUPER      , EventKeyboard::KeyCode::KEY_HYPER         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:302:    { GLFW_KEY_RIGHT_SHIFT     , EventKeyboard::KeyCode::KEY_RIGHT_SHIFT         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:303:    { GLFW_KEY_RIGHT_CONTROL   , EventKeyboard::KeyCode::KEY_RIGHT_CTRL          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:304:    { GLFW_KEY_RIGHT_ALT       , EventKeyboard::KeyCode::KEY_RIGHT_ALT           },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:305:    { GLFW_KEY_RIGHT_SUPER     , EventKeyboard::KeyCode::KEY_HYPER         },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:306:    { GLFW_KEY_MENU            , EventKeyboard::KeyCode::KEY_MENU          },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:309:    { GLFW_KEY_LAST            , EventKeyboard::KeyCode::KEY_NONE          }
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:317:	EventKeyboard::KeyCode keyCode;
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:321:	{ -1         , EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:322:	{ GLFW_KEY_SPACE           , EventKeyboard::KeyCode::KEY_SPACE },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:323:	{ GLFW_KEY_APOSTROPHE      , EventKeyboard::KeyCode::KEY_APOSTROPHE },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:324:	{ 42                       , EventKeyboard::KeyCode::KEY_ASTERISK },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:325:	{ 43                       , EventKeyboard::KeyCode::KEY_PLUS },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:326:	{ GLFW_KEY_COMMA           , EventKeyboard::KeyCode::KEY_COMMA },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:327:	{ GLFW_KEY_MINUS           , EventKeyboard::KeyCode::KEY_MINUS },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:328:	{ GLFW_KEY_PERIOD          , EventKeyboard::KeyCode::KEY_PERIOD },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:329:	{ GLFW_KEY_SLASH           , EventKeyboard::KeyCode::KEY_SLASH },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:330:	{ 48               , EventKeyboard::KeyCode::KEY_0 },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:331:	{ 49               , EventKeyboard::KeyCode::KEY_1 },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:332:	{ 50               , EventKeyboard::KeyCode::KEY_2 },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:333:	{ 51               , EventKeyboard::KeyCode::KEY_3 },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:334:	{ 52               , EventKeyboard::KeyCode::KEY_4 },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:335:	{ 53               , EventKeyboard::KeyCode::KEY_5 },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:336:	{ 54               , EventKeyboard::KeyCode::KEY_6 },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:337:	{ 55               , EventKeyboard::KeyCode::KEY_7 },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:338:	{ 56               , EventKeyboard::KeyCode::KEY_8 },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:339:	{ 57               , EventKeyboard::KeyCode::KEY_9 },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:340:	{ 58               , EventKeyboard::KeyCode::KEY_COLON },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:341:	{ 59               , EventKeyboard::KeyCode::KEY_SEMICOLON },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:342:	{ 64               , EventKeyboard::KeyCode::KEY_AT },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:343:	{ 94               , EventKeyboard::KeyCode::KEY_CIRCUMFLEX },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:344:	{ 97               , EventKeyboard::KeyCode::KEY_A },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:345:	{ 98               , EventKeyboard::KeyCode::KEY_B },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:346:	{ 99               , EventKeyboard::KeyCode::KEY_C },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:347:	{ 100               , EventKeyboard::KeyCode::KEY_D },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:348:	{ 101               , EventKeyboard::KeyCode::KEY_E },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:349:	{ 102               , EventKeyboard::KeyCode::KEY_F },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:350:	{ 103               , EventKeyboard::KeyCode::KEY_G },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:351:	{ 104               , EventKeyboard::KeyCode::KEY_H },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:352:	{ 105               , EventKeyboard::KeyCode::KEY_I },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:353:	{ 106               , EventKeyboard::KeyCode::KEY_J },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:354:	{ 107               , EventKeyboard::KeyCode::KEY_K },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:355:	{ 108               , EventKeyboard::KeyCode::KEY_L },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:356:	{ 109               , EventKeyboard::KeyCode::KEY_M },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:357:	{ 110               , EventKeyboard::KeyCode::KEY_N },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:358:	{ 111               , EventKeyboard::KeyCode::KEY_O },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:359:	{ 112               , EventKeyboard::KeyCode::KEY_P },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:360:	{ 113               , EventKeyboard::KeyCode::KEY_Q },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:361:	{ 114               , EventKeyboard::KeyCode::KEY_R },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:362:	{ 115               , EventKeyboard::KeyCode::KEY_S },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:363:	{ 116               , EventKeyboard::KeyCode::KEY_T },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:364:	{ 117               , EventKeyboard::KeyCode::KEY_U },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:365:	{ 118               , EventKeyboard::KeyCode::KEY_V },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:366:	{ 119               , EventKeyboard::KeyCode::KEY_W },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:367:	{ 120               , EventKeyboard::KeyCode::KEY_X },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:368:	{ 121               , EventKeyboard::KeyCode::KEY_Y },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:369:	{ 122               , EventKeyboard::KeyCode::KEY_Z },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:370:	{ GLFW_KEY_LEFT_BRACKET    , EventKeyboard::KeyCode::KEY_LEFT_BRACKET },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:371:	{ GLFW_KEY_BACKSLASH       , EventKeyboard::KeyCode::KEY_BACK_SLASH },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:372:	{ GLFW_KEY_RIGHT_BRACKET   , EventKeyboard::KeyCode::KEY_RIGHT_BRACKET },
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:402:    g_keyCodeMap.clear();
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:405:        g_keyCodeMap[item.glfwKeyCode] = item.keyCode;
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1217:		EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action, scancode);
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1219:		EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1227:        switch (g_keyCodeMap[key])
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1229:        case EventKeyboard::KeyCode::KEY_BACKSPACE:
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1232:        case EventKeyboard::KeyCode::KEY_HOME:
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1233:        case EventKeyboard::KeyCode::KEY_KP_HOME:
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1234:        case EventKeyboard::KeyCode::KEY_DELETE:
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1235:        case EventKeyboard::KeyCode::KEY_KP_DELETE:
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1236:        case EventKeyboard::KeyCode::KEY_END:
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1237:        case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1238:        case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1239:        case EventKeyboard::KeyCode::KEY_ESCAPE:
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1240:            IMEDispatcher::sharedDispatcher()->dispatchControlKey(g_keyCodeMap[key]);
+Player/cocos2d/external/ImGUI/IMGUIGLViewImpl.cpp:1272:	EventKeyboard event(g_charCodeMap[character], GLFW_PRESS, true);
+Player/cocos2d/cocos/Android.mk:124:base/CCEventKeyboard.cpp \
+Player/cocos2d/cocos/editor-support/cocostudio/CCInputDelegate.cpp:92:void InputDelegate::onKeyPressed(cocos2d::EventKeyboard::KeyCode /*keyCode*/, cocos2d::Event* /*event*/)
+Player/cocos2d/cocos/editor-support/cocostudio/CCInputDelegate.cpp:95:void InputDelegate::onKeyReleased(cocos2d::EventKeyboard::KeyCode /*keyCode*/, cocos2d::Event* /*event*/)
+Player/cocos2d/cocos/editor-support/cocostudio/CCInputDelegate.cpp:257:            listener->onKeyPressed = CC_CALLBACK_2(InputDelegate::onKeyPressed, this);
+Player/cocos2d/cocos/editor-support/cocostudio/CCInputDelegate.cpp:258:            listener->onKeyReleased = CC_CALLBACK_2(InputDelegate::onKeyReleased, this);
+Player/cocos2d/cocos/editor-support/cocostudio/CCInputDelegate.h:33:#include "base/CCEventKeyboard.h"
+Player/cocos2d/cocos/editor-support/cocostudio/CCInputDelegate.h:114:    virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+Player/cocos2d/cocos/editor-support/cocostudio/CCInputDelegate.h:118:    virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+Player/cocos2d/cocos/Android.mk.bak:124:base/CCEventKeyboard.cpp \
+Player/cocos2d/cocos/scripting/js-bindings/script/jsb_cocos2d.js:1508:    ret.onKeyPressed = this.onKeyPressed;
+Player/cocos2d/cocos/scripting/js-bindings/script/jsb_cocos2d.js:1509:    ret.onKeyReleased = this.onKeyReleased;
+Player/cocos2d/cocos/scripting/js-bindings/script/jsb_cocos2d.js:1544:cc.EventListenerKeyboard.prototype._onKeyPressed = function(keyCode, event) {
+Player/cocos2d/cocos/scripting/js-bindings/script/jsb_cocos2d.js:1545:    if (!this.onKeyPressed)
+Player/cocos2d/cocos/scripting/js-bindings/script/jsb_cocos2d.js:1547:    this.onKeyPressed(jsbKeyArr[keyCode], event);
+Player/cocos2d/cocos/scripting/js-bindings/script/jsb_cocos2d.js:1550:cc.EventListenerKeyboard.prototype._onKeyReleased = function(keyCode, event) {
+Player/cocos2d/cocos/scripting/js-bindings/script/jsb_cocos2d.js:1551:    if (!this.onKeyReleased)
+Player/cocos2d/cocos/scripting/js-bindings/script/jsb_cocos2d.js:1553:    this.onKeyReleased(jsbKeyArr[keyCode], event);
+Player/cocos2d/cocos/scripting/js-bindings/manual/jsb_event_dispatcher_manual.cpp:149:        ret->onKeyPressed = [ret](EventKeyboard::KeyCode keyCode, Event* event) {
+Player/cocos2d/cocos/scripting/js-bindings/manual/jsb_event_dispatcher_manual.cpp:153:        ret->onKeyReleased = [ret](EventKeyboard::KeyCode keyCode, Event* event) {
+Player/cocos2d/cocos/scripting/js-bindings/manual/ScriptingCore.h:588:    bool handleKeyboardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5138:// EventKeyboard class bindings, need manual bind for transform key codes
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5140:JSClass  *jsb_cocos2d_EventKeyboard_class;
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5141:JSObject *jsb_cocos2d_EventKeyboard_prototype;
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5143:bool js_cocos2dx_EventKeyboard_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5148:    cocos2d::EventKeyboard::KeyCode arg0;
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5158:    JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventKeyboard_constructor : Error processing arguments");
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5160:    cocos2d::EventKeyboard* cobj = new (std::nothrow) cocos2d::EventKeyboard(arg0, arg1);
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5161:    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::EventKeyboard>(cobj);
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5162:    auto jsobj = jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::EventKeyboard");
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5178:void js_register_cocos2dx_EventKeyboard(JSContext *cx, JS::HandleObject global) {
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5179:    jsb_cocos2d_EventKeyboard_class = (JSClass *)calloc(1, sizeof(JSClass));
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5180:    jsb_cocos2d_EventKeyboard_class->name = "EventKeyboard";
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5181:    jsb_cocos2d_EventKeyboard_class->addProperty = JS_PropertyStub;
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5182:    jsb_cocos2d_EventKeyboard_class->delProperty = JS_DeletePropertyStub;
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5183:    jsb_cocos2d_EventKeyboard_class->getProperty = JS_PropertyStub;
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5184:    jsb_cocos2d_EventKeyboard_class->setProperty = JS_StrictPropertyStub;
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5185:    jsb_cocos2d_EventKeyboard_class->enumerate = JS_EnumerateStub;
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5186:    jsb_cocos2d_EventKeyboard_class->resolve = JS_ResolveStub;
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5187:    jsb_cocos2d_EventKeyboard_class->convert = JS_ConvertStub;
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5188:    jsb_cocos2d_EventKeyboard_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5202:    jsb_cocos2d_EventKeyboard_prototype = JS_InitClass(
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5205:                                                       jsb_cocos2d_EventKeyboard_class,
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5206:                                                       js_cocos2dx_EventKeyboard_constructor, 0, // constructor
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5213:    JS::RootedObject proto(cx, jsb_cocos2d_EventKeyboard_prototype);
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:5214:    jsb_register_class<cocos2d::EventKeyboard>(cx, jsb_cocos2d_EventKeyboard_class, proto, parentProto);
+Player/cocos2d/cocos/scripting/js-bindings/manual/cocos2d_specifics.cpp:6332:    js_register_cocos2dx_EventKeyboard(cx, ccObj);
+Player/cocos2d/cocos/scripting/js-bindings/manual/ScriptingCore.cpp:1905:bool ScriptingCore::handleKeyboardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event)
+Player/cocos2d/cocos/scripting/js-bindings/manual/ScriptingCore.cpp:1913:    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::EventKeyboard>((cocos2d::EventKeyboard*)event);
+Player/cocos2d/cocos/scripting/js-bindings/manual/ScriptingCore.cpp:1921:        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "_onKeyPressed", 2, args);
+Player/cocos2d/cocos/scripting/js-bindings/manual/ScriptingCore.cpp:1925:        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "_onKeyReleased", 2, args);
+Player/cocos2d/cocos/scripting/lua-bindings/auto/api/EventKeyboard.lua:3:-- @module EventKeyboard
+Player/cocos2d/cocos/scripting/lua-bindings/auto/api/EventKeyboard.lua:12:-- @function [parent=#EventKeyboard] EventKeyboard 
+Player/cocos2d/cocos/scripting/lua-bindings/auto/api/EventKeyboard.lua:16:-- @return EventKeyboard#EventKeyboard self (return value: cc.EventKeyboard)
+Player/cocos2d/cocos/ui/UIWidget.cpp:62:    void onKeypadKeyPressed(EventKeyboard::KeyCode, Event*);
+Player/cocos2d/cocos/ui/UIWidget.cpp:80:void Widget::FocusNavigationController::onKeypadKeyPressed(EventKeyboard::KeyCode  keyCode, Event* /*event*/)
+Player/cocos2d/cocos/ui/UIWidget.cpp:84:        if (keyCode == EventKeyboard::KeyCode::KEY_DPAD_DOWN)
+Player/cocos2d/cocos/ui/UIWidget.cpp:88:        if (keyCode == EventKeyboard::KeyCode::KEY_DPAD_UP)
+Player/cocos2d/cocos/ui/UIWidget.cpp:92:        if (keyCode == EventKeyboard::KeyCode::KEY_DPAD_LEFT)
+Player/cocos2d/cocos/ui/UIWidget.cpp:96:        if (keyCode == EventKeyboard::KeyCode::KEY_DPAD_RIGHT)
+Player/cocos2d/cocos/ui/UIWidget.cpp:126:        _keyboardListener->onKeyReleased = CC_CALLBACK_2(Widget::FocusNavigationController::onKeypadKeyPressed, this);
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:26:#include "base/CCEventKeyboard.h"
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:91:    static std::unordered_map<int, cocos2d::EventKeyboard::KeyCode> g_keyCodeMap = {
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:92:        { KEYCODE_BACK , cocos2d::EventKeyboard::KeyCode::KEY_ESCAPE},
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:93:        { KEYCODE_MENU , cocos2d::EventKeyboard::KeyCode::KEY_MENU},
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:94:        { KEYCODE_DPAD_UP  , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_UP },
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:95:        { KEYCODE_DPAD_DOWN , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_DOWN },
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:96:        { KEYCODE_DPAD_LEFT , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_LEFT },
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:97:        { KEYCODE_DPAD_RIGHT , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_RIGHT },
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:98:        { KEYCODE_ENTER  , cocos2d::EventKeyboard::KeyCode::KEY_ENTER},
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:99:        { KEYCODE_PLAY  , cocos2d::EventKeyboard::KeyCode::KEY_PLAY},
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:100:        { KEYCODE_DPAD_CENTER  , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_CENTER},
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:104:    JNIEXPORT jboolean JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeKeyEvent(JNIEnv * env, jobject thiz, jint keyCode, jboolean isPressed) {
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:107:        auto iterKeyCode = g_keyCodeMap.find(keyCode);
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:108:        if (iterKeyCode == g_keyCodeMap.end()) {
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:112:        cocos2d::EventKeyboard::KeyCode cocos2dKey = g_keyCodeMap.at(keyCode);
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:113:        cocos2d::EventKeyboard event(cocos2dKey, isPressed);
+Player/cocos2d/cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxRenderer.java:119:    private static native boolean nativeKeyEvent(final int keyCode,boolean isPressed);
+Player/cocos2d/cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxRenderer.java:143:        Cocos2dxRenderer.nativeKeyEvent(keyCode, true);
+Player/cocos2d/cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxRenderer.java:147:        Cocos2dxRenderer.nativeKeyEvent(keyCode, false);
+Player/cocos2d/cocos/platform/win8.1-universal/OpenGLESPage.xaml.cpp:456:EventKeyboard::KeyCode::KEY_ESCAPE event.
+Player/cocos2d/cocos/platform/win8.1-universal/OpenGLESPage.xaml.cpp:458:The default behavior is to exit the app if the  EventKeyboard::KeyCode::KEY_ESCAPE event
+Player/cocos2d/cocos/platform/tizen/CCApplication-tizen.cpp:43:#include "base/CCEventKeyboard.h"
+Player/cocos2d/cocos/platform/tizen/CCApplication-tizen.cpp:74:	    cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_ESCAPE, true);
+Player/cocos2d/cocos/platform/tizen/CCApplication-tizen.cpp:79:	    cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, true);
+Player/cocos2d/cocos/platform/tizen/CCApplication-tizen.cpp:92:	    cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_ESCAPE, false);
+Player/cocos2d/cocos/platform/tizen/CCApplication-tizen.cpp:97:	    cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, false);
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:36:#include "base/CCEventKeyboard.h"
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:147:    int glfwKeyCode;
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:148:    EventKeyboard::KeyCode keyCode;
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:151:static std::unordered_map<int, EventKeyboard::KeyCode> g_keyCodeMap;
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:155:    { GLFW_KEY_UNKNOWN         , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:158:    { GLFW_KEY_SPACE           , EventKeyboard::KeyCode::KEY_SPACE         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:159:    { GLFW_KEY_APOSTROPHE      , EventKeyboard::KeyCode::KEY_APOSTROPHE    },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:160:    { GLFW_KEY_COMMA           , EventKeyboard::KeyCode::KEY_COMMA         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:161:    { GLFW_KEY_MINUS           , EventKeyboard::KeyCode::KEY_MINUS         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:162:    { GLFW_KEY_PERIOD          , EventKeyboard::KeyCode::KEY_PERIOD        },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:163:    { GLFW_KEY_SLASH           , EventKeyboard::KeyCode::KEY_SLASH         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:164:    { GLFW_KEY_0               , EventKeyboard::KeyCode::KEY_0             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:165:    { GLFW_KEY_1               , EventKeyboard::KeyCode::KEY_1             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:166:    { GLFW_KEY_2               , EventKeyboard::KeyCode::KEY_2             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:167:    { GLFW_KEY_3               , EventKeyboard::KeyCode::KEY_3             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:168:    { GLFW_KEY_4               , EventKeyboard::KeyCode::KEY_4             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:169:    { GLFW_KEY_5               , EventKeyboard::KeyCode::KEY_5             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:170:    { GLFW_KEY_6               , EventKeyboard::KeyCode::KEY_6             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:171:    { GLFW_KEY_7               , EventKeyboard::KeyCode::KEY_7             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:172:    { GLFW_KEY_8               , EventKeyboard::KeyCode::KEY_8             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:173:    { GLFW_KEY_9               , EventKeyboard::KeyCode::KEY_9             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:174:    { GLFW_KEY_SEMICOLON       , EventKeyboard::KeyCode::KEY_SEMICOLON     },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:175:    { GLFW_KEY_EQUAL           , EventKeyboard::KeyCode::KEY_EQUAL         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:176:    { GLFW_KEY_A               , EventKeyboard::KeyCode::KEY_A             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:177:    { GLFW_KEY_B               , EventKeyboard::KeyCode::KEY_B             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:178:    { GLFW_KEY_C               , EventKeyboard::KeyCode::KEY_C             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:179:    { GLFW_KEY_D               , EventKeyboard::KeyCode::KEY_D             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:180:    { GLFW_KEY_E               , EventKeyboard::KeyCode::KEY_E             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:181:    { GLFW_KEY_F               , EventKeyboard::KeyCode::KEY_F             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:182:    { GLFW_KEY_G               , EventKeyboard::KeyCode::KEY_G             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:183:    { GLFW_KEY_H               , EventKeyboard::KeyCode::KEY_H             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:184:    { GLFW_KEY_I               , EventKeyboard::KeyCode::KEY_I             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:185:    { GLFW_KEY_J               , EventKeyboard::KeyCode::KEY_J             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:186:    { GLFW_KEY_K               , EventKeyboard::KeyCode::KEY_K             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:187:    { GLFW_KEY_L               , EventKeyboard::KeyCode::KEY_L             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:188:    { GLFW_KEY_M               , EventKeyboard::KeyCode::KEY_M             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:189:    { GLFW_KEY_N               , EventKeyboard::KeyCode::KEY_N             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:190:    { GLFW_KEY_O               , EventKeyboard::KeyCode::KEY_O             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:191:    { GLFW_KEY_P               , EventKeyboard::KeyCode::KEY_P             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:192:    { GLFW_KEY_Q               , EventKeyboard::KeyCode::KEY_Q             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:193:    { GLFW_KEY_R               , EventKeyboard::KeyCode::KEY_R             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:194:    { GLFW_KEY_S               , EventKeyboard::KeyCode::KEY_S             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:195:    { GLFW_KEY_T               , EventKeyboard::KeyCode::KEY_T             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:196:    { GLFW_KEY_U               , EventKeyboard::KeyCode::KEY_U             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:197:    { GLFW_KEY_V               , EventKeyboard::KeyCode::KEY_V             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:198:    { GLFW_KEY_W               , EventKeyboard::KeyCode::KEY_W             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:199:    { GLFW_KEY_X               , EventKeyboard::KeyCode::KEY_X             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:200:    { GLFW_KEY_Y               , EventKeyboard::KeyCode::KEY_Y             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:201:    { GLFW_KEY_Z               , EventKeyboard::KeyCode::KEY_Z             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:202:    { GLFW_KEY_LEFT_BRACKET    , EventKeyboard::KeyCode::KEY_LEFT_BRACKET  },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:203:    { GLFW_KEY_BACKSLASH       , EventKeyboard::KeyCode::KEY_BACK_SLASH    },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:204:    { GLFW_KEY_RIGHT_BRACKET   , EventKeyboard::KeyCode::KEY_RIGHT_BRACKET },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:205:    { GLFW_KEY_GRAVE_ACCENT    , EventKeyboard::KeyCode::KEY_GRAVE         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:206:    { GLFW_KEY_WORLD_1         , EventKeyboard::KeyCode::KEY_GRAVE         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:207:    { GLFW_KEY_WORLD_2         , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:210:    { GLFW_KEY_ESCAPE          , EventKeyboard::KeyCode::KEY_ESCAPE        },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:211:    { GLFW_KEY_ENTER           , EventKeyboard::KeyCode::KEY_ENTER      },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:212:    { GLFW_KEY_TAB             , EventKeyboard::KeyCode::KEY_TAB           },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:213:    { GLFW_KEY_BACKSPACE       , EventKeyboard::KeyCode::KEY_BACKSPACE     },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:214:    { GLFW_KEY_INSERT          , EventKeyboard::KeyCode::KEY_INSERT        },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:215:    { GLFW_KEY_DELETE          , EventKeyboard::KeyCode::KEY_DELETE        },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:216:    { GLFW_KEY_RIGHT           , EventKeyboard::KeyCode::KEY_RIGHT_ARROW   },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:217:    { GLFW_KEY_LEFT            , EventKeyboard::KeyCode::KEY_LEFT_ARROW    },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:218:    { GLFW_KEY_DOWN            , EventKeyboard::KeyCode::KEY_DOWN_ARROW    },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:219:    { GLFW_KEY_UP              , EventKeyboard::KeyCode::KEY_UP_ARROW      },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:220:    { GLFW_KEY_PAGE_UP         , EventKeyboard::KeyCode::KEY_PG_UP      },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:221:    { GLFW_KEY_PAGE_DOWN       , EventKeyboard::KeyCode::KEY_PG_DOWN    },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:222:    { GLFW_KEY_HOME            , EventKeyboard::KeyCode::KEY_HOME       },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:223:    { GLFW_KEY_END             , EventKeyboard::KeyCode::KEY_END           },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:224:    { GLFW_KEY_CAPS_LOCK       , EventKeyboard::KeyCode::KEY_CAPS_LOCK     },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:225:    { GLFW_KEY_SCROLL_LOCK     , EventKeyboard::KeyCode::KEY_SCROLL_LOCK   },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:226:    { GLFW_KEY_NUM_LOCK        , EventKeyboard::KeyCode::KEY_NUM_LOCK      },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:227:    { GLFW_KEY_PRINT_SCREEN    , EventKeyboard::KeyCode::KEY_PRINT         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:228:    { GLFW_KEY_PAUSE           , EventKeyboard::KeyCode::KEY_PAUSE         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:229:    { GLFW_KEY_F1              , EventKeyboard::KeyCode::KEY_F1            },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:230:    { GLFW_KEY_F2              , EventKeyboard::KeyCode::KEY_F2            },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:231:    { GLFW_KEY_F3              , EventKeyboard::KeyCode::KEY_F3            },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:232:    { GLFW_KEY_F4              , EventKeyboard::KeyCode::KEY_F4            },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:233:    { GLFW_KEY_F5              , EventKeyboard::KeyCode::KEY_F5            },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:234:    { GLFW_KEY_F6              , EventKeyboard::KeyCode::KEY_F6            },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:235:    { GLFW_KEY_F7              , EventKeyboard::KeyCode::KEY_F7            },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:236:    { GLFW_KEY_F8              , EventKeyboard::KeyCode::KEY_F8            },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:237:    { GLFW_KEY_F9              , EventKeyboard::KeyCode::KEY_F9            },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:238:    { GLFW_KEY_F10             , EventKeyboard::KeyCode::KEY_F10           },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:239:    { GLFW_KEY_F11             , EventKeyboard::KeyCode::KEY_F11           },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:240:    { GLFW_KEY_F12             , EventKeyboard::KeyCode::KEY_F12           },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:241:    { GLFW_KEY_F13             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:242:    { GLFW_KEY_F14             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:243:    { GLFW_KEY_F15             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:244:    { GLFW_KEY_F16             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:245:    { GLFW_KEY_F17             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:246:    { GLFW_KEY_F18             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:247:    { GLFW_KEY_F19             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:248:    { GLFW_KEY_F20             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:249:    { GLFW_KEY_F21             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:250:    { GLFW_KEY_F22             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:251:    { GLFW_KEY_F23             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:252:    { GLFW_KEY_F24             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:253:    { GLFW_KEY_F25             , EventKeyboard::KeyCode::KEY_NONE          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:254:    { GLFW_KEY_KP_0            , EventKeyboard::KeyCode::KEY_0             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:255:    { GLFW_KEY_KP_1            , EventKeyboard::KeyCode::KEY_1             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:256:    { GLFW_KEY_KP_2            , EventKeyboard::KeyCode::KEY_2             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:257:    { GLFW_KEY_KP_3            , EventKeyboard::KeyCode::KEY_3             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:258:    { GLFW_KEY_KP_4            , EventKeyboard::KeyCode::KEY_4             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:259:    { GLFW_KEY_KP_5            , EventKeyboard::KeyCode::KEY_5             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:260:    { GLFW_KEY_KP_6            , EventKeyboard::KeyCode::KEY_6             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:261:    { GLFW_KEY_KP_7            , EventKeyboard::KeyCode::KEY_7             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:262:    { GLFW_KEY_KP_8            , EventKeyboard::KeyCode::KEY_8             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:263:    { GLFW_KEY_KP_9            , EventKeyboard::KeyCode::KEY_9             },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:264:    { GLFW_KEY_KP_DECIMAL      , EventKeyboard::KeyCode::KEY_PERIOD        },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:265:    { GLFW_KEY_KP_DIVIDE       , EventKeyboard::KeyCode::KEY_KP_DIVIDE     },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:266:    { GLFW_KEY_KP_MULTIPLY     , EventKeyboard::KeyCode::KEY_KP_MULTIPLY   },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:267:    { GLFW_KEY_KP_SUBTRACT     , EventKeyboard::KeyCode::KEY_KP_MINUS      },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:268:    { GLFW_KEY_KP_ADD          , EventKeyboard::KeyCode::KEY_KP_PLUS       },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:269:    { GLFW_KEY_KP_ENTER        , EventKeyboard::KeyCode::KEY_KP_ENTER      },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:270:    { GLFW_KEY_KP_EQUAL        , EventKeyboard::KeyCode::KEY_EQUAL         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:271:    { GLFW_KEY_LEFT_SHIFT      , EventKeyboard::KeyCode::KEY_LEFT_SHIFT         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:272:    { GLFW_KEY_LEFT_CONTROL    , EventKeyboard::KeyCode::KEY_LEFT_CTRL          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:273:    { GLFW_KEY_LEFT_ALT        , EventKeyboard::KeyCode::KEY_LEFT_ALT           },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:274:    { GLFW_KEY_LEFT_SUPER      , EventKeyboard::KeyCode::KEY_HYPER         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:275:    { GLFW_KEY_RIGHT_SHIFT     , EventKeyboard::KeyCode::KEY_RIGHT_SHIFT         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:276:    { GLFW_KEY_RIGHT_CONTROL   , EventKeyboard::KeyCode::KEY_RIGHT_CTRL          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:277:    { GLFW_KEY_RIGHT_ALT       , EventKeyboard::KeyCode::KEY_RIGHT_ALT           },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:278:    { GLFW_KEY_RIGHT_SUPER     , EventKeyboard::KeyCode::KEY_HYPER         },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:279:    { GLFW_KEY_MENU            , EventKeyboard::KeyCode::KEY_MENU          },
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:280:    { GLFW_KEY_LAST            , EventKeyboard::KeyCode::KEY_NONE          }
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:302:    g_keyCodeMap.clear();
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:305:        g_keyCodeMap[item.glfwKeyCode] = item.keyCode;
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:984:        EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:991:        switch (g_keyCodeMap[key])
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:993:        case EventKeyboard::KeyCode::KEY_BACKSPACE:
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:996:        case EventKeyboard::KeyCode::KEY_HOME:
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:997:        case EventKeyboard::KeyCode::KEY_KP_HOME:
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:998:        case EventKeyboard::KeyCode::KEY_DELETE:
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:999:        case EventKeyboard::KeyCode::KEY_KP_DELETE:
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:1000:        case EventKeyboard::KeyCode::KEY_END:
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:1001:        case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:1002:        case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:1003:        case EventKeyboard::KeyCode::KEY_ESCAPE:
+Player/cocos2d/cocos/platform/desktop/CCGLViewImpl-desktop.cpp:1004:            IMEDispatcher::sharedDispatcher()->dispatchControlKey(g_keyCodeMap[key]);
+Player/cocos2d/cocos/platform/winrt/CCGLViewImpl-winrt.h:34:#include "base/CCEventKeyboard.h"
+Player/cocos2d/cocos/platform/winrt/CCGLViewImpl-winrt.h:101:    void BackButtonListener(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+Player/cocos2d/cocos/platform/winrt/CCGLViewImpl-winrt.cpp:100:    m_backButtonListener->onKeyReleased = CC_CALLBACK_2(GLViewImpl::BackButtonListener, this);
+Player/cocos2d/cocos/platform/winrt/CCGLViewImpl-winrt.cpp:211:    cocos2d::EventKeyboard::KeyCode cocos2dKey = EventKeyboard::KeyCode::KEY_ESCAPE;
+Player/cocos2d/cocos/platform/winrt/CCGLViewImpl-winrt.cpp:212:    cocos2d::EventKeyboard event(cocos2dKey, false);
+Player/cocos2d/cocos/platform/winrt/CCGLViewImpl-winrt.cpp:216:void GLViewImpl::BackButtonListener(EventKeyboard::KeyCode keyCode, Event* event)
+Player/cocos2d/cocos/platform/winrt/CCGLViewImpl-winrt.cpp:218:	if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)
+Player/cocos2d/cocos/platform/winrt/CCGLViewImpl-winrt.cpp:224:		CCLOG("add a listener for EventKeyboard::KeyCode::KEY_ESCAPE");
+Player/cocos2d/cocos/platform/winrt/CCGLViewImpl-winrt.cpp:230:		CCLOG("listener->onKeyReleased = CC_CALLBACK_2(HelloWorld::onKeyReleased, this);");
+Player/cocos2d/cocos/platform/winrt/CCGLViewImpl-winrt.cpp:233:		CCLOG("void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)");
+Player/cocos2d/cocos/platform/winrt/CCGLViewImpl-winrt.cpp:235:		CCLOG("     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)");
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:30:#include "base/CCEventKeyboard.h"
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:51:    EventKeyboard::KeyCode keyCode;
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:54:static std::map<int, EventKeyboard::KeyCode> g_keyCodeMap;
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:61:    { (int) VirtualKey::None, EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:63:    { (int) VirtualKey::Space, EventKeyboard::KeyCode::KEY_SPACE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:64:    { (int) VK_OEM_7, EventKeyboard::KeyCode::KEY_APOSTROPHE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:65:    { (int) VK_OEM_COMMA, EventKeyboard::KeyCode::KEY_COMMA },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:66:    { (int) VK_OEM_MINUS, EventKeyboard::KeyCode::KEY_MINUS },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:67:    { (int) VK_OEM_PERIOD, EventKeyboard::KeyCode::KEY_PERIOD },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:68:    { (int) VK_OEM_2, EventKeyboard::KeyCode::KEY_SLASH },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:69:    { (int) VK_OEM_3, EventKeyboard::KeyCode::KEY_TILDE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:71:    { (int) VirtualKey::Number0, EventKeyboard::KeyCode::KEY_0 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:72:    { (int) VirtualKey::Number1, EventKeyboard::KeyCode::KEY_1 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:73:    { (int) VirtualKey::Number2, EventKeyboard::KeyCode::KEY_2 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:74:    { (int) VirtualKey::Number3, EventKeyboard::KeyCode::KEY_3 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:75:    { (int) VirtualKey::Number4, EventKeyboard::KeyCode::KEY_4 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:76:    { (int) VirtualKey::Number5, EventKeyboard::KeyCode::KEY_5 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:77:    { (int) VirtualKey::Number6, EventKeyboard::KeyCode::KEY_6 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:78:    { (int) VirtualKey::Number7, EventKeyboard::KeyCode::KEY_7 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:79:    { (int) VirtualKey::Number8, EventKeyboard::KeyCode::KEY_8 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:80:    { (int) VirtualKey::Number9, EventKeyboard::KeyCode::KEY_9 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:81:    { (int) VK_OEM_1, EventKeyboard::KeyCode::KEY_SEMICOLON },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:82:    { (int) VK_OEM_PLUS, EventKeyboard::KeyCode::KEY_EQUAL },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:83:    { (int) VirtualKey::A, EventKeyboard::KeyCode::KEY_A },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:84:    { (int) VirtualKey::B, EventKeyboard::KeyCode::KEY_B },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:85:    { (int) VirtualKey::C, EventKeyboard::KeyCode::KEY_C },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:86:    { (int) VirtualKey::D, EventKeyboard::KeyCode::KEY_D },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:87:    { (int) VirtualKey::E, EventKeyboard::KeyCode::KEY_E },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:88:    { (int) VirtualKey::F, EventKeyboard::KeyCode::KEY_F },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:89:    { (int) VirtualKey::G, EventKeyboard::KeyCode::KEY_G },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:90:    { (int) VirtualKey::H, EventKeyboard::KeyCode::KEY_H },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:91:    { (int) VirtualKey::I, EventKeyboard::KeyCode::KEY_I },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:92:    { (int) VirtualKey::J, EventKeyboard::KeyCode::KEY_J },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:93:    { (int) VirtualKey::K, EventKeyboard::KeyCode::KEY_K },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:94:    { (int) VirtualKey::L, EventKeyboard::KeyCode::KEY_L },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:95:    { (int) VirtualKey::M, EventKeyboard::KeyCode::KEY_M },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:96:    { (int) VirtualKey::N, EventKeyboard::KeyCode::KEY_N },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:97:    { (int) VirtualKey::O, EventKeyboard::KeyCode::KEY_O },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:98:    { (int) VirtualKey::P, EventKeyboard::KeyCode::KEY_P },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:99:    { (int) VirtualKey::Q, EventKeyboard::KeyCode::KEY_Q },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:100:    { (int) VirtualKey::R, EventKeyboard::KeyCode::KEY_R },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:101:    { (int) VirtualKey::S, EventKeyboard::KeyCode::KEY_S },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:102:    { (int) VirtualKey::T, EventKeyboard::KeyCode::KEY_T },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:103:    { (int) VirtualKey::U, EventKeyboard::KeyCode::KEY_U },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:104:    { (int) VirtualKey::V, EventKeyboard::KeyCode::KEY_V },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:105:    { (int) VirtualKey::W, EventKeyboard::KeyCode::KEY_W },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:106:    { (int) VirtualKey::X, EventKeyboard::KeyCode::KEY_X },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:107:    { (int) VirtualKey::Y, EventKeyboard::KeyCode::KEY_Y },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:108:    { (int) VirtualKey::Z, EventKeyboard::KeyCode::KEY_Z },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:109:    { VK_OEM_4, EventKeyboard::KeyCode::KEY_LEFT_BRACKET },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:110:    { VK_OEM_5, EventKeyboard::KeyCode::KEY_BACK_SLASH },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:111:    { VK_OEM_6, EventKeyboard::KeyCode::KEY_RIGHT_BRACKET },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:112:    //	{ GLFW_KEY_GRAVE_ACCENT			, EventKeyboard::KeyCode::KEY_GRAVE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:115:    { (int) VirtualKey::Escape, EventKeyboard::KeyCode::KEY_ESCAPE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:116:    { (int) VirtualKey::Enter, EventKeyboard::KeyCode::KEY_ENTER },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:117:    { (int) VirtualKey::Tab, EventKeyboard::KeyCode::KEY_TAB },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:118:    { (int) VirtualKey::Back, EventKeyboard::KeyCode::KEY_BACKSPACE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:119:    { (int) VirtualKey::Insert, EventKeyboard::KeyCode::KEY_INSERT },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:120:    { (int) VirtualKey::Delete, EventKeyboard::KeyCode::KEY_DELETE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:121:    { (int) VirtualKey::Right, EventKeyboard::KeyCode::KEY_RIGHT_ARROW },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:122:    { (int) VirtualKey::Left, EventKeyboard::KeyCode::KEY_LEFT_ARROW },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:123:    { (int) VirtualKey::Down, EventKeyboard::KeyCode::KEY_DOWN_ARROW },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:124:    { (int) VirtualKey::Up, EventKeyboard::KeyCode::KEY_UP_ARROW },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:125:    { VK_PRIOR, EventKeyboard::KeyCode::KEY_PG_UP },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:126:    { VK_NEXT, EventKeyboard::KeyCode::KEY_PG_DOWN },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:127:    { VK_HOME, EventKeyboard::KeyCode::KEY_HOME },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:128:    { VK_END, EventKeyboard::KeyCode::KEY_END },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:129:    { VK_CAPITAL, EventKeyboard::KeyCode::KEY_CAPS_LOCK },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:130:    { VK_SCROLL, EventKeyboard::KeyCode::KEY_SCROLL_LOCK },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:131:    { VK_NUMLOCK, EventKeyboard::KeyCode::KEY_NUM_LOCK },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:132:    { VK_SNAPSHOT, EventKeyboard::KeyCode::KEY_PRINT },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:133:    { VK_PAUSE, EventKeyboard::KeyCode::KEY_PAUSE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:134:    { (int) VirtualKey::F1, EventKeyboard::KeyCode::KEY_F1 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:135:    { (int) VirtualKey::F2, EventKeyboard::KeyCode::KEY_F2 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:136:    { (int) VirtualKey::F3, EventKeyboard::KeyCode::KEY_F3 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:137:    { (int) VirtualKey::F4, EventKeyboard::KeyCode::KEY_F4 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:138:    { (int) VirtualKey::F5, EventKeyboard::KeyCode::KEY_F5 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:139:    { (int) VirtualKey::F6, EventKeyboard::KeyCode::KEY_F6 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:140:    { (int) VirtualKey::F7, EventKeyboard::KeyCode::KEY_F7 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:141:    { (int) VirtualKey::F8, EventKeyboard::KeyCode::KEY_F8 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:142:    { (int) VirtualKey::F9, EventKeyboard::KeyCode::KEY_F9 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:143:    { (int) VirtualKey::F10, EventKeyboard::KeyCode::KEY_F10 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:144:    { (int) VirtualKey::F11, EventKeyboard::KeyCode::KEY_F11 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:145:    { (int) VirtualKey::F12, EventKeyboard::KeyCode::KEY_F12 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:146:    { (int) VirtualKey::F13, EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:147:    { (int) VirtualKey::F14, EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:148:    { (int) VirtualKey::F15, EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:149:    { (int) VirtualKey::F16, EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:150:    { (int) VirtualKey::F17, EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:151:    { (int) VirtualKey::F18, EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:152:    { (int) VirtualKey::F19, EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:153:    { (int) VirtualKey::F20, EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:154:    { (int) VirtualKey::F21, EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:155:    { (int) VirtualKey::F22, EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:156:    { (int) VirtualKey::F23, EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:157:    { (int) VirtualKey::F24, EventKeyboard::KeyCode::KEY_NONE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:159:    { (int) VirtualKey::NumberPad0, EventKeyboard::KeyCode::KEY_0 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:160:    { (int) VirtualKey::NumberPad1, EventKeyboard::KeyCode::KEY_1 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:161:    { (int) VirtualKey::NumberPad2, EventKeyboard::KeyCode::KEY_2 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:162:    { (int) VirtualKey::NumberPad3, EventKeyboard::KeyCode::KEY_3 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:163:    { (int) VirtualKey::NumberPad4, EventKeyboard::KeyCode::KEY_4 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:164:    { (int) VirtualKey::NumberPad5, EventKeyboard::KeyCode::KEY_5 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:165:    { (int) VirtualKey::NumberPad6, EventKeyboard::KeyCode::KEY_6 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:166:    { (int) VirtualKey::NumberPad7, EventKeyboard::KeyCode::KEY_7 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:167:    { (int) VirtualKey::NumberPad8, EventKeyboard::KeyCode::KEY_8 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:168:    { (int) VirtualKey::NumberPad9, EventKeyboard::KeyCode::KEY_9 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:170:    { GLFW_KEY_KP_1, EventKeyboard::KeyCode::KEY_1 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:171:    { GLFW_KEY_KP_2, EventKeyboard::KeyCode::KEY_2 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:172:    { GLFW_KEY_KP_3, EventKeyboard::KeyCode::KEY_3 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:173:    { GLFW_KEY_KP_4, EventKeyboard::KeyCode::KEY_4 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:174:    { GLFW_KEY_KP_5, EventKeyboard::KeyCode::KEY_5 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:175:    { GLFW_KEY_KP_6, EventKeyboard::KeyCode::KEY_6 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:176:    { GLFW_KEY_KP_7, EventKeyboard::KeyCode::KEY_7 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:177:    { GLFW_KEY_KP_8, EventKeyboard::KeyCode::KEY_8 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:178:    { GLFW_KEY_KP_9, EventKeyboard::KeyCode::KEY_9 },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:180:    { (int) VirtualKey::Decimal, EventKeyboard::KeyCode::KEY_PERIOD },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:181:    { (int) VirtualKey::Divide, EventKeyboard::KeyCode::KEY_KP_DIVIDE },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:182:    { (int) VirtualKey::Multiply, EventKeyboard::KeyCode::KEY_KP_MULTIPLY },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:183:    { (int) VirtualKey::Subtract, EventKeyboard::KeyCode::KEY_KP_MINUS },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:184:    { (int) VirtualKey::Add, EventKeyboard::KeyCode::KEY_KP_PLUS },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:185:    //{ GLFW_KEY_KP_ENTER        , EventKeyboard::KeyCode::KEY_KP_ENTER },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:186:    //{ GLFW_KEY_KP_EQUAL        , EventKeyboard::KeyCode::KEY_EQUAL },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:187:    { (int) VirtualKey::Shift, EventKeyboard::KeyCode::KEY_LEFT_SHIFT },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:188:    { (int) VirtualKey::Control, EventKeyboard::KeyCode::KEY_LEFT_CTRL },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:189:    { VK_LMENU, EventKeyboard::KeyCode::KEY_LEFT_ALT },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:190:    { (int) VirtualKey::LeftWindows, EventKeyboard::KeyCode::KEY_HYPER },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:191:    { (int) VirtualKey::RightShift, EventKeyboard::KeyCode::KEY_RIGHT_SHIFT },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:192:    { (int) VirtualKey::RightControl, EventKeyboard::KeyCode::KEY_RIGHT_CTRL },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:193:    { VK_RMENU, EventKeyboard::KeyCode::KEY_RIGHT_ALT },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:194:    { (int) VirtualKey::RightWindows, EventKeyboard::KeyCode::KEY_HYPER },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:195:    { (int) VirtualKey::Menu, EventKeyboard::KeyCode::KEY_MENU },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:196:    { (int) VirtualKey::LeftMenu, EventKeyboard::KeyCode::KEY_MENU },
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:197:    { (int) VirtualKey::RightMenu, EventKeyboard::KeyCode::KEY_MENU }
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:202:    g_keyCodeMap.clear();
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:205:        g_keyCodeMap[item.key] = item.keyCode;
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:284:    auto it = g_keyCodeMap.find(key);
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:285:    if (it != g_keyCodeMap.end())
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:288:        EventKeyboard::KeyCode keyCode = it->second;
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:290:        EventKeyboard event(keyCode, pressed);
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:295:            if (keyCode == EventKeyboard::KeyCode::KEY_ENTER)
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:305:            case EventKeyboard::KeyCode::KEY_BACKSPACE:
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:308:            case EventKeyboard::KeyCode::KEY_HOME:
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:309:            case EventKeyboard::KeyCode::KEY_KP_HOME:
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:310:            case EventKeyboard::KeyCode::KEY_DELETE:
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:311:            case EventKeyboard::KeyCode::KEY_KP_DELETE:
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:312:            case EventKeyboard::KeyCode::KEY_END:
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:313:            case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:314:            case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+Player/cocos2d/cocos/platform/winrt/Keyboard-winrt.cpp:315:            case EventKeyboard::KeyCode::KEY_ESCAPE:
+Player/cocos2d/cocos/2d/CCTextFieldTTF.h:255:    virtual void controlKey(EventKeyboard::KeyCode keyCode) override;
+Player/cocos2d/cocos/2d/libcocos2d_win10/libcocos2d.vcxproj.bak:406:    <ClCompile Include="..\..\base\CCEventKeyboard.cpp" />
+Player/cocos2d/cocos/2d/libcocos2d_win10/libcocos2d.vcxproj.bak:1071:    <ClInclude Include="..\..\base\CCEventKeyboard.h" />
+Player/cocos2d/cocos/2d/libcocos2d_win10/libcocos2d.vcxproj.filters:552:    <ClCompile Include="..\..\base\CCEventKeyboard.cpp">
+Player/cocos2d/cocos/2d/libcocos2d_win10/libcocos2d.vcxproj.filters:2294:    <ClInclude Include="..\..\base\CCEventKeyboard.h">
+Player/cocos2d/cocos/2d/libcocos2d_win10/libcocos2d.vcxproj.filters.bak:552:    <ClCompile Include="..\..\base\CCEventKeyboard.cpp">
+Player/cocos2d/cocos/2d/libcocos2d_win10/libcocos2d.vcxproj.filters.bak:2309:    <ClInclude Include="..\..\base\CCEventKeyboard.h">
+Player/cocos2d/cocos/2d/libcocos2d_win10/libcocos2d.vcxproj:405:    <ClCompile Include="..\..\base\CCEventKeyboard.cpp" />
+Player/cocos2d/cocos/2d/libcocos2d_win10/libcocos2d.vcxproj:1070:    <ClInclude Include="..\..\base\CCEventKeyboard.h" />
+Player/cocos2d/cocos/2d/libcocos2d.vcxproj.filters:583:    <ClCompile Include="..\base\CCEventKeyboard.cpp">
+Player/cocos2d/cocos/2d/libcocos2d.vcxproj.filters:2339:    <ClInclude Include="..\base\CCEventKeyboard.h">
+Player/cocos2d/cocos/2d/libcocos2d_8_1/libcocos2d_8_1/libcocos2d_8_1.Shared/libcocos2d_8_1.Shared.vcxitems.filters:1042:    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCEventKeyboard.h">
+Player/cocos2d/cocos/2d/libcocos2d_8_1/libcocos2d_8_1/libcocos2d_8_1.Shared/libcocos2d_8_1.Shared.vcxitems.filters:2836:    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCEventKeyboard.cpp">
+Player/cocos2d/cocos/2d/libcocos2d_8_1/libcocos2d_8_1/libcocos2d_8_1.Shared/libcocos2d_8_1.Shared.vcxitems:270:    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCEventKeyboard.h" />
+Player/cocos2d/cocos/2d/libcocos2d_8_1/libcocos2d_8_1/libcocos2d_8_1.Shared/libcocos2d_8_1.Shared.vcxitems:909:    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCEventKeyboard.cpp" />
+Player/cocos2d/cocos/2d/CCLayer.h:211:      Please use onKeyPressed instead. 
+Player/cocos2d/cocos/2d/CCLayer.h:217:      Please use onKeyReleased instead. 
+Player/cocos2d/cocos/2d/CCLayer.h:230:    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+Player/cocos2d/cocos/2d/CCLayer.h:236:    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
+Player/cocos2d/cocos/2d/CCLayer.h:242:      @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. 
+Player/cocos2d/cocos/2d/CCLayer.cpp:40:#include "base/CCEventKeyboard.h"
+Player/cocos2d/cocos/2d/CCLayer.cpp:284:void Layer::onKeyPressed(EventKeyboard::KeyCode /*keyCode*/, Event* /*unused_event*/)
+Player/cocos2d/cocos/2d/CCLayer.cpp:288:void Layer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* /*unused_event*/)
+Player/cocos2d/cocos/2d/CCLayer.cpp:320:            listener->onKeyPressed = CC_CALLBACK_2(Layer::onKeyPressed, this);
+Player/cocos2d/cocos/2d/CCLayer.cpp:321:            listener->onKeyReleased = CC_CALLBACK_2(Layer::onKeyReleased, this);
+Player/cocos2d/cocos/2d/CCTextFieldTTF.cpp:615:void TextFieldTTF::controlKey(EventKeyboard::KeyCode keyCode)
+Player/cocos2d/cocos/2d/CCTextFieldTTF.cpp:621:        case EventKeyboard::KeyCode::KEY_HOME:
+Player/cocos2d/cocos/2d/CCTextFieldTTF.cpp:622:        case EventKeyboard::KeyCode::KEY_KP_HOME:
+Player/cocos2d/cocos/2d/CCTextFieldTTF.cpp:626:        case EventKeyboard::KeyCode::KEY_END:
+Player/cocos2d/cocos/2d/CCTextFieldTTF.cpp:630:        case EventKeyboard::KeyCode::KEY_DELETE:
+Player/cocos2d/cocos/2d/CCTextFieldTTF.cpp:631:        case EventKeyboard::KeyCode::KEY_KP_DELETE:
+Player/cocos2d/cocos/2d/CCTextFieldTTF.cpp:643:        case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+Player/cocos2d/cocos/2d/CCTextFieldTTF.cpp:650:        case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+Player/cocos2d/cocos/2d/CCTextFieldTTF.cpp:657:        case EventKeyboard::KeyCode::KEY_ESCAPE:
+Player/cocos2d/cocos/2d/libcocos2d.vcxproj:646:    <ClCompile Include="..\base\CCEventKeyboard.cpp" />
+Player/cocos2d/cocos/2d/libcocos2d.vcxproj:1375:    <ClInclude Include="..\base\CCEventKeyboard.h" />
+Player/cocos2d/cocos/base/CCEventKeyboard.cpp:27:#include "base/CCEventKeyboard.h"
+Player/cocos2d/cocos/base/CCEventKeyboard.cpp:31:EventKeyboard::EventKeyboard(KeyCode keyCode, bool isPressed)
+Player/cocos2d/cocos/base/CCEventKeyboard.cpp:41:EventKeyboard::EventKeyboard(KeyCode keyCode, bool isPressed, bool isCharInputed)
+Player/cocos2d/cocos/base/CCEventKeyboard.cpp:49:EventKeyboard::EventKeyboard(KeyCode keyCode, bool isPressed, int scancode)
+Player/cocos2d/cocos/base/CCIMEDispatcher.cpp:247:void IMEDispatcher::dispatchControlKey(EventKeyboard::KeyCode keyCode)
+Player/cocos2d/cocos/base/CCIMEDispatcher.h:74:    void dispatchControlKey(EventKeyboard::KeyCode keyCode);
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:37:	if ((onKeyPressed == nullptr && onKeyReleased == nullptr)
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:38:	&& (onKeyPressed2 == nullptr && onKeyReleased2 == nullptr && onKeyRepeat == nullptr && onCharInputed == nullptr)) {
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:43:    if (onKeyPressed == nullptr && onKeyReleased == nullptr)
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:73:        ret->onKeyPressed = onKeyPressed;
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:74:        ret->onKeyReleased = onKeyReleased;
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:76:		ret->onKeyPressed2 = onKeyPressed2;
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:77:		ret->onKeyReleased2 = onKeyReleased2;
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:90:: onKeyPressed(nullptr)
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:91:, onKeyReleased(nullptr)
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:93:, onKeyPressed2(nullptr)
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:94:, onKeyReleased2(nullptr)
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:104:        auto keyboardEvent = static_cast<EventKeyboard*>(event);
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:112:				if (onKeyPressed != nullptr)
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:113:					onKeyPressed(keyboardEvent->_keyCode, event);
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:114:				if (onKeyPressed2 != nullptr)
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:115:					onKeyPressed2(keyboardEvent->_keyCode, keyboardEvent->_scancode, event);
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:121:            if (onKeyPressed != nullptr)
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:122:                onKeyPressed(keyboardEvent->_keyCode, event);
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:127:            if (onKeyReleased != nullptr)
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:128:                onKeyReleased(keyboardEvent->_keyCode, event);
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:130:			if (onKeyReleased2 != nullptr)
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.cpp:131:				onKeyReleased2(keyboardEvent->_keyCode, keyboardEvent->_scancode, event);
+Player/cocos2d/cocos/base/CCIMEDelegate.h:32:#include "base/CCEventKeyboard.h"
+Player/cocos2d/cocos/base/CCIMEDelegate.h:134:    virtual void controlKey(EventKeyboard::KeyCode /*keyCode*/) {}
+Player/cocos2d/cocos/base/CCEventKeyboard.h:39:/** @class EventKeyboard
+Player/cocos2d/cocos/base/CCEventKeyboard.h:42:class CC_DLL EventKeyboard : public Event
+Player/cocos2d/cocos/base/CCEventKeyboard.h:229:    EventKeyboard(KeyCode keyCode, bool isPressed);
+Player/cocos2d/cocos/base/CCEventKeyboard.h:231:	EventKeyboard(KeyCode keyCode, bool isPressed, bool isCharInputed);
+Player/cocos2d/cocos/base/CCEventKeyboard.h:232:	EventKeyboard(KeyCode KeyCode, bool isPressed, int scancode);
+Player/cocos2d/cocos/base/CCScriptSupport.h:34:#include "base/CCEventKeyboard.h"
+Player/cocos2d/cocos/base/CCScriptSupport.h:489:     * The specific type of EventKeyboard::KeyCode
+Player/cocos2d/cocos/base/CCScriptSupport.h:494:    EventKeyboard::KeyCode actionType;
+Player/cocos2d/cocos/base/CCScriptSupport.h:509:    KeypadScriptData(EventKeyboard::KeyCode inActionType,void* inNativeObject)
+Player/cocos2d/cocos/base/CMakeLists.txt:48:    base/CCEventKeyboard.h
+Player/cocos2d/cocos/base/CMakeLists.txt:110:    base/CCEventKeyboard.cpp
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.h:31:#include "base/CCEventKeyboard.h"
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.h:61:    std::function<void(EventKeyboard::KeyCode, Event*)> onKeyPressed;
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.h:62:    std::function<void(EventKeyboard::KeyCode, Event*)> onKeyReleased;
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.h:64:	std::function<void(EventKeyboard::KeyCode, int, Event*)> onKeyPressed2;
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.h:65:	std::function<void(EventKeyboard::KeyCode, int, Event*)> onKeyReleased2;
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.h:66:	std::function<void(EventKeyboard::KeyCode, int, Event*)> onKeyRepeat;
+Player/cocos2d/cocos/base/CCEventListenerKeyboard.h:67:	std::function<void(EventKeyboard::KeyCode, Event*)> onCharInputed;
+Player/cocos2d/cocos/cocos2d.h:73:#include "base/CCEventKeyboard.h"

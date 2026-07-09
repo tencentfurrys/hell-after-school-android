@@ -1,0 +1,4 @@
+22105	Player/Classes/Manager/InputManager.h
+148145	Player/Classes/Manager/InputManager.cpp
+8480	Player/cocos2d/cocos/editor-support/cocostudio/CCInputDelegate.cpp
+5629	Player/cocos2d/cocos/editor-support/cocostudio/CCInputDelegate.h

@@ -1,0 +1,200 @@
+Player/Classes/GameScene.cpp:377:	auto inputManager = InputManager::getInstance();
+Player/Classes/GameScene.cpp:444:							ret = isInputState(triggerType, data->getOperationKeyId());
+Player/Classes/GameScene.cpp:454:								if (data->getDirectionBit() & 1 << InputManager::kDirectionLeftDown) {
+Player/Classes/GameScene.cpp:455:									ret |= isInputState(triggerType, InputController::Left) && isInputState(triggerType, InputController::Down);
+Player/Classes/GameScene.cpp:458:								if (data->getDirectionBit() & 1 << InputManager::kDirectionDown) {
+Player/Classes/GameScene.cpp:459:									ret |= isInputState(triggerType, InputController::Down);
+Player/Classes/GameScene.cpp:462:								if (data->getDirectionBit() & 1 << InputManager::kDirectionRightDown) {
+Player/Classes/GameScene.cpp:463:									ret |= isInputState(triggerType, InputController::Right) && isInputState(triggerType, InputController::Down);
+Player/Classes/GameScene.cpp:466:								if (data->getDirectionBit() & 1 << InputManager::kDirectionLeft) {
+Player/Classes/GameScene.cpp:467:									ret |= isInputState(triggerType, InputController::Left);
+Player/Classes/GameScene.cpp:470:								if (data->getDirectionBit() & 1 << InputManager::kDirectionRight) {
+Player/Classes/GameScene.cpp:471:									ret |= isInputState(triggerType, InputController::Right);
+Player/Classes/GameScene.cpp:474:								if (data->getDirectionBit() & 1 << InputManager::kDirectionLeftUp) {
+Player/Classes/GameScene.cpp:475:									ret |= isInputState(triggerType, InputController::Left) && isInputState(triggerType, InputController::Up);
+Player/Classes/GameScene.cpp:478:								if (data->getDirectionBit() & 1 << InputManager::kDirectionUp) {
+Player/Classes/GameScene.cpp:479:									ret |= isInputState(triggerType, InputController::Up);
+Player/Classes/GameScene.cpp:482:								if (data->getDirectionBit() & 1 << InputManager::kDirectionRightUp) {
+Player/Classes/GameScene.cpp:483:									ret |= isInputState(triggerType, InputController::Right) && isInputState(triggerType, InputController::Up);
+Player/Classes/GameScene.cpp:491:								if (data->getDirectionBit() & 1 << InputManager::kDirectionLeftDown) {
+Player/Classes/GameScene.cpp:492:									ret |= isInputState(triggerType, InputController::LeftStickLeft) && isInputState(triggerType, InputController::LeftStickDown);
+Player/Classes/GameScene.cpp:495:								if (data->getDirectionBit() & 1 << InputManager::kDirectionDown) {
+Player/Classes/GameScene.cpp:496:									ret |= isInputState(triggerType, InputController::LeftStickDown);
+Player/Classes/GameScene.cpp:499:								if (data->getDirectionBit() & 1 << InputManager::kDirectionRightDown) {
+Player/Classes/GameScene.cpp:500:									ret |= isInputState(triggerType, InputController::LeftStickRight) && isInputState(triggerType, InputController::LeftStickDown);
+Player/Classes/GameScene.cpp:503:								if (data->getDirectionBit() & 1 << InputManager::kDirectionLeft) {
+Player/Classes/GameScene.cpp:504:									ret |= isInputState(triggerType, InputController::LeftStickLeft);
+Player/Classes/GameScene.cpp:507:								if (data->getDirectionBit() & 1 << InputManager::kDirectionRight) {
+Player/Classes/GameScene.cpp:508:									ret |= isInputState(triggerType, InputController::LeftStickRight);
+Player/Classes/GameScene.cpp:511:								if (data->getDirectionBit() & 1 << InputManager::kDirectionLeftUp) {
+Player/Classes/GameScene.cpp:512:									ret |= isInputState(triggerType, InputController::LeftStickLeft) && isInputState(triggerType, InputController::LeftStickUp);
+Player/Classes/GameScene.cpp:515:								if (data->getDirectionBit() & 1 << InputManager::kDirectionUp) {
+Player/Classes/GameScene.cpp:516:									ret |= isInputState(triggerType, InputController::LeftStickUp);
+Player/Classes/GameScene.cpp:519:								if (data->getDirectionBit() & 1 << InputManager::kDirectionRightUp) {
+Player/Classes/GameScene.cpp:520:									ret |= isInputState(data->getTriggerType(), InputController::LeftStickRight) && isInputState(data->getTriggerType(), InputController::LeftStickUp);
+Player/Classes/GameScene.cpp:528:								if (data->getDirectionBit() & 1 << InputManager::kDirectionLeftDown) {
+Player/Classes/GameScene.cpp:529:									ret |= isInputState(data->getTriggerType(), InputController::RightStickLeft) && isInputState(data->getTriggerType(), InputController::RightStickDown);
+Player/Classes/GameScene.cpp:532:								if (data->getDirectionBit() & 1 << InputManager::kDirectionDown) {
+Player/Classes/GameScene.cpp:533:									ret |= isInputState(data->getTriggerType(), InputController::RightStickDown);
+Player/Classes/GameScene.cpp:536:								if (data->getDirectionBit() & 1 << InputManager::kDirectionRightDown) {
+Player/Classes/GameScene.cpp:537:									ret |= isInputState(data->getTriggerType(), InputController::RightStickRight) && isInputState(data->getTriggerType(), InputController::RightStickDown);
+Player/Classes/GameScene.cpp:540:								if (data->getDirectionBit() & 1 << InputManager::kDirectionLeft) {
+Player/Classes/GameScene.cpp:541:									ret |= isInputState(data->getTriggerType(), InputController::RightStickLeft);
+Player/Classes/GameScene.cpp:544:								if (data->getDirectionBit() & 1 << InputManager::kDirectionRight) {
+Player/Classes/GameScene.cpp:545:									ret |= isInputState(data->getTriggerType(), InputController::RightStickRight);
+Player/Classes/GameScene.cpp:548:								if (data->getDirectionBit() & 1 << InputManager::kDirectionLeftUp) {
+Player/Classes/GameScene.cpp:549:									ret |= isInputState(data->getTriggerType(), InputController::RightStickLeft) && isInputState(data->getTriggerType(), InputController::RightStickUp);
+Player/Classes/GameScene.cpp:552:								if (data->getDirectionBit() & 1 << InputManager::kDirectionUp) {
+Player/Classes/GameScene.cpp:553:									ret |= isInputState(data->getTriggerType(), InputController::RightStickUp);
+Player/Classes/GameScene.cpp:556:								if (data->getDirectionBit() & 1 << InputManager::kDirectionRightUp) {
+Player/Classes/GameScene.cpp:557:									ret |= isInputState(data->getTriggerType(), InputController::RightStickRight) && isInputState(data->getTriggerType(), InputController::RightStickUp);
+Player/Classes/GameScene.cpp:1019:				InputManager::getInstance()->reset();
+Player/Classes/GameScene.cpp:2964:			InputManager::getInstance()->reset(true); // ロード時は全ての操作をキャンセルさせる
+Player/Classes/GameScene.cpp:3329:		auto im = InputManager::getInstance();
+Player/Classes/LogoScene.cpp:249:		auto inputManager = InputManager::getInstance();
+Player/Classes/LogoScene.cpp:251:		auto inputControllerList = inputManager->getInputControllerList();
+Player/Classes/LogoScene.cpp:254:			auto p = static_cast<InputController *>(el->getObject());
+Player/Classes/LogoScene.cpp:426:	auto inputManager = InputManager::getInstance();
+Player/Classes/LogoScene.cpp:428:	auto inputControllerList = inputManager->getInputControllerList();
+Player/Classes/LogoScene.cpp:433:		auto p = static_cast<InputController *>(el->getObject());
+Player/Classes/LogoScene.cpp:435:		auto p = dynamic_cast<InputController *>(el->getObject());
+Player/Classes/LogoScene.cpp:460:	auto im = InputManager::getInstance();
+Player/Classes/LogoScene.cpp:467:	AGTK_ACTION_LOG(1, "# InputManager Init");
+Player/Classes/LogoScene.cpp:469:	im = InputManager::getInstance(); // 一度破棄しているのでインスタンスの再取得
+Player/Classes/LogoScene.cpp:534:	auto inputManager = InputManager::getInstance();
+Player/Classes/LogoScene.h:6:#include "Manager/InputManager.h"
+Player/Classes/Lib/Gui.cpp:2015:		if (InputManager::getInstance()->isTriggered(_data->getKeyId())) {
+Player/Classes/Lib/Gui.cpp:2425:			_isAllowScrollSpeedUp = !InputManager::getInstance()->isPressed(keyId);
+Player/Classes/Lib/Gui.cpp:2517:			if (_isAllowScrollSpeedUp && InputManager::getInstance()->isPressed(keyId)) {
+Player/Classes/Lib/Gui.cpp:2524:			else if (!_isAllowScrollSpeedUp && InputManager::getInstance()->isReleased(keyId)) {
+Player/Classes/Lib/BaseLayer.h:12:#include "Manager/InputManager.h"
+Player/Classes/Lib/Portal.cpp:5:#include "Manager/InputManager.h"
+Player/Classes/Lib/Portal.cpp:470:	if (_moveSettingData->getPreMoveKeyInput() && !InputManager::getInstance()->isPressed(_moveSettingData->getPreMoveOperationKeyId())) {
+Player/Classes/Lib/Object.cpp:15:#include "Manager/InputManager.h"
+Player/Classes/Lib/Object.cpp:11588:				ret = InputManager::getInstance()->isPressed(button, _object->getControllerId());//※とりあずAボタンです。ボタン指定のカラムがあるので作成されたら変更。
+Player/Classes/Lib/Object.cpp:15669:	auto inputManager = InputManager::getInstance();
+Player/Classes/Lib/Object.cpp:15703:		if (inputManager->isPressed(InputController::kMoveUpLeft, centerPosition, forwardMoveKeyId, controllerId) && inputManager->isPressed(InputController::kMoveUpLeft, centerPosition, leftTurnKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15707:		else if (inputManager->isPressed(InputController::kMoveUpRight, centerPosition, forwardMoveKeyId, controllerId) && inputManager->isPressed(InputController::kMoveUpRight, centerPosition, rightTurnKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15711:		else if (inputManager->isPressed(InputController::kMoveDownLeft, centerPosition, backwardMoveKeyId, controllerId) && inputManager->isPressed(InputController::kMoveDownLeft, centerPosition, leftTurnKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15715:		else if (inputManager->isPressed(InputController::kMoveDownRight, centerPosition, backwardMoveKeyId, controllerId) && inputManager->isPressed(InputController::kMoveDownRight, centerPosition, rightTurnKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15719:		else if (inputManager->isPressed(InputController::kMoveUp, centerPosition, forwardMoveKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15723:		else if (inputManager->isPressed(InputController::kMoveDown, centerPosition, backwardMoveKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15727:		else if (inputManager->isPressed(InputController::kMoveLeft, centerPosition, leftTurnKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15731:		else if (inputManager->isPressed(InputController::kMoveRight, centerPosition, rightTurnKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15761:	auto inputManager = InputManager::getInstance();
+Player/Classes/Lib/Object.cpp:15829:		auto inputMapping = GameManager::getInstance()->getProjectData()->getInputMapping();
+Player/Classes/Lib/Object.cpp:15830:		auto typeInput = InputManager::getInstance()->getTypeInput();
+Player/Classes/Lib/Object.cpp:15833:			case InputManager::kTypeCustom1Input: {
+Player/Classes/Lib/Object.cpp:15835:					auto inputMappingData = inputMapping->getInputMapping(g_xbox360Input[i].keyCode);
+Player/Classes/Lib/Object.cpp:15836:					int deviceKeyCode = inputMappingData->getCustom1Input();
+Player/Classes/Lib/Object.cpp:15838:					inputMappingData->setCustom1Input(g_xbox360Input[i].deviceKeyCode);
+Player/Classes/Lib/Object.cpp:15841:			case InputManager::kTypeCustom2Input:
+Player/Classes/Lib/Object.cpp:15844:			case InputManager::kTypeDirectInput:
+Player/Classes/Lib/Object.cpp:15847:			case InputManager::kTypeDiInput:
+Player/Classes/Lib/Object.cpp:15856:		if (inputManager->isPressed(InputController::kMoveUpLeft, centerPosition, upMoveKeyId, controllerId) && inputManager->isPressed(InputController::kMoveUpLeft, centerPosition, leftMoveKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15860:		else if (inputManager->isPressed(InputController::kMoveUpRight, centerPosition, upMoveKeyId, controllerId) && inputManager->isPressed(InputController::kMoveUpRight, centerPosition, rightMoveKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15864:		else if (inputManager->isPressed(InputController::kMoveDownLeft, centerPosition, downMoveKeyId, controllerId) && inputManager->isPressed(InputController::kMoveDownLeft, centerPosition, leftMoveKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15868:		else if (inputManager->isPressed(InputController::kMoveDownRight, centerPosition, downMoveKeyId, controllerId) && inputManager->isPressed(InputController::kMoveDownRight, centerPosition, rightMoveKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15872:		else if (inputManager->isPressed(InputController::kMoveUp, centerPosition, upMoveKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15876:		else if (inputManager->isPressed(InputController::kMoveDown, centerPosition, downMoveKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15880:		else if (inputManager->isPressed(InputController::kMoveLeft, centerPosition, leftMoveKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15884:		else if (inputManager->isPressed(InputController::kMoveRight, centerPosition, rightMoveKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15901:			case InputManager::kTypeCustom1Input: {
+Player/Classes/Lib/Object.cpp:15903:					auto inputMappingData = inputMapping->getInputMapping(g_xbox360Input[i].keyCode);
+Player/Classes/Lib/Object.cpp:15904:					int deviceKeyCode = inputMappingData->getCustom1Input();
+Player/Classes/Lib/Object.cpp:15905:					inputMappingData->setCustom1Input(defaultDeviceKeyCode[i]);
+Player/Classes/Lib/Object.cpp:15908:			case InputManager::kTypeCustom2Input:
+Player/Classes/Lib/Object.cpp:15911:			case InputManager::kTypeDirectInput:
+Player/Classes/Lib/Object.cpp:15914:			case InputManager::kTypeDiInput:
+Player/Classes/Lib/Object.cpp:15979:	auto inputManager				= InputManager::getInstance();					// インプットマネージャ
+Player/Classes/Lib/Object.cpp:15996:		inputManager->isPressed(InputController::kMoveUpLeft, centerPosition, upDispDirectionKeyId, controllerId) && inputManager->isPressed(InputController::kMoveUpLeft, centerPosition, leftDispDirectionKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:15997:		inputDirectionId = InputManager::EnumInputDirection::kDirectionLeftUp;
+Player/Classes/Lib/Object.cpp:16001:		inputManager->isPressed(InputController::kMoveUpRight, centerPosition, upDispDirectionKeyId, controllerId) && inputManager->isPressed(InputController::kMoveUpRight, centerPosition, rightDispDirectionKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:16002:		inputDirectionId = InputManager::EnumInputDirection::kDirectionRightUp;
+Player/Classes/Lib/Object.cpp:16006:		inputManager->isPressed(InputController::kMoveDownLeft, centerPosition, downDispDirectionKeyId, controllerId) && inputManager->isPressed(InputController::kMoveDownLeft, centerPosition, leftDispDirectionKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:16007:		inputDirectionId = InputManager::EnumInputDirection::kDirectionLeftDown;
+Player/Classes/Lib/Object.cpp:16011:		inputManager->isPressed(InputController::kMoveDownRight, centerPosition, downDispDirectionKeyId, controllerId) && inputManager->isPressed(InputController::kMoveDownRight, centerPosition, rightDispDirectionKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:16012:		inputDirectionId = InputManager::EnumInputDirection::kDirectionRightDown;
+Player/Classes/Lib/Object.cpp:16015:	else if (upDispDirectionKeyId >= 0 && inputManager->isPressed(InputController::kMoveUp, centerPosition, upDispDirectionKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:16016:		inputDirectionId = InputManager::EnumInputDirection::kDirectionUp;
+Player/Classes/Lib/Object.cpp:16019:	else if (downDispDirectionKeyId >= 0 && inputManager->isPressed(InputController::kMoveDown, centerPosition, downDispDirectionKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:16020:		inputDirectionId = InputManager::EnumInputDirection::kDirectionDown;
+Player/Classes/Lib/Object.cpp:16023:	else if (leftDispDirectionKeyId >= 0 && inputManager->isPressed(InputController::kMoveLeft, centerPosition, leftDispDirectionKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:16024:		inputDirectionId = InputManager::EnumInputDirection::kDirectionLeft;
+Player/Classes/Lib/Object.cpp:16027:	else if (rightDispDirectionKeyId >= 0 && inputManager->isPressed(InputController::kMoveRight, centerPosition, rightDispDirectionKeyId, controllerId)) {
+Player/Classes/Lib/Object.cpp:16028:		inputDirectionId = InputManager::EnumInputDirection::kDirectionRight;
+Player/Classes/Lib/Object.cpp:16375:		controllerId = InputManager::getInstance()->getPlayControllerId(cid);
+Player/Classes/Lib/Object.cpp:16610:	playObjectData->setInitControllerId(objectData->getOperatable() ? InputManager::kControllerAll : InputManager::kControllerNone);//コントローラID設定。
+Player/Classes/Lib/Object.cpp:16612:	playObjectData->setControllerId(objectData->getOperatable() ? InputManager::kControllerAll : InputManager::kControllerNone);//コントローラID設定。
+Player/Classes/Lib/ObjectCommand.cpp:7000:	auto inputManager = InputManager::getInstance();
+Player/Classes/Lib/ObjectCommand.cpp:7044:				ret = isInputState(triggerType, inputConditionData->getOperationKeyId(), _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount());
+Player/Classes/Lib/ObjectCommand.cpp:7050:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionLeftDown) {
+Player/Classes/Lib/ObjectCommand.cpp:7051:						ret |= (isInputState(triggerType, InputController::Left, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()))
+Player/Classes/Lib/ObjectCommand.cpp:7052:							&& (isInputState(triggerType, InputController::Down, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7055:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionDown) {
+Player/Classes/Lib/ObjectCommand.cpp:7056:						ret |= (isInputState(triggerType, InputController::Down, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7059:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionRightDown) {
+Player/Classes/Lib/ObjectCommand.cpp:7060:						ret |= (isInputState(triggerType, InputController::Right, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()))
+Player/Classes/Lib/ObjectCommand.cpp:7061:							&& (isInputState(triggerType, InputController::Down, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7064:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionLeft) {
+Player/Classes/Lib/ObjectCommand.cpp:7065:						ret |= (isInputState(triggerType, InputController::Left, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7068:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionRight) {
+Player/Classes/Lib/ObjectCommand.cpp:7069:						ret |= (isInputState(triggerType, InputController::Right, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7072:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionLeftUp) {
+Player/Classes/Lib/ObjectCommand.cpp:7073:						ret |= (isInputState(triggerType, InputController::Left, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()))
+Player/Classes/Lib/ObjectCommand.cpp:7074:							&& (isInputState(triggerType, InputController::Up, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7077:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionUp) {
+Player/Classes/Lib/ObjectCommand.cpp:7078:						ret |= (isInputState(triggerType, InputController::Up, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7081:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionRightUp) {
+Player/Classes/Lib/ObjectCommand.cpp:7082:						ret |= (isInputState(triggerType, InputController::Right, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()))
+Player/Classes/Lib/ObjectCommand.cpp:7083:							&& (isInputState(triggerType, InputController::Up, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7088:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionLeftDown) {
+Player/Classes/Lib/ObjectCommand.cpp:7089:						ret |= (isInputState(triggerType, InputController::LeftStickLeft, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()))
+Player/Classes/Lib/ObjectCommand.cpp:7090:							&& (isInputState(triggerType, InputController::LeftStickDown, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7093:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionDown) {
+Player/Classes/Lib/ObjectCommand.cpp:7094:						ret |= (isInputState(triggerType, InputController::LeftStickDown, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7097:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionRightDown) {
+Player/Classes/Lib/ObjectCommand.cpp:7098:						ret |= (isInputState(triggerType, InputController::LeftStickRight, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()))
+Player/Classes/Lib/ObjectCommand.cpp:7099:							&& (isInputState(triggerType, InputController::LeftStickDown, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7102:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionLeft) {
+Player/Classes/Lib/ObjectCommand.cpp:7103:						ret |= (isInputState(triggerType, InputController::LeftStickLeft, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7106:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionRight) {
+Player/Classes/Lib/ObjectCommand.cpp:7107:						ret |= (isInputState(triggerType, InputController::LeftStickRight, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7110:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionLeftUp) {
+Player/Classes/Lib/ObjectCommand.cpp:7111:						ret |= (isInputState(triggerType, InputController::LeftStickLeft, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()))
+Player/Classes/Lib/ObjectCommand.cpp:7112:							&& (isInputState(triggerType, InputController::LeftStickUp, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7115:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionUp) {
+Player/Classes/Lib/ObjectCommand.cpp:7116:						ret |= (isInputState(triggerType, InputController::LeftStickUp, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7119:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionRightUp) {
+Player/Classes/Lib/ObjectCommand.cpp:7120:						ret |= (isInputState(triggerType, InputController::LeftStickRight, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()))
+Player/Classes/Lib/ObjectCommand.cpp:7121:							&& (isInputState(triggerType, InputController::LeftStickUp, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7126:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionLeftDown) {
+Player/Classes/Lib/ObjectCommand.cpp:7127:						ret |= (isInputState(triggerType, InputController::RightStickLeft, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()))
+Player/Classes/Lib/ObjectCommand.cpp:7128:							&& (isInputState(triggerType, InputController::RightStickDown, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7131:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionDown) {
+Player/Classes/Lib/ObjectCommand.cpp:7132:						ret |= (isInputState(triggerType, InputController::RightStickDown, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7135:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionRightDown) {
+Player/Classes/Lib/ObjectCommand.cpp:7136:						ret |= (isInputState(triggerType, InputController::RightStickRight, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()))
+Player/Classes/Lib/ObjectCommand.cpp:7137:							&& (isInputState(triggerType, InputController::RightStickDown, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7140:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionLeft) {
+Player/Classes/Lib/ObjectCommand.cpp:7141:						ret |= (isInputState(triggerType, InputController::RightStickLeft, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7144:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionRight) {
+Player/Classes/Lib/ObjectCommand.cpp:7145:						ret |= (isInputState(triggerType, InputController::RightStickRight, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7148:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionLeftUp) {
+Player/Classes/Lib/ObjectCommand.cpp:7149:						ret |= (isInputState(triggerType, InputController::RightStickLeft, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()))
+Player/Classes/Lib/ObjectCommand.cpp:7150:							&& (isInputState(triggerType, InputController::RightStickUp, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7153:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionUp) {
+Player/Classes/Lib/ObjectCommand.cpp:7154:						ret |= (isInputState(triggerType, InputController::RightStickUp, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/ObjectCommand.cpp:7157:					if (inputConditionData->getDirectionBit() & 1 << InputManager::kDirectionRightUp) {
+Player/Classes/Lib/ObjectCommand.cpp:7158:						ret |= (isInputState(triggerType, InputController::RightStickRight, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()))
+Player/Classes/Lib/ObjectCommand.cpp:7159:							&& (isInputState(triggerType, InputController::RightStickUp, _object->getControllerId(), _object->getInstanceId(), inputConditionData->getAcceptFrameCount()));
+Player/Classes/Lib/Scene.cpp:12827:					auto controller = InputManager::getInstance()->getSelectController(playerId);
+Player/Classes/Lib/Scene.cpp:13004:						auto controller = InputManager::getInstance()->getSelectController(playerId);
+Player/Classes/Lib/PhysicsObject.cpp:1531:		auto inputManager = InputManager::getInstance();
+Player/Classes/Lib/PhysicsObject.cpp:1740:		if (_physicsData->getUseVerificationKey() && InputManager::getInstance()->isTriggered(_physicsData->getKeyId())) {
+Player/Classes/Lib/PhysicsObject.cpp:2203:		if (InputManager::getInstance()->isTriggered(_physicsData->getAttractiveForceKeyId())) {
+Player/Classes/Lib/PhysicsObject.cpp:2207:		if (InputManager::getInstance()->isTriggered(_physicsData->getRepulsiveForceKeyId())) {
+Player/Classes/Lib/Player/SSPlayer.cpp:2:#include "InputManager.h"
+Player/Classes/Data/ProjectData.h:642:	CREATE_FUNC_PARAM(InputMapping, const agtk::data::InputMapping *, inputMapping);
+Player/Classes/Data/ProjectData.h:643:	void copy(const agtk::data::InputMapping *inputMapping);
+Player/Classes/Data/ProjectData.h:653:	virtual bool init(const agtk::data::InputMapping *inputMapping);

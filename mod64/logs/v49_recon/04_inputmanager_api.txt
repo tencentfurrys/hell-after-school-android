@@ -1,0 +1,468 @@
+======================== Player/Classes/External/vlc/include/vlc/plugins/vlc_input.h ========================
+53:static inline seekpoint_t *vlc_seekpoint_New( void )
+55:    seekpoint_t *point = (seekpoint_t*)malloc( sizeof( seekpoint_t ) );
+56:    if( !point )
+64:static inline void vlc_seekpoint_Delete( seekpoint_t *point )
+66:    if( !point ) return;
+68:    free( point );
+73:    seekpoint_t *point = vlc_seekpoint_New();
+87:    bool        b_menu;      /* Is it a menu or a normal entry */
+92:    /* Title seekpoint */
+93:    int         i_seekpoint;
+108:    t->i_seekpoint = 0;
+109:    t->seekpoint = NULL;
+114:static inline void vlc_input_title_Delete( input_title_t *t )
+116:    int i;
+126:    free( t->seekpoint );
+133:    int i;
+139:    dup->i_seekpoint = t->i_seekpoint;
+140:    if( t->i_seekpoint > 0 )
+142:        dup->seekpoint = (seekpoint_t**)calloc( t->i_seekpoint,
+163:    int  i_data;
+164:    void *p_data;
+170:                                                            const void *p_data,
+171:                                                            int i_data )
+195:static inline void vlc_input_attachment_Delete( input_attachment_t *a )
+229:    bool b_error;
+230:    bool b_eof;
+231:    bool b_preparsing;
+232:    bool b_dead;
+420:    INPUT_GET_RATE,             /* arg1= int *          res=    */
+421:    INPUT_SET_RATE,             /* arg1= int            res=can fail    */
+424:    INPUT_GET_STATE,            /* arg1= int *          res=    */
+425:    INPUT_SET_STATE,            /* arg1= int            res=can fail    */
+429:    INPUT_SET_AUDIO_DELAY,      /* arg1 = int  res=can fail */
+431:    INPUT_SET_SPU_DELAY,        /* arg1 = int  res=can fail */
+453:    INPUT_GET_BOOKMARKS,   /* arg1= seekpoint_t *** arg2= int * res=can fail */
+456:    INPUT_CHANGE_BOOKMARK, /* arg1= seekpoint_t * arg2= int * res=can fail   */
+458:    INPUT_SET_BOOKMARK,    /* arg1= int  res=can fail    */
+461:    INPUT_GET_TITLE_INFO,     /* arg1=input_title_t** arg2= int * res=can fail */
+469:    INPUT_ADD_SUBTITLE,    /* arg1= const char *, arg2=bool b_check_extension */
+472:    INPUT_SET_RECORD_STATE, /* arg1=bool    res=can fail */
+476:    INPUT_RESTART_ES,       /* arg1=int (-AUDIO/VIDEO/SPU_ES for the whole category) */
+479:     * XXX You must call vlc_object_release as soon as possible */
+482:    INPUT_GET_ES_OBJECTS,   /* arg1=int id, vlc_object_t **dec, vout_thread_t **, audio_output_t ** */
+486:    INPUT_MODIFY_PCR_SYSTEM,/* arg1=int absolute, arg2=mtime_t      res=can fail */
+501:VLC_API int input_Start( input_thread_t * );
+503:VLC_API void input_Stop( input_thread_t *, bool b_abort );
+505:VLC_API int input_Read( vlc_object_t *, input_item_t * );
+508:VLC_API int input_vaControl( input_thread_t *, int i_query, va_list  );
+510:VLC_API int input_Control( input_thread_t *, int i_query, ...  );
+512:VLC_API void input_Close( input_thread_t * );
+513:void input_Join( input_thread_t * );
+514:void input_Release( input_thread_t * );
+540: * released with vlc_object_release()).
+551:         vlc_object_release( (vlc_object_t *)(pp_vout[i]) );
+562:static inline int input_AddSubtitleOSD( input_thread_t *p_input, const char *psz_url,
+563:        bool b_check_extension, bool b_osd )
+565:    int i_result = input_Control( p_input, INPUT_ADD_SUBTITLE, psz_url, b_check_extension );
+574:        vlc_object_release( (vlc_object_t *)p_vout );
+585: * released with vlc_object_release()).
+596: * You must release all non NULL object using vlc_object_release.
+597: * You may set pointer of pointer to NULL to avoid retreiving it.
+599:static inline int input_GetEsObjects( input_thread_t *p_input, int i_id,
+610:static inline int input_GetPcrSystem( input_thread_t *p_input, mtime_t *pi_system, mtime_t *pi_delay )
+617:static inline int input_ModifyPcrSystem( input_thread_t *p_input, bool b_absolute, mtime_t i_system )
+624:VLC_API void input_DecoderDelete( decoder_t * );
+625:VLC_API void input_DecoderDecode( decoder_t *, block_t *, bool b_do_pace );
+641: * It releases an input resource.
+643:VLC_API void input_resource_Release( input_resource_t * );
+648:VLC_API void input_resource_TerminateVout( input_resource_t * );
+651: * This function releases all resources (object).
+653:VLC_API void input_resource_Terminate( input_resource_t * );
+657: * Use vlc_object_release() to drop the reference.
+669:VLC_API void input_resource_PutAout( input_resource_t *, audio_output_t * );
+674:VLC_API void input_resource_ResetAout( input_resource_t * );
+======================== Player/Classes/External/vlc/include/vlc/plugins/vlc_input_item.h ========================
+51:    int    i_infos;        /**< Number of infos in the category */
+57:    int        i_id;                 /**< Identifier of the item */
+62:    int        i_options;            /**< Number of input options */
+70:    int        i_categories;         /**< Number of info categories */
+73:    int         i_es;                /**< Number of es format descriptions */
+77:    int           i_nb_played;       /**< Number of times played */
+81:    int         i_epg;               /**< Number of EPG entries */
+89:    bool        b_fixed_name;        /**< Can the interface change the name ?*/
+90:    bool        b_error_when_reading;/**< Error When Reading */
+114:    int                    i_children;
+119:VLC_API void input_item_CopyOptions( input_item_t *p_parent, input_item_t *p_child );
+120:VLC_API void input_item_SetName( input_item_t *p_item, const char *psz_name );
+132:VLC_API void input_item_PostSubItem( input_item_t *p_parent, input_item_t *p_child );
+142: * Add a new child node to this parent node that will point to this subitem.
+149:VLC_API void input_item_node_AppendNode( input_item_node_t *p_parent, input_item_node_t *p_child );
+154:VLC_API void input_item_node_Delete( input_item_node_t *p_node );
+167:VLC_API void input_item_node_PostAndDelete( input_item_node_t *p_node );
+187:VLC_API int input_item_AddOption(input_item_t *, const char *, unsigned i_flags );
+190:VLC_API bool input_item_HasErrorWhenReading( input_item_t * );
+191:VLC_API void input_item_SetMeta( input_item_t *, vlc_meta_type_t meta_type, const char *psz_val );
+192:VLC_API bool input_item_MetaMatch( input_item_t *p_i, vlc_meta_type_t meta_type, const char *psz );
+197:VLC_API void input_item_SetURI( input_item_t * p_i, const char *psz_uri );
+199:VLC_API void input_item_SetDuration( input_item_t * p_i, mtime_t i_duration );
+200:VLC_API bool input_item_IsPreparsed( input_item_t *p_i );
+201:VLC_API bool input_item_IsArtFetched( input_item_t *p_i );
+216:void input_item_Set ## name (input_item_t *p_input, const char *val) \
+257:VLC_API int input_item_AddInfo( input_item_t *p_i, const char *psz_cat, const char *psz_name, const char *psz_format, ... ) VLC_FORMAT( 4, 5 );
+258:VLC_API int input_item_DelInfo( input_item_t *p_i, const char *psz_cat, const char *psz_name );
+259:VLC_API void input_item_ReplaceInfos( input_item_t *, info_category_t * );
+260:VLC_API void input_item_MergeInfos( input_item_t *, info_category_t * );
+268:VLC_API input_item_t * input_item_NewWithType( const char *psz_uri, const char *psz_name, int i_options, const char *const *ppsz_options, unsigned i_option_flags, mtime_t i_duration, int i_type ) VLC_USED;
+275:VLC_API input_item_t * input_item_NewExt( const char *psz_uri, const char *psz_name, int i_options, const char *const *ppsz_options, unsigned i_option_flags, mtime_t i_duration ) VLC_USED;
+293:VLC_API void input_item_Release(input_item_t *);
+307:VLC_API int libvlc_MetaRequest(libvlc_int_t *, input_item_t *,
+309:VLC_API int libvlc_ArtRequest(libvlc_int_t *, input_item_t *,
+======================== Player/Classes/Manager/InputManager.h ========================
+20:class AGTKPLAYER_API InputMouseData : public cocos2d::Ref
+23:	class InputData : public cocos2d::Ref
+27:		void update();
+28:		void setTrigger(bool trigger);
+29:		void setRelease(bool release);
+30:		void reset();
+32:		virtual bool init(int keyCode);
+35:		CC_SYNTHESIZE(bool, _press, Press);
+36:		CC_SYNTHESIZE_READONLY(bool, _release, Release);
+37:		CC_SYNTHESIZE_READONLY(int, _keyCode, KeyCode);
+38:		bool _updateTrigger;
+39:		bool _updateRelease;
+41:	static cocos2d::Vec2 CalcTransLeftUp(cocos2d::Vec2 v, cocos2d::Size size, cocos2d::Size displaySize);
+47:	void reset();
+48:	void update();
+49:	InputData *getInputData(int keyCode);
+50:	bool isPressOr();
+51:	cocos2d::Vec2 setPoint(cocos2d::Vec2 v);
+52:	cocos2d::Vec2 getPoint() { return _point; }
+53:	cocos2d::Vec2 getOldPoint() { return _oldPoint; }
+54:	void setMove(bool move);
+55:	bool getMove() { return _move; }
+56:	cocos2d::Vec2 setScrollPoint(cocos2d::Vec2 v);
+57:	cocos2d::Vec2 getScrollPoint() { return _scrollPoint; }
+58:	cocos2d::Vec2 getOldScrollPoint() { return _oldScrollPoint; }
+60:	virtual bool init();
+62:	cocos2d::Vec2 _point;
+63:	cocos2d::Vec2 _oldPoint;
+64:	CC_SYNTHESIZE(cocos2d::Vec2, _movePoint, MovePoint);
+65:	CC_SYNTHESIZE(cocos2d::Vec2, _startPoint, StartPoint);
+66:	cocos2d::Vec2 _scrollPoint;
+67:	cocos2d::Vec2 _oldScrollPoint;
+68:	CC_SYNTHESIZE_RETAIN(cocos2d::__Dictionary *, _inputList, InputList);
+69:	bool _move;
+70:	bool _updateMove;
+73:	bool _updateWheel;
+80:class AGTKPLAYER_API InputKeyboardData : public cocos2d::Ref
+83:	// 小文字アルファベットの KeyCode を 大文字アルファベットの KeyCode に変換
+85:	static int upperKeyCode(int keyCode);
+86:	class InputData : public cocos2d::Ref
+90:		void update();
+91:		void setTrigger(bool trigger);
+92:		void setRelease(bool release);
+93:		void setCharData(int keyCode);
+94:		int getKeyCode();
+95:		int getCharCode() { return _charCode; }
+97:		virtual bool init(int keyCode);
+100:		CC_SYNTHESIZE(bool, _press, Press);
+101:		CC_SYNTHESIZE_READONLY(bool, _release, Release);
+102:		int _keyCode;
+103:		int _charCode;
+105:		bool _updateTrigger;
+106:		bool _updateRelease;
+113:	void reset(bool isReset=false);
+114:	void update();
+115:	InputData *setPressData(int keyCode, int scancode);
+116:	InputData *setReleaseData(int keyCode, int scancode);
+117:	InputData *setRepeatData(int keyCode, int scancode);
+118:	InputData *setCharInputData(int keyCode);
+119:	InputData *getInputData(int keyCode);
+120:	static const char *getKeyCodeName(int keyCode);
+122:	virtual bool init();
+125:	CC_SYNTHESIZE_RETAIN(cocos2d::__Dictionary *, _inputList, InputList);
+126:	CC_SYNTHESIZE_RETAIN(cocos2d::__Array *, _pressDataList, PressDataList);
+134:class AGTKPLAYER_API InputGamepadData : public cocos2d::Ref
+203:	class InputData : public cocos2d::Ref
+210:		void update();
+211:		void reset();
+212:		void setTrigger(bool trigger);
+213:		void setRelease(bool release);
+214:		void setValue(float value);
+215:		void setValue(float value, float minValue, float maxValue);
+217:		bool isChanged() { return _value != _oldValue; }
+218:		bool isValue() { return _firstSetValueFlag; }//アナログ（数値）入力の場合。
+220:		virtual bool init(EnumType type);
+224:		CC_SYNTHESIZE(bool, _press, Press);
+225:		CC_SYNTHESIZE_READONLY(bool, _release, Release);
+230:		bool _updateTrigger;
+231:		bool _updateRelease;
+232:		bool _firstSetValueFlag;
+======================== Player/Classes/Manager/InputManager.cpp ========================
+8:InputMouseData::InputMouseData()
+13:InputMouseData::~InputMouseData()
+18:bool InputMouseData::init()
+20:	auto inputList = cocos2d::__Dictionary::create();
+33:void InputMouseData::reset()
+35:	_point = cocos2d::Vec2::ZERO;
+36:	_oldPoint = cocos2d::Vec2::ZERO;
+37:	_movePoint = cocos2d::Vec2::ZERO;
+38:	_startPoint = cocos2d::Vec2::ZERO;
+39:	_scrollPoint = cocos2d::Vec2::ZERO;
+40:	_oldScrollPoint = cocos2d::Vec2::ZERO;
+49:void InputMouseData::update()
+51:	cocos2d::DictElement *el = nullptr;
+70:			_oldScrollPoint = cocos2d::Vec2::ZERO;
+71:			_scrollPoint = cocos2d::Vec2::ZERO;
+77:			_oldScrollPoint = _scrollPoint;
+78:			_scrollPoint = cocos2d::Vec2::ZERO;
+85:InputMouseData::InputData *InputMouseData::getInputData(int keyCode)
+89:		inputData = InputData::create(keyCode);
+96:bool InputMouseData::isPressOr()
+99:	cocos2d::DictElement *el = nullptr;
+100:	bool ret = false;
+113:cocos2d::Vec2 InputMouseData::setPoint(cocos2d::Vec2 v)
+115:	_oldPoint = _point;
+116:	_point = v;
+120:cocos2d::Vec2 InputMouseData::setScrollPoint(cocos2d::Vec2 v)
+130:	_oldScrollPoint = _scrollPoint;
+131:	_scrollPoint = v;
+135:cocos2d::Vec2 InputMouseData::CalcTransLeftUp(cocos2d::Vec2 v, cocos2d::Size size, cocos2d::Size displaySize)
+137:	return cocos2d::Vec2(
+143:void InputMouseData::setMove(bool move)
+149:void InputMouseData::InputData::update()
+156:	//release
+157:	if (_updateRelease && _release) {
+158:		_release = false;
+163:void InputMouseData::InputData::setTrigger(bool trigger)
+169:void InputMouseData::InputData::setRelease(bool release)
+172:	_release = release;
+175:void InputMouseData::InputData::reset()
+177:	_press = false;
+178:	_release = false;
+184:bool InputMouseData::InputData::init(int keyCode)
+187:	_press = false;
+188:	_release = false;
+196:int InputKeyboardData::upperKeyCode(int keyCode)
+203:InputKeyboardData::InputKeyboardData()
+206:	_pressDataList = nullptr;
+210:InputKeyboardData::~InputKeyboardData()
+213:	CC_SAFE_RELEASE_NULL(_pressDataList);
+217:bool InputKeyboardData::init()
+219:	auto inputList = cocos2d::__Dictionary::create();
+224:	this->setEmptyData(InputData::create(-1));
+225:	this->setPressDataList(cocos2d::__Array::create());
+229:void InputKeyboardData::reset(bool isReset/*=false*/)
+232:	bool bRetry = false;
+236:		cocos2d::DictElement *el;
+255:void InputKeyboardData::update()
+257:	cocos2d::DictElement *el = nullptr;
+269:InputKeyboardData::InputData *InputKeyboardData::setPressData(int keyCode, int scancode)
+274:		inputData = InputData::create(keyCode);
+285:InputKeyboardData::InputData *InputKeyboardData::setReleaseData(int keyCode, int scancode)
+290:		cocos2d::DictElement *el;
+312:InputKeyboardData::InputData *InputKeyboardData::setRepeatData(int keyCode, int scancode)
+317:		inputData = InputData::create(keyCode);
+327:InputKeyboardData::InputData *InputKeyboardData::setCharInputData(int keyCode)
+329:	auto pressDataList = this->getPressDataList();
+330:	if (pressDataList->count() > 0) {
+331:		auto inputData = dynamic_cast<InputData *>(pressDataList->getObjectAtIndex(0));
+334:			if (p && p->getKeyCode() != keyCode) {
+337:			pressDataList->removeObject(inputData);
+344:InputKeyboardData::InputData *InputKeyboardData::getInputData(int keyCode)
+349:		cocos2d::DictElement *el;
+357:			if (p->getKeyCode() == keyCode) {
+368:void InputKeyboardData::InputData::update()
+375:	//release
+376:	if (_updateRelease && _release) {
+377:		_release = false;
+382:void InputKeyboardData::InputData::setTrigger(bool trigger)
+388:void InputKeyboardData::InputData::setRelease(bool release)
+391:	_release = release;
+======================== Player/cocos2d/cocos/editor-support/cocostudio/CCInputDelegate.cpp ========================
+38:InputDelegate::InputDelegate(void)
+46:, _touchMode(Touch::DispatchMode::ALL_AT_ONCE)
+51:InputDelegate::~InputDelegate(void)
+53:    auto dispatcher = Director::getInstance()->getEventDispatcher();
+57:    Device::setAccelerometerEnabled(false);
+60:void InputDelegate::didAccelerate(cocos2d::Acceleration* /*accelerationValue*/)
+63:bool InputDelegate::ccTouchBegan(cocos2d::Touch* /*touch*/, cocos2d::Event* /*event*/)
+68:void InputDelegate::ccTouchMoved(cocos2d::Touch* /*touch*/, cocos2d::Event* /*event*/)
+71:void InputDelegate::ccTouchEnded(cocos2d::Touch* /*touch*/, cocos2d::Event* /*event*/)
+74:void InputDelegate::ccTouchCancelled(cocos2d::Touch* /*touch*/, cocos2d::Event* /*event*/)
+77:void InputDelegate::ccTouchesBegan(cocos2d::__Set* /*touches*/, cocos2d::Event* /*event*/)
+80:void InputDelegate::ccTouchesMoved(cocos2d::__Set* /*touches*/, cocos2d::Event* /*event*/)
+83:void InputDelegate::ccTouchesEnded(cocos2d::__Set* /*touches*/, cocos2d::Event* /*event*/)
+86:void InputDelegate::ccTouchesCancelled(cocos2d::__Set* /*touches*/, cocos2d::Event* /*event*/)
+89:void InputDelegate::onAcceleration(cocos2d::Acceleration* /*acc*/, cocos2d::Event* /*event*/)
+92:void InputDelegate::onKeyPressed(cocos2d::EventKeyboard::KeyCode /*keyCode*/, cocos2d::Event* /*event*/)
+95:void InputDelegate::onKeyReleased(cocos2d::EventKeyboard::KeyCode /*keyCode*/, cocos2d::Event* /*event*/)
+98:bool InputDelegate::onTouchBegan(Touch* /*pTouch*/, Event* /*pEvent*/)
+103:void InputDelegate::onTouchMoved(Touch* /*pTouch*/, Event* /*pEvent*/)
+107:void InputDelegate::onTouchEnded(Touch* /*pTouch*/, Event* /*pEvent*/)
+111:void InputDelegate::onTouchCancelled(Touch* /*pTouch*/, Event* /*pEvent*/)
+115:void InputDelegate::onTouchesBegan(const std::vector<Touch*>& /*pTouches*/, Event* /*pEvent*/)
+119:void InputDelegate::onTouchesMoved(const std::vector<Touch*>& /*pTouches*/, Event* /*pEvent*/)
+123:void InputDelegate::onTouchesEnded(const std::vector<Touch*>& /*pTouches*/, Event* /*pEvent*/)
+127:void InputDelegate::onTouchesCancelled(const std::vector<Touch*>& /*pTouches*/, Event* /*pEvent*/)
+131:bool InputDelegate::isTouchEnabled() const
+136:void InputDelegate::setTouchEnabled(bool enabled)
+140:        auto dispatcher = Director::getInstance()->getEventDispatcher();
+144:            if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE ) {
+146:                auto listener = EventListenerTouchAllAtOnce::create();
+148:                listener->onTouchesBegan = CC_CALLBACK_2(InputDelegate::onTouchesBegan, this);
+149:                listener->onTouchesMoved = CC_CALLBACK_2(InputDelegate::onTouchesMoved, this);
+150:                listener->onTouchesEnded = CC_CALLBACK_2(InputDelegate::onTouchesEnded, this);
+151:                listener->onTouchesCancelled = CC_CALLBACK_2(InputDelegate::onTouchesCancelled, this);
+157:                auto listener = EventListenerTouchOneByOne::create();
+160:                listener->onTouchBegan = CC_CALLBACK_2(InputDelegate::onTouchBegan, this);
+161:                listener->onTouchMoved = CC_CALLBACK_2(InputDelegate::onTouchMoved, this);
+162:                listener->onTouchEnded = CC_CALLBACK_2(InputDelegate::onTouchEnded, this);
+163:                listener->onTouchCancelled = CC_CALLBACK_2(InputDelegate::onTouchCancelled, this);
+176:void InputDelegate::setTouchMode(Touch::DispatchMode mode)
+190:void InputDelegate::setTouchPriority(int priority)
+204:int InputDelegate::getTouchPriority() const
+209:Touch::DispatchMode InputDelegate::getTouchMode() const
+214:bool InputDelegate::isAccelerometerEnabled() const
+219:void InputDelegate::setAccelerometerEnabled(bool enabled)
+225:        auto dispatcher = Director::getInstance()->getEventDispatcher();
+229:        Device::setAccelerometerEnabled(enabled);
+233:            auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(InputDelegate::onAcceleration, this));
+240:bool InputDelegate::isKeypadEnabled() const
+245:void InputDelegate::setKeypadEnabled(bool enabled)
+251:        auto dispatcher = Director::getInstance()->getEventDispatcher();
+256:            auto listener = EventListenerKeyboard::create();
+257:            listener->onKeyPressed = CC_CALLBACK_2(InputDelegate::onKeyPressed, this);
+258:            listener->onKeyReleased = CC_CALLBACK_2(InputDelegate::onKeyReleased, this);
+======================== Player/cocos2d/cocos/editor-support/cocostudio/CCInputDelegate.h ========================
+38:    class __Set;
+46:class CC_STUDIO_DLL InputDelegate
+59:    virtual bool isTouchEnabled() const;
+60:    virtual void setTouchEnabled(bool value);
+61:    virtual bool isAccelerometerEnabled() const;
+62:    virtual void setAccelerometerEnabled(bool value);
+63:    virtual bool isKeypadEnabled() const;
+64:    virtual void setKeypadEnabled(bool value);
+65:    virtual void setTouchMode(cocos2d::Touch::DispatchMode mode);
+66:    virtual cocos2d::Touch::DispatchMode getTouchMode() const;
+67:    virtual void setTouchPriority(int priority);
+68:    virtual int  getTouchPriority() const;
+73:    CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(cocos2d::Acceleration* accelerationValue) final;
+78:    CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event) final;
+82:    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event) final;
+86:    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event) final;
+90:    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* event) final;
+94:    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(cocos2d::__Set* touches, cocos2d::Event* event) final;
+98:    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(cocos2d::__Set* touches, cocos2d::Event* event) final;
+102:    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(cocos2d::__Set* touches, cocos2d::Event* event) final;
+106:    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(cocos2d::__Set* touches, cocos2d::Event* event) final;
+110:    virtual void onAcceleration(cocos2d::Acceleration* acc, cocos2d::Event* event);
+114:    virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+118:    virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+122:    virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+126:    virtual void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
+130:    virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
+134:    virtual void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
+138:    virtual void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+142:    virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+146:    virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+150:    virtual void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+153:    bool _touchEnabled;
+154:    cocos2d::EventListener* _touchListener;
+155:    bool _accelerometerEnabled;
+156:    cocos2d::EventListener*  _accelerometerListener;
+157:    bool _keypadEnabled;
+158:    cocos2d::EventListener*  _keyboardListener;
+160:     int _touchPriority;
+161:    cocos2d::Touch::DispatchMode _touchMode;
+======================== Player/cocos2d/cocos/ui/UIEditBox/Mac/CCUITextInput.h ========================
+38:@property (nonatomic, assign, setter=ccui_setMaxLength:)int ccui_maxLength;
+======================== Player/cocos2d/cocos/ui/UIEditBox/iOS/UITextField+CCUITextInput.h ========================
+37:extern void LoadUITextFieldCCUITextInputCategory();
+======================== Player/cocos2d/cocos/ui/UIEditBox/iOS/CCUITextInput.h ========================
+29:static const int CC_EDIT_BOX_PADDING = 5;
+======================== Player/cocos2d/cocos/ui/UIEditBox/iOS/UITextView+CCUITextInput.h ========================
+37:extern void LoadUITextViewCCUITextInputCategory();
+======================== Player/cocos2d/cocos/platform/winrt/InputEvent.h ========================
+56:class CC_DLL InputEvent
+61:    virtual void execute() = 0;
+65:class CC_DLL AccelerometerEvent : public InputEvent
+68:    AccelerometerEvent(const cocos2d::Acceleration& event);
+69:    virtual void execute();
+72:    cocos2d::Acceleration m_event;
+75:class CC_DLL PointerEvent : public InputEvent
+78:    PointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
+79:    virtual void execute();
+84:    Platform::Agile<Windows::UI::Core::PointerEventArgs> m_args;
+87:class CC_DLL KeyboardEvent : public InputEvent
+92:    KeyboardEvent(Cocos2dKeyEvent type, Platform::String^ text);
+93:    virtual void execute();
+97:    Platform::Agile<Platform::String> m_text;
+106:class CC_DLL WinRTKeyboardEvent : public InputEvent
+109:	WinRTKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args);
+110:	virtual void execute();
+114:	Platform::Agile<Windows::UI::Core::KeyEventArgs> m_key;
+118:class CC_DLL BackButtonEvent : public InputEvent
+122:    virtual void execute();
+125:class CC_DLL CustomInputEvent : public InputEvent
+128:    CustomInputEvent(const std::function<void()>&);
+129:    virtual void execute();
+131:    std::function<void()> m_fun;
+134:class UIEditBoxEvent : public cocos2d::InputEvent
+137:    UIEditBoxEvent(Platform::Object^ sender, Platform::String^ text, Windows::Foundation::EventHandler<Platform::String^>^ handle);
+139:    virtual void execute();
+142:    Platform::Agile<Platform::Object^> m_sender;
+143:    Platform::Agile<Platform::String^> m_text;
+144:    Platform::Agile<Windows::Foundation::EventHandler<Platform::String^>^> m_handler;
+147:ref class EndEventArgs sealed {
+149:    EndEventArgs(int action, Platform::String^ text) : m_text(text), m_action(action) {}
+150:    int GetAction() { return m_action; }
+151:    Platform::String^ GetText() { return m_text; }
+153:    int m_action;
+154:    Platform::String^ m_text;
+157:class UIEditBoxEndEvent : public cocos2d::InputEvent
+160:  UIEditBoxEndEvent(Platform::Object^ sender, Platform::String^ text, int action, Windows::Foundation::EventHandler<EndEventArgs^>^ handle);
+161:  virtual void execute();
+163:  int m_action;
+164:  Platform::Agile<Platform::Object^> m_sender;
+165:  Platform::Agile<Platform::String^> m_text;
+166:  Platform::Agile<Windows::Foundation::EventHandler<EndEventArgs^>^> m_handler;
+======================== Player/cocos2d/cocos/platform/winrt/InputEventTypes.h ========================
+34:enum class Cocos2dKeyEvent : int 
+======================== Player/cocos2d/cocos/platform/winrt/InputEvent.cpp ========================
+37:AccelerometerEvent::AccelerometerEvent(const Acceleration& event)
+43:void AccelerometerEvent::execute()
+45:    auto dispatcher = Director::getInstance()->getEventDispatcher();
+46:    cocos2d::EventAcceleration accEvent(m_event);
+51:PointerEvent::PointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args)
+57:void PointerEvent::execute()
+61:    case PointerEventType::PointerPressed:
+62:        GLViewImpl::sharedOpenGLView()->OnPointerPressed(m_args.Get());
+64:    case PointerEventType::PointerMoved:
+65:        GLViewImpl::sharedOpenGLView()->OnPointerMoved(m_args.Get());
+67:    case PointerEventType::PointerReleased:
+68:        GLViewImpl::sharedOpenGLView()->OnPointerReleased(m_args.Get());
+70:    case cocos2d::MousePressed:
+71:        GLViewImpl::sharedOpenGLView()->OnMousePressed(m_args.Get());
+73:    case cocos2d::MouseMoved:
+74:        GLViewImpl::sharedOpenGLView()->OnMouseMoved(m_args.Get());
+76:    case cocos2d::MouseReleased:
+77:        GLViewImpl::sharedOpenGLView()->OnMouseReleased(m_args.Get());
+79:    case cocos2d::MouseWheelChanged:
+80:        GLViewImpl::sharedOpenGLView()->OnMouseWheelChanged(m_args.Get());
+85:KeyboardEvent::KeyboardEvent(Cocos2dKeyEvent type)
+91:KeyboardEvent::KeyboardEvent(Cocos2dKeyEvent type, Platform::String^ text)
+97:void KeyboardEvent::execute()
+101:    case Cocos2dKeyEvent::Text:
+103:        std::string utf8String = PlatformStringToString(m_text.Get());
+104:        IMEDispatcher::sharedDispatcher()->dispatchInsertText(utf8String.c_str(), utf8String.size());
+111:        case Cocos2dKeyEvent::Escape:
+112:            //Director::getInstance()()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+114:        case Cocos2dKeyEvent::Back:
+115:            IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+117:        case Cocos2dKeyEvent::Enter:
+118:            IMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
+127:WinRTKeyboardEvent::WinRTKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args)
+132:void WinRTKeyboardEvent::execute()
+134:	GLViewImpl::sharedOpenGLView()->OnWinRTKeyboardEvent(m_type, m_key.Get());
+137:BackButtonEvent::BackButtonEvent()
+142:void BackButtonEvent::execute()
+144:    GLViewImpl::sharedOpenGLView()->OnBackKeyPress();
+147:CustomInputEvent::CustomInputEvent(const std::function<void()>& fun)
+152:void CustomInputEvent::execute()
+157:UIEditBoxEvent::UIEditBoxEvent(Platform::Object^ sender, Platform::String^ text, Windows::Foundation::EventHandler<Platform::String^>^ handle) 
+165:void UIEditBoxEvent::execute()
+173:UIEditBoxEndEvent::UIEditBoxEndEvent(Platform::Object^ sender, Platform::String^ text, int action, Windows::Foundation::EventHandler<cocos2d::EndEventArgs^>^ handle)
+182:void UIEditBoxEndEvent::execute()

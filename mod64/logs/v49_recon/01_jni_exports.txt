@@ -1,0 +1,70 @@
+Player/cocos2d/cocos/scripting/js-bindings/manual/platform/android/CCJavascriptJavaBridge.cpp:40:JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalString
+Player/cocos2d/cocos/ui/UIWebViewImpl-android.cpp:84:    JNIEXPORT jboolean JNICALL Java_org_cocos2dx_lib_Cocos2dxWebViewHelper_shouldStartLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
+Player/cocos2d/cocos/ui/UIWebViewImpl-android.cpp:96:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxWebViewHelper_didFinishLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
+Player/cocos2d/cocos/ui/UIWebViewImpl-android.cpp:109:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxWebViewHelper_didFailLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
+Player/cocos2d/cocos/ui/UIWebViewImpl-android.cpp:122:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxWebViewHelper_onJsCallback(JNIEnv *env, jclass, jint index, jstring jmessage) {
+Player/cocos2d/cocos/ui/UIEditBox/UIEditBoxImpl-android.cpp:53:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxEditBoxHelper_editBoxEditingDidBegin(JNIEnv *env, jclass, jint index) {
+Player/cocos2d/cocos/ui/UIEditBox/UIEditBoxImpl-android.cpp:57:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxEditBoxHelper_editBoxEditingChanged(JNIEnv *env, jclass, jint index, jstring text) {
+Player/cocos2d/cocos/ui/UIEditBox/UIEditBoxImpl-android.cpp:62:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxEditBoxHelper_editBoxEditingDidEnd(JNIEnv *env, jclass, jint index, jstring text, jint action) {
+Player/cocos2d/cocos/ui/UIVideoPlayer-android.cpp:50:    void Java_org_cocos2dx_lib_Cocos2dxVideoHelper_nativeExecuteVideoCallback(JNIEnv * env, jobject obj, jint index,jint event) {
+Player/cocos2d/cocos/audio/android/AudioEngine-inl.cpp:49:#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+Player/cocos2d/cocos/platform/android/Android.mk:17:jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
+Player/cocos2d/cocos/platform/android/Android.mk:18:jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
+Player/cocos2d/cocos/platform/android/Android.mk:19:jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
+Player/cocos2d/cocos/platform/android/Android.mk:20:jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp \
+Player/cocos2d/cocos/platform/android/Android.mk:21:jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp \
+Player/cocos2d/cocos/platform/android/CCFileUtils-android.cpp:33:#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+Player/cocos2d/cocos/platform/android/CCFileUtils-android.cpp:34:#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.h"
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:36:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv * env, jobject thiz, jint id, jfloat x, jfloat y) {
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:41:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesEnd(JNIEnv * env, jobject thiz, jint id, jfloat x, jfloat y) {
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:46:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesMove(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:63:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesCancel(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
+Player/cocos2d/cocos/platform/android/jni/TouchesJni.cpp:104:    JNIEXPORT jboolean JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeKeyEvent(JNIEnv * env, jobject thiz, jint keyCode, jboolean isPressed) {
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp:36:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxAccelerometer_onSensorChanged(JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jfloat z, jlong timeStamp) {
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp:26:#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.h"
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp:47:#define JNI_FUNC_PREFIX(func) Java_org_cocos2dx_lib_Cocos2dxEngineDataManager_##func
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp:1645:JNIEXPORT void JNICALL JNI_FUNC_PREFIX(nativeSetSupportOptimization)(JNIEnv* env, jobject thiz, jboolean isSupported)
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp:1651:JNIEXPORT void JNICALL JNI_FUNC_PREFIX(nativeOnQueryFps)(JNIEnv* env, jobject thiz, jintArray arrExpectedFps, jintArray arrRealFps)
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp:1656:JNIEXPORT void JNICALL JNI_FUNC_PREFIX(nativeOnChangeContinuousFrameLostConfig)(JNIEnv* env, jobject thiz, jint continueFrameLostCycle, jint continueFrameLostThreshold)
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp:1661:JNIEXPORT void JNICALL JNI_FUNC_PREFIX(nativeOnChangeLowFpsConfig)(JNIEnv* env, jobject thiz, jint lowFpsCycle, jfloat lowFpsThreshold)
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp:1666:JNIEXPORT void JNICALL JNI_FUNC_PREFIX(nativeOnChangeExpectedFps)(JNIEnv* env, jobject thiz, jint fps)
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp:1671:JNIEXPORT void JNICALL JNI_FUNC_PREFIX(nativeOnChangeSpecialEffectLevel)(JNIEnv* env, jobject thiz, jint level)
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp:1676:JNIEXPORT void JNICALL JNI_FUNC_PREFIX(nativeOnChangeMuteEnabled)(JNIEnv* env, jobject thiz, jboolean enabled)
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp:41:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeRender(JNIEnv* env) {
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp:45:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnPause() {
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp:53:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnResume() {
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp:68:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInsertText(JNIEnv* env, jobject thiz, jstring text) {
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp:74:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz) {
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp:78:    JNIEXPORT jstring JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeGetContentText() {
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h:26:#ifndef __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h:27:#define __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h:41:#endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp:33:#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp:37:#define  LOG_TAG    "Java_org_cocos2dx_lib_Cocos2dxHelper.cpp"
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp:55:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetContext(JNIEnv*  env, jobject thiz, jobject context, jobject assetManager) {
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp:60:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetAudioDeviceInfo(JNIEnv*  env, jobject thiz, jboolean isSupportLowLatency, jint deviceSampleRate, jint deviceAudioBufferSizeInFrames) {
+Player/cocos2d/cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp:66:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {
+Player/cocos2d/cocos/platform/android/CCDevice-android.cpp:113:            * will call Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC() to init the width, height
+Player/cocos2d/cocos/platform/android/CCDevice-android.cpp:195:    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC(JNIEnv*  env, jobject thiz, int width, int height, jbyteArray pixels)
+Player/cocos2d/cocos/platform/android/javaactivity-android.cpp:78:JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved)
+Player/cocos2d/cocos/platform/android/javaactivity-android.cpp:87:JNIEXPORT void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thiz, jint w, jint h)
+Player/cocos2d/cocos/platform/android/javaactivity-android.cpp:113:JNIEXPORT jintArray Java_org_cocos2dx_lib_Cocos2dxActivity_getGLContextAttrs(JNIEnv*  env, jobject thiz)
+Player/cocos2d/cocos/platform/android/javaactivity-android.cpp:128:JNIEXPORT void Java_org_cocos2dx_lib_Cocos2dxAudioFocusManager_nativeOnAudioFocusChange(JNIEnv* env, jobject thiz, jint focusChange)
+Player/cocos2d/cocos/platform/android/javaactivity-android.cpp:133:JNIEXPORT void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnSurfaceChanged(JNIEnv*  env, jobject thiz, jint w, jint h)
+Player/cocos2d/cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxRenderer.java:119:    private static native boolean nativeKeyEvent(final int keyCode,boolean isPressed);
+Player/cocos2d/cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxRenderer.java:143:        Cocos2dxRenderer.nativeKeyEvent(keyCode, true);
+Player/cocos2d/cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxRenderer.java:147:        Cocos2dxRenderer.nativeKeyEvent(keyCode, false);
+Player/cocos2d/cocos/platform/android/CMakeLists.txt:13:  jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp
+Player/cocos2d/cocos/platform/android/CMakeLists.txt:14:  jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
+Player/cocos2d/cocos/platform/android/CMakeLists.txt:15:  jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
+Player/cocos2d/cocos/platform/android/CMakeLists.txt:16:  jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp
+Player/cocos2d/cocos/platform/android/CMakeLists.txt:17:  jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp
+Player/cocos2d/cocos/platform/android/CCApplication-android.cpp:30:#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.h"
+Player/cocos2d/cocos/2d/CCFontAtlas.cpp:31:#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+Player/cocos2d/cocos/base/CCEventType.h:35:// This message is posted in cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp.
+Player/cocos2d/cocos/base/CCEventType.h:45:// This message is posted in cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp and cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp.
+Player/cocos2d/cocos/base/CCController-android.cpp:167:    void Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerConnected(JNIEnv*  env, jobject thiz, jstring deviceName, jint controllerID)
+Player/cocos2d/cocos/base/CCController-android.cpp:173:    void Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerDisconnected(JNIEnv*  env, jobject thiz, jstring deviceName, jint controllerID)
+Player/cocos2d/cocos/base/CCController-android.cpp:179:    void Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerButtonEvent(JNIEnv*  env, jobject thiz, jstring deviceName, jint controllerID, jint button, jboolean isPressed, jfloat value, jboolean isAnalog)
+Player/cocos2d/cocos/base/CCController-android.cpp:184:    void Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerAxisEvent(JNIEnv*  env, jobject thiz, jstring deviceName, jint controllerID, jint axis, jfloat value, jboolean isAnalog)
+Player/cocos2d/cocos/base/CCDirector.cpp:75:#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.h"

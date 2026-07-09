@@ -1,0 +1,13 @@
+Player/Classes/External/vlc/include/vlc/plugins/vlc_input.h
+Player/Classes/External/vlc/include/vlc/plugins/vlc_input_item.h
+Player/Classes/Manager/InputManager.h
+Player/Classes/Manager/InputManager.cpp
+Player/cocos2d/cocos/editor-support/cocostudio/CCInputDelegate.cpp
+Player/cocos2d/cocos/editor-support/cocostudio/CCInputDelegate.h
+Player/cocos2d/cocos/ui/UIEditBox/Mac/CCUITextInput.h
+Player/cocos2d/cocos/ui/UIEditBox/iOS/UITextField+CCUITextInput.h
+Player/cocos2d/cocos/ui/UIEditBox/iOS/CCUITextInput.h
+Player/cocos2d/cocos/ui/UIEditBox/iOS/UITextView+CCUITextInput.h
+Player/cocos2d/cocos/platform/winrt/InputEvent.h
+Player/cocos2d/cocos/platform/winrt/InputEventTypes.h
+Player/cocos2d/cocos/platform/winrt/InputEvent.cpp
