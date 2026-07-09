@@ -1,0 +1,3 @@
+v47b build OK
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v47b-controls/FOBS_v47b.apk
+b73f7d56582769e63e844e6b1fc9c61c  /tmp/FOBS_v47b.apk
