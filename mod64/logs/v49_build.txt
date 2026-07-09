@@ -1,0 +1,63 @@
+=== v49 engine build ===
+SO_OK=1
+--- last 60 lines of build.log ---
+[arm64-v8a] Compile++      : ext_recast <= DetourNavMeshBuilder.cpp
+[arm64-v8a] Compile++      : ext_recast <= DetourNode.cpp
+[arm64-v8a] Compile++      : ext_recast <= DetourCrowd.cpp
+[arm64-v8a] Compile++      : ext_recast <= DetourLocalBoundary.cpp
+[arm64-v8a] Compile++      : cc_core <= clipper.cpp
+[arm64-v8a] Compile++      : ext_recast <= DetourNavMeshQuery.cpp
+[arm64-v8a] Compile++      : ext_recast <= DetourPathCorridor.cpp
+[arm64-v8a] Compile++      : ext_recast <= DetourObstacleAvoidance.cpp
+[arm64-v8a] Compile++      : ext_recast <= DetourProximityGrid.cpp
+[arm64-v8a] Compile++      : ext_recast <= DetourPathQueue.cpp
+[arm64-v8a] Compile        : ext_recast <= fastlz.c
+[arm64-v8a] Compile++      : ext_recast <= DetourTileCache.cpp
+[arm64-v8a] Compile++      : ext_recast <= DetourTileCacheBuilder.cpp
+[arm64-v8a] Compile++      : ccandroid <= CCApplication-android.cpp
+[arm64-v8a] Compile++      : ccjs_android <= CCJavascriptJavaBridge.cpp
+[arm64-v8a] Compile++      : ccandroid <= CCCommon-android.cpp
+[arm64-v8a] Compile++      : ccandroid <= CCGLViewImpl-android.cpp
+[arm64-v8a] Compile++      : ccandroid <= CCDevice-android.cpp
+[arm64-v8a] Compile++      : ccandroid <= CCEnhanceAPI-android.cpp
+[arm64-v8a] Compile++      : ccandroid <= javaactivity-android.cpp
+[arm64-v8a] Compile++      : ccandroid <= Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp
+[arm64-v8a] Compile++      : ccandroid <= CCFileUtils-android.cpp
+[arm64-v8a] Compile++      : ccandroid <= Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
+[arm64-v8a] Compile++      : ccandroid <= Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
+[arm64-v8a] Compile++      : ccandroid <= Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp
+[arm64-v8a] Compile++      : ccandroid <= JniHelper.cpp
+[arm64-v8a] Compile        : cpufeatures <= cpu-features.c
+[arm64-v8a] Compile++      : ccandroid <= Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp
+[arm64-v8a] StaticLibrary  : libstorage.a
+[arm64-v8a] StaticLibrary  : libccs.a
+[arm64-v8a] StaticLibrary  : libccb.a
+[arm64-v8a] StaticLibrary  : libjscc.a
+[arm64-v8a] StaticLibrary  : libc3d.a
+[arm64-v8a] StaticLibrary  : libccds.a
+[arm64-v8a] StaticLibrary  : libui.a
+[arm64-v8a] StaticLibrary  : flatbuffers.a
+[arm64-v8a] StaticLibrary  : libaudio.a
+[arm64-v8a] StaticLibrary  : libnet.a
+[arm64-v8a] StaticLibrary  : libext_vorbisidec.a
+[arm64-v8a] StaticLibrary  : libext_pvmp3dec.a
+[arm64-v8a] StaticLibrary  : libcc_core.a
+[arm64-v8a] StaticLibrary  : librecast.a
+[arm64-v8a] StaticLibrary  : libets.a
+[arm64-v8a] StaticLibrary  : libjsccandroid.a
+[arm64-v8a] StaticLibrary  : libcpufeatures.a
+[arm64-v8a] Compile++      : ccandroid <= TouchesJni.cpp
+[arm64-v8a] StaticLibrary  : libccandroid.a
+[arm64-v8a] SharedLibrary  : libMyGame.so
+[arm64-v8a] Install        : libMyGame.so => libs/arm64-v8a/libMyGame.so
+=== publish_so: waiting for arm64 libMyGame.so ===
+PUBLISH_SO_PATH=./libs/arm64-v8a/libMyGame.so
+PUBLISH_SO_SIZE=30513536
+PUBLISH_SO_SHA=583f82d93b76418c1da0cb95d28104e519d4f6eb3c487321e60d22244086ecd2
+PUBLISH_ALIGN=0x4000
+=== upload litterbox (72h) ===
+PUBLISH_URL_LITTER=https://litter.catbox.moe/tl2uzb.so
+=== upload catbox (perm) ===
+PUBLISH_URL_CATBOX=
+=== upload oshi ===
+=== publish_so done ===
