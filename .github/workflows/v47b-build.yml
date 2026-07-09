@@ -1,0 +1,166 @@
+name: v47b build - route touch through queueInject (identical to KB path)
+
+# STRUCTURAL diagnosis from v46 log + smali comparison:
+#   Keyboard path: AppActivity.dispatchKeyEvent -> queueInject -> $1.run() (189 lines,
+#     just stdKeyInject + neutralised padInject + nativeInject).
+#   Touch path:    onTouchEvent -> rawInject -> $2.run() (474 lines, stdKeyInject
+#     + injectKey + precedeTriggered/Released + toggleMenu + nativeInject).
+#
+# Both paths log identical "inject fired cc=... ok=true" lines but $2 fires FOUR extra
+# MenuShim calls that must be disturbing the input queue on arm64 - because the KB
+# path with the same stdKeyInject works, and the touch path doesn't.
+#
+# Fix: rewrite rawInject to simply call queueInject(p1, p2) and return. Touch then
+# runs the identical bytecode as the keyboard path. Nothing else changes.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_TAG: v46-controls
+      BASE_APK_NAME: FOBS_v46.apk
+      OVERLAY_STD: 'org/cocos2dx/cpp/GamepadOverlay.smali'
+      SMALI_API: '23'
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 0 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+      - name: Download base APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+      - name: Fetch baksmali + smali
+        run: |
+          set -e
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar \
+              "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+      - name: Baksmali
+        run: |
+          set -e
+          mkdir -p /tmp/dex
+          unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+
+      - name: Rewrite rawInject to call queueInject
+        run: |
+          set -e
+          python3 - "/tmp/smali/$OVERLAY_STD" <<'PY'
+          import sys, re
+          path = sys.argv[1]
+          src = open(path).read().splitlines()
+
+          # Find rawInject method start/end
+          i0 = None
+          for i, l in enumerate(src):
+              if re.match(r'\.method .*rawInject\(IZ\)V', l):
+                  i0 = i
+              elif i0 is not None and l.strip() == '.end method':
+                  i1 = i
+                  break
+          if i0 is None: raise SystemExit("rawInject not found")
+
+          # Find the FIRST invoke-static to queueInject in the class to get its class ref
+          class_ref = None
+          for l in src:
+              m = re.search(r'invoke-static\s*\{[^}]+\},\s*(L[A-Za-z0-9_/$]+;)->queueInject\(IZ\)V', l)
+              if m:
+                  class_ref = m.group(1); break
+          # Fallback: derive from the class header
+          if class_ref is None:
+              for l in src[:5]:
+                  m = re.match(r'\.class\s+(?:public\s+)?(L[A-Za-z0-9_/$]+;)', l)
+                  if m: class_ref = m.group(1); break
+          if class_ref is None: raise SystemExit("cannot resolve GamepadOverlay class ref")
+          print(f"class ref: {class_ref}")
+
+          # Replace entire method body with a straight forwarding call.
+          # rawInject signature: rawInject(IZ)V  instance  (p0=this, p1=cc, p2=pressed)
+          new_body = [
+              src[i0],  # keep original .method line
+              "    .locals 0",
+              "",
+              "    invoke-static {p1, p2}, " + class_ref + "->queueInject(IZ)V",
+              "    return-void",
+              ".end method",
+          ]
+          src = src[:i0] + new_body + src[i1+1:]
+          print(f"rawInject rewritten -> forwards to queueInject")
+          open(path, 'w').write("\n".join(src))
+          PY
+
+      - name: Verify
+        run: |
+          set -e
+          echo "==== rawInject POST-PATCH ===="
+          awk '/\.method .*rawInject/,/\.end method/' "/tmp/smali/$OVERLAY_STD"
+          grep -A6 "\.method .*rawInject(IZ)V" "/tmp/smali/$OVERLAY_STD" | grep -q "queueInject(IZ)V" || { echo "FAIL"; exit 1; }
+          echo VERIFY-OK
+
+      - name: Reassemble + repackage + sign + publish
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          mkdir -p mod64/logs/v47b_smali
+          cp "/tmp/smali/$OVERLAY_STD" mod64/logs/v47b_smali/GamepadOverlay.patched.smali.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v47b_smali
+          git commit -m "v47b patched smali (pre-assemble)" || true
+          git push origin main || true
+
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_patched.dex
+          test -s /tmp/dex/classes_patched.dex
+          python3 - /tmp/dex/classes_patched.dex /tmp/base.apk /tmp/v47b_unaligned.apk <<'PY'
+          import sys, zipfile
+          pd, base, out = sys.argv[1], sys.argv[2], sys.argv[3]
+          db=open(pd,"rb").read(); replaced=False
+          zin=zipfile.ZipFile(base,"r"); zout=zipfile.ZipFile(out,"w")
+          for info in zin.infolist():
+              raw = db if info.filename=="classes.dex" else zin.read(info.filename)
+              if info.filename=="classes.dex": replaced=True
+              zi=zipfile.ZipInfo(info.filename,date_time=info.date_time)
+              zi.compress_type=info.compress_type; zi.external_attr=info.external_attr
+              zi.internal_attr=info.internal_attr; zi.create_system=info.create_system
+              zi.flag_bits=info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not replaced: raise SystemExit("classes.dex not found")
+          PY
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v47b_unaligned.apk /tmp/v47b_aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v47b.apk /tmp/v47b_aligned.apk
+          "${BT}apksigner" verify --verbose /tmp/FOBS_v47b.apk
+          gh release create v47b-controls /tmp/FOBS_v47b.apk \
+            --title "v47b controls: touch retargeted through queueInject (KB-identical path)" \
+            --notes "rawInject rewritten to call queueInject, so touch and keyboard now run the identical GamepadOverlay\$1 runnable. Removes the four extra MenuShim calls in \$2 that were disturbing the input queue on arm64." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v47b-controls /tmp/FOBS_v47b.apk --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          {
+            echo "v47b build OK"
+            echo "asset: https://github.com/${GITHUB_REPOSITORY}/releases/download/v47b-controls/FOBS_v47b.apk"
+            md5sum /tmp/FOBS_v47b.apk
+          } > mod64/logs/v47b_result.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v47b_result.txt
+          git commit -m "v47b result" || true
+          git push origin main || true
