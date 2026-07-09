@@ -1,0 +1,3 @@
+v48b build OK
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v48b-controls/FOBS_v48b.apk
+0e37673477ed0b025630a12e8e69fc14  /tmp/FOBS_v48b.apk
