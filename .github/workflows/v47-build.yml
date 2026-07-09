@@ -1,0 +1,229 @@
+name: v47 build - dispatch real KeyEvent through Activity
+
+# v46 proved the endgame: our touch buttons emit EXACTLY the same cc/android
+# values as Hacker Keyboard triggers via queueInject. Every shim reports
+# ok=true. The game consumes zero. Hacker Keyboard produces "INPUT KEY act=0
+# code=52" lines in input.log; our touch buttons produce ZERO such lines.
+#
+# Conclusion: queueInject is a diagnostic wrapper. The real delivery is the
+# Android KeyEvent object flowing through Activity.dispatchKeyEvent -> super
+# -> Cocos2d view chain -> C++ engine's key handler. Our touch path never
+# creates that KeyEvent object.
+#
+# v47 fix: in pressButton (the touch handler), after queueInject, ALSO
+# synthesise a real KeyEvent and call getContext().dispatchKeyEvent(ev). This
+# is the SAME path Hacker Keyboard's InputConnection.sendKeyEvent uses.
+#
+# Base APK = v46-controls (last build with correct cc->android mapping).
+# Only classes.dex changes.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_TAG: v46-controls
+      BASE_APK_NAME: FOBS_v46.apk
+      OVERLAY_STD: 'org/cocos2dx/cpp/GamepadOverlay.smali'
+      SMALI_API: '23'
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 0 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+      - name: Download base APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+      - name: Fetch baksmali + smali
+        run: |
+          set -e
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar \
+              "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+      - name: Baksmali
+        run: |
+          set -e
+          mkdir -p /tmp/dex
+          unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+
+      - name: Add dispatchKeyEvent helper + hook it into queueInject
+        run: |
+          set -e
+          python3 - "/tmp/smali/$OVERLAY_STD" <<'PY'
+          import sys, re
+          path = sys.argv[1]
+          src = open(path).read().splitlines()
+
+          def find_method(lines, name):
+              i0=None
+              for i,l in enumerate(lines):
+                  if re.match(r'\.method .*'+re.escape(name)+r'\(', l): i0=i
+                  elif i0 is not None and l.strip()=='.end method': return i0, i
+              return None, None
+
+          # Add a new static helper: sendKeyEventToActivity(int androidKey, boolean pressed)
+          # that gets Cocos2dxGLSurfaceView.getInstance(), gets its Context, builds a
+          # KeyEvent and dispatches it via getContext().dispatchKeyEvent(ev).
+          #
+          # This method appends before .end class or at the end.
+          helper = [
+              "",
+              ".method private static v47DispatchKeyEvent(IZ)V",
+              "    .locals 10",
+              "",
+              "    :try_start_v47",
+              "    invoke-static {}, Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;->getInstance()Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;",
+              "    move-result-object v8",
+              "    if-nez v8, :v47_have",
+              "    return-void",
+              "    :v47_have",
+              "    invoke-virtual {v8}, Landroid/view/View;->getContext()Landroid/content/Context;",
+              "    move-result-object v9",
+              "    if-nez v9, :v47_have_ctx",
+              "    return-void",
+              "    :v47_have_ctx",
+              "    invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J",
+              "    move-result-wide v1",
+              "    move-wide v3, v1",
+              "    if-eqz p1, :v47_up",
+              "    const/4 v5, 0x0",
+              "    goto :v47_have_action",
+              "    :v47_up",
+              "    const/4 v5, 0x1",
+              "    :v47_have_action",
+              "    move v6, p0",
+              "    const/4 v7, 0x0",
+              "    new-instance v0, Landroid/view/KeyEvent;",
+              "    invoke-direct/range {v0 .. v7}, Landroid/view/KeyEvent;-><init>(JJIII)V",
+              "    instance-of v6, v9, Landroid/app/Activity;",
+              "    if-eqz v6, :v47_via_view",
+              "    check-cast v9, Landroid/app/Activity;",
+              "    invoke-virtual {v9, v0}, Landroid/app/Activity;->dispatchKeyEvent(Landroid/view/KeyEvent;)Z",
+              "    goto :v47_done",
+              "    :v47_via_view",
+              "    invoke-virtual {v8, v0}, Landroid/view/View;->dispatchKeyEvent(Landroid/view/KeyEvent;)Z",
+              "    :v47_done",
+              "    :try_end_v47",
+              "    .catch Ljava/lang/Throwable; {:try_start_v47 .. :try_end_v47} :v47_catch",
+              "    return-void",
+              "    :v47_catch",
+              "    move-exception v0",
+              "    return-void",
+              ".end method",
+          ]
+
+          # Insert helper just before end of file (after last .end method)
+          last_end = max(i for i,l in enumerate(src) if l.strip() == '.end method')
+          src = src[:last_end+1] + helper + src[last_end+1:]
+          print(f"helper inserted after line {last_end+1}")
+
+          # Now, inside queueInject(IZ)V, add a call to v47DispatchKeyEvent(android,pressed)
+          # right after the cocos2dToAndroidKey result is computed. The existing code
+          # already computes v0 = android keycode from p0 (ccKey).
+          i0, i1 = find_method(src, 'queueInject')
+          if i0 is None: raise SystemExit("queueInject not found")
+
+          # Look for "invoke-static {p0}, ...->cocos2dToAndroidKey(I)I" then next
+          # "move-result vN"; insert our call after that.
+          inserted = False
+          for i in range(i0, i1):
+              if 'cocos2dToAndroidKey(I)I' in src[i]:
+                  # next line should be move-result vN
+                  for j in range(i+1, min(i+3, i1)):
+                      m = re.match(r'(\s*)move-result (v\d+)', src[j])
+                      if m:
+                          indent, reg = m.group(1), m.group(2)
+                          call = [
+                              f"{indent}# v47: also dispatch real KeyEvent",
+                              f"{indent}invoke-static {{{reg}, p1}}, Lorg/cocos2dx/cpp/GamepadOverlay;->v47DispatchKeyEvent(IZ)V",
+                          ]
+                          src = src[:j+1] + call + src[j+1:]
+                          inserted = True
+                          print(f"queueInject hook inserted after line {j+1} (using android reg {reg})")
+                          break
+                  break
+          if not inserted:
+              raise SystemExit("could not find queueInject insertion point")
+
+          open(path,'w').write("\n".join(src))
+          PY
+
+      - name: Verify
+        run: |
+          set -e
+          echo "==== v47DispatchKeyEvent method present ===="
+          grep -c "v47DispatchKeyEvent" "/tmp/smali/$OVERLAY_STD"
+          echo
+          echo "==== queueInject POST-PATCH (excerpt) ===="
+          awk '/\.method public static queueInject/,/\.end method/' "/tmp/smali/$OVERLAY_STD" | head -40
+          grep -q "v47DispatchKeyEvent" "/tmp/smali/$OVERLAY_STD" || { echo FAIL; exit 1; }
+          echo VERIFY-OK
+
+      - name: Reassemble + repackage + sign + publish
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          # Commit patched smali first so any assemble error is inspectable
+          mkdir -p mod64/logs/v47_smali
+          cp "/tmp/smali/$OVERLAY_STD" mod64/logs/v47_smali/GamepadOverlay.patched.smali.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v47_smali
+          git commit -m "v47 patched smali (pre-assemble)" || true
+          git push origin main || true
+
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_patched.dex 2>&1 | tee /tmp/assemble.log
+          test -s /tmp/dex/classes_patched.dex
+          python3 - /tmp/dex/classes_patched.dex /tmp/base.apk /tmp/v47_unaligned.apk <<'PY'
+          import sys, zipfile
+          pd, base, out = sys.argv[1], sys.argv[2], sys.argv[3]
+          db=open(pd,"rb").read(); replaced=False
+          zin=zipfile.ZipFile(base,"r"); zout=zipfile.ZipFile(out,"w")
+          for info in zin.infolist():
+              raw = db if info.filename=="classes.dex" else zin.read(info.filename)
+              if info.filename=="classes.dex": replaced=True
+              zi=zipfile.ZipInfo(info.filename,date_time=info.date_time)
+              zi.compress_type=info.compress_type; zi.external_attr=info.external_attr
+              zi.internal_attr=info.internal_attr; zi.create_system=info.create_system
+              zi.flag_bits=info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not replaced: raise SystemExit("classes.dex not found")
+          PY
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v47_unaligned.apk /tmp/v47_aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v47.apk /tmp/v47_aligned.apk
+          "${BT}apksigner" verify --verbose /tmp/FOBS_v47.apk
+          gh release create v47-controls /tmp/FOBS_v47.apk \
+            --title "v47 controls: dispatch real KeyEvent (Hacker Keyboard route)" \
+            --notes "v47 adds v47DispatchKeyEvent hook to queueInject: synthesises a real Android KeyEvent and dispatches it via Activity.dispatchKeyEvent - the same path Hacker Keyboard uses. Should produce INPUT KEY lines in input.log matching Hacker Keyboard's pattern." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v47-controls /tmp/FOBS_v47.apk --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          {
+            echo "v47 build OK"
+            echo "asset: https://github.com/${GITHUB_REPOSITORY}/releases/download/v47-controls/FOBS_v47.apk"
+            md5sum /tmp/FOBS_v47.apk
+          } > mod64/logs/v47_result.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v47_result.txt
+          git commit -m "v47 result" || true
+          git push origin main || true
