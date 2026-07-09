@@ -1,0 +1,17 @@
+### callers of handleKeyDown / handleKeyUp ###
+-- /tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali --
+158:.method public handleKeyDown(I)V
+168:.method public handleKeyUp(I)V
+-- /tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$13.smali --
+52:    invoke-virtual {v0, v1}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleKeyDown(I)V
+-- /tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView$14.smali --
+52:    invoke-virtual {v0, v1}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->handleKeyUp(I)V
+-- /tmp/smali/org/cocos2dx/cpp/GamepadOverlay.smali --
+2604:    const-string v3, "handleKeyDown"
+2609:    const-string v3, "handleKeyUp"
+
+### callers of nativeKeyEvent ###
+-- /tmp/smali/org/cocos2dx/lib/Cocos2dxRenderer.smali --
+57:.method private static native nativeKeyEvent(IZ)Z
+163:    invoke-static {p1, v0}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->nativeKeyEvent(IZ)Z
+173:    invoke-static {p1, v0}, Lorg/cocos2dx/lib/Cocos2dxRenderer;->nativeKeyEvent(IZ)Z

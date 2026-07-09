@@ -1,0 +1,4 @@
+/tmp/smali/org/cocos2dx/lib/GameControllerDelegate.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxEditBox.smali
+/tmp/smali/org/cocos2dx/lib/Cocos2dxGLSurfaceView.smali
+/tmp/smali/org/cocos2dx/cpp/AppActivity.smali

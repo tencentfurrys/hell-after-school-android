@@ -1,0 +1,123 @@
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$3.smali ========================
+26:.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxEditBoxHelper$1;Lorg/cocos2dx/lib/Cocos2dxEditBox;)V
+40:.method public onKey(Landroid/view/View;ILandroid/view/KeyEvent;)Z
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$4.smali ========================
+26:.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxEditBoxHelper$1;Lorg/cocos2dx/lib/Cocos2dxEditBox;)V
+40:.method public onEditorAction(Landroid/widget/TextView;ILandroid/view/KeyEvent;)Z
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$3.smali ========================
+28:.method constructor <init>(ILjava/lang/String;F)V
+44:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$12.smali ========================
+26:.method constructor <init>(II)V
+40:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$2$2.smali ========================
+26:.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxEditBoxHelper$1$2;Ljava/lang/String;)V
+40:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$1.smali ========================
+26:.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxEditBoxHelper$1;Lorg/cocos2dx/lib/Cocos2dxEditBox;)V
+40:.method public afterTextChanged(Landroid/text/Editable;)V
+94:.method public beforeTextChanged(Ljava/lang/CharSequence;III)V
+100:.method public onTextChanged(Ljava/lang/CharSequence;III)V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$1$1.smali ========================
+26:.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxEditBoxHelper$1$1;Landroid/text/Editable;)V
+40:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$5.smali ========================
+26:.method constructor <init>(ILjava/lang/String;)V
+40:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$4.smali ========================
+32:.method constructor <init>(IIIII)V
+52:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$13.smali ========================
+26:.method constructor <init>(II)V
+40:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$2$1.smali ========================
+24:.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxEditBoxHelper$1$2;)V
+36:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$16.smali ========================
+24:.method constructor <init>(I)V
+36:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$9.smali ========================
+26:.method constructor <init>(ILjava/lang/String;)V
+40:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$6.smali ========================
+32:.method constructor <init>(IIIII)V
+52:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$8.smali ========================
+26:.method constructor <init>(IZ)V
+40:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$14.smali ========================
+32:.method constructor <init>(IIIII)V
+52:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$10.smali ========================
+26:.method constructor <init>(II)V
+40:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$2.smali ========================
+24:.method constructor <init>(I)V
+36:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1.smali ========================
+34:.method constructor <init>(FIIIII)V
+56:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$15.smali ========================
+24:.method constructor <init>(I)V
+36:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$11.smali ========================
+26:.method constructor <init>(II)V
+40:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBox.smali ========================
+78:.method public constructor <init>(Landroid/content/Context;)V
+148:.method public getChangedTextProgrammatically()Ljava/lang/Boolean;
+156:.method public getOpenGLViewScaleX()F
+164:.method public onKeyDown(ILandroid/view/KeyEvent;)Z
+171:    invoke-super {p0, p1, p2}, Landroid/widget/EditText;->onKeyDown(ILandroid/view/KeyEvent;)Z
+195:.method public onKeyPreIme(ILandroid/view/KeyEvent;)Z
+198:    invoke-super {p0, p1, p2}, Landroid/widget/EditText;->onKeyPreIme(ILandroid/view/KeyEvent;)Z
+205:.method public setChangedTextProgrammatically(Ljava/lang/Boolean;)V
+213:.method public setEditBoxViewRect(IIII)V
+239:.method public setInputFlag(I)V
+321:.method public setInputMode(I)V
+397:.method public setMaxLength(I)V
+421:.method public setMultilineEnabled(Z)V
+435:.method public setOpenGLViewScaleX(F)V
+443:.method public setReturnType(I)V
+508:.method public setTextHorizontalAlignment(I)V
+555:.method public setTextVerticalAlignment(I)V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$7.smali ========================
+26:.method constructor <init>(II)V
+40:.method public run()V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper.smali ========================
+28:.method static constructor <clinit>()V
+34:.method public constructor <init>(Lorg/cocos2dx/lib/ResizeLayout;)V
+58:.method public static __editBoxEditingChanged(ILjava/lang/String;)V
+66:.method public static __editBoxEditingDidBegin(I)V
+74:.method public static __editBoxEditingDidEnd(ILjava/lang/String;I)V
+82:.method static synthetic access$000()Lorg/cocos2dx/lib/Cocos2dxActivity;
+90:.method static synthetic access$100()Lorg/cocos2dx/lib/ResizeLayout;
+98:.method static synthetic access$200()Ljava/lang/String;
+106:.method static synthetic access$300(I)V
+114:.method static synthetic access$400()Landroid/util/SparseArray;
+122:.method static synthetic access$500(I)V
+130:.method public static closeKeyboard(I)V
+144:.method private static closeKeyboardOnUiThread(I)V
+220:.method public static createEditBox(IIIIF)I
+254:.method private static native editBoxEditingChanged(ILjava/lang/String;)V
+257:.method private static native editBoxEditingDidBegin(I)V
+260:.method private static native editBoxEditingDidEnd(ILjava/lang/String;I)V
+263:.method public static getPadding(F)I
+275:.method public static openKeyboard(I)V
+289:.method private static openKeyboardOnUiThread(I)V
+361:.method public static removeEditBox(I)V
+375:.method public static setEditBoxViewRect(IIIII)V
+401:.method public static setFont(ILjava/lang/String;F)V
+415:.method public static setFontColor(IIIII)V
+441:.method public static setInputFlag(II)V
+455:.method public static setInputMode(II)V
+469:.method public static setMaxLength(II)V
+483:.method public static setPlaceHolderText(ILjava/lang/String;)V
+497:.method public static setPlaceHolderTextColor(IIIII)V
+523:.method public static setReturnType(II)V
+537:.method public static setText(ILjava/lang/String;)V
+551:.method public static setTextHorizontalAlignment(II)V
+565:.method public static setVisible(IZ)V
+======================== /tmp/smali/org/cocos2dx/lib/Cocos2dxEditBoxHelper$1$2.smali ========================
+26:.method constructor <init>(Lorg/cocos2dx/lib/Cocos2dxEditBoxHelper$1;Lorg/cocos2dx/lib/Cocos2dxEditBox;)V
+40:.method public onFocusChange(Landroid/view/View;Z)V
