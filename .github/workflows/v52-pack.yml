@@ -1,0 +1,118 @@
+name: v52 pack - smaller on-screen buttons (0.65x)
+
+# Dex-only tweak on the working v51 build. Shrinks GamepadOverlay button radii
+# to 0.65x so the controls take less screen (Kincaid-style compact layout).
+# Spacing is derived from btnRadius in layoutButtons(), so the whole cluster
+# compacts proportionally. Native .so and input fix are untouched (base=v51).
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_TAG: v51-controls
+      BASE_APK_NAME: FOBS_v51.apk
+      OVERLAY_STD: 'org/cocos2dx/cpp/GamepadOverlay.smali'
+      SMALI_API: '23'
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 1 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+
+      - name: Download working v51 APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+          ls -l /tmp/base.apk
+
+      - name: Fetch baksmali + smali
+        run: |
+          set -e
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+
+      - name: Shrink button radii in GamepadOverlay
+        run: |
+          set -e
+          mkdir -p /tmp/dex
+          unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+          test -f "/tmp/smali/$OVERLAY_STD"
+          python3 - "/tmp/smali/$OVERLAY_STD" <<'PY'
+          import sys
+          path = sys.argv[1]
+          s = open(path).read()
+          # 0.082f btnRadius/shootRadius -> 0.0533f (0.65x)
+          # 0.072f shoulderRadius        -> 0.0468f (0.65x)
+          repl = {
+              "0x3da7ef9e": "0x3d5a511a",   # 0.082 -> 0.0533
+              "0x3d9374bc": "0x3d3fb15b",   # 0.072 -> 0.0468
+          }
+          n = 0
+          for old, new in repl.items():
+              c = s.count(old)
+              if c == 0:
+                  raise SystemExit(f"const {old} not found - layout changed?")
+              s = s.replace(old, new)
+              n += c
+              print(f"replaced {old} -> {new}  ({c}x)")
+          open(path, "w").write(s)
+          print(f"total {n} radius constant(s) rescaled to 0.65x")
+          PY
+          echo "=== confirm new consts present ==="
+          grep -c "0x3d5a511a\|0x3d3fb15b" "/tmp/smali/$OVERLAY_STD"
+
+      - name: Reassemble + repackage (dex only) + sign + release
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_patched.dex
+          test -s /tmp/dex/classes_patched.dex
+          python3 - /tmp/dex/classes_patched.dex /tmp/base.apk /tmp/v52_unaligned.apk <<'PY'
+          import sys, zipfile
+          dex, base, out = sys.argv[1:4]
+          dexb = open(dex,'rb').read()
+          zin=zipfile.ZipFile(base,'r'); zout=zipfile.ZipFile(out,'w')
+          sd=False
+          for info in zin.infolist():
+              n=info.filename
+              raw = dexb if n=='classes.dex' else zin.read(n)
+              if n=='classes.dex': sd=True
+              zi=zipfile.ZipInfo(n,date_time=info.date_time)
+              zi.compress_type=info.compress_type; zi.external_attr=info.external_attr
+              zi.internal_attr=info.internal_attr; zi.create_system=info.create_system; zi.flag_bits=info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not sd: raise SystemExit('dex not swapped')
+          print('dex swapped, .so preserved')
+          PY
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v52_unaligned.apk /tmp/v52_aligned.apk
+          "${BT}apksigner" sign --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v52.apk /tmp/v52_aligned.apk
+          "${BT}apksigner" verify --verbose /tmp/FOBS_v52.apk >/dev/null
+          gh release create v52-controls /tmp/FOBS_v52.apk \
+            --title "v52: smaller on-screen buttons (0.65x)" \
+            --notes "Working v51 controls with GamepadOverlay button radii scaled to 0.65x for a more compact, less obstructive layout." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v52-controls /tmp/FOBS_v52.apk --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          { echo "v52 pack OK (buttons 0.65x)"; echo "asset: https://github.com/${GITHUB_REPOSITORY}/releases/download/v52-controls/FOBS_v52.apk"; md5sum /tmp/FOBS_v52.apk; } > mod64/logs/v52_result.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v52_result.txt && git commit -m "v52 result" || true
+          git push origin main || true
