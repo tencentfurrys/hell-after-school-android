@@ -1,0 +1,3 @@
+v50 pack OK
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v50-controls/FOBS_v50.apk
+dad303f1747c9612b7c4a8ee82311c84  /tmp/FOBS_v50.apk
