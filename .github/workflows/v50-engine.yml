@@ -1,0 +1,119 @@
+name: v50 engine - full arm64 boot patches + nativeInjectCocos2dKey
+
+# v49 crashed at boot: agtk::ChangeScreenResolutionSize <- Scene::start (the v34
+# crash) because the v49 engine was built WITHOUT the accumulated arm64 boot
+# patches. This build replicates the proven v41 patch chain AND adds
+# GamepadInject.cpp so the .so both boots and exports nativeInjectCocos2dKey.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      SCENE_CPP: Player/Classes/Lib/Scene.cpp
+      PHYS_CPP: Player/cocos2d/cocos/physics/CCPhysicsBody.cpp
+      CHIPMUNK_H: Player/cocos2d/external/chipmunk/include/chipmunk/chipmunk_types.h
+      APP_MK: Player/proj.android-studio/app/jni/Application.mk
+      ANDROID_MK: Player/proj.android-studio/app/jni/Android.mk
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 1 }
+
+      - name: Apply v34 boot crash-fix (Scene.cpp)
+        run: |
+          set -e
+          test -f "$SCENE_CPP"
+          python3 mod64/scripts/v34_patch_engine.py "$SCENE_CPP"
+          grep -n "v34: skip desktop window/resolution setup on Android" "$SCENE_CPP" && echo "v34 OK"
+
+      - name: Apply v41 cpFloat ABI fix (chipmunk_types.h)
+        run: |
+          set -e
+          test -f "$CHIPMUNK_H"
+          python3 mod64/scripts/v41_patch_chipmunk.py "$CHIPMUNK_H"
+          grep -n "CP_USE_DOUBLES\|v41" "$CHIPMUNK_H" | head
+
+      - name: Apply v39 moment-guard (CCPhysicsBody.cpp, defense-in-depth)
+        run: |
+          set -e
+          test -f "$PHYS_CPP"
+          python3 mod64/scripts/v39_patch_engine.py "$PHYS_CPP"
+          grep -n "ccSafeMoment" "$PHYS_CPP" | head
+
+      - name: Add GamepadInject.cpp to Android.mk
+        run: |
+          set -e
+          test -f Player/Classes/GamepadInject.cpp
+          if grep -q "GamepadInject.cpp" "$ANDROID_MK"; then
+            echo "already listed"
+          else
+            sed -i 's#\(hellocpp/main.cpp \\\)#\1\n    ../../../Classes/GamepadInject.cpp \\#' "$ANDROID_MK"
+          fi
+          grep -nE "hellocpp/main.cpp|GamepadInject.cpp" "$ANDROID_MK"
+
+      - name: Setup NDK r25c
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with: { ndk-version: r25c, add-to-path: true }
+
+      - name: NDK r25c compatibility
+        run: |
+          set -e
+          for mk in $(find . -path '*pvmp3dec*' -name 'Android.mk' 2>/dev/null); do
+            sed -i 's/-Werror/-Wno-error/g' "$mk" && echo "patched $mk"
+          done
+          if ! grep -q -- '-w ' "$APP_MK"; then
+            sed -i 's/APP_CPPFLAGS := /APP_CPPFLAGS := -w /' "$APP_MK" || echo 'APP_CPPFLAGS := -w' >> "$APP_MK"
+          fi
+          grep "APP_CPPFLAGS" "$APP_MK" || true
+
+      - name: Build arm64-v8a libMyGame.so
+        working-directory: Player/proj.android-studio/app
+        env:
+          NDK_MODULE_PATH: ${{ steps.setup-ndk.outputs.ndk-path }}/sources
+        run: |
+          set -e
+          "${{ steps.setup-ndk.outputs.ndk-path }}/ndk-build" \
+            NDK_DEBUG=0 APP_ABI=arm64-v8a -j"$(nproc)" V=0 2>&1 | tee /tmp/build.log | tail -n 30 || true
+          find . -name libMyGame.so -path '*arm64-v8a*' -exec ls -lh {} \;
+
+      - name: Verify symbol + boot patches
+        id: verify
+        run: |
+          set -e
+          SO="$(find Player/proj.android-studio/app -name libMyGame.so -path '*arm64-v8a*' | head -1)"
+          if [ -z "$SO" ] || [ ! -f "$SO" ]; then
+            echo "BUILD FAILED"; echo "SO_OK=0" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          NM="${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-nm"
+          if "$NM" -D "$SO" 2>/dev/null | grep -q nativeInjectCocos2dKey; then
+            echo "SYMBOL OK"; echo "SO_OK=1" >> "$GITHUB_OUTPUT"; cp "$SO" /tmp/libMyGame.so
+          else
+            echo "SYMBOL MISSING"; echo "SO_OK=0" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit build log
+        if: always()
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          { echo "SO_OK=${{ steps.verify.outputs.SO_OK }}"; echo "--- tail ---"; tail -n 50 /tmp/build.log 2>/dev/null || true; } > mod64/logs/v50_build.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v50_build.txt && git commit -m "v50 engine build log" || true
+          git push origin main || true
+
+      - name: Publish .so
+        if: steps.verify.outputs.SO_OK == '1'
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release create v50-so /tmp/libMyGame.so --title "v50 engine .so (boot patches + native inject)" \
+            --notes "arm64 libMyGame.so: v34 Scene boot fix + v41 chipmunk ABI + v39 moment guard + GamepadInject native symbol." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v50-so /tmp/libMyGame.so --repo "$GITHUB_REPOSITORY" --clobber
