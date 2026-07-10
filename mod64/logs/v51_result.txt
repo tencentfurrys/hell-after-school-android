@@ -1,0 +1,3 @@
+v51 pack OK
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v51-controls/FOBS_v51.apk
+287dacb7c911312738c7fa1bb2f9121e  /tmp/FOBS_v51.apk
