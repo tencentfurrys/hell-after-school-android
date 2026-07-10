@@ -1,0 +1,3 @@
+v52 pack OK (buttons 0.65x)
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v52-controls/FOBS_v52.apk
+66480829ebaf13391eb9f6655241fe78  /tmp/FOBS_v52.apk
