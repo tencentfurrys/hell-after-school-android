@@ -1,0 +1,113 @@
+name: v51 pack - v46 base + v51 native .so + route touch to native inject
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_TAG: v46-controls
+      BASE_APK_NAME: FOBS_v46.apk
+      OVERLAY_STD: 'org/cocos2dx/cpp/GamepadOverlay.smali'
+      SMALI_API: '23'
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 1 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+
+      - name: Download base APK + v51 .so
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+          gh release download v51-so --repo "$GITHUB_REPOSITORY" --pattern "libMyGame.so" --output /tmp/libMyGame.so
+          ls -l /tmp/base.apk /tmp/libMyGame.so
+
+      - name: Fetch baksmali + smali
+        run: |
+          set -e
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+
+      - name: Patch rawInject -> nativeInjectCocos2dKey
+        run: |
+          set -e
+          mkdir -p /tmp/dex
+          unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+          test -f "/tmp/smali/$OVERLAY_STD"
+          python3 - "/tmp/smali/$OVERLAY_STD" <<'PY'
+          import sys, re
+          path = sys.argv[1]; src = open(path).read().splitlines()
+          cls = None
+          for l in src[:20]:
+              m = re.match(r'\.class\s+.*?(L[^;]+;)', l)
+              if m: cls = m.group(1); break
+          if not cls: raise SystemExit('class not found')
+          i0 = i1 = None
+          for i,l in enumerate(src):
+              if re.match(r'\.method .*rawInject\(IZ\)V', l): i0 = i
+              elif i0 is not None and l.strip()=='.end method': i1 = i; break
+          if i0 is None: raise SystemExit('rawInject not found')
+          body = [ src[i0], '    .registers 3', '',
+                   '    invoke-static {p1, p2}, ' + cls + '->nativeInjectCocos2dKey(IZ)V',
+                   '    return-void', '.end method' ]
+          src = src[:i0] + body + src[i1+1:]
+          open(path,'w').write('\n'.join(src))
+          print('patched rawInject on', cls)
+          PY
+          awk '/\.method .*rawInject/,/\.end method/' "/tmp/smali/$OVERLAY_STD" | grep -q "nativeInjectCocos2dKey(IZ)V"
+
+      - name: Reassemble + repackage (dex + .so) + sign + release
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_patched.dex
+          test -s /tmp/dex/classes_patched.dex
+          python3 - /tmp/dex/classes_patched.dex /tmp/libMyGame.so /tmp/base.apk /tmp/v51_unaligned.apk <<'PY'
+          import sys, zipfile
+          dex, so, base, out = sys.argv[1:5]
+          dexb=open(dex,'rb').read(); sob=open(so,'rb').read()
+          zin=zipfile.ZipFile(base,'r'); zout=zipfile.ZipFile(out,'w')
+          sd=ss=False
+          for info in zin.infolist():
+              n=info.filename
+              if n=='classes.dex': raw=dexb; sd=True
+              elif n.endswith('arm64-v8a/libMyGame.so'): raw=sob; ss=True
+              else: raw=zin.read(n)
+              zi=zipfile.ZipInfo(n,date_time=info.date_time)
+              zi.compress_type=info.compress_type; zi.external_attr=info.external_attr
+              zi.internal_attr=info.internal_attr; zi.create_system=info.create_system; zi.flag_bits=info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          print('dex=%s so=%s'%(sd,ss))
+          if not (sd and ss): raise SystemExit('swap failed')
+          PY
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v51_unaligned.apk /tmp/v51_aligned.apk
+          "${BT}apksigner" sign --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v51.apk /tmp/v51_aligned.apk
+          "${BT}apksigner" verify --verbose /tmp/FOBS_v51.apk >/dev/null
+          gh release create v51-controls /tmp/FOBS_v51.apk \
+            --title "v51 controls: boots + native InputManager inject" \
+            --notes "v51 engine .so (v34/v39/v41 boot patches + nativeInjectCocos2dKey) swapped into v46 base; touch routes to native inject. Jump=KEY_SPACE 59 litmus." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v51-controls /tmp/FOBS_v51.apk --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          { echo "v51 pack OK"; echo "asset: https://github.com/${GITHUB_REPOSITORY}/releases/download/v51-controls/FOBS_v51.apk"; md5sum /tmp/FOBS_v51.apk; } > mod64/logs/v51_result.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v51_result.txt && git commit -m "v51 pack result" || true
+          git push origin main || true
