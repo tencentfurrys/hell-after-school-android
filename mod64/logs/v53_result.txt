@@ -1,0 +1,3 @@
+v53 pack OK (edge inset 0.09)
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v53-controls/FOBS_v53.apk
+0d3642a90ee1d4b418004d453cdff4e7  /tmp/FOBS_v53.apk
