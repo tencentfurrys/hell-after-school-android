@@ -1,0 +1,3 @@
+v54 pack OK
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v54-controls/FOBS_v54.apk
+9ace83ebcedca00a7da6fdf354895986  /tmp/FOBS_v54.apk
