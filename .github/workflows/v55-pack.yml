@@ -1,0 +1,114 @@
+name: v55 pack - on-screen control editor (move / pinch-resize / export log)
+
+# Adds an edit mode to GamepadOverlay via mod64/scripts/v55_edit_patch.py:
+#   - Tap the "EDIT" pill (top of screen) to toggle edit mode.
+#   - In edit mode: drag a button to move it; pinch a button to resize it.
+#   - Tap "SAVE" to dump the full layout (W/H + each button cx,cy,r) to
+#     hell_runtime.log as LAYOUT/BTN/LAYOUT END lines.
+# Gameplay input is untouched when not in edit mode. Base = v53 (working controls).
+# Patch is locally pre-validated (assemble + round-trip). Workflow re-verifies by
+# re-disassembling the final dex and re-assembling before packaging.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_TAG: v53-controls
+      BASE_APK_NAME: FOBS_v53.apk
+      OVERLAY_STD: 'org/cocos2dx/cpp/GamepadOverlay.smali'
+      SMALI_API: '23'
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 1 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+
+      - name: Download v53 APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+          ls -l /tmp/base.apk
+
+      - name: Fetch baksmali + smali
+        run: |
+          set -e
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+
+      - name: Disassemble + apply editor patch
+        run: |
+          set -e
+          mkdir -p /tmp/dex
+          unzip -o -q /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+          test -f "/tmp/smali/$OVERLAY_STD"
+          python3 mod64/scripts/v55_edit_patch.py "/tmp/smali/$OVERLAY_STD"
+          echo "=== sanity: new methods present ==="
+          grep -c "edHandle\|edExport\|edDraw\|edNearest" "/tmp/smali/$OVERLAY_STD"
+
+      - name: Assemble + round-trip verify
+        run: |
+          set -e
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_patched.dex
+          test -s /tmp/dex/classes_patched.dex
+          # round-trip: disassemble the produced dex and reassemble -> proves consistency
+          rm -rf /tmp/rt && java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes_patched.dex -o /tmp/rt
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/rt -o /tmp/rt.dex
+          test -s /tmp/rt.dex
+          echo "round-trip verify OK"
+
+      - name: Repackage + sign + release
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -e
+          python3 - /tmp/dex/classes_patched.dex /tmp/base.apk /tmp/v55_unaligned.apk <<'PY'
+          import sys, zipfile
+          dex, base, out = sys.argv[1:4]
+          dexb = open(dex,'rb').read()
+          zin = zipfile.ZipFile(base,'r'); zout = zipfile.ZipFile(out,'w')
+          sd = False
+          for info in zin.infolist():
+              n = info.filename
+              raw = dexb if n == 'classes.dex' else zin.read(n)
+              if n == 'classes.dex': sd = True
+              zi = zipfile.ZipInfo(n, date_time=info.date_time)
+              zi.compress_type = info.compress_type
+              zi.external_attr = info.external_attr
+              zi.internal_attr = info.internal_attr
+              zi.create_system = info.create_system
+              zi.flag_bits = info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not sd: raise SystemExit('classes.dex not swapped')
+          print('repackaged')
+          PY
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v55_unaligned.apk /tmp/v55_aligned.apk
+          "${BT}apksigner" sign --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v55.apk /tmp/v55_aligned.apk
+          "${BT}apksigner" verify --verbose /tmp/FOBS_v55.apk >/dev/null
+          gh release create v55-controls /tmp/FOBS_v55.apk \
+            --title "v55: on-screen control editor (move / pinch-resize / export)" \
+            --notes "Tap EDIT pill to toggle; drag to move, pinch to resize; tap SAVE to write layout to hell_runtime.log. Base v53." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v55-controls /tmp/FOBS_v55.apk --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          { echo "v55 pack OK"; echo "asset: https://github.com/${GITHUB_REPOSITORY}/releases/download/v55-controls/FOBS_v55.apk"; md5sum /tmp/FOBS_v55.apk; } > mod64/logs/v55_result.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v55_result.txt && git commit -m "v55 pack result" || true
+          git push origin main || true
