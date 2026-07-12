@@ -1,2 +1,3 @@
-v57 status: failure
+v57 status: success
 asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v57-editor-fix/FOBS_v57.apk
+8ef1fb0eae08fd8ec678e8f4a6b8ea09  /tmp/FOBS_v57.apk
