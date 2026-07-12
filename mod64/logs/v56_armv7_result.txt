@@ -1,0 +1,84 @@
+v56 armv7 build status: success
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v56-armv7/FOBS_v56.apk
+17ed603343d0f3fb057daea60abdbffa  /tmp/FOBS_v56.apk
+--- build tail ---
+[armeabi-v7a] Compile++ arm  : cc_core <= CCPhysics3DObject.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= CCPhysics3DDebugDrawer.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= CCPhysics3DShape.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= CCPhysicsSprite3D.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= CCNavMeshAgent.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= CCPhysics3DConstraint.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= CCNavMeshDebugDraw.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= CCNavMesh.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= CCNavMeshObstacle.cpp
+[armeabi-v7a] Compile arm    : cc_core <= ConvertUTF.c
+[armeabi-v7a] Compile arm    : cc_core <= md5.c
+[armeabi-v7a] Compile++ arm  : cc_core <= CCNavMeshUtils.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= ConvertUTFWrapper.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= ioapi_mem.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= ioapi.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= unzip.cpp
+[armeabi-v7a] Compile arm    : cc_core <= xxhash.c
+[armeabi-v7a] Compile++ arm  : cc_core <= edtaa3func.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= tinyxml2.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= shapes.cc
+[armeabi-v7a] Compile++ arm  : cc_core <= advancing_front.cc
+[armeabi-v7a] Compile++ arm  : cc_core <= cdt.cc
+[armeabi-v7a] Compile++ arm  : cc_core <= sweep_context.cc
+[armeabi-v7a] Compile++ arm  : ext_recast <= DebugDraw.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= sweep.cc
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourAlloc.cpp
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourDebugDraw.cpp
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourCommon.cpp
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourNavMesh.cpp
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourNavMeshBuilder.cpp
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourNavMeshQuery.cpp
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourNode.cpp
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourLocalBoundary.cpp
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourCrowd.cpp
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourObstacleAvoidance.cpp
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourPathCorridor.cpp
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourProximityGrid.cpp
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourPathQueue.cpp
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourTileCache.cpp
+[armeabi-v7a] Compile arm    : ext_recast <= fastlz.c
+[armeabi-v7a] Compile++ arm  : ext_recast <= DetourTileCacheBuilder.cpp
+[armeabi-v7a] Compile++ arm  : ccjs_android <= CCJavascriptJavaBridge.cpp
+[armeabi-v7a] Compile++ arm  : cc_core <= clipper.cpp
+[armeabi-v7a] Compile++ thumb: ccandroid <= CCApplication-android.cpp
+[armeabi-v7a] Compile++ thumb: ccandroid <= CCCommon-android.cpp
+[armeabi-v7a] Compile++ thumb: ccandroid <= CCGLViewImpl-android.cpp
+[armeabi-v7a] Compile++ thumb: ccandroid <= CCFileUtils-android.cpp
+[armeabi-v7a] Compile++ thumb: ccandroid <= CCDevice-android.cpp
+[armeabi-v7a] Compile++ thumb: ccandroid <= Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp
+[armeabi-v7a] Compile++ thumb: ccandroid <= CCEnhanceAPI-android.cpp
+[armeabi-v7a] Compile++ thumb: ccandroid <= javaactivity-android.cpp
+[armeabi-v7a] Compile++ thumb: ccandroid <= Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
+[armeabi-v7a] Compile++ thumb: ccandroid <= Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
+[armeabi-v7a] Compile++ thumb: ccandroid <= Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp
+[armeabi-v7a] Compile++ thumb: ccandroid <= Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp
+[armeabi-v7a] Compile thumb  : cpufeatures <= cpu-features.c
+[armeabi-v7a] StaticLibrary  : libjscc.a
+[armeabi-v7a] StaticLibrary  : libstorage.a
+[armeabi-v7a] StaticLibrary  : libccs.a
+[armeabi-v7a] StaticLibrary  : libccb.a
+[armeabi-v7a] StaticLibrary  : libc3d.a
+[armeabi-v7a] StaticLibrary  : libui.a
+[armeabi-v7a] StaticLibrary  : libccds.a
+[armeabi-v7a] StaticLibrary  : flatbuffers.a
+[armeabi-v7a] Compile++ thumb: ccandroid <= JniHelper.cpp
+[armeabi-v7a] StaticLibrary  : libets.a
+[armeabi-v7a] StaticLibrary  : libaudio.a
+[armeabi-v7a] StaticLibrary  : libnet.a
+[armeabi-v7a] StaticLibrary  : libext_vorbisidec.a
+[armeabi-v7a] StaticLibrary  : libext_pvmp3dec.a
+[armeabi-v7a] StaticLibrary  : librecast.a
+[armeabi-v7a] StaticLibrary  : libjsccandroid.a
+[armeabi-v7a] StaticLibrary  : libcpufeatures.a
+[armeabi-v7a] StaticLibrary  : libcc_core.a
+[armeabi-v7a] Compile++ thumb: ccandroid <= TouchesJni.cpp
+[armeabi-v7a] StaticLibrary  : libccandroid.a
+[armeabi-v7a] SharedLibrary  : libMyGame.so
+[armeabi-v7a] Install        : libMyGame.so => libs/armeabi-v7a/libMyGame.so
+=== publish_so: waiting for arm64 libMyGame.so ===
+publish_so: .so NOT found
