@@ -95,8 +95,12 @@ jobs:
           "$LLVM/llvm-readelf" -h /tmp/libMyGame-armv7.so | tee /tmp/v56-elf.txt
           grep -q "Class:.*ELF32" /tmp/v56-elf.txt
           grep -q "Machine:.*ARM" /tmp/v56-elf.txt
-          "$LLVM/llvm-nm" -D /tmp/libMyGame-armv7.so | grep -q nativeInjectCocos2dKey
-          strings /tmp/libMyGame-armv7.so | grep -q GamepadOverlay_nativeInjectCocos2dKey
+          # Write inspection output first. With pipefail, `producer | grep -q`
+          # can falsely fail when grep exits early and producer receives SIGPIPE.
+          "$LLVM/llvm-nm" -D /tmp/libMyGame-armv7.so > /tmp/v56-nm.txt
+          strings /tmp/libMyGame-armv7.so > /tmp/v56-strings.txt
+          grep -q nativeInjectCocos2dKey /tmp/v56-nm.txt
+          grep -q GamepadOverlay_nativeInjectCocos2dKey /tmp/v56-strings.txt
           echo "armv7 native injection verified"
 
       - name: Download v55 and replace only the armv7 engine
