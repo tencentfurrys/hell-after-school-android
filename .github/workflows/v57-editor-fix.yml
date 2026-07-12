@@ -1,0 +1,122 @@
+name: v57 - fixed editor + v56 armv7 engine
+
+# Builds a corrected editor dex from clean v53, then places it into v56 so the
+# armv7 native controls/performance engine and working arm64 engine are kept.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CLEAN_TAG: v53-controls
+      CLEAN_APK: FOBS_v53.apk
+      ENGINE_TAG: v56-armv7
+      ENGINE_APK: FOBS_v56.apk
+      OVERLAY: org/cocos2dx/cpp/GamepadOverlay.smali
+      SMALI_API: '23'
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 1 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+
+      - name: Download clean editor base and v56 engine APK
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -euo pipefail
+          gh release download "$CLEAN_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$CLEAN_APK" --output /tmp/clean.apk
+          gh release download "$ENGINE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$ENGINE_APK" --output /tmp/engine.apk
+          ls -lh /tmp/clean.apk /tmp/engine.apk
+
+      - name: Build corrected editor dex
+        run: |
+          set -euo pipefail
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+          mkdir -p /tmp/dex
+          unzip -oq /tmp/clean.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+          python3 mod64/scripts/v57_edit_patch.py "/tmp/smali/$OVERLAY"
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_fixed.dex
+          test -s /tmp/dex/classes_fixed.dex
+
+      - name: Round-trip verify editor behaviour
+        run: |
+          set -euo pipefail
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes_fixed.dex -o /tmp/verify-smali
+          O="/tmp/verify-smali/$OVERLAY"
+          grep -q 'RectF;->contains(FF)Z' "$O"
+          grep -q ':ed_release' "$O"
+          grep -q 'sput .*->edSel:I' "$O"
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/verify-smali -o /tmp/dex/roundtrip.dex
+          test -s /tmp/dex/roundtrip.dex
+          echo "editor verification passed: hit-only selection and release clearing present"
+
+      - name: Replace only classes.dex in v56
+        run: |
+          set -euo pipefail
+          python3 - /tmp/engine.apk /tmp/dex/classes_fixed.dex /tmp/v57-unaligned.apk <<'PY'
+          import sys, zipfile, hashlib
+          base, dex, out = sys.argv[1:4]
+          fixed = open(dex, 'rb').read()
+          zin = zipfile.ZipFile(base, 'r'); zout = zipfile.ZipFile(out, 'w')
+          libs_before = {}
+          swapped = False
+          for info in zin.infolist():
+              original = zin.read(info.filename)
+              if info.filename.startswith('lib/') and info.filename.endswith('/libMyGame.so'):
+                  libs_before[info.filename] = hashlib.sha256(original).hexdigest()
+              raw = fixed if info.filename == 'classes.dex' else original
+              if info.filename == 'classes.dex': swapped = True
+              zi = zipfile.ZipInfo(info.filename, date_time=info.date_time)
+              zi.compress_type=info.compress_type; zi.external_attr=info.external_attr
+              zi.internal_attr=info.internal_attr; zi.create_system=info.create_system; zi.flag_bits=info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not swapped: raise SystemExit('classes.dex not swapped')
+          check = zipfile.ZipFile(out, 'r')
+          for name, digest in libs_before.items():
+              if hashlib.sha256(check.read(name)).hexdigest() != digest:
+                  raise SystemExit('engine library changed: '+name)
+          check.close()
+          print('fixed dex installed; both ABI engine libraries preserved byte-for-byte')
+          PY
+
+      - name: Align, sign, verify and publish
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -euo pipefail
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v57-unaligned.apk /tmp/v57-aligned.apk
+          "${BT}apksigner" sign --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v57.apk /tmp/v57-aligned.apk
+          "${BT}apksigner" verify --verbose /tmp/FOBS_v57.apk
+          gh release create v57-editor-fix /tmp/FOBS_v57.apk \
+            --title "v57: fixed editor + armv7 controls/performance" \
+            --notes "Fixes editor teleport/sticky-button behaviour. A control moves only if touch-down begins inside that control; lifting/cancelling clears selection; DONE clears selection and exits. Preserves v56 armv7 native input/performance engine and working arm64 engine." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v57-editor-fix /tmp/FOBS_v57.apk --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record result
+        if: always()
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          {
+            echo "v57 status: ${{ job.status }}"
+            echo "asset: https://github.com/${GITHUB_REPOSITORY}/releases/download/v57-editor-fix/FOBS_v57.apk"
+            test -f /tmp/FOBS_v57.apk && md5sum /tmp/FOBS_v57.apk || true
+          } > mod64/logs/v57_result.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v57_result.txt
+          git commit -m "v57 editor fix result" || true
+          git push origin main || true
