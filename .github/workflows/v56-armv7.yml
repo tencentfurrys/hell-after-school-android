@@ -1,0 +1,174 @@
+name: v56 armv7 - native controls + optimised 32-bit engine
+
+# Rebuilds only armeabi-v7a from the open-source engine. The working arm64
+# library and v55 control editor are preserved. GamepadInjectV51.cpp supplies
+# the same InputManager injection and X/C/V remap already proven on arm64.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-pack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      SCENE_CPP: Player/Classes/Lib/Scene.cpp
+      PHYS_CPP: Player/cocos2d/cocos/physics/CCPhysicsBody.cpp
+      CHIPMUNK_H: Player/cocos2d/external/chipmunk/include/chipmunk/chipmunk_types.h
+      APP_MK: Player/proj.android-studio/app/jni/Application.mk
+      ANDROID_MK: Player/proj.android-studio/app/jni/Android.mk
+      BASE_TAG: v55-controls
+      BASE_APK_NAME: FOBS_v55.apk
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 1 }
+
+      - name: Apply Android engine safety patches
+        run: |
+          set -euo pipefail
+          python3 mod64/scripts/v34_patch_engine.py "$SCENE_CPP"
+          python3 mod64/scripts/v41_patch_chipmunk.py "$CHIPMUNK_H"
+          python3 mod64/scripts/v39_patch_engine.py "$PHYS_CPP"
+          grep -q "v34: skip desktop window/resolution setup on Android" "$SCENE_CPP"
+          grep -q "ccSafeMoment" "$PHYS_CPP"
+
+      - name: Add native touch input implementation
+        run: |
+          set -euo pipefail
+          test -f Player/Classes/GamepadInjectV51.cpp
+          if ! grep -q "GamepadInjectV51.cpp" "$ANDROID_MK"; then
+            sed -i 's#\(hellocpp/main.cpp \\\)#\1\n    ../../../Classes/GamepadInjectV51.cpp \\#' "$ANDROID_MK"
+          fi
+          grep -n "GamepadInjectV51.cpp" "$ANDROID_MK"
+
+      - name: Enable armv7 release optimisation
+        run: |
+          set -euo pipefail
+          # Keep IEEE maths and compatibility intact. Optimise hot C/C++ code
+          # without enabling NEON-only instructions or unsafe fast-math.
+          cat >> "$APP_MK" <<'EOF'
+          
+          # v56 armv7 performance build
+          APP_CFLAGS += -O3 -fomit-frame-pointer -ffunction-sections -fdata-sections
+          APP_CPPFLAGS += -O3 -fomit-frame-pointer -ffunction-sections -fdata-sections
+          APP_LDFLAGS += -Wl,--gc-sections
+          EOF
+          grep -n "v56 armv7\|O3\|gc-sections" "$APP_MK"
+          # SpiderMonkey JIT must remain enabled on armv7.
+          grep -q "setIon(true)" Player/cocos2d/cocos/scripting/js-bindings/manual/ScriptingCore.cpp
+          grep -q "setBaseline(true)" Player/cocos2d/cocos/scripting/js-bindings/manual/ScriptingCore.cpp
+
+      - name: Setup NDK r25c
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with: { ndk-version: r25c, add-to-path: true }
+
+      - name: NDK r25c compatibility
+        run: |
+          set -euo pipefail
+          while IFS= read -r mk; do
+            sed -i 's/-Werror/-Wno-error/g' "$mk"
+          done < <(find . -path '*pvmp3dec*' -name Android.mk)
+          if ! grep -q -- '-w ' "$APP_MK"; then
+            sed -i 's/APP_CPPFLAGS := /APP_CPPFLAGS := -w /' "$APP_MK" || true
+          fi
+
+      - name: Build optimised armeabi-v7a libMyGame.so
+        working-directory: Player/proj.android-studio/app
+        env:
+          NDK_MODULE_PATH: ${{ steps.setup-ndk.outputs.ndk-path }}/sources
+        run: |
+          set -euo pipefail
+          "${{ steps.setup-ndk.outputs.ndk-path }}/ndk-build" \
+            NDK_DEBUG=0 APP_ABI=armeabi-v7a -j"$(nproc)" V=0 2>&1 | tee /tmp/v56-build.log
+          SO="$(find . -name libMyGame.so -path '*armeabi-v7a*' | head -1)"
+          test -n "$SO" -a -s "$SO"
+          cp "$SO" /tmp/libMyGame-armv7.so
+
+      - name: Verify 32-bit ABI, input symbol and remaps
+        run: |
+          set -euo pipefail
+          LLVM="${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/linux-x86_64/bin"
+          "$LLVM/llvm-readelf" -h /tmp/libMyGame-armv7.so | tee /tmp/v56-elf.txt
+          grep -q "Class:.*ELF32" /tmp/v56-elf.txt
+          grep -q "Machine:.*ARM" /tmp/v56-elf.txt
+          "$LLVM/llvm-nm" -D /tmp/libMyGame-armv7.so | grep -q nativeInjectCocos2dKey
+          strings /tmp/libMyGame-armv7.so | grep -q GamepadOverlay_nativeInjectCocos2dKey
+          echo "armv7 native injection verified"
+
+      - name: Download v55 and replace only the armv7 engine
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -euo pipefail
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$BASE_APK_NAME" --output /tmp/base.apk
+          python3 - /tmp/base.apk /tmp/libMyGame-armv7.so /tmp/v56-unaligned.apk <<'PY'
+          import sys, zipfile
+          base, so, out = sys.argv[1:4]
+          replacement = open(so, 'rb').read()
+          target = 'lib/armeabi-v7a/libMyGame.so'
+          zin = zipfile.ZipFile(base, 'r')
+          zout = zipfile.ZipFile(out, 'w')
+          swapped = False
+          arm64_before = None
+          for info in zin.infolist():
+              raw = zin.read(info.filename)
+              if info.filename == target:
+                  raw = replacement
+                  swapped = True
+              if info.filename == 'lib/arm64-v8a/libMyGame.so':
+                  arm64_before = raw
+              zi = zipfile.ZipInfo(info.filename, date_time=info.date_time)
+              zi.compress_type = info.compress_type
+              zi.external_attr = info.external_attr
+              zi.internal_attr = info.internal_attr
+              zi.create_system = info.create_system
+              zi.flag_bits = info.flag_bits
+              zout.writestr(zi, raw)
+          zout.close(); zin.close()
+          if not swapped: raise SystemExit('armv7 library was not found or replaced')
+          if arm64_before is None: raise SystemExit('arm64 library missing from base')
+          print('armv7 replaced; arm64 and classes.dex preserved')
+          PY
+
+      - name: Align, sign, verify and publish v56
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -euo pipefail
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v56-unaligned.apk /tmp/v56-aligned.apk
+          "${BT}apksigner" sign \
+            --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v56.apk /tmp/v56-aligned.apk
+          "${BT}apksigner" verify --verbose /tmp/FOBS_v56.apk
+          unzip -p /tmp/FOBS_v56.apk lib/armeabi-v7a/libMyGame.so > /tmp/verify-armv7.so
+          cmp /tmp/verify-armv7.so /tmp/libMyGame-armv7.so
+          gh release create v56-armv7 /tmp/FOBS_v56.apk /tmp/libMyGame-armv7.so \
+            --title "v56: armv7 native controls + performance rebuild" \
+            --notes "Based on v55. Replaces only armeabi-v7a libMyGame.so with a release-optimised open-source rebuild. Includes native InputManager injection and X->A, C->Shift, V->Ctrl remaps. Preserves the working arm64 engine and control editor." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v56-armv7 /tmp/FOBS_v56.apk /tmp/libMyGame-armv7.so \
+            --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record result
+        if: always()
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          {
+            echo "v56 armv7 build status: ${{ job.status }}"
+            echo "asset: https://github.com/${GITHUB_REPOSITORY}/releases/download/v56-armv7/FOBS_v56.apk"
+            test -f /tmp/FOBS_v56.apk && md5sum /tmp/FOBS_v56.apk || true
+            echo "--- build tail ---"
+            tail -n 80 /tmp/v56-build.log 2>/dev/null || true
+          } > mod64/logs/v56_armv7_result.txt
+          git config user.name build-bot
+          git config user.email build@local
+          git add mod64/logs/v56_armv7_result.txt
+          git commit -m "v56 armv7 build result" || true
+          git push origin main || true
