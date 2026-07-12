@@ -53,8 +53,9 @@ jobs:
           java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes_fixed.dex -o /tmp/verify-smali
           O="/tmp/verify-smali/$OVERLAY"
           grep -q 'RectF;->contains(FF)Z' "$O"
-          grep -q ':ed_release' "$O"
-          grep -q 'sput .*->edSel:I' "$O"
+          # Baksmali normalises branch labels during round-trip, so verify the
+          # state writes rather than expecting our source label names.
+          test "$(grep -c 'sput .*->edSel:I' "$O")" -ge 4
           java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/verify-smali -o /tmp/dex/roundtrip.dex
           test -s /tmp/dex/roundtrip.dex
           echo "editor verification passed: hit-only selection and release clearing present"
