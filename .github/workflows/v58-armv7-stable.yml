@@ -1,0 +1,180 @@
+name: v58 - restore stable armv7 engine + shared key remap
+
+# v57's rebuilt armv7 engine crashes when entering the world and differs from
+# the proven original in three important ways: NDK r25c vs r21e, API 26 vs 23,
+# and it no longer contains TouchGamepad. This build restores the exact v53
+# armv7 engine and moves X/C/V -> A/Shift/Ctrl into GamepadOverlay.rawInject.
+# The remap is ABI-neutral: the v51 arm64 native injector passes the already
+# remapped values through, while the original armv7 native injector receives
+# the action keys it was missing.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_TAG: v57-editor-fix
+      BASE_APK: FOBS_v57.apk
+      STABLE_TAG: v53-controls
+      STABLE_APK: FOBS_v53.apk
+      OVERLAY: org/cocos2dx/cpp/GamepadOverlay.smali
+      SMALI_API: '23'
+      EXPECTED_ARMV7_SHA256: 423c4d9c580fbd9ef93003ced9e6f6042c84731408be64d462ce4a63fb1ab2fd
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 1 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+
+      - name: Download v57 and proven v53 armv7 source
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -euo pipefail
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$BASE_APK" --output /tmp/base.apk
+          gh release download "$STABLE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$STABLE_APK" --output /tmp/stable.apk
+          unzip -p /tmp/stable.apk lib/armeabi-v7a/libMyGame.so > /tmp/libMyGame-stable-armv7.so
+          echo "$EXPECTED_ARMV7_SHA256  /tmp/libMyGame-stable-armv7.so" | sha256sum -c -
+          file /tmp/libMyGame-stable-armv7.so
+
+      - name: Fetch smali tools and disassemble v57 dex
+        run: |
+          set -euo pipefail
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+          mkdir -p /tmp/dex
+          unzip -oq /tmp/base.apk classes.dex -d /tmp/dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes.dex -o /tmp/smali
+          test -f "/tmp/smali/$OVERLAY"
+
+      - name: Put X/C/V action remap before native injection
+        run: |
+          set -euo pipefail
+          python3 - "/tmp/smali/$OVERLAY" <<'PY'
+          import re, sys
+          path = sys.argv[1]
+          lines = open(path, encoding='utf-8').read().splitlines()
+          cls = None
+          for line in lines[:30]:
+              m = re.match(r'\.class\s+.*?(L[^;]+;)', line)
+              if m: cls = m.group(1); break
+          if not cls: raise SystemExit('overlay class descriptor not found')
+          start = end = None
+          for i, line in enumerate(lines):
+              if re.match(r'\.method .*rawInject\(IZ\)V', line): start = i
+              elif start is not None and line.strip() == '.end method': end = i; break
+          if start is None or end is None: raise SystemExit('rawInject method not found')
+          body = [
+              lines[start],
+              '    .registers 4',
+              '',
+              '    const/16 v0, 0x93',
+              '    if-ne p1, v0, :v58_check_c',
+              '    const/16 p1, 0x7c',       # KEY_X face -> KEY_A action
+              '    goto :v58_inject',
+              '',
+              '    :v58_check_c',
+              '    const/16 v0, 0x7e',
+              '    if-ne p1, v0, :v58_check_v',
+              '    const/16 p1, 0xc',        # KEY_C face -> KEY_LEFT_SHIFT
+              '    goto :v58_inject',
+              '',
+              '    :v58_check_v',
+              '    const/16 v0, 0x91',
+              '    if-ne p1, v0, :v58_inject',
+              '    const/16 p1, 0xe',        # KEY_V face -> KEY_LEFT_CTRL
+              '',
+              '    :v58_inject',
+              f'    invoke-static {{p1, p2}}, {cls}->nativeInjectCocos2dKey(IZ)V',
+              '    return-void',
+              '.end method',
+          ]
+          lines = lines[:start] + body + lines[end+1:]
+          open(path, 'w', encoding='utf-8').write('\n'.join(lines) + '\n')
+          print('patched rawInject with ABI-neutral X/C/V remap')
+          PY
+          awk '/\.method .*rawInject/,/\.end method/' "/tmp/smali/$OVERLAY" | tee /tmp/rawInject.txt
+          grep -q 'const/16 p1, 0x7c' /tmp/rawInject.txt
+          grep -q 'const/16 p1, 0xc' /tmp/rawInject.txt
+          grep -q 'const/16 p1, 0xe' /tmp/rawInject.txt
+
+      - name: Assemble and round-trip verify dex
+        run: |
+          set -euo pipefail
+          java -Xmx3g -jar /tmp/smali.jar assemble -a "$SMALI_API" /tmp/smali -o /tmp/dex/classes_v58.dex
+          test -s /tmp/dex/classes_v58.dex
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes_v58.dex -o /tmp/roundtrip
+          R="/tmp/roundtrip/$OVERLAY"
+          awk '/\.method .*rawInject/,/\.end method/' "$R" > /tmp/rawInject-roundtrip.txt
+          grep -q 'const/16 p1, 0x7c' /tmp/rawInject-roundtrip.txt
+          grep -q 'const/16 p1, 0xc' /tmp/rawInject-roundtrip.txt
+          grep -q 'const/16 p1, 0xe' /tmp/rawInject-roundtrip.txt
+          grep -q 'nativeInjectCocos2dKey(IZ)V' /tmp/rawInject-roundtrip.txt
+
+      - name: Repackage with only dex and stable armv7 engine changed
+        run: |
+          set -euo pipefail
+          python3 - /tmp/base.apk /tmp/dex/classes_v58.dex /tmp/libMyGame-stable-armv7.so /tmp/v58-unaligned.apk <<'PY'
+          import hashlib, sys, zipfile
+          base, dex, armv7, out = sys.argv[1:5]
+          new_dex = open(dex,'rb').read(); new_armv7 = open(armv7,'rb').read()
+          target = 'lib/armeabi-v7a/libMyGame.so'
+          zin=zipfile.ZipFile(base,'r'); zout=zipfile.ZipFile(out,'w')
+          arm64_before = zin.read('lib/arm64-v8a/libMyGame.so')
+          dex_ok = arm_ok = False
+          for info in zin.infolist():
+              if info.filename == 'classes.dex': raw=new_dex; dex_ok=True
+              elif info.filename == target: raw=new_armv7; arm_ok=True
+              else: raw=zin.read(info.filename)
+              zi=zipfile.ZipInfo(info.filename,date_time=info.date_time)
+              zi.compress_type=info.compress_type; zi.external_attr=info.external_attr
+              zi.internal_attr=info.internal_attr; zi.create_system=info.create_system; zi.flag_bits=info.flag_bits
+              zout.writestr(zi,raw)
+          zout.close(); zin.close()
+          if not (dex_ok and arm_ok): raise SystemExit('required swap missing')
+          chk=zipfile.ZipFile(out,'r')
+          if chk.read(target) != new_armv7: raise SystemExit('armv7 mismatch after pack')
+          if chk.read('lib/arm64-v8a/libMyGame.so') != arm64_before: raise SystemExit('arm64 engine changed')
+          chk.close()
+          print('stable armv7 restored; v57 arm64 preserved byte-for-byte')
+          PY
+
+      - name: Align, sign, verify and publish v58
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -euo pipefail
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v58-unaligned.apk /tmp/v58-aligned.apk
+          "${BT}apksigner" sign --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v58.apk /tmp/v58-aligned.apk
+          "${BT}apksigner" verify --verbose /tmp/FOBS_v58.apk
+          unzip -p /tmp/FOBS_v58.apk lib/armeabi-v7a/libMyGame.so | sha256sum | grep -q "$EXPECTED_ARMV7_SHA256"
+          gh release create v58-armv7-stable /tmp/FOBS_v58.apk \
+            --title "v58: stable armv7 engine + all controls" \
+            --notes "Restores the exact proven NDK r21e/API23 armv7 engine from v53, preserving TouchGamepad and avoiding the v57 world-entry crash. X/C/V are remapped in the shared overlay to A/Shift/Ctrl, so both armv7 and arm64 receive the correct action keys. Keeps the v57 editor fix and working v51 arm64 engine." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v58-armv7-stable /tmp/FOBS_v58.apk --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record result
+        if: always()
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          {
+            echo "v58 status: ${{ job.status }}"
+            echo "asset: https://github.com/${GITHUB_REPOSITORY}/releases/download/v58-armv7-stable/FOBS_v58.apk"
+            test -f /tmp/FOBS_v58.apk && md5sum /tmp/FOBS_v58.apk || true
+            test -f /tmp/FOBS_v58.apk && sha256sum /tmp/FOBS_v58.apk || true
+          } > mod64/logs/v58_result.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v58_result.txt
+          git commit -m "v58 stable armv7 result" || true
+          git push origin main || true
