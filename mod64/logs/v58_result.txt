@@ -1,0 +1,4 @@
+v58 status: success
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v58-armv7-stable/FOBS_v58.apk
+42a1f8a7ff72a87478bdecbb341a5ef4  /tmp/FOBS_v58.apk
+b7d54004a662b12d141ee42e554e9070fc9234981ee5969044ad6308fddb328d  /tmp/FOBS_v58.apk
