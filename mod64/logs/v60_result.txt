@@ -1,0 +1,7 @@
+v60 status: success
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v60-editor-sizebtns/FOBS_v60.apk
+9e6057d3be15d8887954c6287a62e13e  FOBS_v60.apk
+size: 228427796 bytes
+fix: Build #2 - replace pinch resize with top-bar +/- size buttons (~10%/tap, keeps center)
+base: v59; patch: mod64/scripts/v60_edit_patch.py applied to GamepadOverlay.smali
+verified: apksigner v1+v2+v3 = true; round-trip disasm confirmed edPillPM/edScale/edPillMinus/edPillPlus + draw hooks
