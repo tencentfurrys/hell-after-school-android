@@ -1,0 +1,7 @@
+v59 status: success
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v59-editor-grabfix/FOBS_v59.apk
+0d6a39a44e0025ff387ace4ee6358f7b  FOBS_v59.apk
+size: 228427796 bytes
+fix: Build #1 grab-offset drag (buttons stop following finger; land where placed)
+base: v58; patch: mod64/scripts/v59_edit_patch.py applied to GamepadOverlay.smali
+verified: apksigner v1+v2+v3 = true; round-trip disasm confirmed edGrab + offset move
