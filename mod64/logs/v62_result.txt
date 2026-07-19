@@ -1,0 +1,9 @@
+v62 status: success
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v62-fobs-style-controls/FOBS_v62_32bit.apk
+91b75b641a3e8e433186806942c09402  FOBS_v62_32bit.apk
+size: 197842818 bytes
+change: restyle controls to fit FOBS look - translucent glass fills + glowing amber/gold rings (match gold HUD frames)
+base: v61 (32-bit only); patch: mod64/scripts/v62_restyle_patch.py (restyle() called at end of init())
+paint-only: colors/alpha/stroke; no layout/memory change -> does NOT affect the crash-isolation result
+verified: apksigner v1+v2+v3 = true; aapt native-code = armeabi-v7a only; round-trip disasm confirmed restyle() present + called
+carries: v59 grab-offset drag + v60 +/- size buttons
