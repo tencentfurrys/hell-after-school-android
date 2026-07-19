@@ -1,0 +1,12 @@
+v65 status: success (build); pending phone launch confirm
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v65-no-editor/FOBS_v65_32bit.apk
+8c2ead4b48f29cbfc24dd8768d5697d4  FOBS_v65_32bit.apk
+size: 197842818 bytes
+change: REMOVE controls editor (unhook edDraw + edHandle). Base = v61 (last launch-good 32-bit).
+root-cause of v62/v63 launch crash (from user's boot.log/crash.log): java.lang.VerifyError in GamepadOverlay
+  - restyle() [v62]: register aliased with 'this' (Imprecise Constant 127 field access)
+  - navDraw() [v63]: high-reg params (this/Canvas) clobbered by scratch regs
+  VerifyError = class-load-time crash, BEFORE native crash handler -> explains missing Downloads crash file.
+  => v62 and v63 never launched; v61 was last good.
+verified(build): apksigner v1+v2+v3=true; native-code=armeabi-v7a; disasm confirms no restyle/nav*, editor unhooked, gameplay methods intact, dex parses.
+TODO after launch confirm: re-add amber-glass restyle then MENU/MAP with correct .registers (params occupy highest regs; keep scratch below).
