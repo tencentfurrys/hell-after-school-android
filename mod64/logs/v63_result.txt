@@ -1,0 +1,10 @@
+v63 status: success
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v63-menu-map-buttons/FOBS_v63_32bit.apk
+7e5d5b7dd5296fc2cd3792b487396c13  FOBS_v63_32bit.apk
+size: 197842818 bytes
+change: add MENU (Tab=0x8) + MAP (M=0x88) always-on top-center buttons via pill pattern (nativeInjectCocos2dKey down+up)
+base: v62 (32-bit); patch: mod64/scripts/v63_menumap_patch.py
+safe: no button-array/layout/hit-loop changes (avoids VerifyError/index risk); pills hidden in edit mode
+UNVERIFIED at runtime: keycodes triangulated from engine constants. Fallbacks if wrong -> Tab:0x9 ; M:0x93 or 0x6d
+verified(build): apksigner v1+v2+v3 = true; aapt native-code = armeabi-v7a; round-trip disasm confirmed nav* methods + wiring + keycodes
+carries: v59 grab-offset drag + v60 +/- size buttons + v62 amber-glass style
