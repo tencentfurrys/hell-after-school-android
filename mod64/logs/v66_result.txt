@@ -1,0 +1,12 @@
+v66 status: success (build); pending phone playtest
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v66-particle-cap/FOBS_v66_32bit.apk
+0a5ecac00b16a935266804336b04589e  FOBS_v66_32bit.apk
+size: 197842818 bytes
+change: cap project.json emitVolume at 60 to reduce particle memory/lag -> fix 32-bit mid-game OOM
+base: v65 (editor removed); script: mod64/scripts/v66_cap_particles.py
+diagnosis: user logs show onTrimMemory->level=80 OOM kill mid-game; cachePurge stalls GL thread 15-31s.
+  APK diff vs swd_v2 reference: engine libMyGame.so + assets + AppActivity(purger) BYTE-IDENTICAL.
+  => OOM is inherent particle load on 2GB J3, not our dex changes. 712 emitters; heavy ones 1000/500/200/100.
+effect: 186 emitters capped; max emitVolume 1000 -> 60; small effects (<=60) unchanged. JSON re-validated.
+verified: apksigner v1+v2+v3=true; native-code=armeabi-v7a; shipped project.json max emitVolume=60, 0 over; editor still unhooked.
+open: if still OOM -> obtain user's non-crashing original APK to diff, or lower cap to 40/30.
