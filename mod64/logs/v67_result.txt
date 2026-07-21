@@ -1,0 +1,11 @@
+v67 status: success (build); pending phone playtest
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v67-portal-lag-fix/FOBS_v67_32bit.apk
+f5a086f1749a0ac18dd6bd0018ac4759  FOBS_v67_32bit.apk
+size: 197842818 bytes
+change: targeted particle caps - looping emitters(loop:true)->20, one-shot->40. Attacks glowing portal/beam lag.
+base: v65 shell (editor removed) + project.json retargeted from original uncapped source.
+data: 373 loop emitters (212 were >20, incl 16x1000/12x500/16x200); 113 one-shot >40 reduced. max emitVolume now 40.
+context: v66 (cap 60) already fixed the mid-game OOM crash and user confirmed 'performance really good, not crashing'.
+  user pointed at glowing portals as remaining lag -> loop emitters are those continuous glows.
+verified: apksigner v1+v2+v3=true; native-code=armeabi-v7a; shipped project.json max emitVolume=40, 0 over; editor still removed.
+next-if-needed: lower loop cap to 12/10 for portals, or per-effect targeting of soft light/cyber light/warp/pillar of fire.
