@@ -1,0 +1,9 @@
+v68 status: success (build); pending phone playtest
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v68-max-low-particles/FOBS_v68_32bit.apk
+d6393e7a86f85dbdff95cc929dde3057  FOBS_v68_32bit.apk
+size: 197842818 bytes
+change: MAX LOW global particle caps - looping->4, one-shot->8, floor 1 (never invisible). 603 emitters reduced. max emitVolume 8.
+base: v65 shell (editor removed) + project.json from original uncapped source.
+context: v66 fixed crash; v67 targeted portals; user then asked for max low on EVERYTHING (water/glow/all).
+verified: apksigner v1+v2+v3=true; native-code=armeabi-v7a; shipped project.json max emitVolume=8, 0 over; editor still removed.
+tuning: if effects too sparse, raise specific named effects (water flow, etc). If perf still short, particles are near floor - next levers are texture/RGB565 (native .so) not project.json.
