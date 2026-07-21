@@ -1,0 +1,12 @@
+v70 status: success (build); pending phone playtest
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v70-clean-base-capped/FOBS_v70_32bit.apk
+b39da2415d589ddb98601098efa1ba04  FOBS_v70_32bit.apk
+size: 197818218 bytes
+BREAKTHROUGH: diff of user's crash-free original vs our builds ->
+  engine libMyGame.so IDENTICAL (0a578bfb); AppActivity + AppActivity$1/$2 (incl purgeCachedData) IDENTICAL.
+  ONLY GamepadOverlay differs: our chain added 12 dead ed* editor methods + heavier diag logging + modded layout.
+  => crash was in our modded classes.dex, not engine/purger/particle count. (v69 purge theory was WRONG.)
+build: base = user's ORIGINAL apk (its clean dex kept as-is) + swap in v66 capped project.json (emitVolume max 60).
+result: user's no-crash controls + our reduced-lag particles. No editor/style/menu-map/diag bloat.
+verified: apksigner v1+v2+v3=true; native-code=armeabi-v7a; v70 dex has 0 ed* methods; project.json max emitVolume=60.
+NOTE FOR FUTURE: rebuild any new control features FROM the user's original clean GamepadOverlay, not from our v44-v69 modded dex. Add features minimally + keep register hygiene (params occupy highest regs).
