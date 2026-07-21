@@ -1,0 +1,9 @@
+v69 status: success (build); pending phone playtest
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v69-purge-stall-fix/FOBS_v69_32bit.apk
+33e1d96511e8181dc65987bebe56eb29  FOBS_v69_32bit.apk
+size: 197842818 bytes
+change: remove cc.director.purgeCachedData() from GL-thread cache purge job (AppActivity$2 evalString). Keep removeUnusedTextures + removeUnusedSpriteFrames.
+root-cause: purgeCachedData unloads ALL cached data on the render thread -> full reload -> 15-31s stall (logs: cachePurge GLthread evalString elapsedMs=31947). This, not particle count, was the real lag. v67/v68 particle cuts backfired (10x laggier per user).
+base: v66 (particles capped 60, editor removed). v67/v68 reverted.
+verified: apksigner v1+v2+v3=true; native-code=armeabi-v7a; shipped AppActivity$2 has 0 purgeCachedData, keeps removeUnused*, project.json max emitVolume=60.
+next-if-needed: also lengthen purge interval (currently ~15s tick 0x3a98) or gate purge on real pressure only; or native texture RGB565/downsample for more FPS.
