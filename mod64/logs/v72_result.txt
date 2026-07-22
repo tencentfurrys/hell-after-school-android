@@ -1,0 +1,23 @@
+v72 status: success (build); pending phone playtest
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v72-corner-buttons-size-config/FOBS_v72_32bit.apk
+8dc6aaf0cf736a41411adaa712d549be  FOBS_v72_32bit.apk
+size: 197822338 bytes
+base: v71 (FOBS_v71_32bit.apk, md5 7dc18c1863c0f3a4fd9c302fda98e2a9) = clean original + v66 particle cap.
+change:
+  1. MENU moved to top-LEFT corner (left 0.02), MAP to top-RIGHT corner (left 0.88). SIZE pill top-center (0.45).
+  2. SIZE pill toggles cfgMode -> shows - / + pills (left 0.32 / 0.58).
+  3. - / + call applyScale(0.9 / 1.1): scales ctrlScale (clamped 0.5..2.0), re-runs layoutButtons -> resizes
+     GAMEPLAY CONTROLS ONLY (min-dim v2 * ctrlScale). Nav pills unaffected.
+  4. ctrlScale persisted permanently via SharedPreferences("fobs_ctrl","ctrlScale"); loadScale() in init after restyle().
+  5. restyle(): periwinkle-glow look to match user mockup - translucent navy fill argb(56,20,22,44),
+     bright periwinkle outline argb(255,191,196,255) stroke 2.2*density, cream centered bold labels
+     argb(255,255,245,220) with periwinkle glow shadow (setShadowLayer 4*density).
+keycodes: MENU=Tab=0x8, MAP=M=0x88 (unchanged from v71; fallback Tab=0x9, M=0x6d if wrong).
+crash-avoidance: all new methods register-safe (params highest regs, scratch below). navDraw .registers 6,
+  drawPill .registers 11, navHandle .registers 10, applyScale/loadScale/saveScale low reg counts.
+  init loadScale call uses {v0} (this copy), matching v71 register lesson. smali assembled clean; no VerifyError risk.
+verified: apksigner v1+v2+v3=true; native-code=armeabi-v7a only; round-trip disasm confirms navPill/navDraw/drawPill/
+  navHandle/navPulse/applyScale/loadScale/saveScale/restyle all present(1x), onDraw->navDraw & onTouch->navHandle hooked,
+  keycodes 0x8/0x88 wired, layoutButtons scales by ctrlScale, init restyle+loadScale present; dexdump class_defs_size=1039.
+next: confirm corner placement + style look good; MENU/MAP still open screens; SIZE +/- resizes gameplay controls
+  and sticks after closing the game.
