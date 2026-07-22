@@ -1,0 +1,15 @@
+v73 status: success (build); pending phone playtest
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v73-indigo-green-colors/FOBS_v73_32bit.apk
+6db81fe48cba227ffe335d55e0e56518  FOBS_v73_32bit.apk
+size: 197822338 bytes
+base: v72 (FOBS_v72_32bit.apk) = corner MENU/MAP + SIZE config on clean v71 base.
+change: COLOR-ONLY restyle per user palette (screenshot 20260722-171628):
+  - outline = deep indigo-blue argb(255,90,106,230)
+  - fill    = semi-transparent deep indigo argb(80,40,45,120)
+  - text+arrows (paintLabel/paintLabelSmall/paintArrow/paintNav) = glowing light green argb(255,170,255,150)
+    with green glow shadow (setShadowLayer 4*density) via new tintGreen(Paint) helper.
+crash-avoidance: paint-only; restyle .registers 6, tintGreen .registers 8 (params highest regs). No layout/memory change.
+verified: apksigner v1+v2+v3=true; native-code=armeabi-v7a only; round-trip disasm confirms restyle+tintGreen present,
+  outline/green color consts present, onDraw->navDraw hook intact.
+note: v72 confirmed RUNNING on device (screenshot shows MENU/MAP/SIZE/+/- rendered, no crash). This build only recolors.
+next: confirm colors match the mockup (indigo outline+fill, green glowing labels/arrows).
