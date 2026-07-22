@@ -1,0 +1,13 @@
+v71 status: success (build); pending phone playtest
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v71-menu-map-style/FOBS_v71_32bit.apk
+7dc18c1863c0f3a4fd9c302fda98e2a9  FOBS_v71_32bit.apk
+size: 197822338 bytes
+change: add MENU(Tab=0x8)+MAP(M=0x88) small top-center pills + amber-glass restyle, on the CLEAN ORIGINAL base.
+base: user's crash-free original dex (v70 finding) + v66 capped project.json (emitVolume max 60).
+crash-avoidance: new methods register-safe (params in highest regs, scratch below). init restyle call fixed {p0}->{v0}
+  (init copies this to v0 via move-object/from16; p0 is high reg v18, not invoke-addressable).
+  smali assembler pre-flight REJECTED the bad register before shipping; after fix it assembled clean.
+verified: apksigner v1+v2+v3=true; native-code=armeabi-v7a; round-trip disasm: navPill/navDraw/navHandle/navPulse/restyle present,
+  onDraw->navDraw, onTouch->navHandle hooked, keycodes 0x8/0x88 wired; dexdump parses (class_defs_size 1039).
+keycodes: MENU=Tab=0x8, MAP=M=0x88 (from engine KeyCode consts). Fallback if wrong: Tab=0x9, M=0x6d.
+next: confirm buttons open menu/map in-game + style/size look good. Then optional: tune positions/size.
