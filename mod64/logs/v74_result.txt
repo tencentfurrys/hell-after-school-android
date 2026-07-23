@@ -1,0 +1,24 @@
+v74 status: success (build); pending device playtest
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v74-universal-menu-map-size-colors/FOBS_v74_universal.apk
+2aa9f2b53b142a297d58b886b2b7908e  FOBS_v74_universal.apk
+size: 231294996 bytes
+base: FOBS_universal_v4.apk (arm64-savepoint release, md5 c4b0fea11518978e769285de2f5890c4).
+  Verified its GamepadOverlay == the SAME clean original code used for the 32-bit chain (no ed* editor methods,
+  identical method list/fields/anchors, classes.dex 959924 = pristine). ABIs: arm64-v8a + armeabi-v7a, targetSdk 30.
+change: applied full 32-bit feature chain to the universal dex:
+  v71 (MENU=Tab 0x8 / MAP=M 0x88 pills + nav infra),
+  v72 (MENU top-left, MAP top-right, SIZE config pill -> +/- resize GAMEPLAY CONTROLS ONLY via ctrlScale, persisted
+       in SharedPreferences fobs_ctrl/ctrlScale, loadScale in init),
+  v73 (deep indigo-blue outline argb 255,90,106,230; semi-transparent indigo fill argb 80,40,45,120;
+       glowing light-green text+arrows argb 255,170,255,150 + green glow).
+crash-avoidance: v71 committed script writes restyle init-call as {p0}; universal init keeps this in v0
+  (.registers 20, move-object/from16 v0,p0) -> normalized {p0}->{v0} before v72 (same fix the v71 log noted).
+  All new methods register-safe. Kept BOTH ABIs (only classes.dex swapped); targetSdk 30 preserved for S26.
+verified: apksigner v1+v2+v3=true; ABIs = arm64-v8a + armeabi-v7a; round-trip disasm: navPill/navDraw/drawPill/
+  navHandle/navPulse/applyScale/loadScale/saveScale/restyle/tintGreen all present(1x); onDraw->navDraw &
+  onTouch->navHandle hooked; init restyle+loadScale; layoutButtons scales by ctrlScale; keycodes 0x8/0x88 present.
+note: FIX-FORWARD for committed v71 script register bug logged here; consider updating v71_menu_map_style_patch.py
+  to emit {v0} so future universal builds don't need the sed normalize.
+next: test on S26 (arm64) AND 32-bit phone (armv7 fallback in same APK). Confirm no crash, MENU/MAP open,
+  SIZE +/- resizes gameplay controls & persists, colors match. (arm64 MOVEMENT controls still need engine rebuild
+  per HANDOFF - unaffected by this dex-only change.)
