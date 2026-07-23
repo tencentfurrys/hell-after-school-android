@@ -1,0 +1,27 @@
+v76 status: success (build); pending S26 playtest. THE 64-bit FIX.
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v76-arm64-working-engine/FOBS_v76_arm64.apk
+83fe84c5960880003201197cbcbe5656  FOBS_v76_arm64.apk
+size: 202184598 bytes
+
+ROOT CAUSE of v75 crash (S26 native SIGSEGV):
+  backtrace was 100% native libMyGame.so (arm64): nativeInit -> applicationDidFinishLaunching ->
+  startCanvas -> createCanvas -> GameScene::init -> GameManager::initPlugins -> JavascriptManager::addObject
+  -> cocos2d::__String::getCString => SIGSEGV. NO dex frames -> not our controls code.
+  Two DIFFERENT arm64 engines existed:
+    - v58 arm64 libMyGame.so: md5 e58520fde34e44ff7d9ba6d51151914d, 30.5MB, HAS nativeInjectCocos2dKey (3 refs).
+      This is the engine behind v60 which user confirmed "works on 64-bit, nothing wrong".
+    - universal_v4 arm64 libMyGame.so: md5 46070af74519a7e2815c8ca1e59ece17, 33.35MB, ZERO nativeInjectCocos2dKey.
+      A later rebuild that crashes at initPlugins. v74/v75 were wrongly based on THIS one.
+
+FIX (v76): rebuild standalone arm64 from v58's PROVEN engine shell + our clean patched dex:
+  - shell: FOBS_v58.apk (has working arm64 engine + menushim). Stripped lib/armeabi-v7a/* -> arm64-v8a ONLY.
+  - dex: classes73.dex (clean original + full v71/v72/v73 chain, 0 editor methods, all 9 nav/size/style methods).
+    NOTE: v58's OWN dex is the messy editor lineage (7 ed* methods, different onDraw anchor) - NOT used.
+    We swap in the clean patched dex instead (dex is CPU-independent).
+  - targetSdk 23 -> 30 via patch_targetsdk.py (S26/Android 16 install policy).
+verified: apksigner v1+v2+v3=true; native-code=arm64-v8a ONLY; targetSdkVersion=30;
+  shipped arm64 engine md5=e58520... (the working one) with nativeInjectCocos2dKey present (3);
+  dex round-trip: 0 editor methods, navPill/navDraw/drawPill/navHandle/applyScale/loadScale/saveScale/restyle/
+  tintGreen all present(1x), onDraw->navDraw & onTouch->navHandle hooked.
+next: install on S26 - should now LAUNCH (was crashing at initPlugins). Confirm no crash, MENU/MAP open,
+  SIZE +/- resizes gameplay & persists, colors right. (arm64 MOVEMENT D-pad still needs engine-rebuild w/ TouchGamepad.)
