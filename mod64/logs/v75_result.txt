@@ -1,0 +1,13 @@
+v75 status: success (build); pending device playtest
+asset: https://github.com/sonicsonica701-cloud/hell-after-school-android/releases/download/v75-arm64-standalone/FOBS_v75_arm64.apk
+832b496a8d087d5e94898143410f9b0e  FOBS_v75_arm64.apk
+size: 205072254 bytes
+base: v74 universal (FOBS_v74_universal.apk). Same dex/features; removed lib/armeabi-v7a/* -> arm64-v8a ONLY.
+change: standalone 64-bit APK per user request. Stripped 32-bit engine, re-zipaligned, re-signed v1+v2+v3.
+  dex UNCHANGED from v74 (all features intact): corner MENU/MAP, SIZE +/- gameplay resize (persisted), indigo
+  outline+fill, glowing light-green text/arrows. targetSdk 30 preserved (S26/Android 16 install policy).
+verified: apksigner v1+v2+v3=true; ABIs = arm64-v8a ONLY; round-trip disasm confirms navPill/navDraw/drawPill/
+  navHandle/applyScale/loadScale/saveScale/restyle/tintGreen present; onDraw->navDraw & onTouch->navHandle hooked.
+note: will NOT install on 32-bit-only devices (that's the point). For the J3 (armv7) use 32-bit v73.
+  arm64 MOVEMENT controls still need engine rebuild per HANDOFF (dex-only change here does not add them).
+next: test on S26 - no crash, MENU/MAP open, SIZE +/- resizes gameplay controls & persists, colors match.
