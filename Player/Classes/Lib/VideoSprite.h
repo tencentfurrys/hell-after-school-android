@@ -8,6 +8,11 @@
 #include "vlc/vlc.h"
 #else
 #endif
+// [Android MP4 cutscene] real decode via Java MediaPlayer + SurfaceTexture (OES)
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+#endif
 
 NS_AGTK_BEGIN
 
@@ -62,6 +67,19 @@ private:
 	CC_SYNTHESIZE(unsigned int, _texHeight, TexHeight);
 	bool _endReached;
 	bool _pause;
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+	// [Android MP4 cutscene] MediaPlayer/SurfaceTexture-backed playback
+	int _androidHandle;
+	GLuint _oesTexture;
+	GLuint _oesFbo;
+	GLuint _oesProgram;
+	GLint  _oesAttrPos, _oesAttrTex, _oesUniTexMat, _oesUniSampler;
+	float  _oesTexMatrix[16];
+	void setupOESAndroid();
+	void blitVideoFrameAndroid();
+	bool fetchFrameMatrixAndroid(float* out16);
+	std::string resolveMovieToCacheAndroid(const std::string& filename);
+#endif
 };
 
 NS_AGTK_END

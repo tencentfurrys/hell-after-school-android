@@ -28,5 +28,6 @@
 /work/temp/pgmmv/Player/cocos2d/cocos/platform/android/java/src/org/cocos2dx/lib/GameControllerUtils.java
 /work/temp/pgmmv/Player/cocos2d/cocos/platform/android/java/src/org/cocos2dx/lib/ResizeLayout.java
 /work/temp/pgmmv/Player/proj.android-studio/app/src/org/cocos2dx/cpp/AppActivity.java
+/work/temp/pgmmv/Player/proj.android-studio/app/src/org/cocos2dx/cpp/HASVideoDecoder.java
 /work/temp/apk-build/classes/com/sthdk/hellafterschool/R.java
 /work/temp/apk-build/aidl-out/com/enhance/gameservice/IGameTuningService.java
