@@ -2389,12 +2389,21 @@ std::string GameManager::getSaveFilePath(int slotIdx) const {
 #ifdef USE_RUNTIME
 #if CC_TARGET_PLATFORM == CC_PLATFORM_NX
 #else
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+	// [Android save fix] projectFolderSave writes next to the project file, which on
+	// Android lives inside the read-only APK assets -> writeStringToFile() silently
+	// fails and nothing is saved. Always use the app's writable files dir instead
+	// (_saveDataPath == getWritablePath() + "save/"). save/load/exists/copy/delete all
+	// route through getSaveFilePath(), so this single redirect fixes the whole cycle.
+	return _saveDataPath + fileName;
+#else
 	if (this->getProjectFolderSave()) {
 		return getProjectPathFromProjectFile(getProjectFilePath()->getCString()) + SAVE_FOLDER + fileName;
 	}
 	else {
 		return _saveDataPath + fileName;
 	}
+#endif
 #endif
 #else
 	return getProjectPathFromProjectFile(getProjectFilePath()->getCString()) + SAVE_FOLDER + fileName;
