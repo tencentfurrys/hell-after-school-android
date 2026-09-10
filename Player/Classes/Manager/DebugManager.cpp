@@ -2873,9 +2873,19 @@ void ChangeScreenResolutionSize(cocos2d::Size designResolutionSize, float magnif
 	// (IMGUIGLViewImpl::setFrameSizeAndZoomFactor) operates on a window that does
 	// not exist here and segfaults. AppDelegate already calls setDesignResolutionSize
 	// with the project screen size at init, so just (re)apply that safely and return.
-	if (auto gv = director->getOpenGLView()) {
-		gv->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
-		director->setContentScaleFactor(1.0f);
+	// NOTE (v79 probe): designResolutionSize must NOT be read here. At least one call
+	// path delivers it as a dangling reference (Scene::start's own values probe valid
+	// while the callee receives garbage -> instant SIGSEGV). Re-read the live project
+	// screen size instead (same values, always valid).
+	{
+		cocos2d::Size ds(1024.0f, 768.0f);
+		if (auto gm = GameManager::getInstance()) {
+			if (auto pd = gm->getProjectData()) { ds = pd->getScreenSize(); }
+		}
+		if (auto gv = director->getOpenGLView()) {
+			gv->setDesignResolutionSize(ds.width, ds.height, ResolutionPolicy::SHOW_ALL);
+			director->setContentScaleFactor(1.0f);
+		}
 	}
 	return;
 #endif
