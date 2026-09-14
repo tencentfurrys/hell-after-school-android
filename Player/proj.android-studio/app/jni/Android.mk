@@ -12,6 +12,7 @@ LOCAL_MODULE_FILENAME := libMyGame
 
 LOCAL_SRC_FILES := \
     hellocpp/main.cpp \
+    ../../../Classes/GamepadInjectV51.cpp \
     CrashHandler/CrashHandler.cpp \
     android-stubs/libvlc-stub.cpp \
     android-stubs/DllPluginManager-android.cpp \

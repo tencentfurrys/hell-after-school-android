@@ -4668,31 +4668,31 @@ void GameManager::updateForesight()
 	if (!wantForesight) {
 		if (_foresightApplied) {
 			// Deactivate on the scene we slowed: 100% for the exact targets we set.
-			gameSpeed->set(SceneGameSpeed::eTYPE_OBJECT,
+			gameSpeed->set(agtk::SceneGameSpeed::eTYPE_OBJECT,
 				GSData::kTargettingByGroup, GSData::kObjectGroupAll,
 				-1, agtk::data::ObjectCommandData::kQualifierSingle, nullptr,
-				100.0f, GameSpeed::DURATION_UNLIMITED);
-			gameSpeed->set(SceneGameSpeed::eTYPE_EFFECT, 100.0f, GameSpeed::DURATION_UNLIMITED);
-			gameSpeed->set(SceneGameSpeed::eTYPE_TILE, 100.0f, GameSpeed::DURATION_UNLIMITED);
+				100.0f, agtk::GameSpeed::DURATION_UNLIMITED);
+			gameSpeed->set(agtk::SceneGameSpeed::eTYPE_EFFECT, 100.0f, agtk::GameSpeed::DURATION_UNLIMITED);
+			gameSpeed->set(agtk::SceneGameSpeed::eTYPE_TILE, 100.0f, agtk::GameSpeed::DURATION_UNLIMITED);
 		}
 	}
 	else {
 		if (!_foresightApplied || sceneChanged) {
 			// Activate (or re-apply after a scene change): world 0.35x (objects),
 			// effects/tiles 0.25x so bullet animations stay readable.
-			gameSpeed->set(SceneGameSpeed::eTYPE_OBJECT,
+			gameSpeed->set(agtk::SceneGameSpeed::eTYPE_OBJECT,
 				GSData::kTargettingByGroup, GSData::kObjectGroupAll,
 				-1, agtk::data::ObjectCommandData::kQualifierSingle, nullptr,
-				35.0f, GameSpeed::DURATION_UNLIMITED);
-			gameSpeed->set(SceneGameSpeed::eTYPE_EFFECT, 25.0f, GameSpeed::DURATION_UNLIMITED);
-			gameSpeed->set(SceneGameSpeed::eTYPE_TILE, 25.0f, GameSpeed::DURATION_UNLIMITED);
+				35.0f, agtk::GameSpeed::DURATION_UNLIMITED);
+			gameSpeed->set(agtk::SceneGameSpeed::eTYPE_EFFECT, 25.0f, agtk::GameSpeed::DURATION_UNLIMITED);
+			gameSpeed->set(agtk::SceneGameSpeed::eTYPE_TILE, 25.0f, agtk::GameSpeed::DURATION_UNLIMITED);
 			// Player exemption: appended after the world entry, and getTimeScale
 			// scans back-to-front, so the player keeps full speed. Registered once
 			// per activation so the game's own later speed commands still win.
-			gameSpeed->set(SceneGameSpeed::eTYPE_OBJECT,
+			gameSpeed->set(agtk::SceneGameSpeed::eTYPE_OBJECT,
 				GSData::kTargettingByGroup, GSData::kObjectGroupPlayer,
 				-1, agtk::data::ObjectCommandData::kQualifierSingle, nullptr,
-				100.0f, GameSpeed::DURATION_UNLIMITED);
+				100.0f, agtk::GameSpeed::DURATION_UNLIMITED);
 		}
 	}
 	_foresightApplied = wantForesight;
