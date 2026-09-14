@@ -57,6 +57,10 @@ private:
 	GameManager();
 	static GameManager *_gameManager;
 
+	// v77 Foresight (slow-time) state
+	bool _foresightApplied;
+	cocos2d::RefPtr<agtk::Scene> _foresightScene;
+
 	// 前の時間
 	double _prevTime;
 
@@ -64,6 +68,12 @@ private:
 	const float AIR_RESISTANCE_COE = 0.05f;//空気抵抗係数(物体によって異なるが大層な計算が必要になるので固定値を使用する)
 public:
 	virtual void update(float delta);
+
+	// v77: Foresight - globally slow the scene (bullet-time) while enabled.
+	// Driven from the common variable FOBS_FORESIGHT_VAR so the Android
+	// overlay SLOW pill (via MenuShim.nativeSetCommonVariable) can toggle it.
+	static const int FOBS_FORESIGHT_VAR = 500;
+	void updateForesight();
 
 //	// 読み込みパース済みJSONデータ
 //	typedef std::map<std::string, picojson::value *> JsonMapType;

@@ -85,6 +85,8 @@ GameManager::GameManager()
 {
 	_projectData = nullptr;
 	_playData = nullptr;
+	_foresightApplied = false; // v77
+	_foresightScene = nullptr;
 	_currentScene = nullptr;
 	_loadingScene = nullptr;
 	_currentLayer = nullptr;
@@ -380,6 +382,7 @@ void GameManager::update(float delta)
 	this->getTimer()->laptime();
 	this->getLoadingTimer()->laptime();
 
+	this->updateForesight(); // v77: bullet-time toggle from common variable 500
 	this->updateSceneState();
 
 	this->updateLoadResources();
@@ -4634,6 +4637,67 @@ void GameManager::loadProject(std::string filePath)
 	_sceneStateInfo.projectFilePath = filePath;
 }
 #endif
+
+void GameManager::updateForesight()
+{
+	// v77 Foresight (bullet-time): while the toggle var (common variable 500) is
+	// non-zero, keep an unlimited-duration SceneGameSpeed entry registered so
+	// everything but the player moves in slow motion. Entries are idempotent
+	// (same-target replace, see SceneGameSpeed::find) and SceneGameSpeed is
+	// recreated per scene, so we re-apply after scene changes.
+	auto scene = this->getCurrentScene();
+	auto playData = this->getPlayData();
+	auto gameSpeed = scene ? scene->getGameSpeed() : nullptr;
+	if (!gameSpeed || !playData) {
+		// Scene is being torn down or no project running: drop our state.
+		if (_foresightScene) {
+			_foresightScene = nullptr;
+			_foresightApplied = false;
+		}
+		return;
+	}
+
+	bool wantForesight = false;
+	auto varData = playData->getCommonVariableData(FOBS_FORESIGHT_VAR);
+	if (varData) {
+		wantForesight = (varData->getValue() != 0.0);
+	}
+	bool sceneChanged = (scene != _foresightScene);
+
+	using GSData = agtk::data::ObjectCommandGameSpeedChangeData;
+	if (!wantForesight) {
+		if (_foresightApplied) {
+			// Deactivate on the scene we slowed: 100% for the exact targets we set.
+			gameSpeed->set(SceneGameSpeed::eTYPE_OBJECT,
+				GSData::kTargettingByGroup, GSData::kObjectGroupAll,
+				-1, agtk::data::ObjectCommandData::kQualifierSingle, nullptr,
+				100.0f, GameSpeed::DURATION_UNLIMITED);
+			gameSpeed->set(SceneGameSpeed::eTYPE_EFFECT, 100.0f, GameSpeed::DURATION_UNLIMITED);
+			gameSpeed->set(SceneGameSpeed::eTYPE_TILE, 100.0f, GameSpeed::DURATION_UNLIMITED);
+		}
+	}
+	else {
+		if (!_foresightApplied || sceneChanged) {
+			// Activate (or re-apply after a scene change): world 0.35x (objects),
+			// effects/tiles 0.25x so bullet animations stay readable.
+			gameSpeed->set(SceneGameSpeed::eTYPE_OBJECT,
+				GSData::kTargettingByGroup, GSData::kObjectGroupAll,
+				-1, agtk::data::ObjectCommandData::kQualifierSingle, nullptr,
+				35.0f, GameSpeed::DURATION_UNLIMITED);
+			gameSpeed->set(SceneGameSpeed::eTYPE_EFFECT, 25.0f, GameSpeed::DURATION_UNLIMITED);
+			gameSpeed->set(SceneGameSpeed::eTYPE_TILE, 25.0f, GameSpeed::DURATION_UNLIMITED);
+			// Player exemption: appended after the world entry, and getTimeScale
+			// scans back-to-front, so the player keeps full speed. Registered once
+			// per activation so the game's own later speed commands still win.
+			gameSpeed->set(SceneGameSpeed::eTYPE_OBJECT,
+				GSData::kTargettingByGroup, GSData::kObjectGroupPlayer,
+				-1, agtk::data::ObjectCommandData::kQualifierSingle, nullptr,
+				100.0f, GameSpeed::DURATION_UNLIMITED);
+		}
+	}
+	_foresightApplied = wantForesight;
+	_foresightScene = scene;
+}
 
 void GameManager::updateSceneState()
 {
