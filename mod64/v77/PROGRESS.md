@@ -116,7 +116,35 @@ are on top of origin/main; see git log), plus APK baselines on GitHub Releases
    MenuShim / AppActivity in `analysis/dex_smali/`.
 5. **APK baselines** — both v76 APKs uploaded to GitHub Releases (see bottom).
 
-## v77 delivery status (updated 2026-09-14, second session) — supersedes the older step list below
+## v77 DELIVERED (2026-09-14, second session)
+- Both APKs built locally (GitHub Actions is DISABLED for this account —
+  workflow_dispatch returns 422 "Actions has been disabled for this user";
+  `.github/workflows/v77-build.yml` is committed for when it's re-enabled) and
+  published to GitHub Release **`v77`**:
+  - `FOBS_v77_arm64.apk` 202,180,454 bytes, md5 6c8715722c93c113cf7bba5aceb237a8
+  - `FOBS_v77_32bit.apk` 197,814,122 bytes, md5 42dae2f4652c8a4ec5ce73af1a1c7faf
+- arm64 engine: first successful compile of updateForesight (fix: qualify
+  `agtk::SceneGameSpeed` / `agtk::GameSpeed` in GameManager.cpp — commit c880754);
+  GamepadInjectV51.cpp registered in Android.mk (commit c880754); built with NDK
+  r25c on the RDP, symbols verified (nativeInjectCocos2dKey,
+  getCommonVariableData exported).
+- Build-time gotchas fixed on the way (documented for future builds):
+  - NTFS checkout: git materializes the `common`/`loader` symlinks under
+    SSPlayer as plain files, deleting 20 real sources. Fix: delete the symlink
+    files, re-extract every real path from `git ls-tree -r HEAD` (skip the two
+    symlink entries). Only lowercase `loader`/`common` are referenced nowhere —
+    safe to omit.
+  - Local build: `cmd //c <NDK>\\ndk-build.cmd NDK_DEBUG=0 APP_ABI=arm64-v8a
+    -j8` with `NDK_MODULE_PATH=<NDK>\\sources` works on the RDP.
+- Data patch verified on the real project.json: var 500 inserted before id 2062,
+  352 looping + 251 one-shot emitters capped, output JSON-valid, idempotent
+  (second pass byte-identical).
+- Map (wilderness fog) NOT changed — data proven healthy; runtime diagnosis
+  still pending (see corrected root cause below). Ask user to re-test v77 and,
+  if the map is still revealed, capture which 荒野N switches are ON when the
+  menu map opens.
+
+## v77 delivery status (earlier this session) — supersedes the older step list below
 1. **`mod64/scripts/v77_dex_patch.py` — DONE & round-trip verified.** Adds
    SLOW + MASH pills to GamepadOverlay. Verified details:
    - SLOW pill toggles `MenuShim.setCommonVariable(500, 0.0/1.0)` — var id is
