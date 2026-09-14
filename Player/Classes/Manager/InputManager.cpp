@@ -275,6 +275,17 @@ InputKeyboardData::InputData *InputKeyboardData::setPressData(int keyCode, int s
 		inputData = InputData::create(keyCode);
 		inputList->setObject(inputData, keyCode);
 	}
+	// v77: Android overlay taps are injected asynchronously and a lost release
+	// event can leave the key latched DOWN; without this guard the "just
+	// pressed" edge never fires again and mash prompts (e.g. escape gauges)
+	// become impossible to complete. A physical keyboard always releases
+	// before re-pressing, so treat a press of an already-down key as
+	// release-then-press to regenerate the edge.
+	if (inputData->getPress()) {
+		inputData->setPress(false);
+		inputData->setRelease(true);
+		this->getPressDataList()->removeObject(inputData);
+	}
 	inputData->setCharData(-1);
 	inputData->setScancode(scancode);
 	inputData->setTrigger(true);
@@ -1227,6 +1238,12 @@ void InputDataRaw::applyRegisteredData()
             }
             auto input = gamepad->getInput(deviceData.keyCode);
             if (input) {
+                // v77: same re-press edge regeneration as the keyboard path
+                // (async overlay injection can drop the release event).
+                if (input->getPress()) {
+                    input->setRelease(true);
+                    input->setPress(false);
+                }
                 input->setTrigger(true);
                 input->setPress(true);
 				input->setValue(1);
