@@ -41,14 +41,31 @@ are on top of origin/main; see git log), plus APK baselines on GitHub Releases
   async injection) kill alternation even on arrows. Hence escape is impossible on touch.
 - Fix = engine edge-regen (done, arm64) + dex MASH pill pulsing alternating keys (todo).
 
-### 2. Wilderness map fully revealed
-- Map UI lives in the MENU scene; fog parts = object 137 (forest, works) vs
-  object 165 (wilderness, broken). Menu scene places obj165 ×28, obj137 ×40.
-- **Structural anomaly:** obj 165 is **missing 8 action links (ids 2, 19–25)**
-  that its twin obj 163 has — they connect fog-hide actions 54/55/20/21/22 to
-  their switch conditions. Evidence preserved:
-  `mod64/v77/analysis/165_links.txt` (+ `obj_165.json`, `obj_163.json`).
-- Fix = data patch merging the missing links into obj 165 (todo).
+### 2. Wilderness map fully revealed — **v77 CORRECTION: old theory DISPROVEN**
+- The earlier handoff claimed obj 165 was missing 8 action links (ids 2, 19–25)
+  compared to obj 163. **That is false.** Full re-forensics this session
+  (scripts preserved in repo root: `verify_165.py`, `diff_fog.py`,
+  `count_assigns.py`, `action_full.py`, `placements.py`, `neighbors.py`,
+  `context_shapes.py`, `parts_overrides.py`) proved:
+  - obj 165's hide links are **complete and correct**: 21 square actions, each
+    wired to a `linkConditionList` switch-guard on 荒野1–18 (switch ids
+    2276–2293), firing 消え (motion 4 = hidden) when the switch turns ON
+    (`kSwitchConditionOn = 0` ⇒ `switchValue:0` = ON — polarity verified in
+    engine source).
+  - Switch-assignment counts are symmetric between forest and wilderness
+    (荒野1 has 1228 ON-assignments; forest switches ~84 each — 荒野 has more
+    placements, consistent).
+  - Per-instance command overrides in parts data are portal-teleport handlers,
+    symmetric with forest.
+  - Obj 163 (踏破率計算表示) is a different graph by design; its gaps vs 165
+    are not shared.
+- **Conclusion: the fog DATA is healthy.** The visible-map symptom is a
+  RUNTIME issue (switch states never turning ON in play, or the menu scene's
+  obj165 instances not evaluating their links) and needs on-device diagnosis —
+  e.g. capture which 荒野N switches are ON when the menu map opens. Blind data
+  edits were correctly skipped in v77.
+- Evidence: `mod64/v77/analysis/` dumps + the repo-root probe scripts above.
+  Raw 246MB project.json extractable from either baseline APK.
 
 ### 3. Lag with many entities/animations
 - **v68 particle caps were lost**: shipped v76 data has emitVolume up to 60 with
@@ -99,8 +116,31 @@ are on top of origin/main; see git log), plus APK baselines on GitHub Releases
    MenuShim / AppActivity in `analysis/dex_smali/`.
 5. **APK baselines** — both v76 APKs uploaded to GitHub Releases (see bottom).
 
-## Remaining steps (exact, in order)
-1. **`mod64/scripts/v77_data_patch.py`** (operates on extracted project.json):
+## v77 delivery status (updated 2026-09-14, second session) — supersedes the older step list below
+1. **`mod64/scripts/v77_dex_patch.py` — DONE & round-trip verified.** Adds
+   SLOW + MASH pills to GamepadOverlay. Verified details:
+   - SLOW pill toggles `MenuShim.setCommonVariable(500, 0.0/1.0)` — var id is
+     **500 (0x1f4)**, NOT 50; an earlier draft wrongly used 0x32.
+   - MASH pill keys verified from the real mapping chain: op11 = pcInput 13 =
+     AGTK KEY_LEFT_SHIFT = cocos **0x0c**; op12 = pcInput 11 = AGTK KEY_RETURN
+     = cocos **0x0a**. `rawInject` routes to `stdKeyInject` (renderer handleKey)
+     + `nativeInjectCocos2dKey`, both support RETURN — so the MASH pulse works.
+   - Pills render via the existing `navPill`/`drawPill` (ids 5/6, second row:
+     x 0.02/0.07, y 0.08), hit-tested in `navHandle` after `:cond_33`.
+   - Verified locally: baksmali → patch → smali → baksmali round-trip OK.
+2. **`mod64/scripts/v77_data_patch.py` — DONE.** Byte-faithful project.json
+   edit: inserts var 500 entry (`toBeSaved:false`) before the id-2062 entry,
+   re-applies v68 particle caps (loop→4, one-shot→8), JSON-validates output.
+   Does NOT touch obj 165 (see corrected root cause above).
+3. **`.github/workflows/v77-build.yml` — DONE.** Builds arm64 engine from main
+   (v34+v39+v41 patches + **registers GamepadInjectV51.cpp in Android.mk**,
+   which main does NOT list — critical, else the rebuilt .so loses touch
+   injection), then dex patch + data patch + repack of both v76-baseline APKs,
+   zipalign+apksigner (repo keystore `mod64/signing/fobs.keystore`), publishes
+   release **`v77`** with `FOBS_v77_arm64.apk` + `FOBS_v77_32bit.apk`.
+4. Trigger the workflow, download both APKs to Downloads for the user.
+
+## Older remaining steps (superseded by the block above; kept for context)
    - Add common variable **id 500** to `variableList` (name e.g.
      `★FORESIGHT_スロー`, `initialValue: 0`, `toBeSaved: false`, `folder: false`)
      so toggling doesn't persist in saves.
@@ -138,7 +178,6 @@ are on top of origin/main; see git log), plus APK baselines on GitHub Releases
 
 ## APK baselines (GitHub Releases)
 - Release **`v76-baseline`** on the repo holds both v76 APKs uploaded this session
-  as rebuild inputs:
-  - `fobs-v76-arm64.apk`
-  - `fobs-v76-armv7a.apk`
-  (If names differ, list with: `gh release view v76-baseline` equivalent via API.)
+  as rebuild inputs (exact asset names):
+  - `FOBS_v76_arm64_v2.save.hotfix.apk` (202,176,382 bytes)
+  - `FOBS_UPD_32bit_v2.apk` (197,822,314 bytes)

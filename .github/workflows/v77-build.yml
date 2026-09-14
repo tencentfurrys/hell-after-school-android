@@ -1,0 +1,218 @@
+name: v77 - Foresight + MASH pills (arm64 engine rebuild + dex/data patches)
+
+# Builds both deliverables from the v76 baseline release assets:
+#  - arm64: fresh engine build from main (adds updateForesight + input edge-regen
+#    + save fix) with GamepadInjectV51.cpp registered in Android.mk so the
+#    touch-injection JNI keeps working, plus patched dex + patched data.
+#  - 32bit: stock v76 engine (untouched), patched dex + patched data.
+# Shared patches:
+#  - dex: SLOW pill (common var 500 -> Foresight) + MASH pill (RETURN<->SHIFT
+#    alternation for the escape gauge).
+#  - data: variable 500 entry + v68-style particle emitVolume caps.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      BASE_TAG: v76-baseline
+      ARM64_BASE: FOBS_v76_arm64_v2.save.hotfix.apk
+      ARM32_BASE: FOBS_UPD_32bit_v2.apk
+      SCENE_CPP: Player/Classes/Lib/Scene.cpp
+      PHYS_CPP: Player/cocos2d/cocos/physics/CCPhysicsBody.cpp
+      CHIPMUNK_H: Player/cocos2d/external/chipmunk/include/chipmunk/chipmunk_types.h
+      APP_MK: Player/proj.android-studio/app/jni/Application.mk
+      ANDROID_MK: Player/proj.android-studio/app/jni/Android.mk
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 1 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '11' }
+
+      # ------------------------------------------------ engine (arm64 only)
+      - name: Setup NDK r25c
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with: { ndk-version: r25c, add-to-path: true }
+
+      - name: Apply engine patches and register GamepadInject source
+        run: |
+          set -e
+          test -f "$SCENE_CPP"
+          python3 mod64/scripts/v34_patch_engine.py "$SCENE_CPP"
+          grep -n "v34: skip desktop window/resolution setup on Android" "$SCENE_CPP" && echo "v34 OK"
+          python3 mod64/scripts/v41_patch_chipmunk.py "$CHIPMUNK_H"
+          echo "v41 OK"
+          python3 mod64/scripts/v39_patch_engine.py "$PHYS_CPP"
+          grep -n "ccSafeMoment" "$PHYS_CPP" | head -1 && echo "v39 OK"
+          # Register GamepadInjectV51.cpp so nativeInjectCocos2dKey stays exported.
+          if ! grep -q "GamepadInjectV51.cpp" "$ANDROID_MK"; then
+            sed -i 's#\(hellocpp/main.cpp \\\)#\1\n    ../../../Classes/GamepadInjectV51.cpp \\#' "$ANDROID_MK"
+          fi
+          grep -nE "hellocpp/main.cpp|GamepadInjectV51.cpp" "$ANDROID_MK"
+
+      - name: NDK r25c compatibility
+        run: |
+          set -e
+          for mk in $(find . -path '*pvmp3dec*' -name 'Android.mk' 2>/dev/null); do
+            sed -i 's/-Werror/-Wno-error/g' "$mk" && echo "patched $mk"
+          done
+          if ! grep -q -- '-w ' "$APP_MK"; then
+            sed -i 's/APP_CPPFLAGS := /APP_CPPFLAGS := -w /' "$APP_MK" || echo 'APP_CPPFLAGS := -w' >> "$APP_MK"
+          fi
+          grep "APP_CPPFLAGS" "$APP_MK" || true
+
+      - name: Build arm64-v8a libMyGame.so
+        working-directory: Player/proj.android-studio/app
+        env:
+          NDK_MODULE_PATH: ${{ steps.setup-ndk.outputs.ndk-path }}/sources
+        run: |
+          set -e
+          "${{ steps.setup-ndk.outputs.ndk-path }}/ndk-build" \
+            NDK_DEBUG=0 APP_ABI=arm64-v8a -j"$(nproc)" V=0 2>&1 | tee /tmp/build.log | tail -n 30
+          SO="libs/arm64-v8a/libMyGame.so"
+          test -f "$SO"
+          ls -lh "$SO"
+          NM="${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-nm"
+          "$NM" -D "$SO" | grep -q nativeInjectCocos2dKey && echo "inject symbol OK"
+          "$NM" -D "$SO" | grep -q updateForesight || echo "note: updateForesight is inlined/static (OK if present in lib)"
+          cp "$SO" /tmp/libMyGame-arm64-v77.so
+
+      # ------------------------------------------------ dex + data patches
+      - name: Fetch smali tools and disassemble both baselines' dex
+        run: |
+          set -euo pipefail
+          for j in baksmali smali; do
+            curl -fsSL -o /tmp/$j.jar "https://github.com/baksmali/smali/releases/download/3.0.9/$j-3.0.9-fat.jar"
+          done
+          mkdir -p /tmp/dex
+
+      - name: Download baseline APKs
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -euo pipefail
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$ARM64_BASE" --output /tmp/base_arm64.apk
+          gh release download "$BASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$ARM32_BASE" --output /tmp/base_arm32.apk
+          unzip -p /tmp/base_arm64.apk classes.dex > /tmp/dex/classes64_in.dex
+          unzip -p /tmp/base_arm32.apk classes.dex > /tmp/dex/classes32_in.dex
+          cmp /tmp/dex/classes64_in.dex /tmp/dex/classes32_in.dex && echo "dexes identical"
+
+      - name: Patch dex (SLOW + MASH pills)
+        run: |
+          set -euo pipefail
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes64_in.dex -o /tmp/smali
+          test -f /tmp/smali/org/cocos2dx/cpp/GamepadOverlay.smali
+          python3 mod64/scripts/v77_dex_patch.py /tmp/smali
+          java -Xmx3g -jar /tmp/smali.jar assemble -a 25 /tmp/smali -o /tmp/dex/classes_v77.dex
+          test -s /tmp/dex/classes_v77.dex
+          # Round-trip verify: re-disassemble and confirm the pills exist.
+          java -Xmx3g -jar /tmp/baksmali.jar disassemble /tmp/dex/classes_v77.dex -o /tmp/roundtrip
+          R=/tmp/roundtrip/org/cocos2dx/cpp/GamepadOverlay.smali
+          grep -q 'mashPulse' "$R" && grep -q '0x1f4' "$R" && echo "dex round-trip OK"
+
+      - name: Patch project.json (var 500 + particle caps)
+        run: |
+          set -euo pipefail
+          unzip -p /tmp/base_arm64.apk assets/Resources/data/project.json > /tmp/project_in.json
+          ls -la /tmp/project_in.json
+          python3 mod64/scripts/v77_data_patch.py /tmp/project_in.json /tmp/project_v77.json
+
+      # ------------------------------------------------ repack both APKs
+      - name: Repack arm64 APK (new engine + patched dex + patched data)
+        run: |
+          set -euo pipefail
+          python3 - /tmp/base_arm64.apk /tmp/libMyGame-arm64-v77.so \
+            /tmp/dex/classes_v77.dex /tmp/project_v77.json /tmp/v77_arm64_unaligned.apk <<'PY'
+          import sys, zipfile
+          base, so, dex, data, out = sys.argv[1:6]
+          SO = 'lib/arm64-v8a/libMyGame.so'
+          DATA = 'assets/Resources/data/project.json'
+          new = { 'classes.dex': open(dex,'rb').read(), SO: open(so,'rb').read(), DATA: open(data,'rb').read() }
+          zin=zipfile.ZipFile(base,'r'); zout=zipfile.ZipFile(out,'w')
+          got=set()
+          for info in zin.infolist():
+              if info.filename == 'lib/armeabi-v7a/libMyGame.so' or info.filename == 'lib/armeabi-v7a/libmenushim.so':
+                  continue  # arm64-only build
+              raw = new.get(info.filename, None)
+              if info.filename in new: got.add(info.filename)
+              zi=zipfile.ZipInfo(info.filename,date_time=info.date_time)
+              zi.compress_type=info.compress_type; zi.external_attr=info.external_attr
+              zi.internal_attr=info.internal_attr; zi.create_system=info.create_system; zi.flag_bits=info.flag_bits
+              zout.writestr(zi, raw if raw is not None else zin.read(info.filename))
+          zout.close(); zin.close()
+          assert got == set(new), f"swap missing: {set(new)-got}"
+          print('arm64 repack OK')
+          PY
+
+      - name: Repack 32-bit APK (stock engine + patched dex + patched data)
+        run: |
+          set -euo pipefail
+          python3 - /tmp/base_arm32.apk /tmp/dex/classes_v77.dex /tmp/project_v77.json /tmp/v77_arm32_unaligned.apk <<'PY'
+          import sys, zipfile
+          base, dex, data, out = sys.argv[1:5]
+          DATA = 'assets/Resources/data/project.json'
+          new = { 'classes.dex': open(dex,'rb').read(), DATA: open(data,'rb').read() }
+          zin=zipfile.ZipFile(base,'r'); zout=zipfile.ZipFile(out,'w')
+          got=set()
+          for info in zin.infolist():
+              raw = new.get(info.filename)
+              if raw is not None: got.add(info.filename)
+              zi=zipfile.ZipInfo(info.filename,date_time=info.date_time)
+              zi.compress_type=info.compress_type; zi.external_attr=info.external_attr
+              zi.internal_attr=info.internal_attr; zi.create_system=info.create_system; zi.flag_bits=info.flag_bits
+              zout.writestr(zi, raw if raw is not None else zin.read(info.filename))
+          zout.close(); zin.close()
+          assert got == set(new), f"swap missing: {set(new)-got}"
+          print('arm32 repack OK')
+          PY
+
+      # ------------------------------------------------ align + sign + publish
+      - name: Align, sign, verify and publish v77
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set -euo pipefail
+          BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          "${BT}zipalign" -p -f 4 /tmp/v77_arm64_unaligned.apk /tmp/v77_arm64_aligned.apk
+          "${BT}apksigner" sign --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v77_arm64.apk /tmp/v77_arm64_aligned.apk
+          "${BT}zipalign" -p -f 4 /tmp/v77_arm32_unaligned.apk /tmp/v77_arm32_aligned.apk
+          "${BT}apksigner" sign --ks mod64/signing/fobs.keystore --ks-key-alias fobs \
+            --ks-pass pass:fobsmod --key-pass pass:fobsmod \
+            --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true \
+            --out /tmp/FOBS_v77_32bit.apk /tmp/v77_arm32_aligned.apk
+          "${BT}apksigner" verify /tmp/FOBS_v77_arm64.apk
+          "${BT}apksigner" verify /tmp/FOBS_v77_32bit.apk
+          ls -la /tmp/FOBS_v77_arm64.apk /tmp/FOBS_v77_32bit.apk
+          gh release create v77 /tmp/FOBS_v77_arm64.apk /tmp/FOBS_v77_32bit.apk \
+            --title "v77: Foresight slow-time + MASH escape pills, particle caps" \
+            --notes "arm64: fresh engine from main (Foresight updateForesight, input edge-regen, save NaN fix) + GamepadInject registered. Both APKs: SLOW pill (var 500 bullet-time), MASH pill (RETURN/SHIFT alternation for the escape gauge), variable 500 added to data, v68 particle caps re-applied." \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload v77 /tmp/FOBS_v77_arm64.apk /tmp/FOBS_v77_32bit.apk \
+            --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Record result
+        if: always()
+        run: |
+          set -e
+          mkdir -p mod64/logs
+          {
+            echo "v77 status: ${{ job.status }}"
+            echo "arm64: https://github.com/${GITHUB_REPOSITORY}/releases/download/v77/FOBS_v77_arm64.apk"
+            echo "32bit: https://github.com/${GITHUB_REPOSITORY}/releases/download/v77/FOBS_v77_32bit.apk"
+            test -f /tmp/FOBS_v77_arm64.apk && md5sum /tmp/FOBS_v77_arm64.apk || true
+            test -f /tmp/FOBS_v77_32bit.apk && md5sum /tmp/FOBS_v77_32bit.apk || true
+          } > mod64/logs/v77_result.txt
+          git config user.name build-bot; git config user.email build@local
+          git add mod64/logs/v77_result.txt
+          git commit -m "v77 build result" || true
+          git push origin main || true
