@@ -1,0 +1,1893 @@
+.class public Lorg/cocos2dx/cpp/AppActivity;
+.super Lorg/cocos2dx/lib/Cocos2dxActivity;
+.source "AppActivity.java"
+
+
+# static fields
+.field private static final TAG:Ljava/lang/String; = "HellAfterSchool"
+
+.field private static sLastPurgeMs:J
+
+
+# instance fields
+.field private mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+.field private mPurgeHandler:Landroid/os/Handler;
+
+.field private final mPurgeTick:Ljava/lang/Runnable;
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .registers 2
+
+    .line 287
+    const-wide/16 v0, 0x0
+
+    sput-wide v0, Lorg/cocos2dx/cpp/AppActivity;->sLastPurgeMs:J
+
+    return-void
+.end method
+
+.method public constructor <init>()V
+    .registers 2
+
+    .line 15
+    invoke-direct {p0}, Lorg/cocos2dx/lib/Cocos2dxActivity;-><init>()V
+
+    .line 221
+    new-instance v0, Lorg/cocos2dx/cpp/AppActivity$1;
+
+    invoke-direct {v0, p0}, Lorg/cocos2dx/cpp/AppActivity$1;-><init>(Lorg/cocos2dx/cpp/AppActivity;)V
+
+    iput-object v0, p0, Lorg/cocos2dx/cpp/AppActivity;->mPurgeTick:Ljava/lang/Runnable;
+
+    return-void
+.end method
+
+.method static synthetic access$000(Lorg/cocos2dx/cpp/AppActivity;Ljava/lang/String;)V
+    .registers 2
+
+    .line 15
+    invoke-direct {p0, p1}, Lorg/cocos2dx/cpp/AppActivity;->emergencyCachePurge(Ljava/lang/String;)V
+
+    return-void
+.end method
+
+.method static synthetic access$100(Lorg/cocos2dx/cpp/AppActivity;)Landroid/os/Handler;
+    .registers 1
+
+    .line 15
+    iget-object p0, p0, Lorg/cocos2dx/cpp/AppActivity;->mPurgeHandler:Landroid/os/Handler;
+
+    return-object p0
+.end method
+
+.method static synthetic access$200(Lorg/cocos2dx/cpp/AppActivity;Ljava/lang/String;Ljava/lang/String;)V
+    .registers 3
+
+    .line 15
+    invoke-direct {p0, p1, p2}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    return-void
+.end method
+
+.method private addGamepadOverlay()V
+    .registers 4
+
+    .line 354
+    new-instance v0, Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    invoke-direct {v0, p0}, Lorg/cocos2dx/cpp/GamepadOverlay;-><init>(Landroid/content/Context;)V
+
+    iput-object v0, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    .line 355
+    new-instance v0, Landroid/widget/FrameLayout$LayoutParams;
+
+    const/4 v1, -0x1
+
+    invoke-direct {v0, v1, v1}, Landroid/widget/FrameLayout$LayoutParams;-><init>(II)V
+
+    .line 356
+    iget-object v1, p0, Lorg/cocos2dx/cpp/AppActivity;->mFrameLayout:Lorg/cocos2dx/lib/ResizeLayout;
+
+    if-eqz v1, :cond_19
+
+    .line 357
+    iget-object v1, p0, Lorg/cocos2dx/cpp/AppActivity;->mFrameLayout:Lorg/cocos2dx/lib/ResizeLayout;
+
+    iget-object v2, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    invoke-virtual {v1, v2, v0}, Lorg/cocos2dx/lib/ResizeLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
+
+    goto :goto_1e
+
+    .line 359
+    :cond_19
+    iget-object v1, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    invoke-virtual {p0, v1, v0}, Lorg/cocos2dx/cpp/AppActivity;->addContentView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
+
+    .line 362
+    :goto_1e
+    iget-object v0, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/cpp/GamepadOverlay;->bringToFront()V
+
+    .line 363
+    iget-object v0, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, v1}, Lorg/cocos2dx/cpp/GamepadOverlay;->setVisibility(I)V
+
+    .line 364
+    return-void
+.end method
+
+.method private bringOverlayToFront(Ljava/lang/String;)V
+    .registers 5
+
+    .line 137
+    :try_start_0
+    iget-object v0, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    if-eqz v0, :cond_37
+
+    .line 138
+    iget-object v0, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, v1}, Lorg/cocos2dx/cpp/GamepadOverlay;->setVisibility(I)V
+
+    .line 139
+    iget-object v0, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/cpp/GamepadOverlay;->bringToFront()V
+
+    .line 140
+    iget-object v0, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/cpp/GamepadOverlay;->requestLayout()V
+
+    .line 141
+    iget-object v0, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    invoke-virtual {v0}, Lorg/cocos2dx/cpp/GamepadOverlay;->invalidate()V
+
+    .line 142
+    iget-object v0, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "bringToFront("
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    const-string v1, ")"
+
+    invoke-virtual {p1, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-virtual {v0, p1}, Lorg/cocos2dx/cpp/GamepadOverlay;->logStateExternal(Ljava/lang/String;)V
+    :try_end_37
+    .catchall {:try_start_0 .. :try_end_37} :catchall_38
+
+    .line 146
+    :cond_37
+    goto :goto_51
+
+    .line 144
+    :catchall_38
+    move-exception p1
+
+    .line 145
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v1, "bringOverlayToFront EXC "
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    const-string v0, "input.log"
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 147
+    :goto_51
+    return-void
+.end method
+
+.method private emergencyCachePurge(Ljava/lang/String;)V
+    .registers 10
+
+    .line 290
+    const-string v0, "hell_runtime.log"
+
+    :try_start_2
+    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
+
+    move-result-wide v1
+
+    .line 292
+    sget-wide v3, Lorg/cocos2dx/cpp/AppActivity;->sLastPurgeMs:J
+
+    sub-long v3, v1, v3
+
+    const-wide/16 v5, 0x7d0
+
+    cmp-long v3, v3, v5
+
+    if-gez v3, :cond_2d
+
+    .line 293
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "JAVA cachePurge throttled (reason="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    const-string v1, ")"
+
+    invoke-virtual {p1, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 294
+    return-void
+
+    .line 296
+    :cond_2d
+    sput-wide v1, Lorg/cocos2dx/cpp/AppActivity;->sLastPurgeMs:J
+
+    .line 298
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "JAVA cachePurge start reason="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 299
+    nop
+
+    .line 302
+    invoke-static {}, Ljava/lang/System;->gc()V
+
+    .line 303
+    invoke-static {}, Ljava/lang/Runtime;->getRuntime()Ljava/lang/Runtime;
+
+    move-result-object p1
+
+    .line 304
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "JAVA cachePurge javaHeap free="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    .line 305
+    invoke-virtual {p1}, Ljava/lang/Runtime;->freeMemory()J
+
+    move-result-wide v4
+
+    const-wide/32 v6, 0x100000
+
+    div-long/2addr v4, v6
+
+    invoke-virtual {v3, v4, v5}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    const-string v4, "MB total="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    .line 306
+    invoke-virtual {p1}, Ljava/lang/Runtime;->totalMemory()J
+
+    move-result-wide v4
+
+    div-long/2addr v4, v6
+
+    invoke-virtual {v3, v4, v5}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    const-string v4, "MB max="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    .line 307
+    invoke-virtual {p1}, Ljava/lang/Runtime;->maxMemory()J
+
+    move-result-wide v4
+
+    div-long/2addr v4, v6
+
+    invoke-virtual {v3, v4, v5}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    const-string v3, "MB"
+
+    invoke-virtual {p1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    .line 304
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_8f
+    .catchall {:try_start_2 .. :try_end_8f} :catchall_ce
+
+    .line 326
+    :try_start_8f
+    const-string p1, "org.cocos2dx.lib.Cocos2dxHelper"
+
+    invoke-static {p1}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
+
+    move-result-object p1
+
+    .line 327
+    const-string v3, "runOnGLThread"
+
+    const/4 v4, 0x1
+
+    new-array v5, v4, [Ljava/lang/Class;
+
+    const-class v6, Ljava/lang/Runnable;
+
+    const/4 v7, 0x0
+
+    aput-object v6, v5, v7
+
+    invoke-virtual {p1, v3, v5}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+
+    move-result-object p1
+
+    .line 328
+    new-instance v3, Lorg/cocos2dx/cpp/AppActivity$2;
+
+    invoke-direct {v3, p0, v1, v2}, Lorg/cocos2dx/cpp/AppActivity$2;-><init>(Lorg/cocos2dx/cpp/AppActivity;J)V
+
+    .line 343
+    const/4 v1, 0x0
+
+    new-array v2, v4, [Ljava/lang/Object;
+
+    aput-object v3, v2, v7
+
+    invoke-virtual {p1, v1, v2}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 344
+    const-string p1, "JAVA cachePurge queued to GL thread"
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_b5
+    .catchall {:try_start_8f .. :try_end_b5} :catchall_b6
+
+    .line 347
+    goto :goto_cd
+
+    .line 345
+    :catchall_b6
+    move-exception p1
+
+    .line 346
+    :try_start_b7
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "JAVA cachePurge queue FAILED (no GL thread helper): "
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_cd
+    .catchall {:try_start_b7 .. :try_end_cd} :catchall_ce
+
+    .line 350
+    :goto_cd
+    goto :goto_e5
+
+    .line 348
+    :catchall_ce
+    move-exception p1
+
+    .line 349
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "JAVA cachePurge OUTER FAILED: "
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 351
+    :goto_e5
+    return-void
+.end method
+
+.method private getDiagDir()Ljava/io/File;
+    .registers 2
+
+    .line 20
+    const/4 v0, 0x0
+
+    invoke-virtual {p0, v0}, Lorg/cocos2dx/cpp/AppActivity;->getExternalFilesDir(Ljava/lang/String;)Ljava/io/File;
+
+    move-result-object v0
+
+    .line 21
+    if-nez v0, :cond_b
+
+    invoke-virtual {p0}, Lorg/cocos2dx/cpp/AppActivity;->getFilesDir()Ljava/io/File;
+
+    move-result-object v0
+
+    .line 22
+    :cond_b
+    return-object v0
+.end method
+
+.method private startPeriodicPurger()V
+    .registers 5
+
+    .line 234
+    iget-object v0, p0, Lorg/cocos2dx/cpp/AppActivity;->mPurgeHandler:Landroid/os/Handler;
+
+    if-nez v0, :cond_f
+
+    .line 235
+    new-instance v0, Landroid/os/Handler;
+
+    invoke-static {}, Landroid/os/Looper;->getMainLooper()Landroid/os/Looper;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Landroid/os/Handler;-><init>(Landroid/os/Looper;)V
+
+    iput-object v0, p0, Lorg/cocos2dx/cpp/AppActivity;->mPurgeHandler:Landroid/os/Handler;
+
+    .line 238
+    :cond_f
+    iget-object v0, p0, Lorg/cocos2dx/cpp/AppActivity;->mPurgeHandler:Landroid/os/Handler;
+
+    iget-object v1, p0, Lorg/cocos2dx/cpp/AppActivity;->mPurgeTick:Ljava/lang/Runnable;
+
+    const-wide/16 v2, 0x3a98
+
+    invoke-virtual {v0, v1, v2, v3}, Landroid/os/Handler;->postDelayed(Ljava/lang/Runnable;J)Z
+
+    .line 239
+    return-void
+.end method
+
+.method private writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    .registers 8
+
+    .line 27
+    const-string v0, "HellAfterSchool"
+
+    :try_start_2
+    new-instance v1, Ljava/io/File;
+
+    invoke-direct {p0}, Lorg/cocos2dx/cpp/AppActivity;->getDiagDir()Ljava/io/File;
+
+    move-result-object v2
+
+    invoke-direct {v1, v2, p1}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+
+    .line 28
+    new-instance p1, Ljava/io/FileOutputStream;
+
+    const/4 v2, 0x1
+
+    invoke-direct {p1, v1, v2}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;Z)V
+
+    .line 29
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
+
+    move-result-wide v3
+
+    invoke-virtual {v2, v3, v4}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    const-string v3, " "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    const-string v3, "\n"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/String;->getBytes()[B
+
+    move-result-object v2
+
+    invoke-virtual {p1, v2}, Ljava/io/FileOutputStream;->write([B)V
+
+    .line 30
+    invoke-virtual {p1}, Ljava/io/FileOutputStream;->close()V
+
+    .line 31
+    new-instance p1, Ljava/lang/StringBuilder;
+
+    invoke-direct {p1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "diag-> "
+
+    invoke-virtual {p1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {v1}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {p1, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    const-string v1, ": "
+
+    invoke-virtual {p1, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-static {v0, p1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+    :try_end_60
+    .catchall {:try_start_2 .. :try_end_60} :catchall_61
+
+    .line 34
+    goto :goto_67
+
+    .line 32
+    :catchall_61
+    move-exception p1
+
+    .line 33
+    const-string p2, "writeDiag failed"
+
+    invoke-static {v0, p2, p1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    .line 35
+    :goto_67
+    return-void
+.end method
+
+
+# virtual methods
+.method public dispatchKeyEvent(Landroid/view/KeyEvent;)Z
+    .registers 8
+
+    .line 62
+    const-string v0, "input.log"
+
+    :try_start_2
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getKeyCode()I
+
+    move-result v1
+
+    .line 63
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getAction()I
+
+    move-result v2
+
+    .line 64
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "INPUT KEY act="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    const-string v4, " code="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {p0, v0, v3}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 68
+    invoke-static {v1}, Lorg/cocos2dx/cpp/GamepadOverlay;->androidKeyToCocos2d(I)I
+
+    move-result v1
+
+    .line 69
+    if-eqz v1, :cond_6a
+
+    const/4 v3, 0x1
+
+    if-eqz v2, :cond_35
+
+    if-ne v2, v3, :cond_6a
+
+    .line 70
+    :cond_35
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->isCanceled()Z
+
+    move-result v4
+
+    if-nez v4, :cond_6a
+
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getRepeatCount()I
+
+    move-result v4
+
+    if-nez v4, :cond_6a
+
+    .line 71
+    if-nez v2, :cond_45
+
+    move v2, v3
+
+    goto :goto_46
+
+    :cond_45
+    const/4 v2, 0x0
+
+    .line 72
+    :goto_46
+    invoke-static {v1, v2}, Lorg/cocos2dx/cpp/GamepadOverlay;->queueInject(IZ)V
+
+    .line 73
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v5, "INPUT KEY FORCED-INJECT cc="
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v4, " pressed="
+
+    invoke-virtual {v1, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_69
+    .catchall {:try_start_2 .. :try_end_69} :catchall_6b
+
+    .line 74
+    return v3
+
+    .line 78
+    :cond_6a
+    goto :goto_82
+
+    .line 76
+    :catchall_6b
+    move-exception v1
+
+    .line 77
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "INPUT KEY EXC "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 79
+    :goto_82
+    invoke-super {p0, p1}, Lorg/cocos2dx/lib/Cocos2dxActivity;->dispatchKeyEvent(Landroid/view/KeyEvent;)Z
+
+    move-result p1
+
+    return p1
+.end method
+
+.method public dispatchTouchEvent(Landroid/view/MotionEvent;)Z
+    .registers 7
+
+    .line 85
+    const-string v0, "input.log"
+
+    :try_start_2
+    invoke-virtual {p1}, Landroid/view/MotionEvent;->getActionMasked()I
+
+    move-result v1
+
+    .line 86
+    const/4 v2, 0x2
+
+    if-eq v1, v2, :cond_3b
+
+    .line 87
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "INPUT TOUCH act="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    const-string v4, " x="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    .line 88
+    invoke-virtual {p1}, Landroid/view/MotionEvent;->getX()F
+
+    move-result v4
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(F)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    const-string v4, " y="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {p1}, Landroid/view/MotionEvent;->getY()F
+
+    move-result v4
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(F)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    .line 87
+    invoke-direct {p0, v0, v3}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 96
+    :cond_3b
+    iget-object v3, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    if-eqz v3, :cond_94
+
+    iget-object v3, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    invoke-virtual {v3}, Lorg/cocos2dx/cpp/GamepadOverlay;->isAttachedToWindow()Z
+
+    move-result v3
+
+    if-eqz v3, :cond_94
+
+    .line 97
+    iget-object v3, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    invoke-virtual {v3, p1}, Lorg/cocos2dx/cpp/GamepadOverlay;->touchIsOnButton(Landroid/view/MotionEvent;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_7b
+
+    .line 98
+    iget-object v3, p0, Lorg/cocos2dx/cpp/AppActivity;->mGamepadOverlay:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    invoke-virtual {v3, p1}, Lorg/cocos2dx/cpp/GamepadOverlay;->dispatchTouchEvent(Landroid/view/MotionEvent;)Z
+
+    move-result v3
+
+    .line 99
+    if-eq v1, v2, :cond_77
+
+    .line 100
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "INPUT TOUCH OVERLAY-HIT act="
+
+    invoke-virtual {v2, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, " consumed="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 103
+    :cond_77
+    if-eqz v3, :cond_94
+
+    const/4 p1, 0x1
+
+    return p1
+
+    .line 104
+    :cond_7b
+    if-eq v1, v2, :cond_94
+
+    .line 105
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "INPUT TOUCH PASS-THROUGH act="
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_93
+    .catchall {:try_start_2 .. :try_end_93} :catchall_95
+
+    nop
+
+    .line 111
+    :cond_94
+    goto :goto_ac
+
+    .line 109
+    :catchall_95
+    move-exception v1
+
+    .line 110
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "INPUT TOUCH EXC "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 112
+    :goto_ac
+    invoke-super {p0, p1}, Lorg/cocos2dx/lib/Cocos2dxActivity;->dispatchTouchEvent(Landroid/view/MotionEvent;)Z
+
+    move-result p1
+
+    return p1
+.end method
+
+.method protected onCreate(Landroid/os/Bundle;)V
+    .registers 6
+
+    .line 177
+    const-string v0, "boot.log"
+
+    const-string v1, "onCreate ENTER"
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 179
+    :try_start_7
+    invoke-super {p0, p1}, Lorg/cocos2dx/lib/Cocos2dxActivity;->onCreate(Landroid/os/Bundle;)V
+
+    .line 180
+    const-string p1, "onCreate super.onCreate done"
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 181
+    invoke-direct {p0}, Lorg/cocos2dx/cpp/AppActivity;->addGamepadOverlay()V
+
+    invoke-static {p0}, Lfobs/SaveExport;->start(Ljava/lang/Object;)V
+
+    .line 182
+    const-string p1, "gamepad overlay added"
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_1a
+    .catchall {:try_start_7 .. :try_end_1a} :catchall_98
+
+    .line 187
+    :try_start_1a
+    const-string p1, "HellAfterSchool-VirtualPad"
+
+    const/4 v1, 0x0
+
+    invoke-static {p1, v1}, Lorg/cocos2dx/lib/GameControllerAdapter;->onConnected(Ljava/lang/String;I)V
+
+    .line 190
+    const-string p1, "virtual game controller registered"
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_25
+    .catchall {:try_start_1a .. :try_end_25} :catchall_26
+
+    .line 193
+    goto :goto_3d
+
+    .line 191
+    :catchall_26
+    move-exception p1
+
+    .line 192
+    :try_start_27
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "virtual controller register FAILED: "
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_3d
+    .catchall {:try_start_27 .. :try_end_3d} :catchall_98
+
+    .line 197
+    :goto_3d
+    :try_start_3d
+    invoke-direct {p0}, Lorg/cocos2dx/cpp/AppActivity;->startPeriodicPurger()V
+
+    .line 198
+    const-string p1, "periodic cache purger scheduled (20s)"
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_45
+    .catchall {:try_start_3d .. :try_end_45} :catchall_46
+
+    .line 201
+    goto :goto_5d
+
+    .line 199
+    :catchall_46
+    move-exception p1
+
+    .line 200
+    :try_start_47
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "periodic purger scheduling FAILED: "
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_5d
+    .catchall {:try_start_47 .. :try_end_5d} :catchall_98
+
+    .line 205
+    :goto_5d
+    :try_start_5d
+    invoke-static {p0}, Lorg/cocos2dx/cpp/MenuShim;->init(Landroid/content/Context;)Z
+
+    move-result p1
+
+    .line 206
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "MenuShim init "
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    if-eqz p1, :cond_71
+
+    const-string p1, "OK"
+
+    goto :goto_73
+
+    :cond_71
+    const-string p1, "FAILED"
+
+    :goto_73
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_7e
+    .catchall {:try_start_5d .. :try_end_7e} :catchall_7f
+
+    .line 209
+    goto :goto_96
+
+    .line 207
+    :catchall_7f
+    move-exception p1
+
+    .line 208
+    :try_start_80
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "MenuShim init threw: "
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-direct {p0, v0, p1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_96
+    .catchall {:try_start_80 .. :try_end_96} :catchall_98
+
+    .line 216
+    :goto_96
+    nop
+
+    .line 217
+    return-void
+
+    .line 210
+    :catchall_98
+    move-exception p1
+
+    .line 211
+    new-instance v1, Ljava/io/StringWriter;
+
+    invoke-direct {v1}, Ljava/io/StringWriter;-><init>()V
+
+    .line 212
+    new-instance v2, Ljava/io/PrintWriter;
+
+    invoke-direct {v2, v1}, Ljava/io/PrintWriter;-><init>(Ljava/io/Writer;)V
+
+    invoke-virtual {p1, v2}, Ljava/lang/Throwable;->printStackTrace(Ljava/io/PrintWriter;)V
+
+    .line 213
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "onCreate FAILED: "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-direct {p0, v0, v2}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 214
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "ONCREATE_FAILURE:\n"
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v1}, Ljava/io/StringWriter;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    const-string v1, "crash.log"
+
+    invoke-direct {p0, v1, v0}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 215
+    new-instance v0, Ljava/lang/RuntimeException;
+
+    const-string v1, "onCreate failed"
+
+    invoke-direct {v0, v1, p1}, Ljava/lang/RuntimeException;-><init>(Ljava/lang/String;Ljava/lang/Throwable;)V
+
+    throw v0
+.end method
+
+.method protected onLoadNativeLibraries()V
+    .registers 6
+
+    .line 151
+    const-string v0, "boot.log"
+
+    const-string v1, "onLoadNativeLibraries: ENTER"
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 152
+    const-string v1, "MyGame"
+
+    .line 154
+    :try_start_9
+    invoke-virtual {p0}, Lorg/cocos2dx/cpp/AppActivity;->getPackageManager()Landroid/content/pm/PackageManager;
+
+    move-result-object v2
+
+    .line 155
+    invoke-virtual {p0}, Lorg/cocos2dx/cpp/AppActivity;->getPackageName()Ljava/lang/String;
+
+    move-result-object v3
+
+    const/16 v4, 0x80
+
+    invoke-virtual {v2, v3, v4}, Landroid/content/pm/PackageManager;->getApplicationInfo(Ljava/lang/String;I)Landroid/content/pm/ApplicationInfo;
+
+    move-result-object v2
+
+    .line 156
+    iget-object v2, v2, Landroid/content/pm/ApplicationInfo;->metaData:Landroid/os/Bundle;
+
+    .line 157
+    const-string v3, "android.app.lib_name"
+
+    invoke-virtual {v2, v3}, Landroid/os/Bundle;->getString(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v1
+
+    .line 158
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "lib_name="
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-direct {p0, v0, v2}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_35
+    .catchall {:try_start_9 .. :try_end_35} :catchall_36
+
+    .line 161
+    goto :goto_4d
+
+    .line 159
+    :catchall_36
+    move-exception v2
+
+    .line 160
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "metadata failed: "
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-direct {p0, v0, v2}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 163
+    :goto_4d
+    :try_start_4d
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "before System.loadLibrary("
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    const-string v3, ")"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-direct {p0, v0, v2}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 164
+    invoke-static {v1}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
+
+    .line 165
+    const-string v1, "after loadLibrary: SUCCESS"
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_71
+    .catchall {:try_start_4d .. :try_end_71} :catchall_73
+
+    .line 172
+    nop
+
+    .line 173
+    return-void
+
+    .line 166
+    :catchall_73
+    move-exception v1
+
+    .line 167
+    new-instance v2, Ljava/io/StringWriter;
+
+    invoke-direct {v2}, Ljava/io/StringWriter;-><init>()V
+
+    .line 168
+    new-instance v3, Ljava/io/PrintWriter;
+
+    invoke-direct {v3, v2}, Ljava/io/PrintWriter;-><init>(Ljava/io/Writer;)V
+
+    invoke-virtual {v1, v3}, Ljava/lang/Throwable;->printStackTrace(Ljava/io/PrintWriter;)V
+
+    .line 169
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "loadLibrary FAILED: "
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {p0, v0, v3}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 170
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "LOAD_FAILURE:\n"
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v2}, Ljava/io/StringWriter;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    const-string v2, "crash.log"
+
+    invoke-direct {p0, v2, v0}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 171
+    new-instance v0, Ljava/lang/RuntimeException;
+
+    const-string v2, "native lib load failed"
+
+    invoke-direct {v0, v2, v1}, Ljava/lang/RuntimeException;-><init>(Ljava/lang/String;Ljava/lang/Throwable;)V
+
+    throw v0
+.end method
+
+.method public onLowMemory()V
+    .registers 8
+
+    .line 243
+    invoke-super {p0}, Lorg/cocos2dx/lib/Cocos2dxActivity;->onLowMemory()V
+
+    .line 244
+    const-string v0, "hell_runtime.log"
+
+    const-string v1, "JAVA onLowMemory! System is running low on memory."
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 245
+    invoke-static {}, Ljava/lang/Runtime;->getRuntime()Ljava/lang/Runtime;
+
+    move-result-object v1
+
+    .line 246
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "JAVA heap: free="
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Runtime;->freeMemory()J
+
+    move-result-wide v3
+
+    const-wide/32 v5, 0x100000
+
+    div-long/2addr v3, v5
+
+    invoke-virtual {v2, v3, v4}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    const-string v3, "MB total="
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    .line 247
+    invoke-virtual {v1}, Ljava/lang/Runtime;->totalMemory()J
+
+    move-result-wide v3
+
+    div-long/2addr v3, v5
+
+    invoke-virtual {v2, v3, v4}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    const-string v3, "MB max="
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    .line 248
+    invoke-virtual {v1}, Ljava/lang/Runtime;->maxMemory()J
+
+    move-result-wide v3
+
+    div-long/2addr v3, v5
+
+    invoke-virtual {v2, v3, v4}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, "MB"
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    .line 246
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 250
+    const-string v0, "onLowMemory"
+
+    invoke-direct {p0, v0}, Lorg/cocos2dx/cpp/AppActivity;->emergencyCachePurge(Ljava/lang/String;)V
+
+    .line 251
+    return-void
+.end method
+
+.method protected onPause()V
+    .registers 3
+
+    .line 117
+    :try_start_0
+    const-string v0, "input.log"
+
+    const-string v1, "LIFE onPause"
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_7
+    .catchall {:try_start_0 .. :try_end_7} :catchall_8
+
+    goto :goto_9
+
+    :catchall_8
+    move-exception v0
+
+    .line 118
+    :goto_9
+    invoke-super {p0}, Lorg/cocos2dx/lib/Cocos2dxActivity;->onPause()V
+
+    .line 119
+    return-void
+.end method
+
+.method protected onResume()V
+    .registers 3
+
+    .line 123
+    invoke-super {p0}, Lorg/cocos2dx/lib/Cocos2dxActivity;->onResume()V
+
+    .line 124
+    :try_start_3
+    const-string v0, "input.log"
+
+    const-string v1, "LIFE onResume"
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_a
+    .catchall {:try_start_3 .. :try_end_a} :catchall_b
+
+    goto :goto_c
+
+    :catchall_b
+    move-exception v0
+
+    .line 125
+    :goto_c
+    const-string v0, "onResume"
+
+    invoke-direct {p0, v0}, Lorg/cocos2dx/cpp/AppActivity;->bringOverlayToFront(Ljava/lang/String;)V
+
+    .line 126
+    return-void
+.end method
+
+.method public onTrimMemory(I)V
+    .registers 8
+
+    .line 255
+    invoke-super {p0, p1}, Lorg/cocos2dx/lib/Cocos2dxActivity;->onTrimMemory(I)V
+
+    .line 265
+    const/4 v0, 0x5
+
+    const/16 v1, 0x50
+
+    const/16 v2, 0xf
+
+    const/16 v3, 0x14
+
+    if-ne p1, v3, :cond_f
+
+    const-string v3, "UI_HIDDEN (app backgrounded - not a crash)"
+
+    goto :goto_35
+
+    .line 266
+    :cond_f
+    if-ne p1, v2, :cond_14
+
+    const-string v3, "RUNNING_CRITICAL - foreground OOM imminent"
+
+    goto :goto_35
+
+    .line 267
+    :cond_14
+    if-ne p1, v1, :cond_19
+
+    const-string v3, "COMPLETE - background OOM kill likely"
+
+    goto :goto_35
+
+    .line 268
+    :cond_19
+    const/16 v3, 0x3c
+
+    if-ne p1, v3, :cond_20
+
+    const-string v3, "MODERATE background"
+
+    goto :goto_35
+
+    .line 269
+    :cond_20
+    const/16 v3, 0x28
+
+    if-ne p1, v3, :cond_27
+
+    const-string v3, "BACKGROUND"
+
+    goto :goto_35
+
+    .line 270
+    :cond_27
+    const/16 v3, 0xa
+
+    if-ne p1, v3, :cond_2e
+
+    const-string v3, "RUNNING_LOW"
+
+    goto :goto_35
+
+    .line 271
+    :cond_2e
+    if-ne p1, v0, :cond_33
+
+    const-string v3, "RUNNING_MODERATE"
+
+    goto :goto_35
+
+    .line 272
+    :cond_33
+    const-string v3, "other"
+
+    .line 273
+    :goto_35
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v5, "JAVA onTrimMemory level="
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    const-string v5, " ("
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    const-string v4, ")"
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    const-string v5, "hell_runtime.log"
+
+    invoke-direct {p0, v5, v3}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 275
+    if-eq p1, v2, :cond_61
+
+    if-ne p1, v1, :cond_66
+
+    .line 276
+    :cond_61
+    const-string v1, "CRITICAL memory pressure - OOM kill possible."
+
+    invoke-direct {p0, v5, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 280
+    :cond_66
+    if-lt p1, v0, :cond_84
+
+    if-gt p1, v2, :cond_84
+
+    .line 281
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v1, "onTrimMemory("
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p1
+
+    invoke-direct {p0, p1}, Lorg/cocos2dx/cpp/AppActivity;->emergencyCachePurge(Ljava/lang/String;)V
+
+    .line 283
+    :cond_84
+    return-void
+.end method
+
+.method public onWindowFocusChanged(Z)V
+    .registers 5
+
+    .line 130
+    :try_start_0
+    const-string v0, "input.log"
+
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "FOCUS hasFocus="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {p0, v0, v1}, Lorg/cocos2dx/cpp/AppActivity;->writeDiag(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_18
+    .catchall {:try_start_0 .. :try_end_18} :catchall_19
+
+    goto :goto_1a
+
+    :catchall_19
+    move-exception v0
+
+    .line 131
+    :goto_1a
+    invoke-super {p0, p1}, Lorg/cocos2dx/lib/Cocos2dxActivity;->onWindowFocusChanged(Z)V
+
+    .line 132
+    if-eqz p1, :cond_24
+
+    const-string p1, "onWindowFocusChanged"
+
+    invoke-direct {p0, p1}, Lorg/cocos2dx/cpp/AppActivity;->bringOverlayToFront(Ljava/lang/String;)V
+
+    .line 133
+    :cond_24
+    return-void
+.end method

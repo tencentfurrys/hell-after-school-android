@@ -1,0 +1,6286 @@
+{
+ "id": 165,
+ "name": "荒野マップ(隠し",
+ "type": 0,
+ "group": 0,
+ "animationId": 459,
+ "operatable": false,
+ "priority": 0,
+ "initialActionId": 2,
+ "initialDisplayDirectionFlag": false,
+ "initialDisplayDirection": 90.0,
+ "hitPlayerGroup": false,
+ "hitEnemyGroup": false,
+ "hitObjectGroupBit": 0,
+ "collideWithPlayerGroup": false,
+ "collideWithEnemyGroup": false,
+ "collideWithObjectGroupBit": 0,
+ "collideWithTile": false,
+ "collideWithTileGroupBit": 0,
+ "dispPriority": 0,
+ "actionList": [
+  {
+   "id": 2,
+   "name": "1",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": -24,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 1,
+   "name": "消え",
+   "a": 255,
+   "r": 0,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 4,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": false,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 360,
+   "y": 1248,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 3,
+   "name": "2",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 48,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 4,
+   "name": "3",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 120,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 5,
+   "name": "4",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 192,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 6,
+   "name": "5",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 264,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 7,
+   "name": "6",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 336,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 8,
+   "name": "7",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 408,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 9,
+   "name": "8",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 480,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 10,
+   "name": "9",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 552,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 11,
+   "name": "10",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 624,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 12,
+   "name": "11",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 696,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 13,
+   "name": "12",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 768,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 14,
+   "name": "13",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 840,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 15,
+   "name": "14",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 912,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 16,
+   "name": "15",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 984,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 17,
+   "name": "16",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1056,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 18,
+   "name": "17",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1128,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 19,
+   "name": "18",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1200,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 20,
+   "name": "19",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1272,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 21,
+   "name": "20",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1344,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 22,
+   "name": "21",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1416,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 23,
+   "name": "22",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1488,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 24,
+   "name": "23",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1560,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 25,
+   "name": "24",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1632,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 29,
+   "name": "25",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1704,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 30,
+   "name": "26",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1776,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 31,
+   "name": "27",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1848,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 26,
+   "name": "荒野未開",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1920,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 27,
+   "name": "大樹未開",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 3,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": -72,
+   "y": 1992,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 32,
+   "name": "★荒野の入口",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 9,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1056,
+   "y": -96,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 28,
+   "name": "見回り詰所",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 9,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1056,
+   "y": -24,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 34,
+   "name": "消え(1)",
+   "a": 255,
+   "r": 0,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 4,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": false,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1536,
+   "y": 48,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 33,
+   "name": "荒野の書庫",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 9,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1056,
+   "y": 48,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 35,
+   "name": "砂の洞穴",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 9,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1056,
+   "y": 120,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 36,
+   "name": "★FT選択肢",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 12,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1032,
+   "y": 432,
+   "width": 168,
+   "height": 48,
+   "shortcutList": [
+    {
+     "x": 1680.0,
+     "y": 456.0,
+     "width": 84.0,
+     "height": 24.0
+    }
+   ]
+  },
+  {
+   "id": 37,
+   "name": "表示　JP",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 10,
+   "animDirectionId": 1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1248,
+   "y": 384,
+   "width": 96,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 38,
+   "name": "表示　ENG",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 11,
+   "animDirectionId": 1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1248,
+   "y": 480,
+   "width": 96,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 39,
+   "name": "表示　JP(1)",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 10,
+   "animDirectionId": 2,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1392,
+   "y": 384,
+   "width": 96,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 40,
+   "name": "表示　EMG",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 11,
+   "animDirectionId": 2,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1392,
+   "y": 480,
+   "width": 96,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 41,
+   "name": "閉じる",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 10,
+   "animDirectionId": 3,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1536,
+   "y": 384,
+   "width": 96,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 42,
+   "name": "閉じる(1)",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 11,
+   "animDirectionId": 3,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1536,
+   "y": 480,
+   "width": 96,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 43,
+   "name": "★FT選択肢(決定用",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 7,
+   "animDirectionId": 2,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 840,
+   "y": 648,
+   "width": 168,
+   "height": 48,
+   "shortcutList": [
+    {
+     "x": 1536.0,
+     "y": 696.0,
+     "width": 84.0,
+     "height": 24.0
+    }
+   ]
+  },
+  {
+   "id": 44,
+   "name": "はい",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 8,
+   "animDirectionId": -1,
+   "takeOverMotion": true,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [
+    {
+     "id": 1,
+     "commandType": 31,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "switchVariableChange": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchValue": 0,
+      "variableObjectId": -2,
+      "variableQualifierId": -1,
+      "variableId": 9,
+      "variableAssignOperator": 0,
+      "variableAssignValueType": 0,
+      "assignValue": 653.0,
+      "assignVariableObjectId": -1,
+      "assignVariableQualifierId": -1,
+      "assignVariableId": -1,
+      "randomMin": 0,
+      "randomMax": 100,
+      "assignScript": "",
+      "useCoffeeScript": false,
+      "javaScript": ""
+     }
+    },
+    {
+     "id": 2,
+     "commandType": 31,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "switchVariableChange": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchValue": 0,
+      "variableObjectId": -2,
+      "variableQualifierId": -1,
+      "variableId": 10,
+      "variableAssignOperator": 0,
+      "variableAssignValueType": 0,
+      "assignValue": 322.0,
+      "assignVariableObjectId": -1,
+      "assignVariableQualifierId": -1,
+      "assignVariableId": -1,
+      "randomMin": 0,
+      "randomMax": 100,
+      "assignScript": "",
+      "useCoffeeScript": false,
+      "javaScript": ""
+     }
+    },
+    {
+     "id": 3,
+     "commandType": 31,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "switchVariableChange": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchValue": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "variableAssignOperator": 0,
+      "variableAssignValueType": 0,
+      "assignValue": -3.0,
+      "assignVariableObjectId": -1,
+      "assignVariableQualifierId": -1,
+      "assignVariableId": -1,
+      "randomMin": 0,
+      "randomMax": 100,
+      "assignScript": "",
+      "useCoffeeScript": false,
+      "javaScript": ""
+     }
+    }
+   ],
+   "memo": "",
+   "x": 1248,
+   "y": 600,
+   "width": 96,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 45,
+   "name": "いいえ",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 8,
+   "animDirectionId": -1,
+   "takeOverMotion": true,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [
+    {
+     "id": 1,
+     "commandType": 31,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "switchVariableChange": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchValue": 0,
+      "variableObjectId": -2,
+      "variableQualifierId": -1,
+      "variableId": 9,
+      "variableAssignOperator": 0,
+      "variableAssignValueType": 0,
+      "assignValue": 653.0,
+      "assignVariableObjectId": -1,
+      "assignVariableQualifierId": -1,
+      "assignVariableId": -1,
+      "randomMin": 0,
+      "randomMax": 100,
+      "assignScript": "",
+      "useCoffeeScript": false,
+      "javaScript": ""
+     }
+    },
+    {
+     "id": 2,
+     "commandType": 31,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "switchVariableChange": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchValue": 0,
+      "variableObjectId": -2,
+      "variableQualifierId": -1,
+      "variableId": 10,
+      "variableAssignOperator": 0,
+      "variableAssignValueType": 0,
+      "assignValue": 349.0,
+      "assignVariableObjectId": -1,
+      "assignVariableQualifierId": -1,
+      "assignVariableId": -1,
+      "randomMin": 0,
+      "randomMax": 100,
+      "assignScript": "",
+      "useCoffeeScript": false,
+      "javaScript": ""
+     }
+    },
+    {
+     "id": 3,
+     "commandType": 31,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "switchVariableChange": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchValue": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "variableAssignOperator": 0,
+      "variableAssignValueType": 0,
+      "assignValue": -3.0,
+      "assignVariableObjectId": -1,
+      "assignVariableQualifierId": -1,
+      "assignVariableId": -1,
+      "randomMin": 0,
+      "randomMax": 100,
+      "assignScript": "",
+      "useCoffeeScript": false,
+      "javaScript": ""
+     }
+    }
+   ],
+   "memo": "",
+   "x": 1248,
+   "y": 672,
+   "width": 96,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 46,
+   "name": "はい決定",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 8,
+   "animDirectionId": -1,
+   "takeOverMotion": true,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [
+    {
+     "id": 3,
+     "commandType": 25,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "soundPlay": {
+      "soundType": 0,
+      "seId": 269,
+      "voiceId": -1,
+      "bgmId": -1,
+      "loop": false,
+      "fadein": false,
+      "duration300": 300,
+      "specifyAudioPosition": false,
+      "audioPositionVariableObjectId": -1,
+      "audioPositionVariableQualifierId": -1,
+      "audioPositionVariableId": -1,
+      "volume": 80,
+      "pan": 0,
+      "pitch": 0
+     }
+    },
+    {
+     "id": 4,
+     "commandType": 31,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "switchVariableChange": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchValue": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "variableAssignOperator": 0,
+      "variableAssignValueType": 0,
+      "assignValue": 10.0,
+      "assignVariableObjectId": -1,
+      "assignVariableQualifierId": -1,
+      "assignVariableId": -1,
+      "randomMin": 0,
+      "randomMax": 100,
+      "assignScript": "",
+      "useCoffeeScript": false,
+      "javaScript": ""
+     }
+    },
+    {
+     "id": 1,
+     "commandType": 45,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "particleRemove": {
+      "particleId": -2,
+      "targettingType": 1,
+      "targetObjectType": 0,
+      "targetObjectGroup": -1,
+      "targetObjectId": -2
+     }
+    }
+   ],
+   "memo": "会話変数10",
+   "x": 1392,
+   "y": 600,
+   "width": 96,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 47,
+   "name": "いいえ決定",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 8,
+   "animDirectionId": -1,
+   "takeOverMotion": true,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [
+    {
+     "id": 3,
+     "commandType": 25,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "soundPlay": {
+      "soundType": 0,
+      "seId": 268,
+      "voiceId": -1,
+      "bgmId": -1,
+      "loop": false,
+      "fadein": false,
+      "duration300": 300,
+      "specifyAudioPosition": false,
+      "audioPositionVariableObjectId": -1,
+      "audioPositionVariableQualifierId": -1,
+      "audioPositionVariableId": -1,
+      "volume": 90,
+      "pan": 0,
+      "pitch": -5
+     }
+    },
+    {
+     "id": 4,
+     "commandType": 31,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "switchVariableChange": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchValue": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "variableAssignOperator": 0,
+      "variableAssignValueType": 0,
+      "assignValue": 0.0,
+      "assignVariableObjectId": -1,
+      "assignVariableQualifierId": -1,
+      "assignVariableId": -1,
+      "randomMin": 0,
+      "randomMax": 100,
+      "assignScript": "",
+      "useCoffeeScript": false,
+      "javaScript": ""
+     }
+    },
+    {
+     "id": 1,
+     "commandType": 45,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "particleRemove": {
+      "particleId": -2,
+      "targettingType": 1,
+      "targetObjectType": 0,
+      "targetObjectGroup": -1,
+      "targetObjectId": -2
+     }
+    }
+   ],
+   "memo": "会話変数０",
+   "x": 1392,
+   "y": 672,
+   "width": 96,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 48,
+   "name": "閉じる(2)",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 10,
+   "animDirectionId": 3,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1800,
+   "y": 384,
+   "width": 96,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 49,
+   "name": "閉じる(2)(1)",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 11,
+   "animDirectionId": 3,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1800,
+   "y": 480,
+   "width": 96,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 50,
+   "name": "滅",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 12,
+   "animDirectionId": 1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1944,
+   "y": 432,
+   "width": 96,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 51,
+   "name": "パーティクル",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 8,
+   "animDirectionId": 1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [
+    {
+     "id": 1,
+     "commandType": 41,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "particleShow": {
+      "particleId": 351,
+      "positionType": 0,
+      "useConnect": false,
+      "connectId": -1,
+      "adjustX": 0,
+      "adjustY": 10,
+      "duration300": 300,
+      "durationUnlimited": true
+     }
+    }
+   ],
+   "memo": "",
+   "x": 1056,
+   "y": 648,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 52,
+   "name": "１１でワープ",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 8,
+   "animDirectionId": -1,
+   "takeOverMotion": true,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [
+    {
+     "id": 4,
+     "commandType": 31,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "switchVariableChange": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchValue": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "variableAssignOperator": 0,
+      "variableAssignValueType": 0,
+      "assignValue": 11.0,
+      "assignVariableObjectId": -1,
+      "assignVariableQualifierId": -1,
+      "assignVariableId": -1,
+      "randomMin": 0,
+      "randomMax": 100,
+      "assignScript": "",
+      "useCoffeeScript": false,
+      "javaScript": ""
+     }
+    },
+    {
+     "id": 1,
+     "commandType": 25,
+     "ignored": false,
+     "instanceConfigurable": false,
+     "soundPlay": {
+      "soundType": 0,
+      "seId": 304,
+      "voiceId": -1,
+      "bgmId": -1,
+      "loop": false,
+      "fadein": false,
+      "duration300": 300,
+      "specifyAudioPosition": false,
+      "audioPositionVariableObjectId": -1,
+      "audioPositionVariableQualifierId": -1,
+      "audioPositionVariableId": -1,
+      "volume": 75,
+      "pan": 0,
+      "pitch": -3
+     }
+    }
+   ],
+   "memo": "会話変数11\n\n",
+   "x": 1536,
+   "y": 600,
+   "width": 240,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 53,
+   "name": "FT禁止一旦退避",
+   "a": 255,
+   "r": 255,
+   "g": 0,
+   "b": 0,
+   "animMotionId": 4,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 696,
+   "y": 24,
+   "width": 168,
+   "height": 96,
+   "shortcutList": []
+  },
+  {
+   "id": 54,
+   "name": "遺跡の入口",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 9,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1056,
+   "y": 192,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  },
+  {
+   "id": 55,
+   "name": "アジト入口",
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "animMotionId": 9,
+   "animDirectionId": -1,
+   "takeOverMotion": false,
+   "jumpable": false,
+   "enableCustomizedJump": false,
+   "ignoreMoveInput": false,
+   "keepDirection": false,
+   "ignoreGravity": true,
+   "gravity": 100,
+   "reflectGravityToDisplayDirection": false,
+   "moveSpeed": 100,
+   "upDownMoveSpeed": 100,
+   "jumpSpeed": 100,
+   "turnSpeed": 100,
+   "objCommandList": [],
+   "memo": "",
+   "x": 1056,
+   "y": 264,
+   "width": 168,
+   "height": 48,
+   "shortcutList": []
+  }
+ ],
+ "actionLinkList": [
+  {
+   "id": 1,
+   "typeIdPair": [
+    [
+     0,
+     2,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2276,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     20,
+     23
+    ],
+    [
+     435,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 3,
+   "typeIdPair": [
+    [
+     0,
+     4,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2278,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     21,
+     167
+    ],
+    [
+     434,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 4,
+   "typeIdPair": [
+    [
+     0,
+     5,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2279,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     21,
+     239
+    ],
+    [
+     434,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 5,
+   "typeIdPair": [
+    [
+     0,
+     6,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2280,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     22,
+     311
+    ],
+    [
+     433,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 6,
+   "typeIdPair": [
+    [
+     0,
+     7,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2281,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     23,
+     383
+    ],
+    [
+     432,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 7,
+   "typeIdPair": [
+    [
+     0,
+     8,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2282,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     24,
+     455
+    ],
+    [
+     431,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 8,
+   "typeIdPair": [
+    [
+     0,
+     9,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2283,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     25,
+     527
+    ],
+    [
+     430,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 9,
+   "typeIdPair": [
+    [
+     0,
+     10,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2284,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     26,
+     599
+    ],
+    [
+     429,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 10,
+   "typeIdPair": [
+    [
+     0,
+     11,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2285,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     28,
+     671
+    ],
+    [
+     427,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 11,
+   "typeIdPair": [
+    [
+     0,
+     12,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2286,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     30,
+     743
+    ],
+    [
+     425,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 12,
+   "typeIdPair": [
+    [
+     0,
+     13,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2287,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     33,
+     815
+    ],
+    [
+     422,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 13,
+   "typeIdPair": [
+    [
+     0,
+     14,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2288,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     37,
+     887
+    ],
+    [
+     418,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 14,
+   "typeIdPair": [
+    [
+     0,
+     15,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2289,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     42,
+     959
+    ],
+    [
+     413,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 15,
+   "typeIdPair": [
+    [
+     0,
+     16,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2290,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     51,
+     1031
+    ],
+    [
+     404,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 16,
+   "typeIdPair": [
+    [
+     0,
+     17,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2291,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     65,
+     1103
+    ],
+    [
+     390,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 17,
+   "typeIdPair": [
+    [
+     0,
+     18,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2292,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     95,
+     1175
+    ],
+    [
+     360,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 18,
+   "typeIdPair": [
+    [
+     0,
+     19,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2293,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     95,
+     1233
+    ],
+    [
+     360,
+     1262
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 28,
+   "typeIdPair": [
+    [
+     0,
+     32,
+     -1
+    ],
+    [
+     0,
+     34,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2276,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1219,
+     -48
+    ],
+    [
+     1539,
+     48
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 29,
+   "typeIdPair": [
+    [
+     0,
+     28,
+     -1
+    ],
+    [
+     0,
+     34,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2280,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1223,
+     12
+    ],
+    [
+     1536,
+     59
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 30,
+   "typeIdPair": [
+    [
+     0,
+     33,
+     -1
+    ],
+    [
+     0,
+     34,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2282,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1223,
+     72
+    ],
+    [
+     1536,
+     72
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 31,
+   "typeIdPair": [
+    [
+     0,
+     35,
+     -1
+    ],
+    [
+     0,
+     34,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2285,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1223,
+     131
+    ],
+    [
+     1536,
+     84
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 32,
+   "typeIdPair": [
+    [
+     0,
+     36,
+     -1
+    ],
+    [
+     0,
+     37,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "compareVariableOperator": 3,
+      "compareValueType": 0,
+      "compareValue": 1.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    },
+    {
+     "id": 2,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 0,
+      "variableQualifierId": -1,
+      "variableId": 2062,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1199,
+     432
+    ],
+    [
+     1248,
+     419
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 33,
+   "typeIdPair": [
+    [
+     0,
+     36,
+     -1
+    ],
+    [
+     0,
+     38,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "compareVariableOperator": 3,
+      "compareValueType": 0,
+      "compareValue": 1.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    },
+    {
+     "id": 2,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 0,
+      "variableQualifierId": -1,
+      "variableId": 2062,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 1.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1199,
+     477
+    ],
+    [
+     1248,
+     490
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 34,
+   "typeIdPair": [
+    [
+     0,
+     37,
+     -1
+    ],
+    [
+     0,
+     39,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 2,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [],
+   "memo": "",
+   "coordList": [
+    [
+     1343,
+     414
+    ],
+    [
+     1392,
+     415
+    ]
+   ],
+   "endPointFactor": [
+    1466,
+    3001
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 35,
+   "typeIdPair": [
+    [
+     0,
+     38,
+     -1
+    ],
+    [
+     0,
+     40,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 2,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [],
+   "memo": "",
+   "coordList": [
+    [
+     1343,
+     504
+    ],
+    [
+     1392,
+     504
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 36,
+   "typeIdPair": [
+    [
+     0,
+     39,
+     -1
+    ],
+    [
+     0,
+     41,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 2,
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1487,
+     408
+    ],
+    [
+     1536,
+     408
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 37,
+   "typeIdPair": [
+    [
+     0,
+     40,
+     -1
+    ],
+    [
+     0,
+     42,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 2,
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1487,
+     504
+    ],
+    [
+     1536,
+     504
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 38,
+   "typeIdPair": [
+    [
+     0,
+     38,
+     -1
+    ],
+    [
+     0,
+     42,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 2,
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1343,
+     504
+    ],
+    [
+     1536,
+     504
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 39,
+   "typeIdPair": [
+    [
+     0,
+     37,
+     -1
+    ],
+    [
+     0,
+     41,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 2,
+   "a": 255,
+   "r": 255,
+   "g": 255,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1343,
+     408
+    ],
+    [
+     1536,
+     408
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 40,
+   "typeIdPair": [
+    [
+     0,
+     41,
+     -1
+    ],
+    [
+     0,
+     36,
+     0
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 2,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [],
+   "memo": "",
+   "coordList": [
+    [
+     1631,
+     428
+    ],
+    [
+     1694,
+     456
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 41,
+   "typeIdPair": [
+    [
+     0,
+     42,
+     -1
+    ],
+    [
+     0,
+     36,
+     0
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 2,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [],
+   "memo": "",
+   "coordList": [
+    [
+     1631,
+     490
+    ],
+    [
+     1680,
+     478
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 42,
+   "typeIdPair": [
+    [
+     0,
+     43,
+     -1
+    ],
+    [
+     0,
+     51,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "compareVariableOperator": 3,
+      "compareValueType": 0,
+      "compareValue": 1.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    },
+    {
+     "id": 2,
+     "ignored": false,
+     "type": 16,
+     "condAnd": true,
+     "notFlag": false,
+     "waitTime": {
+      "time": 0.01
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1007,
+     664
+    ],
+    [
+     1056,
+     660
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    3369
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 43,
+   "typeIdPair": [
+    [
+     0,
+     44,
+     -1
+    ],
+    [
+     0,
+     45,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": true,
+   "inputConditionList": [
+    {
+     "id": 1,
+     "useKey": false,
+     "operationKeyId": -1,
+     "triggerType": 1,
+     "directionInputType": 0,
+     "directionBit": 260,
+     "condAnd": true,
+     "acceptFrameCount": 1
+    }
+   ],
+   "linkConditionList": [],
+   "memo": "",
+   "coordList": [
+    [
+     1296,
+     647
+    ],
+    [
+     1296,
+     672
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 44,
+   "typeIdPair": [
+    [
+     0,
+     45,
+     -1
+    ],
+    [
+     0,
+     44,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": true,
+   "inputConditionList": [
+    {
+     "id": 1,
+     "useKey": false,
+     "operationKeyId": -1,
+     "triggerType": 1,
+     "directionInputType": 0,
+     "directionBit": 260,
+     "condAnd": true,
+     "acceptFrameCount": 1
+    }
+   ],
+   "linkConditionList": [],
+   "memo": "",
+   "coordList": [
+    [
+     1296,
+     672
+    ],
+    [
+     1296,
+     647
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 45,
+   "typeIdPair": [
+    [
+     0,
+     44,
+     -1
+    ],
+    [
+     0,
+     46,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 1,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": true,
+   "inputConditionList": [
+    {
+     "id": 1,
+     "useKey": true,
+     "operationKeyId": 1,
+     "triggerType": 1,
+     "directionInputType": 0,
+     "directionBit": 0,
+     "condAnd": false,
+     "acceptFrameCount": 1
+    },
+    {
+     "id": 2,
+     "useKey": true,
+     "operationKeyId": 2,
+     "triggerType": 1,
+     "directionInputType": 0,
+     "directionBit": 0,
+     "condAnd": true,
+     "acceptFrameCount": 1
+    }
+   ],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 16,
+     "condAnd": true,
+     "notFlag": false,
+     "waitTime": {
+      "time": 0.1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1343,
+     624
+    ],
+    [
+     1392,
+     625
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    3131
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 46,
+   "typeIdPair": [
+    [
+     0,
+     45,
+     -1
+    ],
+    [
+     0,
+     47,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 1,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": true,
+   "inputConditionList": [
+    {
+     "id": 1,
+     "useKey": true,
+     "operationKeyId": 1,
+     "triggerType": 1,
+     "directionInputType": 0,
+     "directionBit": 0,
+     "condAnd": false,
+     "acceptFrameCount": 1
+    },
+    {
+     "id": 2,
+     "useKey": true,
+     "operationKeyId": 2,
+     "triggerType": 1,
+     "directionInputType": 0,
+     "directionBit": 0,
+     "condAnd": true,
+     "acceptFrameCount": 1
+    }
+   ],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 16,
+     "condAnd": true,
+     "notFlag": false,
+     "waitTime": {
+      "time": 0.1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1343,
+     696
+    ],
+    [
+     1392,
+     696
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 48,
+   "typeIdPair": [
+    [
+     0,
+     47,
+     -1
+    ],
+    [
+     0,
+     43,
+     0
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 3,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [],
+   "memo": "",
+   "coordList": [
+    [
+     1487,
+     700
+    ],
+    [
+     1536,
+     704
+    ]
+   ],
+   "endPointFactor": [
+    1441,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 47,
+   "typeIdPair": [
+    [
+     0,
+     41,
+     -1
+    ],
+    [
+     0,
+     48,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 3,
+   "a": 255,
+   "r": 205,
+   "g": 30,
+   "b": 142,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 10.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1631,
+     408
+    ],
+    [
+     1800,
+     408
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 49,
+   "typeIdPair": [
+    [
+     0,
+     42,
+     -1
+    ],
+    [
+     0,
+     49,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 3,
+   "a": 255,
+   "r": 205,
+   "g": 30,
+   "b": 142,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 1,
+      "variableQualifierId": -2,
+      "variableId": 2000,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 10.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1631,
+     504
+    ],
+    [
+     1800,
+     504
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 50,
+   "typeIdPair": [
+    [
+     0,
+     48,
+     -1
+    ],
+    [
+     0,
+     50,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 2,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [],
+   "memo": "",
+   "coordList": [
+    [
+     1895,
+     423
+    ],
+    [
+     1944,
+     439
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 51,
+   "typeIdPair": [
+    [
+     0,
+     49,
+     -1
+    ],
+    [
+     0,
+     50,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 2,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [],
+   "memo": "",
+   "coordList": [
+    [
+     1895,
+     487
+    ],
+    [
+     1944,
+     471
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 52,
+   "typeIdPair": [
+    [
+     0,
+     51,
+     -1
+    ],
+    [
+     0,
+     44,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 3,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [],
+   "memo": "",
+   "coordList": [
+    [
+     1223,
+     656
+    ],
+    [
+     1248,
+     645
+    ]
+   ],
+   "endPointFactor": [
+    1050,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 53,
+   "typeIdPair": [
+    [
+     0,
+     46,
+     -1
+    ],
+    [
+     0,
+     52,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 16,
+     "condAnd": true,
+     "notFlag": false,
+     "waitTime": {
+      "time": 0.5
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1487,
+     624
+    ],
+    [
+     1536,
+     624
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 54,
+   "typeIdPair": [
+    [
+     0,
+     32,
+     -1
+    ],
+    [
+     0,
+     53,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 1,
+   "a": 255,
+   "r": 249,
+   "g": 148,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 0,
+      "variableQualifierId": -1,
+      "variableId": 2289,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 1.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1056,
+     -63
+    ],
+    [
+     863,
+     30
+    ]
+   ],
+   "endPointFactor": [
+    2984,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 55,
+   "typeIdPair": [
+    [
+     0,
+     28,
+     -1
+    ],
+    [
+     0,
+     53,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 1,
+   "a": 255,
+   "r": 249,
+   "g": 148,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 0,
+      "variableQualifierId": -1,
+      "variableId": 2289,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 1.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1056,
+     16
+    ],
+    [
+     863,
+     54
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 56,
+   "typeIdPair": [
+    [
+     0,
+     33,
+     -1
+    ],
+    [
+     0,
+     53,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 1,
+   "a": 255,
+   "r": 249,
+   "g": 148,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 0,
+      "variableQualifierId": -1,
+      "variableId": 2289,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 1.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1056,
+     72
+    ],
+    [
+     863,
+     72
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 57,
+   "typeIdPair": [
+    [
+     0,
+     35,
+     -1
+    ],
+    [
+     0,
+     53,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 1,
+   "a": 255,
+   "r": 249,
+   "g": 148,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 0,
+      "variableQualifierId": -1,
+      "variableId": 2289,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 1.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1056,
+     143
+    ],
+    [
+     802,
+     119
+    ]
+   ],
+   "endPointFactor": [
+    3161,
+    2130
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 58,
+   "typeIdPair": [
+    [
+     0,
+     44,
+     -1
+    ],
+    [
+     0,
+     47,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 1,
+   "a": 255,
+   "r": 255,
+   "g": 50,
+   "b": 136,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": true,
+   "inputConditionList": [
+    {
+     "id": 1,
+     "useKey": true,
+     "operationKeyId": 27,
+     "triggerType": 1,
+     "directionInputType": 0,
+     "directionBit": 0,
+     "condAnd": true,
+     "acceptFrameCount": 1
+    }
+   ],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 16,
+     "condAnd": true,
+     "notFlag": false,
+     "waitTime": {
+      "time": 0.1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1343,
+     647
+    ],
+    [
+     1392,
+     672
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 59,
+   "typeIdPair": [
+    [
+     0,
+     45,
+     -1
+    ],
+    [
+     0,
+     47,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 1,
+   "a": 255,
+   "r": 255,
+   "g": 50,
+   "b": 136,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": true,
+   "inputConditionList": [
+    {
+     "id": 1,
+     "useKey": true,
+     "operationKeyId": 27,
+     "triggerType": 1,
+     "directionInputType": 0,
+     "directionBit": 0,
+     "condAnd": true,
+     "acceptFrameCount": 1
+    }
+   ],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 16,
+     "condAnd": true,
+     "notFlag": false,
+     "waitTime": {
+      "time": 0.1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1343,
+     696
+    ],
+    [
+     1392,
+     696
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 2,
+   "typeIdPair": [
+    [
+     0,
+     3,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2277,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     20,
+     95
+    ],
+    [
+     435,
+     1248
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 19,
+   "typeIdPair": [
+    [
+     0,
+     54,
+     -1
+    ],
+    [
+     0,
+     53,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 1,
+   "a": 255,
+   "r": 249,
+   "g": 148,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 0,
+      "variableQualifierId": -1,
+      "variableId": 2289,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 1.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1080,
+     192
+    ],
+    [
+     863,
+     105
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 20,
+   "typeIdPair": [
+    [
+     0,
+     54,
+     -1
+    ],
+    [
+     0,
+     34,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2292,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1218,
+     192
+    ],
+    [
+     1539,
+     95
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 21,
+   "typeIdPair": [
+    [
+     0,
+     20,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2305,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     95,
+     1291
+    ],
+    [
+     360,
+     1276
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 22,
+   "typeIdPair": [
+    [
+     0,
+     21,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2306,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     95,
+     1349
+    ],
+    [
+     360,
+     1290
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 23,
+   "typeIdPair": [
+    [
+     0,
+     22,
+     -1
+    ],
+    [
+     0,
+     1,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2309,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     73,
+     1416
+    ],
+    [
+     382,
+     1295
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 24,
+   "typeIdPair": [
+    [
+     0,
+     55,
+     -1
+    ],
+    [
+     0,
+     53,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 1,
+   "a": 255,
+   "r": 249,
+   "g": 148,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": false,
+      "switchObjectId": -1,
+      "switchQualifierId": -1,
+      "switchId": -1,
+      "switchCondition": 0,
+      "variableObjectId": 0,
+      "variableQualifierId": -1,
+      "variableId": 2289,
+      "compareVariableOperator": 2,
+      "compareValueType": 0,
+      "compareValue": 1.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1100,
+     264
+    ],
+    [
+     859,
+     119
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    -1
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  },
+  {
+   "id": 25,
+   "typeIdPair": [
+    [
+     0,
+     55,
+     -1
+    ],
+    [
+     0,
+     34,
+     -1
+    ]
+   ],
+   "linkType": 0,
+   "priority": 0,
+   "a": 255,
+   "r": 0,
+   "g": 0,
+   "b": 0,
+   "changeConditionType": 0,
+   "noInput": false,
+   "useInput": false,
+   "inputConditionList": [],
+   "linkConditionList": [
+    {
+     "id": 1,
+     "ignored": false,
+     "type": 17,
+     "condAnd": true,
+     "notFlag": false,
+     "switchVariableChanged": {
+      "swtch": true,
+      "switchObjectId": 0,
+      "switchQualifierId": -1,
+      "switchId": 2288,
+      "switchCondition": 0,
+      "variableObjectId": -1,
+      "variableQualifierId": -1,
+      "variableId": -1,
+      "compareVariableOperator": 0,
+      "compareValueType": 0,
+      "compareValue": 0.0,
+      "compareVariableObjectId": -1,
+      "compareVariableQualifierId": -1,
+      "compareVariableId": -1
+     }
+    }
+   ],
+   "memo": "",
+   "coordList": [
+    [
+     1191,
+     264
+    ],
+    [
+     1552,
+     95
+    ]
+   ],
+   "endPointFactor": [
+    -1,
+    2609
+   ],
+   "visible": true,
+   "num": 0,
+   "actionLinkIdList": []
+  }
+ ],
+ "actionGroupList": [],
+ "memo": "",
+ "testplayOnly": false,
+ "appearCondition": 1,
+ "appearConditionTileCount": 0,
+ "reappearCondition": 1,
+ "reappearConditionTileCount": 0,
+ "hp": 1,
+ "maxHp": 1,
+ "minAttack": 1,
+ "maxAttack": 1,
+ "initialDamageRate": 100,
+ "damageVariationValue": 0,
+ "critical": true,
+ "criticalRatio": 200,
+ "criticalIncidence": 5,
+ "invincible": false,
+ "invincible300": 300,
+ "moveType": 0,
+ "normalAccelMove": false,
+ "tankAccelMove": false,
+ "carAccelMove": false,
+ "upMoveKeyId": -1,
+ "downMoveKeyId": -1,
+ "leftMoveKeyId": -1,
+ "rightMoveKeyId": -1,
+ "forwardMoveKeyId": -1,
+ "backwardMoveKeyId": -1,
+ "leftTurnKeyId": -1,
+ "rightTurnKeyId": -1,
+ "slipOnSlope": false,
+ "diagonalMoveWithPolar": false,
+ "moveAroundWithinDots": false,
+ "dotsToMoveAround": 0,
+ "horizontalMove": 1.0,
+ "verticalMove": 1.0,
+ "horizontalAccel": 1.0,
+ "horizontalMaxMove": 1.0,
+ "horizontalDecel": 1.0,
+ "verticalAccel": 1.0,
+ "verticalMaxMove": 1.0,
+ "verticalDecel": 1.0,
+ "forwardMove": 1.0,
+ "backwardMove": 1.0,
+ "forwardAccel": 1.0,
+ "forwardMaxMove": 1.0,
+ "forwardDecel": 1.0,
+ "backwardAccel": 1.0,
+ "backwardMaxMove": 1.0,
+ "backwardDecel": 1.0,
+ "leftTurn": 1.0,
+ "rightTurn": 1.0,
+ "jumpInitialSpeed": 1.0,
+ "gravity": 1.0,
+ "movableWhenJumping": true,
+ "movableWhenFalling": true,
+ "fallOnCollideWithWall": true,
+ "fallOnCollideWithHitbox": true,
+ "jumpInputOperationKeyId": -1,
+ "affectInputDuration300": 0,
+ "limitFalldownAmount": true,
+ "maxFalldownAmount": 16.0,
+ "invincibleOnDamaged": true,
+ "invincibleDuration300": 300,
+ "winkWhenInvincible": true,
+ "winkInterval300": 300,
+ "afterimage": false,
+ "afterimageCount": 0,
+ "afterimageInterval": 0.0,
+ "afterimageDuration300": 0,
+ "fillAfterimage": false,
+ "fillAfterimageA": 255,
+ "fillAfterimageR": 128,
+ "fillAfterimageG": 0,
+ "fillAfterimageB": 255,
+ "fadeoutAfterimage": false,
+ "fadeoutAfterimageStart300": 0,
+ "useAnimationAfterimage": false,
+ "afterimageAnimationId": -1,
+ "followType": 1,
+ "followPrecision": 100,
+ "followIntervalByTime300": 0,
+ "followIntervalByLocusLength": 0,
+ "childDamageType": 1,
+ "takeOverDamageRateToParent": false,
+ "unattackableToParent": true,
+ "takeoverDispDirection": true,
+ "takeoverAngle": true,
+ "takeoverScaling": true,
+ "takeoverIntensity": true,
+ "disappearWhenHp0": false,
+ "disappearWhenOutOfCamera": false,
+ "disappearCameraMarginTileCount": 2,
+ "fixedInCamera": false,
+ "pushedbackByObject": true,
+ "takeoverStatesAtSceneEnd": false,
+ "disappearSettingFlag": false,
+ "disappearSetting": {
+  "otherObjectDecrementHp": true,
+  "decrement": 0,
+  "targetObjectType": 1,
+  "targetObjectTypeByType": 0,
+  "targetObjectGroup": -1,
+  "targetObjectId": -3,
+  "damageRange": 0,
+  "cameraRangeAdjust": 0,
+  "objCommandList": []
+ },
+ "fireBulletSettingFlag": false,
+ "additionalDisplayList": [],
+ "fireBulletSettingList": [],
+ "effectSettingFlag": false,
+ "effectSettingList": [],
+ "connectSettingFlag": false,
+ "connectSettingList": [],
+ "moveDispDirectionSettingFlag": false,
+ "moveDispDirectionSetting": {
+  "upOperationKeyId": -1,
+  "downOperationKeyId": -1,
+  "leftOperationKeyId": -1,
+  "rightOperationKeyId": -1,
+  "actionInfoList": []
+ },
+ "physicsSettingFlag": false,
+ "physicsSetting": {
+  "affectPhysics": false,
+  "physicsAffected": false,
+  "followConnectedPhysics": false,
+  "templateId": -1,
+  "density": 1000,
+  "mass": 1,
+  "friction": 1,
+  "repulsion": 0.5,
+  "nonCollisionGroup": []
+ },
+ "viewportLightSettingFlag": false,
+ "viewportLightSettingList": [],
+ "commonActionSettingFlag": false,
+ "commonActionSettingList": [],
+ "commonActionGroup": {
+  "id": 99999999,
+  "name": "コモンアクション",
+  "a": 255,
+  "r": 255,
+  "g": 255,
+  "b": 0,
+  "actionIdList": [],
+  "x": 0,
+  "y": 0,
+  "width": 64,
+  "height": 64,
+  "collapsed": false
+ },
+ "aroundCharacterViewSettingFlag": false,
+ "aroundCharacterViewSetting": {
+  "tileOn": true,
+  "objectOn": true,
+  "viewType": 0,
+  "multiplyFill": true,
+  "fillA": 255,
+  "fillR": 255,
+  "fillG": 255,
+  "fillB": 255,
+  "transparency": 0,
+  "width": 0,
+  "height": 0
+ },
+ "invincibleSettingFlag": false,
+ "invincibleSettingList": [],
+ "damagedSettingFlag": false,
+ "damagedSettingList": [],
+ "moveRestrictionSettingFlag": false,
+ "moveRestrictionSettingList": [],
+ "variableList": [
+  {
+   "folder": false,
+   "id": 1,
+   "initialValue": 0,
+   "memo": "",
+   "name": "オブジェクトID",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 2,
+   "initialValue": 0,
+   "memo": "",
+   "name": "体力",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 3,
+   "initialValue": 0,
+   "memo": "",
+   "name": "最大体力",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 4,
+   "initialValue": 0,
+   "memo": "",
+   "name": "最小攻撃力",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 5,
+   "initialValue": 0,
+   "memo": "",
+   "name": "最大攻撃力",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 15,
+   "initialValue": 100,
+   "memo": "",
+   "name": "クリティカル倍率（％）",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 16,
+   "initialValue": 0,
+   "memo": "",
+   "name": "クリティカル発生率(％)",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 6,
+   "initialValue": 0,
+   "memo": "",
+   "name": "被ダメージ率",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 36,
+   "initialValue": 0,
+   "memo": "",
+   "name": "被ダメージ率の変動値",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 7,
+   "initialValue": 0,
+   "memo": "",
+   "name": "攻撃属性",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 8,
+   "initialValue": -1,
+   "memo": "",
+   "name": "エリア判定",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 9,
+   "initialValue": 0,
+   "memo": "",
+   "name": "X座標位置",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 10,
+   "initialValue": 0,
+   "memo": "",
+   "name": "Y座標位置",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 37,
+   "initialValue": 0,
+   "memo": "",
+   "name": "表示方向",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 32,
+   "initialValue": 100,
+   "memo": "",
+   "name": "スケールX(%)",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 33,
+   "initialValue": 100,
+   "memo": "",
+   "name": "スケールY(%)",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 11,
+   "initialValue": 0,
+   "memo": "",
+   "name": "X方向速度",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 12,
+   "initialValue": 0,
+   "memo": "",
+   "name": "Y方向速度",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 23,
+   "initialValue": 0,
+   "memo": "",
+   "name": "左右の移動量",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 24,
+   "initialValue": 0,
+   "memo": "",
+   "name": "上下の移動量",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 25,
+   "initialValue": 0,
+   "memo": "",
+   "name": "左右の加速量",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 26,
+   "initialValue": 0,
+   "memo": "",
+   "name": "上下の加速量",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 27,
+   "initialValue": 0,
+   "memo": "",
+   "name": "左右の最大移動量",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 28,
+   "initialValue": 0,
+   "memo": "",
+   "name": "上下の最大移動量",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 29,
+   "initialValue": 0,
+   "memo": "",
+   "name": "左右の減速量",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 30,
+   "initialValue": 0,
+   "memo": "",
+   "name": "上下の減速量",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 35,
+   "initialValue": 0,
+   "memo": "",
+   "name": "ジャンプの初速",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 13,
+   "initialValue": 0,
+   "memo": "",
+   "name": "プレイヤー判定",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 22,
+   "initialValue": 0,
+   "memo": "",
+   "name": "コントローラーID",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 14,
+   "initialValue": 0,
+   "memo": "",
+   "name": "被ダメージ数値",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 17,
+   "initialValue": 0,
+   "memo": "",
+   "name": "無敵時間",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 18,
+   "initialValue": -1,
+   "memo": "",
+   "name": "アニメの表示を指定フレームで固定",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 19,
+   "initialValue": 0,
+   "memo": "",
+   "name": "インスタンスID",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 21,
+   "initialValue": 0,
+   "memo": "",
+   "name": "単体インスタンスID",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 20,
+   "initialValue": 0,
+   "memo": "",
+   "name": "シーンに配置された同インスタンス数",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 31,
+   "initialValue": 0,
+   "memo": "",
+   "name": "加速移動切り替え時間",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 34,
+   "initialValue": 0,
+   "memo": "",
+   "name": "表示優先度",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 38,
+   "initialValue": -1,
+   "memo": "",
+   "name": "親オブジェクトのインスタンスID",
+   "toBeSaved": true
+  },
+  {
+   "folder": false,
+   "id": 39,
+   "initialValue": -1,
+   "memo": "",
+   "name": "親オブジェクトのインスタンスID",
+   "toBeSaved": true
+  }
+ ],
+ "switchList": [
+  {
+   "id": 1,
+   "name": "無敵",
+   "initialValue": false,
+   "toBeSaved": true,
+   "memo": "",
+   "folder": false
+  },
+  {
+   "id": 2,
+   "name": "自由移動",
+   "initialValue": false,
+   "toBeSaved": true,
+   "memo": "",
+   "folder": false
+  },
+  {
+   "id": 3,
+   "name": "ロック対象",
+   "initialValue": false,
+   "toBeSaved": true,
+   "memo": "",
+   "folder": false
+  },
+  {
+   "id": 4,
+   "name": "ポータルに触れた",
+   "initialValue": false,
+   "toBeSaved": true,
+   "memo": "",
+   "folder": false
+  },
+  {
+   "id": 5,
+   "name": "クリティカルを受けた",
+   "initialValue": false,
+   "toBeSaved": true,
+   "memo": "",
+   "folder": false
+  },
+  {
+   "id": 6,
+   "name": "無効",
+   "initialValue": false,
+   "toBeSaved": true,
+   "memo": "",
+   "folder": false
+  },
+  {
+   "id": 7,
+   "name": "坂ですべる",
+   "initialValue": false,
+   "toBeSaved": true,
+   "memo": "",
+   "folder": false
+  },
+  {
+   "id": 8,
+   "name": "他の物理演算オブジェクトに影響を与える",
+   "initialValue": false,
+   "toBeSaved": true,
+   "memo": "",
+   "folder": false
+  },
+  {
+   "id": 9,
+   "name": "他の物理演算オブジェクトから影響を受ける",
+   "initialValue": false,
+   "toBeSaved": true,
+   "memo": "",
+   "folder": false
+  },
+  {
+   "id": 10,
+   "name": "接続されている物理オブジェクトの動作を優先",
+   "initialValue": false,
+   "toBeSaved": true,
+   "memo": "",
+   "folder": false
+  },
+  {
+   "id": 11,
+   "name": "残像を表示",
+   "initialValue": false,
+   "toBeSaved": true,
+   "memo": "",
+   "folder": false
+  }
+ ],
+ "databaseSettingFlag": false,
+ "databaseId": 0,
+ "physicsPartList": [],
+ "priorityInPhysics": 0,
+ "folder": false
+}

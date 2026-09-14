@@ -1,0 +1,493 @@
+.class Lorg/cocos2dx/cpp/GamepadOverlay$2;
+.super Ljava/lang/Object;
+.source "GamepadOverlay.java"
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/cocos2dx/cpp/GamepadOverlay;->rawInject(IZ)V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final synthetic this$0:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+.field final synthetic val$androidKey:I
+
+.field final synthetic val$i:I
+
+.field final synthetic val$padBtn:I
+
+.field final synthetic val$z:Z
+
+
+# direct methods
+.method constructor <init>(Lorg/cocos2dx/cpp/GamepadOverlay;IIIZ)V
+    .registers 6
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()V"
+        }
+    .end annotation
+
+    .line 601
+    iput-object p1, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->this$0:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    iput p2, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$i:I
+
+    iput p3, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$androidKey:I
+
+    iput p4, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$padBtn:I
+
+    iput-boolean p5, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$z:Z
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .registers 9
+
+    .line 603
+    iget-object v0, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->this$0:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "inject fired cc="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    iget v2, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$i:I
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, " android="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    iget v2, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$androidKey:I
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, " padBtn="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    iget v2, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$padBtn:I
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, " pressed="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    iget-boolean v3, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$z:Z
+
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    # invokes: Lorg/cocos2dx/cpp/GamepadOverlay;->logD(Ljava/lang/String;)V
+    invoke-static {v0, v1}, Lorg/cocos2dx/cpp/GamepadOverlay;->access$400(Lorg/cocos2dx/cpp/GamepadOverlay;Ljava/lang/String;)V
+
+    .line 610
+    iget v0, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$padBtn:I
+
+    if-ltz v0, :cond_47
+
+    .line 611
+    iget-boolean v1, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$z:Z
+
+    # invokes: Lorg/cocos2dx/cpp/GamepadOverlay;->padInject(IZ)V
+    invoke-static {v0, v1}, Lorg/cocos2dx/cpp/GamepadOverlay;->access$100(IZ)V
+
+    .line 616
+    :cond_47
+    iget v0, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$androidKey:I
+
+    if-eqz v0, :cond_50
+
+    .line 617
+    iget-boolean v1, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$z:Z
+
+    # invokes: Lorg/cocos2dx/cpp/GamepadOverlay;->stdKeyInject(IZ)Z
+    invoke-static {v0, v1}, Lorg/cocos2dx/cpp/GamepadOverlay;->access$200(IZ)Z
+
+    .line 621
+    :cond_50
+    iget v0, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$i:I
+
+    const-string v1, " ok="
+
+    const/16 v3, 0x91
+
+    if-ne v0, v3, :cond_8a
+
+    .line 622
+    iget-boolean v4, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$z:Z
+
+    invoke-static {v0, v4}, Lorg/cocos2dx/cpp/MenuShim;->injectKey(IZ)Z
+
+    move-result v0
+
+    .line 623
+    iget-object v4, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->this$0:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    new-instance v5, Ljava/lang/StringBuilder;
+
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v6, "MenuShim injectKey cc="
+
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    iget v6, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$i:I
+
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v5, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    iget-boolean v6, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$z:Z
+
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v5, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v5, v0}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    # invokes: Lorg/cocos2dx/cpp/GamepadOverlay;->logD(Ljava/lang/String;)V
+    invoke-static {v4, v0}, Lorg/cocos2dx/cpp/GamepadOverlay;->access$400(Lorg/cocos2dx/cpp/GamepadOverlay;Ljava/lang/String;)V
+
+    .line 631
+    :cond_8a
+    nop
+
+    .line 632
+    iget v0, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$i:I
+
+    const/4 v5, 0x1
+
+    const/4 v6, 0x0
+
+    const/16 v4, 0xe
+
+    if-ne v0, v4, :cond_96
+
+    const/16 v0, 0x3f6
+
+    goto :goto_d1
+
+    :cond_96
+    const/16 v4, 0x8c
+
+    if-ne v0, v4, :cond_9c
+
+    const/4 v0, 0x7
+
+    goto :goto_d1
+
+    :cond_9c
+    const/16 v4, 0x7c
+
+    if-ne v0, v4, :cond_a2
+
+    const/4 v0, 0x2
+
+    goto :goto_d1
+
+    .line 633
+    :cond_a2
+    const/16 v4, 0x93
+
+    if-ne v0, v4, :cond_a9
+
+    const/16 v0, 0x1b
+
+    goto :goto_d1
+
+    .line 634
+    :cond_a9
+    if-ne v0, v3, :cond_ae
+
+    const/16 v0, 0x3f6
+
+    goto :goto_d1
+
+    .line 635
+    :cond_ae
+    const/16 v4, 0x7e
+
+    if-ne v0, v4, :cond_b4
+
+    const/4 v0, 0x4
+
+    goto :goto_d1
+
+    :cond_b4
+    const/16 v4, 0x1a
+
+    if-ne v0, v4, :cond_bb
+
+    const/16 v0, 0xb
+
+    goto :goto_d1
+
+    :cond_bb
+    const/16 v4, 0x1b
+
+    if-ne v0, v4, :cond_c2
+
+    const/16 v0, 0xc
+
+    goto :goto_d1
+
+    :cond_c2
+    const/16 v4, 0x1c
+
+    if-ne v0, v4, :cond_c9
+
+    const/16 v0, 0x9
+
+    goto :goto_d1
+
+    :cond_c9
+    const/16 v4, 0x1d
+
+    if-ne v0, v4, :cond_d0
+
+    const/16 v0, 0xa
+
+    goto :goto_d1
+
+    :cond_d0
+    move v0, v6
+
+    .line 636
+    :goto_d1
+    if-eqz v0, :cond_10b
+
+    .line 637
+    iget-boolean v4, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$z:Z
+
+    const/4 v7, -0x1
+
+    if-eqz v4, :cond_dd
+
+    .line 638
+    invoke-static {v6, v0, v5, v7}, Lorg/cocos2dx/cpp/MenuShim;->precedeTriggered(IIII)Z
+
+    move-result v4
+
+    goto :goto_e1
+
+    .line 639
+    :cond_dd
+    invoke-static {v6, v0, v5, v7}, Lorg/cocos2dx/cpp/MenuShim;->precedeReleased(IIII)Z
+
+    move-result v4
+
+    .line 640
+    :goto_e1
+    iget-object v5, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->this$0:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    new-instance v6, Ljava/lang/StringBuilder;
+
+    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v7, "MenuShim precede opKid="
+
+    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v6, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    iget-boolean v2, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$z:Z
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    # invokes: Lorg/cocos2dx/cpp/GamepadOverlay;->logD(Ljava/lang/String;)V
+    invoke-static {v5, v0}, Lorg/cocos2dx/cpp/GamepadOverlay;->access$400(Lorg/cocos2dx/cpp/GamepadOverlay;Ljava/lang/String;)V
+
+    .line 652
+    :cond_10b
+    iget v0, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$i:I
+
+    if-ne v0, v3, :cond_14b
+
+    iget-boolean v0, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$z:Z
+
+    if-eqz v0, :cond_14b
+
+    .line 653
+    invoke-static {}, Lorg/cocos2dx/cpp/MenuShim;->isMenuOpen()Z
+
+    move-result v0
+
+    .line 654
+    invoke-static {}, Lorg/cocos2dx/cpp/MenuShim;->toggleMenu()I
+
+    move-result v1
+
+    .line 655
+    iget-object v2, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->this$0:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "MenuShim toggleMenu rc="
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v3, " wasOpen="
+
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    const-string v1, " nowOpen="
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    .line 656
+    invoke-static {}, Lorg/cocos2dx/cpp/MenuShim;->isMenuOpen()Z
+
+    move-result v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 655
+    # invokes: Lorg/cocos2dx/cpp/GamepadOverlay;->logD(Ljava/lang/String;)V
+    invoke-static {v2, v0}, Lorg/cocos2dx/cpp/GamepadOverlay;->access$400(Lorg/cocos2dx/cpp/GamepadOverlay;Ljava/lang/String;)V
+
+    .line 659
+    :cond_14b
+    :try_start_14b
+    iget v0, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$i:I
+
+    iget-boolean v1, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->val$z:Z
+
+    # invokes: Lorg/cocos2dx/cpp/GamepadOverlay;->nativeInjectCocos2dKey(IZ)V
+    invoke-static {v0, v1}, Lorg/cocos2dx/cpp/GamepadOverlay;->access$300(IZ)V
+    :try_end_152
+    .catchall {:try_start_14b .. :try_end_152} :catchall_153
+
+    .line 660
+    goto :goto_16c
+
+    :catchall_153
+    move-exception v0
+
+    iget-object v1, p0, Lorg/cocos2dx/cpp/GamepadOverlay$2;->this$0:Lorg/cocos2dx/cpp/GamepadOverlay;
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "legacy inject EXC "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    # invokes: Lorg/cocos2dx/cpp/GamepadOverlay;->logD(Ljava/lang/String;)V
+    invoke-static {v1, v0}, Lorg/cocos2dx/cpp/GamepadOverlay;->access$400(Lorg/cocos2dx/cpp/GamepadOverlay;Ljava/lang/String;)V
+
+    .line 661
+    :goto_16c
+    return-void
+.end method
