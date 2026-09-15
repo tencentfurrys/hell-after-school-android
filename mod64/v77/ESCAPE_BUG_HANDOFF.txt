@@ -1,0 +1,153 @@
+HANDOFF TXT — PLANT LADY ESCAPE BUG (v77 status + playbook)
+============================================================
+Written 2026-09-15. Companion to mod64/v77/PROGRESS.md (full session diary).
+Scope: ONLY the mushroom/plant-girl H-scene escape bug near the house.
+If the user reports v77.1 STILL cannot escape, start at section "IF IT STILL
+FAILS" at the bottom. Everything below is verified against real game data.
+
+WHAT THE USER REPORTED
+----------------------
+"In plant lady scene I can never escape no matter what, and because of that
+the save file reset." (Stuck forever in the scene -> user force-closes the
+app -> save resets. The save reset is a SIDE EFFECT of being stuck, not a
+separate bug. Earlier session also added a save-corruption guard on arm64,
+commit a528c66.)
+
+VERIFIED MECHANICS (from analysis/obj_12.json = エスケープゲージ関連)
+---------------------------------------------------------------------
+- Escape gauge object: **obj 12**. 51 actions, 175 links. Drains a gauge var
+  while the mash loop runs; escape succeeds when the gauge is filled.
+- The mash loop is a strict alternation between two actions via links:
+  * link 162: action 121 -> action 17, inputCondition = operationKeyId **11**
+  * link 163: action 17  -> action 121, inputCondition = operationKeyId **12**
+  (inputConditionList entries: useKey=true, triggerType=1 = on-press,
+   acceptFrameCount=1.)
+- So the gauge only advances when op11 and op12 fire in ALTERNATING order.
+  Pressing only one of them advances nothing.
+- Several gauge links also carry `directionBit: 80` = bits (1<<4)|(1<<6) =
+  **Left + Right direction wiggle** (InputManager::EnumInputDirection:
+  kDirectionLeft=4, kDirectionRight=6). The pad arrows already supply this —
+  direction input is NOT the missing half.
+- Operation-key mapping chain (verified from project.json inputMapping):
+  * op11 = pcInput 13 = AGTK KEY_LEFT_SHIFT = cocos keycode **0x0c**
+  * op12 = pcInput 11 = AGTK KEY_RETURN  = cocos keycode **0x0a**
+- Why touch could never escape (pre-v77): the on-screen pad had a SHIFT
+  button but **nothing ever injected RETURN**, and repeated taps of a stuck
+  key produced no fresh press edges (edge condition requires down edge each
+  press). Alternation was therefore impossible on touch.
+
+WHAT v77 / v77.1 SHIPPED FOR THIS BUG
+-------------------------------------
+1. **MASH pill** (dex patch `mod64/scripts/v77_dex_patch.py`, both APKs):
+   new second-row button. Each tap injects the OPPOSITE key of the previous
+   tap: first tap = cocos 0x0a (RETURN/op12), next tap = 0x0c (SHIFT/op11),
+   alternating forever. So: alternate taps of [MASH pill] and [SHIFT pad
+   button] = exactly the op11/op12 alternation the gauge wants. (Tapping
+   MASH repeatedly also alternates by itself.)
+2. **Input edge-regen** (arm64 only, InputManager.cpp): a re-press of an
+   already-down key synthesizes a release first, so repeated taps always
+   produce fresh press edges — the stuck-key killer. 32-bit runs the stock
+   engine, so the dex MASH pill is what carries it there.
+3. **Save-corruption guard** (arm64, commit a528c66): the "save reset"
+   symptom is mitigated on arm64; 32-bit save path NOT patched.
+4. v77.1 additionally fixed the 32-bit boot SIGILL (desktop GLView getter
+   stubs, `mod64/scripts/v77_fix32_screen_crash.py`) — unrelated to escape
+   but required for 32-bit to run at all.
+
+HOW THE USER SHOULD TEST (write this back to them verbatim-ish)
+---------------------------------------------------------------
+1. Install the v77.1 APK over the existing app (32-bit: FOBS_v77_32bit.apk).
+2. Enter the plant-lady scene, let the grab start.
+3. Alternate taps: **MASH pill → SHIFT → MASH pill → SHIFT …** (roughly
+   2–4 taps per second). Watch the escape gauge fill.
+4. If the gauge does not move at all: also try tapping **MASH MASH MASH**
+   alone (it self-alternates), and wiggle left/right arrows simultaneously.
+5. Report: gauge moves but slowly? gauge never moves? scene never offers
+   the gauge at all? Each answer points to a different branch below.
+
+IF IT STILL FAILS — DIAGNOSIS PLAYBOOK (in order)
+-------------------------------------------------
+Step 0 — establish which failure mode:
+  (a) Gauge visible but never advances -> injection/edge problem (Step A).
+  (b) Gauge advances but too slowly -> alternation works, drain wins (Step B).
+  (c) No gauge / no mash prompt at all -> link 10 never fires (Step C).
+      link 10 conditions (from obj_12.json): switchId 2000 ON (swtch=true,
+      switchCondition 0 = ON) AND var 2122 compareOperator 5 vs -1.0 — i.e.
+      the grab handshake must set switch 2000 / var 2122 first.
+
+Step A — injection not reaching the engine (most likely on 32-bit):
+  * 32-bit uses the STOCK libMyGame.so; `MenuShim.nativeInjectCocos2dKey`
+    dlsyms `stdKeyInject`/`renderer handleKey` paths. PROGRESS.md says the
+    symbol strings were verified present, but the RETURN press edge may be
+    swallowed by the touch → keyboard bridge. Add a debug toast/log in the
+    dex MASH handler (GamepadOverlay.smali) printing the injected keycode
+    each tap; have the user run with `adb logcat -s cocos2d-x` if possible.
+  * Cross-check on 64-bit: the same scene on the arm64 build has the engine
+    edge-regen + engine-side injection. If 64-bit escapes and 32-bit does
+    not, the difference is the injector path, not the pill logic.
+  * Fallback plan: extend `v77_dex_patch.py` to make the MASH pill fire a
+    2-key burst per tap (0x0a down/up + 0x0c down/up in the same frame
+    window, 100ms apart) instead of strict per-tap alternation.
+
+Step B — drain beats fill:
+  * Gauge var: look up which variable obj 12's actions increment
+    (PROGRESS.md records +5 per alternation, −1 loop drain). If testing
+    shows progress but the drain dominates, data-patch obj 12's drain link
+    wait time (raise the `waitTime` in the drain links) — small, safe edit
+    via a v78 data patch script modeled on `v77_data_patch.py`.
+  * Also check `acceptFrameCount: 1` on links 162/163 — a faster input
+    debounce is NOT needed; alternation timing is user-side.
+
+Step C — handshake never starts (switch 2000 / var 2122):
+  * Check the scene's grab event object (search project.json for the
+    plant-lady scene id; placements + event objects set switch 2000). If
+    the scene sets them only on a KEYBOARD Enter prompt (op12 = RETURN!),
+    the MASH pill covers it — but if it wants a DIFFERENT operation key
+    (e.g. op1 = Z), the user must press that pad button once first.
+  * Verify by asking the user: "does a mash prompt/gauge bar ever appear?"
+
+Step D — nuclear option (works regardless of cause):
+  * v78 data patch: set switch 2000's initial value or add a variable
+    listener that force-advances var 2030 (gauge) when obj 12 is active…
+    BUT this risks skipping the H-scene entirely (instant escape). Prefer
+    Step B's gentler drain edit. Only use with the user's explicit OK.
+
+KEYCODE CHEAT SHEET (already double-verified)
+---------------------------------------------
+  op11 = pcInput 13 = AGTK KEY_LEFT_SHIFT = cocos 0x0c (12)
+  op12 = pcInput 11 = AGTK KEY_RETURN     = cocos 0x0a (10)
+  directionBit 80 = Left(1<<4) + Right(1<<6)
+  kSwitchConditionOn = 0  (switchValue:0 means ON in link conditions)
+  Common var 500 = Foresight SLOW toggle (0x1f4) — unrelated to escape.
+  Escape gauge object = obj 12; hidden-mode motion = 4 (消え).
+
+FILES THAT MATTER
+-----------------
+  mod64/v77/PROGRESS.md              — full session diary (superset of this)
+  mod64/scripts/v77_dex_patch.py     — MASH/SLOW pill source (dex smali edit)
+  mod64/scripts/v77_data_patch.py    — var 500 + particle caps (project.json)
+  mod64/scripts/v77_repack.py        — APK repack helper
+  mod64/scripts/v77_fix32_screen_crash.py — v77.1 32-bit SIGILL fix
+  mod64/v77/analysis/obj_12.json     — escape gauge ground truth
+  mod64/v77/analysis/dex_smali/      — current GamepadOverlay/MenuShim smali
+  .github/workflows/v77-build.yml    — CI pipeline (Actions disabled for
+                                       this account — build locally instead:
+                                       NDK r25c at Downloads/ndk-extract,
+                                       ndk-build in Player/proj.android-
+                                       studio/app, then v77_repack.py)
+
+BUILD QUICKSTART (local, since GitHub Actions is disabled for the account)
+--------------------------------------------------------------------------
+  1. Patch engine sources: python mod64/scripts (v34/v39/v41 build patches
+     are applied by the workflow recipe — replicate steps from
+     .github/workflows/v77-build.yml) and add GamepadInjectV51.cpp to
+     Android.mk (already committed to main).
+  2. cd Player/proj.android-studio/app && ndk-build (NDK r25c) → arm64 only.
+  3. python mod64/scripts/v77_dex_patch.py  (on baksmali output)
+  4. python mod64/scripts/v77_data_patch.py (on extracted project.json)
+  5. python mod64/scripts/v77_repack.py --base <v76 baseline apk> --dex
+     classes.dex --data project.json --out out.apk [--arm64-so libMyGame.so]
+  6. zipalign + apksigner with mod64/signing/fobs.keystore.
+  7. Deliver to Downloads AND Music folder (user's preferred location),
+     upload to release v77 (delete old asset with same name first), commit
+     + push everything.
