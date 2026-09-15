@@ -131,21 +131,30 @@ are on top of origin/main; see git log), plus APK baselines on GitHub Releases
   off-by-one-symbol backtrace). The porter had already stubbed
   IsFullScreen/ChangeScreen/RestoreScreen/FocusWindow to `bx lr` but left both
   size getters live.
+- **ABI fact (decisive, from Scene::start disassembly):** Scene::start calls
+  these getters with a hidden sret pointer in r0 (`add r0, sp, #36; blx
+  GetScreenResolutionSize` @ 0x8613cc) — cocos2d::Size has a non-trivial copy
+  ctor, so on this AAPCS toolchain the return ALWAYS goes through the sret
+  pointer (both originals discard r0 as the hidden pointer). An earlier stub
+  draft that returned {width,height} in r0/r1 was WRONG (callers would read an
+  uninitialized stack buffer) and was replaced before shipping.
 - **Binary fix:** `mod64/scripts/v77_fix32_screen_crash.py` overwrites both
-  getters with an 18-byte Thumb-2 stub returning `Size{1024.0f, 768.0f}` (the
-  project design resolution, soft-float ABI: r0=width, r1=height):
+  getters with a 22-byte Thumb-2 stub (NDK-assembler-verified encoding) that
+  writes `Size{1024.0f, 768.0f}` (the project design resolution,
+  screenWidth/screenHeight) through the sret pointer and returns it:
   - `GetScreenResolutionSize` @ vaddr 0x0088B338
   - `GetFrameSize`        @ vaddr 0x0088B388
-  Bytes: `40F20000 C4F28040 40F20101 C4F24041 7047` (movw/movt 1024.0f into
-  r0, 768.0f into r1, bx lr). Fits inside both functions' original footprints;
-  idempotent via prologue signature check; verified by re-disassembly.
+  Bytes: `40F20001 C4F28041 40F20002 C4F24042 0160 4260 7047`
+  (movw/movt 1024.0f→r1, 768.0f→r2, str r1,[r0], str r2,[r0,#4], bx lr).
+  Fits inside both functions' original footprints; idempotent via prologue
+  signature check; verified by re-disassembly.
 - All callers of these two functions are desktop-window code paths (Scene.cpp
   11697, DebugManager 4001) or guarded by them — nothing Android-legit uses
   them; AppDelegate/LogoScene only use ChangeScreen/IsFullScreen (already
   stubbed).
 - Redelivered: `FOBS_v77_32bit.apk` (197,814,122 bytes, md5
-  `265a0a3c7a94c7490f5c82bd37a1ebe0`) on release `v77` + user's Music folder;
-  patched lib sha256 `49b6578ec14df916f638accaeb965d1bf590dc3f402071bf5ba7e2656b1b3ee6`
+  `8e47e489a8df8d09dbdf014d8d0cc4ea`) on release `v77` + user's Music folder;
+  patched lib sha256 `b37d9dca96526ea1bb0d5f04fbac4693c5d9aecaecaa8ae05959e9cc95c48cdc`
   (stock was `2a856aa8c30d6ceadbcce6f9560164267c8d2857745deba2302b1993eee7b178`).
   `v77_repack.py` grew a `--lib32-so` flag for this. arm64 APK unchanged.
 
