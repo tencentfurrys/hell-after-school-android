@@ -116,6 +116,39 @@ are on top of origin/main; see git log), plus APK baselines on GitHub Releases
    MenuShim / AppActivity in `analysis/dex_smali/`.
 5. **APK baselines** — both v76 APKs uploaded to GitHub Releases (see bottom).
 
+## v77.1: 32-bit boot crash FIXED (2026-09-15)
+- **User crash report:** SIGILL (signal 4) at `agtk::GetScreenResolutionSize+0x5b`
+  called from `agtk::Scene::start` — 32-bit only; the 64-bit build ran fine.
+- **Root cause (from the actual .so disassembly):** the stock armeabi-v7a engine
+  kept the desktop window-resolution block in `Scene::start` that our arm64
+  build removes with the v34 source patch. On Android the GLView is NOT an
+  `IMGUIGLViewImpl`, so `static_cast<IMGUIGLViewImpl*>(glview)` yields a bogus
+  pointer. `GetScreenResolutionSize` loads a garbage "vtable" from [x+140],
+  survives via a CC_ASSERT-failure printf branch, then the next call in the
+  same Scene::start block, `GetFrameSize`, does `blx r1` through the garbage
+  slot → SIGILL whose PC (0xca8fd10c) actually lands INSIDE
+  GetScreenResolutionSize's code range (+0x5b, data executed as code — classic
+  off-by-one-symbol backtrace). The porter had already stubbed
+  IsFullScreen/ChangeScreen/RestoreScreen/FocusWindow to `bx lr` but left both
+  size getters live.
+- **Binary fix:** `mod64/scripts/v77_fix32_screen_crash.py` overwrites both
+  getters with an 18-byte Thumb-2 stub returning `Size{1024.0f, 768.0f}` (the
+  project design resolution, soft-float ABI: r0=width, r1=height):
+  - `GetScreenResolutionSize` @ vaddr 0x0088B338
+  - `GetFrameSize`        @ vaddr 0x0088B388
+  Bytes: `40F20000 C4F28040 40F20101 C4F24041 7047` (movw/movt 1024.0f into
+  r0, 768.0f into r1, bx lr). Fits inside both functions' original footprints;
+  idempotent via prologue signature check; verified by re-disassembly.
+- All callers of these two functions are desktop-window code paths (Scene.cpp
+  11697, DebugManager 4001) or guarded by them — nothing Android-legit uses
+  them; AppDelegate/LogoScene only use ChangeScreen/IsFullScreen (already
+  stubbed).
+- Redelivered: `FOBS_v77_32bit.apk` (197,814,122 bytes, md5
+  `265a0a3c7a94c7490f5c82bd37a1ebe0`) on release `v77` + user's Music folder;
+  patched lib sha256 `49b6578ec14df916f638accaeb965d1bf590dc3f402071bf5ba7e2656b1b3ee6`
+  (stock was `2a856aa8c30d6ceadbcce6f9560164267c8d2857745deba2302b1993eee7b178`).
+  `v77_repack.py` grew a `--lib32-so` flag for this. arm64 APK unchanged.
+
 ## v77 DELIVERED (2026-09-14, second session)
 - Both APKs built locally (GitHub Actions is DISABLED for this account —
   workflow_dispatch returns 422 "Actions has been disabled for this user";

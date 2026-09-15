@@ -15,6 +15,8 @@ ap.add_argument("--data", required=True)
 ap.add_argument("--out", required=True)
 ap.add_argument("--arm64-so", dest="arm64_so", default=None,
                 help="new lib/arm64-v8a/libMyGame.so (arm64 builds only)")
+ap.add_argument("--lib32-so", dest="lib32_so", default=None,
+                help="replacement lib/armeabi-v7a/libMyGame.so (32-bit builds only)")
 args = ap.parse_args()
 
 new = {
@@ -25,6 +27,8 @@ drop = set()
 if args.arm64_so:
     new["lib/arm64-v8a/libMyGame.so"] = open(args.arm64_so, "rb").read()
     drop = {"lib/armeabi-v7a/libMyGame.so", "lib/armeabi-v7a/libmenushim.so"}
+if args.lib32_so:
+    new["lib/armeabi-v7a/libMyGame.so"] = open(args.lib32_so, "rb").read()
 
 zin = zipfile.ZipFile(args.base, "r")
 zout = zipfile.ZipFile(args.out, "w")
